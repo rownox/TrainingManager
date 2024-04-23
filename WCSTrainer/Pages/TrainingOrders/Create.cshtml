@@ -1,0 +1,87 @@
+﻿@page
+@model WCSTrainer.Pages.TrainingOrders.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="panel">
+    <div class="body">
+        <div class="side-bar">
+            <div class="ul">
+                <a href=""><div class="li">Statistics</div></a>
+                <a asp-page="Index"><div class="selected">Training Orders</div></a>
+                <a href=""><div class="li">Manage Trainers</div></a>
+                <a href=""><div class="li">Manage Trainees</div></a>
+                <a href=""><div class="li">Account Settings</div></a>
+            </div>
+        </div>
+        <div class="properties">
+            <div class="user-form">
+                <p class="title">Create New Training Order</p>
+                <p class="description">Fill out each field.</p>
+                <hr />
+                <div class="field-container">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        
+                        <div class="form-group">
+                            <p class="control-label">Trainers</p>
+                            <span asp-validation-for="TrainingOrder.trainers" class="text-danger"></span>
+                            <input asp-for="TrainingOrder.trainers" class="form-control" />
+                            
+                        </div>
+                        <div class="form-group">
+                            <p class="control-label">Trainee</p>
+                            <span asp-validation-for="TrainingOrder.trainee" class="text-danger"></span>
+                            <input asp-for="TrainingOrder.trainee" class="form-control" />
+                            
+                        </div>
+                        <div class="form-group">
+                            <p class="control-label">Begin Date</p>
+                            <span asp-validation-for="TrainingOrder.beginDate" class="text-danger"></span>
+                            <input asp-for="TrainingOrder.beginDate" class="form-control" />
+                            
+                        </div>
+                        <div class="form-group">
+                            <p class="control-label">End Date</p>
+                            <span asp-validation-for="TrainingOrder.endDate" class="text-danger"></span>
+                            <input asp-for="TrainingOrder.endDate" class="form-control" />
+                            
+                        </div>
+                        <div class="form-group">
+                            <p class="control-label">Location</p>
+                            <span asp-validation-for="TrainingOrder.location" class="text-danger"></span>
+                            <input asp-for="TrainingOrder.location" class="form-control" />
+                            
+                        </div>
+                        <div class="form-group">
+                            <p class="control-label">Medium</p>
+                            <span asp-validation-for="TrainingOrder.medium" class="text-danger"></span>
+                            <input asp-for="TrainingOrder.medium" class="form-control" />
+                            
+                        </div>
+                        <div class="form-group">
+                            <p class="control-label">Description</p>
+                            <span asp-validation-for="TrainingOrder.description" class="text-danger"></span>
+                            <input asp-for="TrainingOrder.description" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn" />
+                        </div>
+                    </form>
+                </div>
+
+                <a asp-page="Index">
+                    <button>Return To Menu</button>
+                </a>
+                
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

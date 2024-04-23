@@ -1,0 +1,49 @@
+﻿@page
+@model WCSTrainer.Pages.TrainingOrders.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="panel">
+    <div class="body">
+        <div class="side-bar">
+            <div class="ul">
+                <a href=""><div class="li">Statistics</div></a>
+                <a href="TrainingOrders"><div class="selected">Training Orders</div></a>
+                <a href=""><div class="li">Manage Trainers</div></a>
+                <a href=""><div class="li">Manage Trainees</div></a>
+                <a href=""><div class="li">Account Settings</div></a>
+            </div>
+        </div>
+        <div class="properties">
+            <div class="order-list">
+                <ul>
+                    @foreach (var item in Model.TrainingOrder) {
+                        <li>
+                            <a asp-page="./Details" asp-route-id="@item.Id" class="info">
+                                <div class="title">Training Order ID: @Html.DisplayFor(modelItem => item.Id)</div>
+                                <div class="sub">Employee - @Html.DisplayFor(modelItem => item.trainee)</div>
+                                <div class="sub">Begin Date - @Html.DisplayFor(modelItem => item.beginDate)</div>
+                                <div class="sub">End Date - @Html.DisplayFor(modelItem => item.endDate)</div>
+                            </a>
+                            <div class="buttons">
+                                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="tools">
+                <div class="search">
+                    <p>Search for a training order ID:</p>
+                    <input type="search">
+                </div>
+                <div class="buttons">
+                    <a asp-page="Create">Create New Order</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
