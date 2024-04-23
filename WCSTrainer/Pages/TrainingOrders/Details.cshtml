@@ -1,0 +1,65 @@
+﻿@page
+@model WCSTrainer.Pages.TrainingOrders.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="panel">
+    <div class="body">
+        <div class="side-bar">
+            <div class="ul">
+                <a href=""><div class="li">Statistics</div></a>
+                <a asp-page="Index"><div class="selected">Training Orders</div></a>
+                <a href=""><div class="li">Manage Trainers</div></a>
+                <a href=""><div class="li">Manage Trainees</div></a>
+                <a href=""><div class="li">Account Settings</div></a>
+            </div>
+        </div>
+        <div class="properties">
+            <div class="user-form">
+                <p class="title">Training Order ID: @Html.DisplayFor(model => model.TrainingOrder.Id)</p>
+                <hr />
+                <div class="field-container">
+                    <div class="text-group">
+                        <p class="title">Trainers</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainers)</p>
+                    </div>
+                    <div class="text-group">
+                        <p class="title">Trainee</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainee)</p>
+                    </div>
+                    <div class="text-group">
+                        <p class="title">Begin Date</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.beginDate)</p>
+                    </div>
+                    <div class="text-group">
+                        <p class="title">End Date</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.endDate)</p>
+                    </div>
+                    <div class="text-group">
+                        <p class="title">Location</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.location)</p>
+                    </div>
+                    <div class="text-group">
+                        <p class="title">Medium</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.medium)</p>
+                    </div>
+                    <div class="text-group">
+                        <p class="title">Description</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.description)</p>
+                    </div>
+
+                    <a asp-page="./Index">
+                        <button>Return To Menu</button>
+                    </a>
+                    <a asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
+                        <button>Edit Order</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
