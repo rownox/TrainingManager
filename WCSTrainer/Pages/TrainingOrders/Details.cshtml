@@ -50,11 +50,12 @@
                         <p class="info">@Html.DisplayFor(model => model.TrainingOrder.description)</p>
                     </div>
 
-                    <a asp-page="./Index">
-                        <button>Return To Menu</button>
-                    </a>
                     <a asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
-                        <button>Edit Order</button>
+                        <button class="btn2">Edit Order</button>
+                    </a>
+
+                    <a asp-page="./Index">
+                        <button class="btn1">Return To Menu</button>
                     </a>
                 </div>
             </div>

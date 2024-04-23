@@ -97,79 +97,84 @@ body {
     flex-direction: column;
 }
 
-.user-form .title {
-    color: white;
-    font-size: 40px;
-    margin-bottom: 40px;
-}
+    .properties .user-form .title {
+        color: white;
+        font-size: 40px;
+        margin-bottom: 40px;
+    }
 
-.user-form .description {
-    color: white;
-}
+    .properties .user-form .description {
+        color: white;
+    }
 
-.user-form .field-container {
-    color: white;
-    display: flex;
-    flex-direction: column;
-    margin-top: 40px;
-}
+    .properties .user-form .field-container {
+        color: white;
+        display: flex;
+        flex-direction: column;
+        margin-top: 40px;
+    }
 
-.user-form button {
-    margin-top: 10px;
-    color: white;
-    background-color: #1f84ff;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    width: 250px;
-}
+    .properties .user-form button {
+        margin-top: 10px;
+        color: white;
+        
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        width: 250px;
+    }
+    .properties .user-form .btn1 {
+        background-color: #1f84ff;
+    }
 
-.field-container .text-danger {
-    color: red;
-    font-size: 13px;
-}
+    .properties .user-form .btn2 {
+        background-color: #1b9246;
+    }
 
-.field-container .form-group {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-}
+    .properties .user-form .field-container .text-danger {
+        color: red;
+        font-size: 13px;
+    }
 
-.form-group .control-label {
-}
+    .properties .user-form .field-container .form-group {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+    }
 
-.form-group .form-control {
-    height: 25px;
-    margin-bottom: 20px;
-}
+        .properties .user-form .field-container .form-group .control-label {
+        }
 
-.form-group .btn {
-    color: white;
-    background-color: #1f84ff;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    width: 250px;
-}
+        .properties .user-form .field-container .form-group .form-control {
+            height: 25px;
+            margin-bottom: 20px;
+        }
 
-.field-container .text-group {
-    display: flex;
-    flex-direction: row;
-}
+        .properties .user-form .field-container .form-group .btn {
+            color: white;
+            background-color: #1b9246;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 250px;
+        }
 
-.text-group .title {
-    font-size: 20px;
-    color: #a0a2a8;
-}
+    .properties .user-form .field-container .text-group {
+        display: flex;
+        flex-direction: row;
+        height: 40px;
+    }
 
-.text-group .info {
-    margin-left: 10px;
-    font-size: 20px;
-    color: #fff;
-}
+    .properties .user-form .text-group .title {
+        font-size: 20px;
+        color: #a0a2a8;
+    }
 
-.text-group .special {
-}
+    .properties .user-form .text-group .info {
+        margin-left: 10px;
+        font-size: 20px;
+        color: #fff;
+    }
 
 .properties .tools {
     margin-left: 30px;
