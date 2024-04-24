@@ -18,16 +18,15 @@
         </div>
         <div class="properties">
             <div class="user-form">
-                <p class="title">Create New Training Order</p>
+                <p class="title">Edit Training Order</p>
                 <hr />
                 <div class="field-container">
                     <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id" />
                         <div class="form-group">
-                            <label asp-for="TrainingOrder.description" class="control-label"></label>
-                            <input asp-for="TrainingOrder.description" class="form-control" />
-                            <span asp-validation-for="TrainingOrder.description" class="text-danger"></span>
+                            <label class="control-label">Status</label>
+                            <input value="Active" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label asp-for="TrainingOrder.trainers" class="control-label"></label>
@@ -60,6 +59,11 @@
                             <span asp-validation-for="TrainingOrder.medium" class="text-danger"></span>
                         </div>
                         <div class="form-group">
+                            <label asp-for="TrainingOrder.description" class="control-label"></label>
+                            <input asp-for="TrainingOrder.description" class="form-control" />
+                            <span asp-validation-for="TrainingOrder.description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
                             <input type="submit" value="Save" class="btn btn-primary" />
                         </div>
                     </form>
@@ -67,6 +71,9 @@
 
                 <a asp-page="Index">
                     <button class="btn1">Return To Menu</button>
+                </a>
+                <a asp-page="Index">
+                    <button class="btn3">Verify Completion</button>
                 </a>
             </div>
         </div>
