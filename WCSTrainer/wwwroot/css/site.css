@@ -66,11 +66,15 @@ body {
                 padding: 0;
             }
 
-            .panel .body .side-bar .li {
-                width: 100%;
-                color: #D9DADA;
-                padding: 15px 20px;
+            .panel .body .side-bar a {
+                text-decoration: none;
             }
+
+                .panel .body .side-bar a .li {
+                    width: 100%;
+                    color: #D9DADA;
+                    padding: 15px 20px;
+                }
 
             .panel .body .side-bar .selected {
                 padding: 15px 20px;
@@ -123,6 +127,7 @@ body {
         border-radius: 5px;
         width: 250px;
     }
+
     .properties .user-form .btn1 {
         background-color: #1f84ff;
     }
@@ -131,9 +136,8 @@ body {
         background-color: #1b9246;
     }
 
-    .properties .user-form .field-container .text-danger {
-        color: red;
-        font-size: 13px;
+    .properties .user-form .btn3 {
+        background-color: #ff3434;
     }
 
     .properties .user-form .field-container .form-group {
@@ -142,12 +146,35 @@ body {
         width: 80%;
     }
 
-        .properties .user-form .field-container .form-group .control-label {
+        .properties .user-form .field-container .form-group .labels {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
         }
+
+            .properties .user-form .field-container .form-group .labels .control-label {
+
+            }
+
+            .properties .user-form .field-container .form-group .labels .text-danger {
+                color: #ff3434;
+                margin-left: 10px;
+            }
 
         .properties .user-form .field-container .form-group .form-control {
             height: 25px;
             margin-bottom: 20px;
+        }
+
+        .properties .user-form .field-container .form-group .form-drop {
+            margin-bottom: 20px;
+            display: block;
+            height: 30px;
+        }
+
+        .properties .user-form .field-container .form-group .form-drop2 {
+            margin-bottom: 20px;
+            display: block;
         }
 
         .properties .user-form .field-container .form-group .btn {
@@ -158,6 +185,21 @@ body {
             border-radius: 5px;
             width: 250px;
         }
+
+        .properties .user-form .field-container .form-group .selectors {
+            display: flex;
+            flex-direction: row;
+        }
+
+            .properties .user-form .field-container .form-group .selectors .dropdown-btn {
+                margin-right: 10px;
+                margin-bottom: 10px;
+                color: white;
+                background-color: #1a1c1d;
+                padding: 10px;
+                border: none;
+                width: 100px;
+            }
 
     .properties .user-form .field-container .text-group {
         display: flex;
