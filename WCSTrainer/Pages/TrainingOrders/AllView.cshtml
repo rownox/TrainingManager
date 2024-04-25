@@ -1,0 +1,71 @@
+﻿@page
+@model WCSTrainer.Pages.TrainingOrders.AllViewModel
+@{
+    ViewData["Title"] = "AllView";
+}
+
+<div class="panel">
+    <div class="body">
+        <div class="side-bar">
+            <div class="ul">
+                <a href=""><div class="li">Statistics</div></a>
+                <a href="TrainingOrders"><div class="selected">Training Orders</div></a>
+                <a href=""><div class="li">Manage Trainers</div></a>
+                <a href=""><div class="li">Manage Trainees</div></a>
+                <a href=""><div class="li">Account Settings</div></a>
+            </div>
+        </div>
+        <div class="properties">
+            <div class="order-list2">
+                <div class="sorters">
+                    <p>Priority</p>
+                    <button id="alphButton" class="btn">Alphabetical</button>
+                    <button id="startButton" class="btn">Start Date</button>
+                    <button id="machButton" class="btn">Machines</button>
+                </div>
+                <table id="datatable">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Trainee</th>
+                        <th>Status</th>
+                        <th>Begin Date</th>
+                        <th>End Date</th>
+                        <th>Location</th>
+                    </tr>
+                    @foreach (var item in Model.TrainingOrder) {
+                        <tr class="clickable">
+                            <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                            <td>@Html.DisplayFor(modelItem => item.trainee)</td>
+                            <td>Active</td>
+                            <td>@Html.DisplayFor(modelItem => item.beginDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.endDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.location)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var datatable = document.getElementById("dataTable");
+    var alphButton = document.getElementById("alphButton");
+    var startButton = document.getElementById("startButton");
+    var machButton = document.getElementById("machButton");
+
+    alphButton.addEventListener("click", function () {
+        
+    });
+
+    startButton.addEventListener("click", function () {
+
+    });
+
+    machButton.addEventListener("click", function () {
+
+    });
+
+
+</script>

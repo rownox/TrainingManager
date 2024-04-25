@@ -36,14 +36,10 @@
                             </div>
                             
                             <select id="individual" style="display: none" asp-for="TrainingOrder.trainers" class="form-drop2">
-                                @foreach (var individual in Model.Individuals) {
-                                    <option value="@individual.Text">@individual.Text</option>
-                                }
+                                <option value="Placeholder">Placeholder</option>
                             </select>
                             <select id="groups" style="display: none" asp-for="TrainingOrder.trainers" class="form-drop2">
-                                @foreach (var group in Model.Groups) {
-                                    <option value="@group.Text">@group.Text</option>
-                                }
+                                <option value="Placeholder">Placeholder</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -73,9 +69,7 @@
                                 <span asp-validation-for="TrainingOrder.location" class="text-danger"></span>
                             </div>
                             <select asp-for="TrainingOrder.location" class="form-drop">
-                                @foreach (var locations in Model.Locations) {
-                                    <option value="@locations.Text">@locations.Text</option>
-                                }
+                                <option value="Placeholder">Placeholder</option>
                             </select>
                         </div>
                         <div class="form-group">

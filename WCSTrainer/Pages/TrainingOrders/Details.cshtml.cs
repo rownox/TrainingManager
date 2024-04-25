@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using WCSTrainer.Data;
 using WebApplication2.Models;
 
-namespace WCSTrainer.Pages.TrainingOrders
-{
+namespace WCSTrainer.Pages.TrainingOrders {
     public class DetailsModel : PageModel
     {
         private readonly WCSTrainer.Data.WCSTrainerContext _context;

@@ -230,7 +230,6 @@ body {
         margin: 0;
         width: 100%;
         display: flex;
-
     }
 
         .properties .tools .buttons a {
@@ -272,61 +271,116 @@ body {
 .properties .order-list {
     overflow-y: scroll;
     width: 70%;
+}
+
+    .properties .order-list ul {
+        list-style: none;
+    }
+
+    .properties .order-list li {
+        margin-right: 20px;
+        padding: 10px;
+        border-bottom: 1px solid gray;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .properties .order-list li:hover {
+            background-color: #232728;
+        }
+
+        .properties .order-list li .info {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+        }
+
+            .properties .order-list li .info .title {
+                width: 100%;
+                height: 100%;
+                color: white;
+                font-size: 20px;
+            }
+
+            .properties .order-list li .info .sub {
+                margin-top: 5px;
+                font-size: 15px;
+                color: #B2B3B4;
+            }
+
+        .properties .order-list li .buttons {
+            display: flex;
+            color: red;
+        }
+
+            .properties .order-list li .buttons a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-decoration: none;
+                color: #ff4d4d;
+                background-color: #111214;
+                padding: 10px;
+                border-radius: 7px;
+                font-size: 15px;
+                height: 20px;
+            }
+
+.properties .order-list2 {
+    overflow-y: scroll;
+    width: 100%;
     
 }
 
-.order-list ul {
-    list-style: none;
-}
-
-.order-list li {
-    margin-right: 20px;
-    padding: 10px;
-    border-bottom: 1px solid gray;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-    .order-list li:hover {
-        background-color: #232728;
-    }
-
-.order-list li .info {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-}
-
-    .order-list li .info .title {
+    .properties .order-list2 .sorters {
         width: 100%;
-        height: 100%;
-        color: white;
-        font-size: 20px;
     }
 
-    .order-list li .info .sub {
-        margin-top: 5px;
-        font-size: 15px;
-        color: #B2B3B4;
+        .properties .order-list2 .sorters .btn {
+            padding: 8px 10px;
+            border: none;
+            background-color: black;
+            color: white;
+            margin: 10px 0;
+        }
+
+        .properties .order-list2 .sorters .btn:hover {
+            background-color: #2f2f2f;
+        }
+
+        .properties .order-list2 .sorters p {
+            color: white;
+        }
+
+    .properties .order-list2 table {
+        width: 100%;
+        padding-right: 20px;
     }
 
-    .order-list li .buttons {
-        display: flex;
-        color: red;
-    }
+        .properties .order-list2 table tr {
+            font-size: 18px;
+        }
 
-        .order-list li .buttons a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
-            color: #ff4d4d;
-            background-color: #111214;
-            padding: 10px;
-            border-radius: 7px;
-            font-size: 15px;
-            height: 20px;
+        .properties .order-list2 table .clickable {
+            
+        }
+
+            .properties .order-list2 table .clickable:hover {
+                background-color: #1a1b1b;
+                cursor: pointer;
+            }
+
+        .properties .order-list2 table tr td {
+            color: #b1b6bb;
+            border-bottom: 1px solid #51565b;
+            height: 25px;
+        }
+
+        .properties .order-list2 table tr th {
+            color: white;
+            border-bottom: 1px solid white;
+            text-align: start;
         }
