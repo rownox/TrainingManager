@@ -21,55 +21,45 @@
                 <p class="title">Delete Training Order</p>
                 <hr />
                 <div class="field-container">
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.TrainingOrder.description)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.TrainingOrder.description)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.TrainingOrder.trainers)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.TrainingOrder.trainers)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.TrainingOrder.trainee)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.TrainingOrder.trainee)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.TrainingOrder.beginDate)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.TrainingOrder.beginDate)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.TrainingOrder.endDate)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.TrainingOrder.endDate)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.TrainingOrder.location)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.TrainingOrder.location)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.TrainingOrder.medium)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.TrainingOrder.medium)
-                    </dd>
+                    <div class="text-group">
+                        <p class="title">Description</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.description)</p>
+                    </div>
+                    <div class="text-group">
+                        <p class="title">Trainers</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainers)</p>
+                    </div>
+                    <div class="text-group">
+                        <p class="title">Trainee</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainee)</p>
+                    </div>
+                    <div class="text-group">
+                        <p class="title">Begin Date</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.beginDate)</p>
+                    </div>
+                    <div class="text-group">
+                        <p class="title">End Date</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.endDate)</p>
+                    </div>
+                    <div class="text-group">
+                        <p class="title">Location</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.location)</p>
+                    </div>
+                    <div class="text-group">
+                        <p class="title">Medium</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.medium)</p>
+                    </div>
                 </div>
 
                 <form method="post">
                     <input type="hidden" asp-for="TrainingOrder.Id" />
                     <input type="submit" value="Delete" class="btn btn-danger" /> |
+                    <button class="btn3">Delete</button>
                 </form>
-                <a asp-page="./Index">Back to List</a>
+
+                <a asp-page="./Index">
+                    <button class="btn1">Return To Menu</button>
+                </a>
 
             </div>
 
