@@ -121,7 +121,6 @@ body {
     .properties .user-form button {
         margin-top: 10px;
         color: white;
-        
         padding: 10px;
         border: none;
         border-radius: 5px;
@@ -332,7 +331,6 @@ body {
 .properties .order-list2 {
     overflow-y: scroll;
     width: 100%;
-    
 }
 
     .properties .order-list2 .sorters {
@@ -347,9 +345,9 @@ body {
             margin: 10px 0;
         }
 
-        .properties .order-list2 .sorters .btn:hover {
-            background-color: #2f2f2f;
-        }
+            .properties .order-list2 .sorters .btn:hover {
+                background-color: #2f2f2f;
+            }
 
         .properties .order-list2 .sorters p {
             color: white;
