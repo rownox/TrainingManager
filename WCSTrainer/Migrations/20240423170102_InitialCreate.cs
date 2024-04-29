@@ -17,13 +17,15 @@ namespace WCSTrainer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    trainers = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    skill = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    trainers = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     trainee = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     beginDate = table.Column<DateOnly>(type: "date", nullable: false),
                     endDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    createDate = table.Column<DateOnly>(type: "date", nullable: true),
                     location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    medium = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    medium = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

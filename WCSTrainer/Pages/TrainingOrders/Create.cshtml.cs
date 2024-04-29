@@ -14,7 +14,6 @@ namespace WCSTrainer.Pages.TrainingOrders
         }
 
         public IActionResult OnGet() {
-
             return Page();
         }
 
