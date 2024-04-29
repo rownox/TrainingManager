@@ -33,8 +33,10 @@ namespace WCSTrainer.Migrations
                     b.Property<DateOnly>("beginDate")
                         .HasColumnType("date");
 
+                    b.Property<DateOnly>("createDate")
+                        .HasColumnType("date");
+
                     b.Property<string>("description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateOnly>("endDate")
@@ -53,6 +55,9 @@ namespace WCSTrainer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("trainers")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("skill")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

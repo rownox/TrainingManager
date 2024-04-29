@@ -18,12 +18,11 @@
         <div class="properties">
             <div class="order-list2">
                 <div class="sorters">
-                    <p>Priority</p>
-                    <button id="alphButton" class="btn">Alphabetical</button>
-                    <button id="startButton" class="btn">Start Date</button>
-                    <button id="machButton" class="btn">Machines</button>
+                    <p>Priority Settings</p>
+                    <button onclick="sortTable(3)" class="btn">Begin Date</button>
+                    <button onclick="sortTable(0)" class="btn">Order ID</button>
                 </div>
-                <table id="datatable">
+                <table id="dataTable">
                     <tr>
                         <th>Order ID</th>
                         <th>Trainee</th>
@@ -48,21 +47,33 @@
     </div>
 </div>
 
-
 <script>
-    var datatable = document.getElementById("dataTable");
-    var alphButton = document.getElementById("alphButton");
-    var startButton = document.getElementById("startButton");
-    var machButton = document.getElementById("machButton");
 
-    alphButton.addEventListener("click", function () {
-    });
+    function sortTable(column) {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("dataTable");
+        switching = true;
 
-    startButton.addEventListener("click", function () {
-    });
+        while (switching) {
+            switching = false;
+            rows = table.rows; 
 
-    machButton.addEventListener("click", function () {
-    });
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[column];
+                y = rows[i + 1].getElementsByTagName("TD")[column];
 
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
 
 </script>
