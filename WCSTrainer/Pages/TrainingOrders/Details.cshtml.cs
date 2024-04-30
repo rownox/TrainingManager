@@ -4,31 +4,25 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication2.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
-    public class DetailsModel : PageModel
-    {
+    public class DetailsModel : PageModel {
         private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
-        public DetailsModel(WCSTrainer.Data.WCSTrainerContext context)
-        {
+        public DetailsModel(WCSTrainer.Data.WCSTrainerContext context) {
             _context = context;
         }
 
         public TrainingOrder TrainingOrder { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> OnGetAsync(int? id) {
+
+            if (id == null) {
                 return NotFound();
             }
 
             var trainingorder = await _context.TrainingOrder.FirstOrDefaultAsync(m => m.Id == id);
-            if (trainingorder == null)
-            {
+            if (trainingorder == null) {
                 return NotFound();
-            }
-            else
-            {
+            } else {
                 TrainingOrder = trainingorder;
             }
             return Page();

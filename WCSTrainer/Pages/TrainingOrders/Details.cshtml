@@ -21,14 +21,23 @@
                 <p class="title">Training Order ID: @Html.DisplayFor(model => model.TrainingOrder.Id)</p>
                 <hr />
                 <div class="field-container">
+
                     <div class="text-group">
                         <p class="title">Status</p>
                         <p class="info">Active</p>
                     </div>
+
                     <div class="text-group">
                         <p class="title">Trainers</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainers)</p>
+                        @if (Model.TrainingOrder.trainers.Count == 1) {
+                            <p class="info">@Model.TrainingOrder.trainers[0].ToString()</p>
+                        } else if (Model.TrainingOrder.trainers.Count > 1) {
+                            foreach (var order in Model.TrainingOrder.trainers) {
+                                <p class="info">@order</p>
+                            }
+                        }
                     </div>
+
                     <div class="text-group">
                         <p class="title">Trainee</p>
                         <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainee)</p>
@@ -55,11 +64,13 @@
                     </div>
 
                     <a asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
-                        <button class="btn2">Edit Order</button>
+                        <button class="btn btn2">Edit Order</button>
                     </a>
+
                     <a asp-page="./Index">
-                        <button class="btn1">Return To Menu</button>
+                        <button class="btn btn1">Return To Menu</button>
                     </a>
+
                 </div>
             </div>
         </div>

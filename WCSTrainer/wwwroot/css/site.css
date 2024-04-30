@@ -119,6 +119,7 @@ body {
     }
 
     .properties .user-form button {
+        border: 1px solid red;
         margin-top: 10px;
         color: white;
         padding: 10px;
@@ -127,16 +128,37 @@ body {
         width: 250px;
     }
 
+    .properties .user-form .btn {
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        width: 250px;
+        cursor: pointer;
+    }
+
     .properties .user-form .btn1 {
         background-color: #1f84ff;
+    }
+
+    .properties .user-form .btn1:hover {
+        background-color: #4b9cff;
     }
 
     .properties .user-form .btn2 {
         background-color: #1b9246;
     }
 
+    .properties .user-form .btn2:hover {
+        background-color: #0eb149;
+    }
+
     .properties .user-form .btn3 {
         background-color: #ff3434;
+    }
+
+    .properties .user-form .btn3:hover {
+        background-color: #ff5151;
     }
 
     .properties .user-form .field-container .form-group {
@@ -174,15 +196,6 @@ body {
         .properties .user-form .field-container .form-group .form-drop2 {
             margin-bottom: 20px;
             display: block;
-        }
-
-        .properties .user-form .field-container .form-group .btn {
-            color: white;
-            background-color: #1b9246;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            width: 250px;
         }
 
         .properties .user-form .field-container .form-group .selectors {
@@ -226,7 +239,7 @@ body {
 }
 
     .properties .tools .buttons {
-        margin: 0;
+        margin: 10px 0 0 0;
         width: 100%;
         display: flex;
     }
@@ -266,6 +279,23 @@ body {
             font-size: 20px;
             color: white;
         }
+
+    .properties .tools .selections {
+        margin-bottom: 20px;
+    }
+
+        .properties .tools .selections .title {
+
+        }
+
+        .properties .tools .selections .section {
+            margin-top: 10px;
+            display: flex;
+        }
+
+            .properties .tools .selections .section .info {
+                margin-left: 7px;
+            }
 
 .properties .order-list {
     overflow-y: scroll;

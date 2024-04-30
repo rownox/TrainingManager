@@ -20,10 +20,12 @@ namespace WCSTrainer.Pages.TrainingOrders
         [BindProperty]
         public TrainingOrder TrainingOrder { get; set; } = default!;
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
+        public DateOnly day = DateOnly.FromDateTime(DateTime.Now);
+        public List<string> newList = new List<string>();
+
+        public async Task<IActionResult> OnPostAsync() {
+
+            if (!ModelState.IsValid) {
                 return Page();
             }
 
