@@ -19,50 +19,17 @@
         <div class="properties">
             <div class="user-form">
                 <p class="title">Delete Training Order</p>
+                <p class="description">Are you sure you would like to delete this training order?</p>
                 <hr />
-                <div class="field-container">
-                    <div class="text-group">
-                        <p class="title">Description</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.description)</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Trainers</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainers)</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Trainee</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainee)</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Begin Date</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.beginDate)</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">End Date</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.endDate)</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Location</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.location)</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Medium</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.medium)</p>
-                    </div>
-                </div>
 
                 <form method="post">
-                    <input type="hidden" asp-for="TrainingOrder.Id" />
-                    <input type="submit" value="Delete" class="btn btn-danger" /> |
-                    <button class="btn3">Delete</button>
+                    <button class="btn btn3">Delete</button>
                 </form>
 
                 <a asp-page="./Index">
-                    <button class="btn1">Return To Menu</button>
+                    <button class="btn btn1">Return To Menu</button>
                 </a>
-
             </div>
-
         </div>
     </div>
 </div>

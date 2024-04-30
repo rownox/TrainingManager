@@ -7,6 +7,7 @@
 
 <div class="panel">
     <div class="body">
+
         <div class="side-bar">
             <div class="ul">
                 <a href=""><div class="li">Statistics</div></a>
@@ -16,6 +17,7 @@
                 <a href=""><div class="li">Account Settings</div></a>
             </div>
         </div>
+
         <div class="properties">
             <div class="order-list">
                 <ul>
@@ -23,7 +25,7 @@
                         <li>
                             <a asp-page="./Details" asp-route-id="@item.Id" class="info">
                                 <div class="title">Training Order ID: @Html.DisplayFor(modelItem => item.Id)</div>
-                                <div class="sub">Employee - @Html.DisplayFor(modelItem => item.trainee)</div>
+                                <div class="sub">Trainee - @Html.DisplayFor(modelItem => item.trainee)</div>
                             </a>
                             <div class="buttons">
                                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
@@ -32,10 +34,26 @@
                     }
                 </ul>
             </div>
+
             <div class="tools">
                 <div class="search">
                     <p>Search for a training order ID:</p>
                     <input type="search">
+                </div>
+                <div class="selections">
+                    <p class="title">Show in List:</p>
+                    <div class="section">
+                        <input type="checkbox" name="Completed" />
+                        <p class="info">Completed</p>
+                    </div>
+                    <div class="section">
+                        <input type="checkbox" name="Ongoing" />
+                        <p class="info">Ongoing</p>
+                    </div>
+                    <div class="section">
+                        <input type="checkbox" name="Awaiting Approval" />
+                        <p class="info">Awaiting Approval</p>
+                    </div>
                 </div>
                 <div class="buttons">
                     <a asp-page="Create">Create New Order</a>
