@@ -26,33 +26,23 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <div class="labels">
-                                <p class="control-label">Skill*</p>
-                                <span asp-validation-for="TrainingOrder.skill" class="text-danger"></span>
-                            </div>
-                            <input asp-for="TrainingOrder.skill" class="form-control" />
-                            <input asp-for="TrainingOrder.createDate" type="hidden" value="@Model.day"/>
-                            <input asp-for="TrainingOrder.trainers" type="hidden" value="@Model.newList"/>
-                        </div>
-                        <div class="form-group">
-                            <div class="labels">
                                 <p class="control-label">Trainee*</p>
                                 <span asp-validation-for="TrainingOrder.trainee" class="text-danger"></span>
                             </div>
                             <input asp-for="TrainingOrder.trainee" class="form-control" />
+                            <input asp-for="TrainingOrder.createDate" type="hidden" value="@Model.day"/>
+                            <input asp-for="TrainingOrder.trainers" type="hidden" value="@Model.newList"/>
+                            <input asp-for="TrainingOrder.beginDate" type="hidden" value="@Model.day" />
+                            <input asp-for="TrainingOrder.endDate" type="hidden" value="@Model.day" />
+
                         </div>
                         <div class="form-group">
                             <div class="labels">
-                                <p class="control-label">Begin Date*</p>
-                                <span asp-validation-for="TrainingOrder.beginDate" class="text-danger"></span>
+                                <p class="control-label">Skill*</p>
+                                <span asp-validation-for="TrainingOrder.skill" class="text-danger"></span>
                             </div>
-                            <input type="date" asp-for="TrainingOrder.beginDate" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">End Date*</p>
-                                <span asp-validation-for="TrainingOrder.endDate" class="text-danger"></span>
-                            </div>
-                            <input type="date" asp-for="TrainingOrder.endDate" class="form-control" />
+                            <input asp-for="TrainingOrder.skill" class="form-control" />
+                            
                         </div>
                         <div class="form-group">
                             <div class="labels">
