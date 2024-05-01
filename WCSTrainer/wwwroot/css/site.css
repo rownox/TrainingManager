@@ -1,3 +1,10 @@
+:root {
+    --gray1: #1a1c1d;
+    --gray2: #33393C;
+    --gray3: #33393C;
+}
+
+
 * {
     padding: 0;
     margin: 0;
@@ -14,7 +21,7 @@ body {
     flex-direction: column;
     align-items: center;
     margin-bottom: 60px;
-    background-color: #1a1c1d;
+    background-color: var(--gray1);
 }
 
 .content {
@@ -48,14 +55,15 @@ body {
         flex-direction: row;
         height: 100%;
         width: 100%;
-        min-height: 1000px;
+        min-height: 800px;
+        max-height: 1000px;
     }
 
         .panel .body .side-bar {
             display: flex;
             flex-direction: column;
             width: 25%;
-            background-color: #33393C;
+            background-color: var(--gray2);
         }
 
             .panel .body .side-bar ul {
@@ -99,6 +107,7 @@ body {
 .properties .user-form {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
     .properties .user-form .title {
@@ -116,6 +125,7 @@ body {
         display: flex;
         flex-direction: column;
         margin-top: 40px;
+        width: 40%;
     }
 
     .properties .user-form button {
@@ -164,7 +174,6 @@ body {
     .properties .user-form .field-container .form-group {
         display: flex;
         flex-direction: column;
-        width: 80%;
     }
 
         .properties .user-form .field-container .form-group .labels {
@@ -204,13 +213,19 @@ body {
         }
 
             .properties .user-form .field-container .form-group .selectors .dropdown-btn {
-                margin-right: 10px;
-                margin-bottom: 10px;
+                margin: 10px 10px 10px 0;
                 color: white;
                 background-color: #1a1c1d;
-                padding: 10px;
-                border: none;
+                padding: 10px 0;
                 width: 100px;
+                text-align: center;
+                font-size: 15px;
+                cursor: pointer;
+                user-select: none;
+            }
+
+            .properties .user-form .field-container .form-group .selectors .dropdown-btn:active {
+                background-color: #333638;
             }
 
     .properties .user-form .field-container .text-group {

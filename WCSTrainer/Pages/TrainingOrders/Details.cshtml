@@ -24,7 +24,7 @@
 
                     <div class="text-group">
                         <p class="title">Status</p>
-                        <p class="info">Active</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
                     </div>
 
                     <div class="text-group">
@@ -43,6 +43,10 @@
                         <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainee)</p>
                     </div>
                     <div class="text-group">
+                        <p class="title">Skill</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.skill)</p>
+                    </div>
+                    <div class="text-group">
                         <p class="title">Begin Date</p>
                         <p class="info">@Html.DisplayFor(model => model.TrainingOrder.beginDate)</p>
                     </div>
@@ -59,8 +63,16 @@
                         <p class="info">@Html.DisplayFor(model => model.TrainingOrder.medium)</p>
                     </div>
                     <div class="text-group">
+                        <p class="title">Session Duration</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.duration) Hours</p>
+                    </div>
+                    <div class="text-group">
                         <p class="title">Description</p>
                         <p class="info">@Html.DisplayFor(model => model.TrainingOrder.description)</p>
+                    </div>
+                    <div class="text-group">
+                        <p class="title">Order Creation Date</p>
+                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.createDate)</p>
                     </div>
 
                     <a asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
@@ -70,6 +82,12 @@
                     <a asp-page="./Index">
                         <button class="btn btn1">Return To Menu</button>
                     </a>
+
+                    @if (Model.TrainingOrder.status.Equals("Awaiting Approval")) {
+                        <a asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">
+                            <button class="btn btn3">Approve Order</button>
+                        </a>
+                    }
 
                 </div>
             </div>
