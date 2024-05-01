@@ -50,11 +50,20 @@ namespace WCSTrainer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("duration")
+                        .IsRequired()
+                        .HasColumnType("int");
+
                     b.Property<string>("trainee")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("trainers")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("skill")

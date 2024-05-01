@@ -9,7 +9,7 @@
         <div class="side-bar">
             <div class="ul">
                 <a href=""><div class="li">Statistics</div></a>
-                <a href="TrainingOrders"><div class="selected">Training Orders</div></a>
+                <a asp-page="./Index"><div class="selected">Training Orders</div></a>
                 <a href=""><div class="li">Manage Trainers</div></a>
                 <a href=""><div class="li">Manage Trainees</div></a>
                 <a href=""><div class="li">Account Settings</div></a>
@@ -19,14 +19,15 @@
             <div class="order-list2">
                 <div class="sorters">
                     <p>Sort By:</p>
-                    <button onclick="sortTable(3)" class="btn">Begin Date</button>
-                    <button onclick="sortTable(0)" class="btn">Order ID</button>
+                    <button onclick="sortTable(4)" class="btn">Begin Date</button>
+                    <button onclick="sortTable(0)" class="btn">ID Number</button>
                 </div>
                 <table id="dataTable">
                     <tr>
                         <th>Order ID</th>
-                        <th>Trainee</th>
                         <th>Status</th>
+                        <th>Trainee</th>
+                        <th>Skill</th>
                         <th>Begin Date</th>
                         <th>End Date</th>
                         <th>Location</th>
@@ -34,8 +35,9 @@
                     @foreach (var item in Model.TrainingOrder) {
                         <tr class="clickable">
                             <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                            <td>@Html.DisplayFor(modelItem => item.status)</td>
                             <td>@Html.DisplayFor(modelItem => item.trainee)</td>
-                            <td>Active</td>
+                            <td>@Html.DisplayFor(modelItem => item.skill)</td>
                             <td>@Html.DisplayFor(modelItem => item.beginDate)</td>
                             <td>@Html.DisplayFor(modelItem => item.endDate)</td>
                             <td>@Html.DisplayFor(modelItem => item.location)</td>
@@ -75,5 +77,4 @@
             }
         }
     }
-
 </script>

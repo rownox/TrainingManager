@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApplication2.Models;
 
-namespace WCSTrainer.Pages.TrainingOrders
-{
-    public class CreateModel : PageModel
-    {
+namespace WCSTrainer.Pages.TrainingOrders {
+    public class CreateModel : PageModel {
         private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
         public CreateModel(WCSTrainer.Data.WCSTrainerContext context) {

@@ -11,6 +11,8 @@
         public DateOnly createDate { get; set; }
         public string location { get; set; }
         public string medium { get; set; }
+        public string status { get; set; }
+        public int duration { get; set; }
         public string description { get; set; }
     }
 }

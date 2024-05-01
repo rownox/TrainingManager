@@ -1,5 +1,5 @@
 ﻿@page
-@model WCSTrainer.Pages.TrainingOrders.EditModel
+@model Pages.TrainingOrders.EditModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -24,10 +24,27 @@
                     <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id" />
+
                         <div class="form-group">
-                            <label class="control-label">Status</label>
-                            <input value="Active" class="form-control" />
+                            <div class="labels">
+                                <p class="control-label">Status</p>
+                                <span asp-validation-for="TrainingOrder.status" class="text-danger"></span>
+                            </div>
+                            <select asp-for="TrainingOrder.status" class="form-drop">
+                                <option value="Awaiting Approval">Awaiting Approval</option>
+                                <option value="Active">Active</option>
+                                <option value="Completed">Completed</option>
+                            </select>
                         </div>
+
+                        <div class="form-group">
+                            <div class="labels">
+                                <p class="control-label">Skill*</p>
+                                <span asp-validation-for="TrainingOrder.skill" class="text-danger"></span>
+                            </div>
+                            <input asp-for="TrainingOrder.skill" class="form-control" />
+                        </div>
+
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">Trainers</p> 
@@ -35,47 +52,69 @@
                             </div>
 
                             <div class="selectors">
-                                <button class="dropdown-btn" id="indiButton">Individual</button>
-                                <button class="dropdown-btn" id="groupButton">Groups</button>
+                                <div class="dropdown-btn" id="indiButton"><p>Individual</p></div>
+                                <div class="dropdown-btn" id="groupButton"><p>Groups</p></div>
                             </div>
 
                             <select id="individual" style="display: none" asp-for="TrainingOrder.trainers" class="form-drop2">
-                                <option value="Placeholder">Placeholder</option>
+                                <option value="Placeholder">Aadam</option>
                             </select>
                             <select id="groups" style="display: none" asp-for="TrainingOrder.trainers" class="form-drop2">
-                                <option value="Placeholder">Placeholder</option>
+                                <option value="Placeholder">HR</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="TrainingOrder.trainee" class="control-label"></label>
+                            <div class="labels">
+                                <p class="control-label">Trainee*</p>
+                                <span asp-validation-for="TrainingOrder.trainee" class="text-danger"></span>
+                            </div>
                             <input asp-for="TrainingOrder.trainee" class="form-control" />
-                            <span asp-validation-for="TrainingOrder.trainee" class="text-danger"></span>
                         </div>
+
                         <div class="form-group">
-                            <label asp-for="TrainingOrder.beginDate" class="control-label"></label>
-                            <input asp-for="TrainingOrder.beginDate" class="form-control" />
-                            <span asp-validation-for="TrainingOrder.beginDate" class="text-danger"></span>
+                            <div class="labels">
+                                <p class="control-label">Begin Date*</p>
+                                <span asp-validation-for="TrainingOrder.beginDate" class="text-danger"></span>
+                            </div>
+                            <input type="date" asp-for="TrainingOrder.beginDate" class="form-control" />
                         </div>
+
                         <div class="form-group">
-                            <label asp-for="TrainingOrder.endDate" class="control-label"></label>
-                            <input asp-for="TrainingOrder.endDate" class="form-control" />
-                            <span asp-validation-for="TrainingOrder.endDate" class="text-danger"></span>
+                            <div class="labels">
+                                <p class="control-label">End Date*</p>
+                                <span asp-validation-for="TrainingOrder.endDate" class="text-danger"></span>
+                            </div>
+                            <input type="date" asp-for="TrainingOrder.endDate" class="form-control" />
                         </div>
+
                         <div class="form-group">
-                            <label asp-for="TrainingOrder.location" class="control-label"></label>
+                            <div class="labels">
+                                <p class="control-label">Location*</p>
+                                <span asp-validation-for="TrainingOrder.location" class="text-danger"></span>
+                            </div>
                             <input asp-for="TrainingOrder.location" class="form-control" />
-                            <span asp-validation-for="TrainingOrder.location" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="TrainingOrder.medium" class="control-label"></label>
+                            <div class="labels">
+                                <p class="control-label">Medium*</p>
+                                <span asp-validation-for="TrainingOrder.medium" class="text-danger"></span>
+                            </div>
                             <input asp-for="TrainingOrder.medium" class="form-control" />
-                            <span asp-validation-for="TrainingOrder.medium" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="TrainingOrder.description" class="control-label"></label>
+                            <div class="labels">
+                                <p class="control-label">Duration*</p>
+                                <span asp-validation-for="TrainingOrder.duration" class="text-danger"></span>
+                            </div>
+                            <input asp-for="TrainingOrder.duration" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <div class="labels">
+                                <p class="control-label">Description</p>
+                                <span asp-validation-for="TrainingOrder.description" class="text-danger"></span>
+                            </div>
                             <input asp-for="TrainingOrder.description" class="form-control" />
-                            <span asp-validation-for="TrainingOrder.description" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Save" class="btn btn2" />
@@ -86,10 +125,6 @@
 
                 <a asp-page="Index">
                     <button class="btn btn1">Return To Menu</button>
-                </a>
-
-                <a asp-page="Index">
-                    <button class="btn btn3">Verify Completion</button>
                 </a>
 
             </div>
