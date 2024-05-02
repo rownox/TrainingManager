@@ -56,7 +56,6 @@ body {
         height: 100%;
         width: 100%;
         min-height: 800px;
-        max-height: 1000px;
     }
 
         .panel .body .side-bar {
@@ -315,6 +314,7 @@ body {
 .properties .order-list {
     overflow-y: scroll;
     width: 70%;
+    max-height: 800px;
 }
 
     .properties .order-list ul {
