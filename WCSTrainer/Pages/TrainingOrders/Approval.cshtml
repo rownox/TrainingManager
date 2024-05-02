@@ -42,8 +42,8 @@
                             </div>
 
                             <div class="selectors">
-                                <button class="dropdown-btn" id="indiButton">Individual</button>
-                                <button class="dropdown-btn" id="groupButton">Groups</button>
+                                <a class="btn btnWhite" id="indiButton">Individual</a>
+                                <a class="btn btnWhite" id="groupButton">Groups</a>
                             </div>
 
                             <select id="individual" style="display: none" asp-for="TrainingOrder.trainers" class="form-drop2">
@@ -71,14 +71,14 @@
                             <input type="date" asp-for="TrainingOrder.endDate" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn2" />
+                            <input type="submit" value="Save" class="btn btnGreen" />
                         </div>
 
                     </form>
                 </div>
 
                 <a asp-page="Index">
-                    <button class="btn btn1">Return To Menu</button>
+                    <button class="btn btnBlue">Return To Menu</button>
                 </a>
 
             </div>

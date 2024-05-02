@@ -5,9 +5,24 @@
     ViewData["Title"] = "Index";
 }
 
+<section class="modal hidden">
+    <div class="one">
+        <button class="btn-close btn btnRed">⨉</button>
+    </div>
+    <div class="two">
+        <h3>Delete Training Order</h3>
+        <p id="deleteText"></p>
+    </div>
+    <div class="three">
+        <form method="del">
+            <button class="btn-submit btn btnRed">Delete</button>
+        </form>
+    </div>
+</section>
+<div class="overlay hidden"></div>
+
 <div class="panel">
     <div class="body">
-
         <div class="side-bar">
             <div class="ul">
                 <a href=""><div class="li">Statistics</div></a>
@@ -28,9 +43,7 @@
                                 <div class="sub">Trainee - @Html.DisplayFor(modelItem => item.trainee)</div>
                                 <div class="sub">Status - @Html.DisplayFor(modelItem => item.status)</div>
                             </a>
-                            <div class="buttons">
-                                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                            </div>
+                            <a class="btn-open btn btnRed" onclick="openModal(@item.Id.ToString())">Delete</a>
                         </li>
                     }
                 </ul>
@@ -56,18 +69,34 @@
                         <p class="info">Awaiting Approval</p>
                     </div>
                 </div>
-                <div class="buttons">
-                    <a asp-page="Create">Create New Order</a>
-                </div>
-                <div class="buttons">
-                    <a asp-page="AllView">Database Planning</a>
-                </div>
+                <a asp-page="Create" class="btn btnWhite">Create New Order</a>
+                <a asp-page="AllView" class="btn btnWhite">Database Planning</a>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    const modal = document.querySelector(".modal");
+    const overlay = document.querySelector(".overlay");
+    const openModalBtn = document.querySelectorAll(".btn-open");
+    const closeModalBtn = document.querySelector(".btn-close");
+
+    const openModal = function (orderID) {
+        modal.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+        document.getElementById("deleteText").textContent = "Press delete to confirm the deletion of Training Order #" + orderID;
+    };
+
+    const closeModal = function () {
+        modal.classList.add("hidden");
+        overlay.classList.add("hidden");
+    };
+
+    closeModalBtn.addEventListener("click", closeModal);
+
+    overlay.addEventListener("click", closeModal);
+
     const co = document.querySelector('#co')
     const ac = document.querySelector('#ac')
     const aw = document.querySelector('#aw')

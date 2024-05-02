@@ -46,22 +46,25 @@
                         </div>
 
                         <div class="form-group">
+
                             <div class="labels">
                                 <p class="control-label">Trainers</p> 
                                 <span asp-validation-for="TrainingOrder.trainers" class="text-danger"></span>
                             </div>
 
                             <div class="selectors">
-                                <div class="dropdown-btn" id="indiButton"><p>Individual</p></div>
-                                <div class="dropdown-btn" id="groupButton"><p>Groups</p></div>
+                                <div class="btn btnWhite" id="indiButton"><p>Individual</p></div>
+                                <div class="btn btnWhite" id="groupButton"><p>Groups</p></div>
                             </div>
 
                             <select id="individual" style="display: none" asp-for="TrainingOrder.trainers" class="form-drop2">
                                 <option value="Placeholder">Aadam</option>
                             </select>
+
                             <select id="groups" style="display: none" asp-for="TrainingOrder.trainers" class="form-drop2">
                                 <option value="Placeholder">HR</option>
                             </select>
+
                         </div>
 
                         <div class="form-group">
@@ -117,16 +120,15 @@
                             <input asp-for="TrainingOrder.description" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn2" />
+                            <input type="submit" value="Save" class="btn btnGreen" />
                         </div>
 
                     </form>
                 </div>
 
                 <a asp-page="Index">
-                    <button class="btn btn1">Return To Menu</button>
+                    <button class="btn btnBlue">Return To Menu</button>
                 </a>
-
             </div>
         </div>
     </div>
