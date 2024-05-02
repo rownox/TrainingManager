@@ -24,7 +24,14 @@
 
                     <div class="text-group">
                         <p class="title">Status</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
+                        
+                        @if(Model.TrainingOrder.status.Equals("Awaiting Approval")) {
+                            <p class="info yellow">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
+                        } else if (Model.TrainingOrder.status.Equals("Active")) {
+                            <p class="info green">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
+                        } else {
+                            <p class="info white">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
+                        }
                     </div>
 
                     <div class="text-group">
@@ -76,19 +83,17 @@
                     </div>
 
                     <a asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
-                        <button class="btn btn2">Edit Order</button>
+                        <button class="btn btnGreen">Edit Order</button>
                     </a>
-
                     <a asp-page="./Index">
-                        <button class="btn btn1">Return To Menu</button>
+                        <button class="btn btnBlue">Return To Menu</button>
                     </a>
 
                     @if (Model.TrainingOrder.status.Equals("Awaiting Approval")) {
                         <a asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">
-                            <button class="btn btn3">Approve Order</button>
+                            <button class="btn btnRed">Approve Order</button>
                         </a>
                     }
-
                 </div>
             </div>
         </div>

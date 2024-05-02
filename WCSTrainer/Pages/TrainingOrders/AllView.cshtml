@@ -19,8 +19,8 @@
             <div class="order-list2">
                 <div class="sorters">
                     <p>Sort By:</p>
-                    <button onclick="sortTable(4)" class="btn">Begin Date</button>
-                    <button onclick="sortTable(0)" class="btn">ID Number</button>
+                    <button onclick="sortTable(4)" class="btn btnWhite">Begin Date</button>
+                    <button onclick="sortTable(0)" class="btn btnWhite">ID Number</button>
                 </div>
                 <table id="dataTable">
                     <tr>
@@ -52,20 +52,20 @@
 <script>
 
     function sortTable(column) {
-        var table, rows, switching, i, x, y, shouldSwitch;
+        var table, rows, switching, i, shouldSwitch;
         table = document.getElementById("dataTable");
         switching = true;
 
         while (switching) {
             switching = false;
-            rows = table.rows; 
+            rows = table.rows;
 
             for (i = 1; i < (rows.length - 1); i++) {
                 shouldSwitch = false;
-                x = rows[i].getElementsByTagName("TD")[column];
-                y = rows[i + 1].getElementsByTagName("TD")[column];
+                var x = parseFloat(rows[i].getElementsByTagName("TD")[column].innerHTML.toLowerCase());
+                var y = parseFloat(rows[i + 1].getElementsByTagName("TD")[column].innerHTML.toLowerCase());
 
-                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                if (x > y) {
                     shouldSwitch = true;
                     break;
                 }
