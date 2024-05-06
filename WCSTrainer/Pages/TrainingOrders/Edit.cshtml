@@ -18,7 +18,7 @@
         </div>
         <div class="properties">
             <div class="user-form">
-                <p class="title">Edit Training Order</p>
+                <p class="title">Edit Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
                 <hr/>
                 <div class="field-container">
                     <form method="post">
@@ -36,7 +36,6 @@
                                 <option value="Completed">Completed</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">Skill*</p>
@@ -44,29 +43,23 @@
                             </div>
                             <input asp-for="TrainingOrder.skill" class="form-control" />
                         </div>
-
                         <div class="form-group">
-
                             <div class="labels">
                                 <p class="control-label">Trainers</p> 
                                 <span asp-validation-for="TrainingOrder.trainers" class="text-danger"></span>
                             </div>
-
                             <div class="selectors">
                                 <div class="btn btnWhite" id="indiButton"><p>Individual</p></div>
                                 <div class="btn btnWhite" id="groupButton"><p>Groups</p></div>
                             </div>
 
                             <select id="individual" style="display: none" asp-for="TrainingOrder.trainers" class="form-drop2">
-                                <option value="Placeholder">Aadam</option>
+                                <option value="Aadam">Aadam</option>
                             </select>
-
                             <select id="groups" style="display: none" asp-for="TrainingOrder.trainers" class="form-drop2">
-                                <option value="Placeholder">HR</option>
+                                <option value="HR">HR</option>
                             </select>
-
                         </div>
-
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">Trainee*</p>
@@ -74,7 +67,6 @@
                             </div>
                             <input asp-for="TrainingOrder.trainee" class="form-control" />
                         </div>
-
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">Begin Date*</p>
@@ -82,7 +74,6 @@
                             </div>
                             <input type="date" asp-for="TrainingOrder.beginDate" class="form-control" />
                         </div>
-
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">End Date*</p>
@@ -90,7 +81,6 @@
                             </div>
                             <input type="date" asp-for="TrainingOrder.endDate" class="form-control" />
                         </div>
-
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">Location*</p>
@@ -138,7 +128,6 @@
 
     var indiButton = document.getElementById("indiButton");
     var groupButton = document.getElementById("groupButton");
-
     var individual = document.getElementById("individual");
     var groups = document.getElementById("groups");
 

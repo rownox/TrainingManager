@@ -15,7 +15,7 @@
     </div>
     <div class="three">
         <form method="del">
-            <button class="btn-submit btn btnRed">Delete</button>
+            <button class="btn-submit btn btnRed" onclick="@Model.deleteOrder()">Delete</button>
         </form>
     </div>
 </section>
@@ -94,13 +94,12 @@
     };
 
     closeModalBtn.addEventListener("click", closeModal);
-
     overlay.addEventListener("click", closeModal);
 
     const co = document.querySelector('#co')
     const ac = document.querySelector('#ac')
     const aw = document.querySelector('#aw')
-
+   
     co.checked = true
     ac.checked = true
     aw.checked = true
@@ -123,5 +122,5 @@
     function active(checkboxElem) {
         toggleDisplay("Active", checkboxElem.checked);
     }
-</script>
 
+</script>

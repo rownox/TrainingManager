@@ -57,11 +57,14 @@
         switching = true;
 
         while (switching) {
+
             switching = false;
             rows = table.rows;
 
             for (i = 1; i < (rows.length - 1); i++) {
+
                 shouldSwitch = false;
+
                 var x = parseFloat(rows[i].getElementsByTagName("TD")[column].innerHTML.toLowerCase());
                 var y = parseFloat(rows[i + 1].getElementsByTagName("TD")[column].innerHTML.toLowerCase());
 
