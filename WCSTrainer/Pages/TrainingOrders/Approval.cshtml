@@ -17,7 +17,7 @@
         </div>
         <div class="properties">
             <div class="user-form">
-                <p class="title">Edit Training Order</p>
+                <p class="title">Approve Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
                 <hr />
                 <div class="field-container">
                     <form method="post">
@@ -47,10 +47,10 @@
                             </div>
 
                             <select id="individual" style="display: none" asp-for="TrainingOrder.trainers" class="form-drop2">
-                                <option value="Placeholder">Aadam</option>
+                                <option value="Aadam">Aadam</option>
                             </select>
                             <select id="groups" style="display: none" asp-for="TrainingOrder.trainers" class="form-drop2">
-                                <option value="Placeholder">HR</option>
+                                <option value="HR">HR</option>
                             </select>
 
                         </div>

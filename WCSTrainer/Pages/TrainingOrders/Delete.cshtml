@@ -18,14 +18,13 @@
         </div>
         <div class="properties">
             <div class="user-form">
-                <p class="title">Delete Training Order</p>
+                <p class="title">Delete Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
                 <p class="description">Are you sure you would like to delete this training order?</p>
                 <hr />
 
                 <form method="post">
                     <button class="btn btnRed">Delete</button>
                 </form>
-
                 <a asp-page="./Index">
                     <button class="btn btnBlue">Return To Menu</button>
                 </a>
