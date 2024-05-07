@@ -10,11 +10,11 @@
         <button class="btn-close btn btnRed">⨉</button>
     </div>
     <div class="two">
-        <h3>Delete Training Order</h3>
-        <p id="deleteText"></p>
+        <p class="title">Delete Training Order</p>
+        <p class="info" id="deleteText"></p>
     </div>
     <div class="three">
-        <form id="deleteForm" method="post">
+        <form method="post">
             <input type="hidden" id="orderId" name="id" />
             <button id="deleteBtn" class="btn-submit btn btnRed">Delete</button>
         </form>
@@ -41,9 +41,20 @@
                     @foreach (var item in Model.TrainingOrder) {
                         <li class="@item.status.ToString()">
                             <a asp-page="./Details" asp-route-id="@item.Id" class="info">
-                                <div class="title">Training Order ID: @Html.DisplayFor(modelItem => item.Id)</div>
+                                <div class="title">
+                                    <p>Training Order ID: @Html.DisplayFor(modelItem => item.Id) </p>
+                                </div>
                                 <div class="sub">Trainee - @Html.DisplayFor(modelItem => item.trainee)</div>
-                                <div class="sub">Status - @Html.DisplayFor(modelItem => item.status)</div>
+                                <div class="sub">
+                                    <p>Status - </p>
+                                    @if (item.status.Equals("Awaiting Approval")) {
+                                        <p class="awaiting">@Html.DisplayFor(modelItem => item.status)</p>
+                                    } else if (item.status.Equals("Active")) {
+                                        <p class="active">@Html.DisplayFor(modelItem => item.status)</p>
+                                    } else {
+                                        <p class="completed">@Html.DisplayFor(modelItem => item.status)</p>
+                                    }
+                                </div>
                             </a>
                             <a class="btn-open btn btnRed" onclick="openModal(@item.Id)">Delete</a>
                         </li>
@@ -82,7 +93,6 @@
     const modal = document.querySelector(".modal");
     const overlay = document.querySelector(".overlay");
     const closeModalBtn = document.querySelector(".btn-close");
-    const deleteForm = document.querySelector("#deleteForm");
     const deleteText = document.getElementById("deleteText");
     const deleteBtn = document.querySelector("#deleteBtn");
 
@@ -90,7 +100,7 @@
         modal.classList.remove("hidden");
         overlay.classList.remove("hidden");
         document.getElementById("orderId").value = orderID;
-        deleteText.textContent = "Press delete to confirm the deletion of Training Order #" + orderID;
+        deleteText.textContent = "Press the delete button to confirm the deletion of Training Order #" + orderID;
     };
 
     const closeModal = function () {
@@ -100,24 +110,6 @@
 
     closeModalBtn.addEventListener("click", closeModal);
     overlay.addEventListener("click", closeModal);
-
-    deleteForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        const orderId = document.getElementById("orderId").value;
-
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = `?handler=DeleteTrainingOrderAsync&id=${orderId}`;
-
-        const hiddenInput = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = 'id';
-        hiddenInput.value = orderId;
-
-        form.appendChild(hiddenInput);
-        document.body.appendChild(form);
-        form.submit();
-    });
 
     const co = document.querySelector('#co');
     const ac = document.querySelector('#ac');

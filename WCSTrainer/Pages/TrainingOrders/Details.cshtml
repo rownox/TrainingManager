@@ -26,11 +26,11 @@
                         <p class="title">Status</p>
                         
                         @if(Model.TrainingOrder.status.Equals("Awaiting Approval")) {
-                            <p class="info yellow">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
+                            <p class="info awaiting">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
                         } else if (Model.TrainingOrder.status.Equals("Active")) {
-                            <p class="info green">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
+                            <p class="info active">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
                         } else {
-                            <p class="info white">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
+                            <p class="info completed">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
                         }
                     </div>
 
