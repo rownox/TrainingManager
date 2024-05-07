@@ -82,16 +82,21 @@
                         <p class="info">@Html.DisplayFor(model => model.TrainingOrder.createDate)</p>
                     </div>
 
-                    <a asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
-                        <button class="btn btnGreen">Edit Order</button>
-                    </a>
-                    <a asp-page="./Index">
-                        <button class="btn btnBlue">Return To Menu</button>
-                    </a>
+                    
+                    @if (!Model.TrainingOrder.status.Equals("Completed")) {
+                        <a class="btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
+                            Edit Order
+                        </a>
+                    }
+                    <a class="btn btnBlue" asp-page="./Index">Return To Menu</a>
 
                     @if (Model.TrainingOrder.status.Equals("Awaiting Approval")) {
-                        <a asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">
-                            <button class="btn btnRed">Approve Order</button>
+                        <a class="btn btnRed" asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">
+                            Approve Order
+                        </a>
+                    } else if (Model.TrainingOrder.status.Equals("Active")) {
+                        <a class="btn btnRed" asp-page="./Conclude" asp-route-id="@Model.TrainingOrder.Id">
+                            Conclude Training
                         </a>
                     }
                 </div>

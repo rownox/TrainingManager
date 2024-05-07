@@ -40,7 +40,6 @@
                                 <p class="control-label">Trainers</p>
                                 <span asp-validation-for="TrainingOrder.trainers" class="text-danger"></span>
                             </div>
-
                             <div class="selectors">
                                 <a class="btn btnWhite" id="indiButton">Individual</a>
                                 <a class="btn btnWhite" id="groupButton">Groups</a>
@@ -73,14 +72,11 @@
                         <div class="form-group">
                             <input type="submit" value="Save" class="btn btnGreen" />
                         </div>
-
+                        <div class="form-group">
+                            <a asp-page="Index" class="btn btnBlue">Return To Menu</a>
+                        </div>
                     </form>
                 </div>
-
-                <a asp-page="Index">
-                    <button class="btn btnBlue">Return To Menu</button>
-                </a>
-
             </div>
         </div>
     </div>

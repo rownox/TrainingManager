@@ -1,0 +1,55 @@
+﻿@page
+@model WCSTrainer.Pages.TrainingOrders.ConcludeModel
+@{
+}
+
+<div class="panel">
+    <div class="body">
+        <div class="side-bar">
+            <div class="ul">
+                <a href=""><div class="li">Statistics</div></a>
+                <a asp-page="Index"><div class="selected">Training Orders</div></a>
+                <a href=""><div class="li">Manage Trainers</div></a>
+                <a href=""><div class="li">Manage Trainees</div></a>
+                <a href=""><div class="li">Account Settings</div></a>
+            </div>
+        </div>
+
+        <div class="properties">
+            <div class="user-form">
+                <p class="title">Conclude Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
+                <hr />
+                <div class="field-container">
+                    <form method="post">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="TrainingOrder.Id"/>
+
+                        <input asp-for="TrainingOrder.skill" type="hidden"/>
+                        <input asp-for="TrainingOrder.trainee" type="hidden"/>
+                        <input asp-for="TrainingOrder.createDate" type="hidden"/>
+                        <input asp-for="TrainingOrder.location" type="hidden"/>
+                        <input asp-for="TrainingOrder.medium" type="hidden"/>
+                        <input asp-for="TrainingOrder.status" type="hidden" value="Completed"/>
+                        <input asp-for="TrainingOrder.duration" type="hidden"/>
+                        <input asp-for="TrainingOrder.description" type="hidden"/>
+                        <input asp-for="TrainingOrder.trainers" type="hidden"/>
+                        <input asp-for="TrainingOrder.beginDate" type="hidden"/>
+                        <input asp-for="TrainingOrder.endDate" type="hidden"/>
+
+                        <div class="form-group">
+                            <input type="submit" value="Submit" class="btn btnGreen"/>
+                        </div>
+                    </form>
+                </div>
+                <a asp-page="Index" class="btn btnBlue">Return To Menu</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
