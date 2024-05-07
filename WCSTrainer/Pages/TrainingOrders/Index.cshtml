@@ -14,11 +14,13 @@
         <p id="deleteText"></p>
     </div>
     <div class="three">
-        <form method="del">
-            <button class="btn-submit btn btnRed" onclick="@Model.deleteOrder()">Delete</button>
+        <form id="deleteForm" method="post">
+            <input type="hidden" id="orderId" name="id" />
+            <button id="deleteBtn" class="btn-submit btn btnRed">Delete</button>
         </form>
     </div>
 </section>
+
 <div class="overlay hidden"></div>
 
 <div class="panel">
@@ -43,7 +45,7 @@
                                 <div class="sub">Trainee - @Html.DisplayFor(modelItem => item.trainee)</div>
                                 <div class="sub">Status - @Html.DisplayFor(modelItem => item.status)</div>
                             </a>
-                            <a class="btn-open btn btnRed" onclick="openModal(@item.Id.ToString())">Delete</a>
+                            <a class="btn-open btn btnRed" onclick="openModal(@item.Id)">Delete</a>
                         </li>
                     }
                 </ul>
@@ -79,13 +81,16 @@
 <script>
     const modal = document.querySelector(".modal");
     const overlay = document.querySelector(".overlay");
-    const openModalBtn = document.querySelectorAll(".btn-open");
     const closeModalBtn = document.querySelector(".btn-close");
+    const deleteForm = document.querySelector("#deleteForm");
+    const deleteText = document.getElementById("deleteText");
+    const deleteBtn = document.querySelector("#deleteBtn");
 
     const openModal = function (orderID) {
         modal.classList.remove("hidden");
         overlay.classList.remove("hidden");
-        document.getElementById("deleteText").textContent = "Press delete to confirm the deletion of Training Order #" + orderID;
+        document.getElementById("orderId").value = orderID;
+        deleteText.textContent = "Press delete to confirm the deletion of Training Order #" + orderID;
     };
 
     const closeModal = function () {
@@ -96,13 +101,31 @@
     closeModalBtn.addEventListener("click", closeModal);
     overlay.addEventListener("click", closeModal);
 
-    const co = document.querySelector('#co')
-    const ac = document.querySelector('#ac')
-    const aw = document.querySelector('#aw')
-   
-    co.checked = true
-    ac.checked = true
-    aw.checked = true
+    deleteForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const orderId = document.getElementById("orderId").value;
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `?handler=DeleteTrainingOrderAsync&id=${orderId}`;
+
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'id';
+        hiddenInput.value = orderId;
+
+        form.appendChild(hiddenInput);
+        document.body.appendChild(form);
+        form.submit();
+    });
+
+    const co = document.querySelector('#co');
+    const ac = document.querySelector('#ac');
+    const aw = document.querySelector('#aw');
+
+    co.checked = true;
+    ac.checked = true;
+    aw.checked = true;
 
     function toggleDisplay(className, show) {
         var elements = document.getElementsByClassName(className);
@@ -114,11 +137,9 @@
     function completed(checkboxElem) {
         toggleDisplay("Completed", checkboxElem.checked);
     }
-
     function awaiting(checkboxElem) {
         toggleDisplay("Awaiting Approval", checkboxElem.checked);
     }
-
     function active(checkboxElem) {
         toggleDisplay("Active", checkboxElem.checked);
     }
