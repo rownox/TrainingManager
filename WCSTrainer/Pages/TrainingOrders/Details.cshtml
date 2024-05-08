@@ -7,6 +7,7 @@
 
 <div class="panel">
     <div class="body">
+
         <div class="side-bar">
             <div class="ul">
                 <a href=""><div class="li">Statistics</div></a>
@@ -16,6 +17,7 @@
                 <a href=""><div class="li">Account Settings</div></a>
             </div>
         </div>
+
         <div class="properties">
             <div class="user-form">
                 <p class="title">Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
@@ -36,12 +38,9 @@
 
                     <div class="text-group">
                         <p class="title">Trainers</p>
-                        @if (Model.TrainingOrder.trainers.Count == 1) {
-                            <p class="info">@Model.TrainingOrder.trainers[0].ToString()</p>
-                        } else if (Model.TrainingOrder.trainers.Count > 1) {
-                            foreach (var order in Model.TrainingOrder.trainers) {
-                                <p class="info">@order</p>
-                            }
+                        @foreach (string trainer in Model.TrainingOrder.trainers) {
+                            <p class="info">@trainer</p>
+
                         }
                     </div>
 
