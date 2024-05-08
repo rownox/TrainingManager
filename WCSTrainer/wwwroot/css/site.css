@@ -108,7 +108,6 @@ body {
                 margin: 0;
                 padding: 0;
             }
-
             .panel .body .side-bar a {
                 text-decoration: none;
             }
@@ -125,7 +124,6 @@ body {
                 background-color: var(--gray3);
                 border-bottom: 2px solid #76B5BA;
             }
-
             .panel .body .side-bar .li:hover {
                 background-color: var(--gray3);
                 color: white;
@@ -150,26 +148,22 @@ body {
                     font-size: 40px;
                     margin-bottom: 40px;
                 }
-
                 .panel .body .properties .user-form .description {
                     color: white;
                 }
-
                 .panel .body .properties .user-form .field-container {
                     color: white;
                     display: flex;
                     flex-direction: column;
                     margin-top: 40px;
-                    width: 40%;
+                    width: 450px;
                 }
-
                 .panel .body .properties .user-form .btn {
                     margin-top: 10px;
                     padding: 10px 0;
                     width: 250px;
                     font-size: 15px;
                 }
-
                 .panel .body .properties .user-form .field-container .form-group {
                     display: flex;
                     flex-direction: column;
@@ -183,7 +177,6 @@ body {
 
                         .panel .body .properties .user-form .field-container .form-group .labels .control-label {
                         }
-
                         .panel .body .properties .user-form .field-container .form-group .labels .text-danger {
                             color: #ff3434;
                             margin-left: 10px;
@@ -193,17 +186,38 @@ body {
                         height: 25px;
                         margin-bottom: 20px;
                     }
-
                     .panel .body .properties .user-form .field-container .form-group .form-drop {
                         margin-bottom: 20px;
                         display: block;
                         height: 30px;
                     }
-
                     .panel .body .properties .user-form .field-container .form-group .form-drop2 {
                         margin-bottom: 20px;
                         display: block;
                     }
+                    .panel .body .properties .user-form .field-container .form-group .selections {
+                        display: flex;
+                        background-color: black;
+                        padding: 3px;
+                        min-height: 30px;
+                    }
+
+                        .panel .body .properties .user-form .field-container .form-group .selections ul {
+                            display: flex;
+                            flex-direction: row;
+                            flex-wrap: wrap;
+                        }
+
+                            .panel .body .properties .user-form .field-container .form-group .selections ul li {
+                                list-style: none;
+                                background-color: var(--gray2);
+                                cursor: pointer;
+                                padding: 3px 10px;
+                                border-radius: 20px;
+                                user-select: none;
+                                margin: 2px;
+
+                            }
 
                     .panel .body .properties .user-form .field-container .form-group .selectors {
                         display: flex;
@@ -222,13 +236,11 @@ body {
                     display: flex;
                     padding: 3px 0;
                 }
-
                 .panel .body .properties .user-form .text-group .title {
                     font-size: 20px;
                     color: #a0a2a8;
                     margin: 0;
                 }
-
                 .panel .body .properties .user-form .text-group .info {
                     margin-left: 10px;
                     font-size: 20px;
@@ -249,7 +261,6 @@ body {
                     text-decoration: none;
                     padding: 10px;
                 }
-
                 .panel .body .properties .tools .search {
                     width: 100%;
                     display: flex;
@@ -263,7 +274,6 @@ body {
                         height: 35px;
                         margin-top: 10px;
                     }
-
                     .panel .body .properties .tools .search p {
                         font-size: 20px;
                         color: white;
@@ -275,7 +285,6 @@ body {
 
                     .panel .body .properties .tools .selections .title {
                     }
-
                     .panel .body .properties .tools .selections .section {
                         margin-top: 10px;
                         display: flex;
@@ -294,7 +303,6 @@ body {
                 .panel .body .properties .order-list ul {
                     list-style: none;
                 }
-
                 .panel .body .properties .order-list li {
                     margin-right: 20px;
                     padding: 10px;
@@ -308,7 +316,6 @@ body {
                     .panel .body .properties .order-list li:hover {
                         background-color: #1f2223;
                     }
-
                     .panel .body .properties .order-list li .info {
                         width: 80%;
                         display: flex;
@@ -323,7 +330,6 @@ body {
                             color: white;
                             font-size: 17px;
                         }
-
                         .panel .body .properties .order-list li .info .sub {
                             display: flex;
                             margin-top: 2px;
@@ -357,7 +363,6 @@ body {
                         padding: 8px 10px;
                         margin: 10px 0;
                     }
-
                     .panel .body .properties .order-list2 .sorters p {
                         color: white;
                     }
@@ -370,8 +375,8 @@ body {
                     .panel .body .properties .order-list2 table tr {
                         font-size: 18px;
                     }
-
                     .panel .body .properties .order-list2 table .clickable {
+
                     }
 
                         .panel .body .properties .order-list2 table .clickable:hover {
@@ -384,7 +389,6 @@ body {
                         border-bottom: 1px solid #51565b;
                         height: 25px;
                     }
-
                     .panel .body .properties .order-list2 table tr th {
                         color: white;
                         border-bottom: 1px solid white;
@@ -444,7 +448,6 @@ body {
         display: flex;
         justify-content: flex-end;
     }
-
     .modal .two {
         display: flex;
         flex-direction: column;
@@ -456,7 +459,6 @@ body {
             font-size: 22px;
             font-weight: bold;
         }
-
         .modal .two .info {
             text-align: center;
             font-size: 18px;
@@ -475,7 +477,10 @@ body {
     border-radius: 50%;
     font-size: 20px;
 }
-
+.btn-submit {
+    padding: 10px 50px;
+    font-size: 15px;
+}
 .overlay {
     display: flex;
     justify-content: center;
@@ -491,19 +496,13 @@ body {
     backdrop-filter: blur(3px);
     z-index: 1;
 }
-
 .hidden {
     display: none;
 }
 
-.btn-submit {
-    padding: 10px 50px;
-    font-size: 15px;
-}
-
-/*--------------------------------------------------------*/
-/*                     DELETION POPUP                     */
-/*--------------------------------------------------------*/
+/*--------------------------------------------------------
+                     DELETION POPUP                     
+--------------------------------------------------------*/
 
 .active    { color: #1fff38; }
 .awaiting  { color: #ffed20; }

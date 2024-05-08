@@ -20,11 +20,9 @@
 
         <div class="properties">
             <div class="user-form">
-
                 <p class="title">Create New Training Order</p>
                 <p class="description">Fill out each required field.</p>
                 <hr />
-
                 <div class="field-container">
                     <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -35,7 +33,7 @@
                             </div>
                             <input asp-for="TrainingOrder.trainee" class="form-control" />
                             <input asp-for="TrainingOrder.createDate" type="hidden" value="@Model.day"/>
-                            <input asp-for="TrainingOrder.trainers" type="hidden" value="@Model.newList"/>
+                            <input asp-for="TrainingOrder.trainers" type="hidden"/>
                             <input asp-for="TrainingOrder.beginDate" type="hidden" value="@Model.day"/>
                             <input asp-for="TrainingOrder.endDate" type="hidden" value="@Model.day"/>
                             <input asp-for="TrainingOrder.status" type="hidden" value="Awaiting Approval"/>

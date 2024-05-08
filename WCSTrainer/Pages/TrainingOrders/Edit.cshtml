@@ -24,19 +24,7 @@
                     <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id" />
-
-                        <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">Status</p>
-                                <span asp-validation-for="TrainingOrder.status" class="text-danger"></span>
-                            </div>
-                            <select asp-for="TrainingOrder.status" class="form-drop">
-                                <option value="Awaiting Approval">Awaiting Approval</option>
-                                <option value="Active">Active</option>
-                                <option value="Completed">Completed</option>
-                            </select>
-                        </div>
-
+                        <input asp-for="TrainingOrder.status" type="hidden" />
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">Skill*</p>
@@ -44,25 +32,34 @@
                             </div>
                             <input asp-for="TrainingOrder.skill" class="form-control" />
                         </div>
-
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">Trainers</p> 
                                 <span asp-validation-for="TrainingOrder.trainers" class="text-danger"></span>
+                            </div>
+                            <div class="selections">
+                                <ul id="trainerList">
+                                    @foreach (string trainerName in Model.TrainingOrder.trainers) {
+                                        <li>@trainerName</li>
+                                    }
+                                </ul>
                             </div>
                             <div class="selectors">
                                 <div class="btn btnWhite" id="indiButton"><p>Individual</p></div>
                                 <div class="btn btnWhite" id="groupButton"><p>Groups</p></div>
                             </div>
 
-                            <select id="individual" style="display: none" asp-for="TrainingOrder.trainers" class="form-drop2">
+                            <input asp-for="TrainingOrder.trainers" type="hidden"/>
+
+                            <select id="individual" style="display: none" class="form-drop" onchange="trainer1()">
                                 <option value="Aadam">Aadam</option>
+                                <option value="Alex">Alex</option>
                             </select>
-                            <select id="groups" style="display: none" asp-for="TrainingOrder.trainers" class="form-drop2">
+                            <select id="groups" style="display: none" class="form-drop" onchange="trainer2()">
                                 <option value="HR">HR</option>
+                                <option value="Shipping">Shipping</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">Trainee*</p>
@@ -70,7 +67,6 @@
                             </div>
                             <input asp-for="TrainingOrder.trainee" class="form-control" />
                         </div>
-
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">Begin Date*</p>
@@ -78,7 +74,6 @@
                             </div>
                             <input type="date" asp-for="TrainingOrder.beginDate" class="form-control" />
                         </div>
-
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">End Date*</p>
@@ -86,15 +81,18 @@
                             </div>
                             <input type="date" asp-for="TrainingOrder.endDate" class="form-control" />
                         </div>
-
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">Location*</p>
                                 <span asp-validation-for="TrainingOrder.location" class="text-danger"></span>
                             </div>
-                            <input asp-for="TrainingOrder.location" class="form-control" />
+                            <select asp-for="TrainingOrder.location" class="form-drop">
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                <option value="4">Four</option>
+                            </select>
                         </div>
-
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">Medium*</p>
@@ -102,7 +100,6 @@
                             </div>
                             <input asp-for="TrainingOrder.medium" class="form-control" />
                         </div>
-
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">Duration*</p>
@@ -110,7 +107,6 @@
                             </div>
                             <input asp-for="TrainingOrder.duration" class="form-control" />
                         </div>
-
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">Description</p>
@@ -118,14 +114,11 @@
                             </div>
                             <input asp-for="TrainingOrder.description" class="form-control" />
                         </div>
-
                         <div class="form-group">
                             <input type="submit" value="Save" class="btn btnGreen" />
                         </div>
-
                     </form>
                 </div>
-
                 <a asp-page="Index">
                     <button class="btn btnBlue">Return To Menu</button>
                 </a>
@@ -135,24 +128,45 @@
 </div>
 
 <script>
-
     var indiButton = document.getElementById("indiButton");
     var groupButton = document.getElementById("groupButton");
     var individual = document.getElementById("individual");
     var groups = document.getElementById("groups");
+    var trainList = document.getElementById("trainerList");
 
     indiButton.addEventListener("click", function () {
         groups.style.display = "none";
-        groups.selectedIndex = -1;
         individual.style.display = "block";
     });
 
     groupButton.addEventListener("click", function () {
-        groups.style.display = "block";
         individual.style.display = "none";
-        individual.selectedIndex = -1;
+        groups.style.display = "block";
     });
 
+    trainList.addEventListener("click", function (event) {
+        if (event.target.tagName === "LI") {
+            event.target.remove();
+        }
+    });
+
+    function trainer1() {
+        var name = individual.options[individual.selectedIndex].value;
+        if (!trainList.innerHTML.includes(name)) {
+            trainList.innerHTML += "<li>" + name + "</li>";
+        }
+        groups.selectedIndex = -1;
+        individual.selectedIndex = -1;
+    }
+
+    function trainer2() {
+        var name = groups.options[groups.selectedIndex].value;
+        if (!trainList.innerHTML.includes(name)) {
+            trainList.innerHTML += "<li>" + name + "</li>";
+        }
+        individual.selectedIndex = -1;
+        groups.selectedIndex = -1;
+    }
 </script>
 
 @section Scripts {
