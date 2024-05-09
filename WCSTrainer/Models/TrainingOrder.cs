@@ -1,7 +1,5 @@
-﻿namespace WebApplication2.Models
-{
-    public class TrainingOrder
-    {
+﻿namespace WebApplication2.Models {
+    public class TrainingOrder {
         public int Id { get; set; }
         public string skill { get; set; }
         public List<string> trainers { get; set; }

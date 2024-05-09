@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using WCSTrainer.Models;
 using WebApplication2.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
@@ -15,7 +16,13 @@ namespace WCSTrainer.Pages.TrainingOrders {
         [BindProperty]
         public TrainingOrder TrainingOrder { get; set; } = default!;
 
+        public IList<Trainer> Trainers { get; set; }
+        public IList<Employee> Employees { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id) {
+            //Trainers = await _context.Trainer.ToListAsync();
+            //Employees = await _context.Employee.ToListAsync();
+
             if (id == null) {
                 return NotFound();
             }
@@ -34,6 +41,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
 
             _context.Attach(TrainingOrder).State = EntityState.Modified;
+
+            //TrainingOrder.trainers = Request.Form["TrainingOrder.trainers"].ToList();
 
             try {
                 await _context.SaveChangesAsync();

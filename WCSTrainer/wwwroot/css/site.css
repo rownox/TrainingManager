@@ -7,6 +7,7 @@
 * {
     padding: 0;
     margin: 0;
+    user-select: none;
 }
 
 nav {
@@ -164,6 +165,10 @@ body {
                     width: 250px;
                     font-size: 15px;
                 }
+                    .panel .body .properties .user-form .btn:hover .form-drop {
+                        display: block;
+                    }
+
                 .panel .body .properties .user-form .field-container .form-group {
                     display: flex;
                     flex-direction: column;
@@ -176,6 +181,7 @@ body {
                     }
 
                         .panel .body .properties .user-form .field-container .form-group .labels .control-label {
+
                         }
                         .panel .body .properties .user-form .field-container .form-group .labels .text-danger {
                             color: #ff3434;
@@ -186,14 +192,11 @@ body {
                         height: 25px;
                         margin-bottom: 20px;
                     }
-                    .panel .body .properties .user-form .field-container .form-group .form-drop {
-                        margin-bottom: 20px;
-                        display: block;
-                        height: 30px;
-                    }
+                    
                     .panel .body .properties .user-form .field-container .form-group .form-drop2 {
                         margin-bottom: 20px;
                         display: block;
+                        height: 30px;
                     }
                     .panel .body .properties .user-form .field-container .form-group .selections {
                         display: flex;
@@ -206,6 +209,7 @@ body {
                             display: flex;
                             flex-direction: row;
                             flex-wrap: wrap;
+                            
                         }
 
                             .panel .body .properties .user-form .field-container .form-group .selections ul li {
@@ -214,7 +218,6 @@ body {
                                 cursor: pointer;
                                 padding: 3px 10px;
                                 border-radius: 20px;
-                                user-select: none;
                                 margin: 2px;
 
                             }
@@ -222,15 +225,42 @@ body {
                     .panel .body .properties .user-form .field-container .form-group .selectors {
                         display: flex;
                         flex-direction: row;
+                        margin-bottom: 10px;
+                        width: 100%;
+                        justify-content: space-between;
                     }
 
-                        .panel .body .properties .user-form .field-container .form-group .selectors .btn {
-                            margin: 10px 10px 10px 0;
-                            padding: 10px 0;
-                            width: 100px;
-                            font-size: 15px;
-                            
+                        .panel .body .properties .user-form .field-container .form-group .selectors .selector {
+                            display: flex;
+                            flex-direction: column;
+                            width: 48%;
                         }
+                            .panel .body .properties .user-form .field-container .form-group .selectors .selector .btn {
+                                padding: 10px 0;
+                                width: 100%;
+                                font-size: 15px;
+                            }
+
+                            .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop {
+                                display: none;
+                                color: black;
+                                font-size: 15px;
+                                width: 100%;
+                            }
+
+                                .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul {
+                                    list-style: none;
+                                    width: 100%;
+                                }
+
+                                    .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul li {
+                                        cursor: pointer;
+                                        padding: 5px;
+                                        background-color: white;
+                                    }
+                                        .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul li:hover {
+                                            background-color: #dbdbdb;
+                                        }
 
                 .panel .body .properties .user-form .field-container .text-group {
                     display: flex;
@@ -405,7 +435,6 @@ body {
     text-decoration: none;
     cursor: pointer;
     border: 1px solid black;
-    user-select: none;
 }
 
 .btnWhite        { color: white;              }
