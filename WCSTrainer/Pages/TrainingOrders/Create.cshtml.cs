@@ -18,7 +18,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public TrainingOrder TrainingOrder { get; set; } = default!;
 
         public DateOnly day = DateOnly.FromDateTime(DateTime.Now);
-        public string newList = "";
 
         public async Task<IActionResult> OnPostAsync() {
 

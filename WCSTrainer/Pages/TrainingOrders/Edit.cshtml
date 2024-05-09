@@ -45,20 +45,37 @@
                                 </ul>
                             </div>
                             <div class="selectors">
-                                <div class="btn btnWhite" id="indiButton"><p>Individual</p></div>
-                                <div class="btn btnWhite" id="groupButton"><p>Groups</p></div>
+                                <div class="selector">
+                                    <div class="btn btnWhite" id="indiButton"><p>Individual</p></div>
+                                    <div class="form-drop" id="individual">
+                                        <ul id="indiList">
+                                            <li>Aadam</li>
+                                            <li>Alex</li>
+                                            <li>Bob</li>
+                                            <li>Carter</li>
+                                        <!--foreach (Models.Trainer trainer in Model.Trainers) {
+                                                foreach (Models.Employee employee in Model.Employees) {
+                                                    if (trainer.EmployeeID == employee.EmployeeID) {
+                                                        <li>employee.FirstName employee.LastName</li>
+                                                    }
+                                                }
+                                            }-->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="selector">
+                                    <div class="btn btnWhite" id="groupButton"><p>Groups</p></div>
+                                    <div class="form-drop" id="groups">
+                                        <ul id="groupList">
+                                            <li>HR</li>
+                                            <li>Shipping</li>
+                                            <li>Sales</li>
+                                            <li>Engineering</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-
                             <input asp-for="TrainingOrder.trainers" type="hidden"/>
-
-                            <select id="individual" style="display: none" class="form-drop" onchange="trainer1()">
-                                <option value="Aadam">Aadam</option>
-                                <option value="Alex">Alex</option>
-                            </select>
-                            <select id="groups" style="display: none" class="form-drop" onchange="trainer2()">
-                                <option value="HR">HR</option>
-                                <option value="Shipping">Shipping</option>
-                            </select>
                         </div>
                         <div class="form-group">
                             <div class="labels">
@@ -86,7 +103,7 @@
                                 <p class="control-label">Location*</p>
                                 <span asp-validation-for="TrainingOrder.location" class="text-danger"></span>
                             </div>
-                            <select asp-for="TrainingOrder.location" class="form-drop">
+                            <select asp-for="TrainingOrder.location" class="form-drop2">
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
@@ -133,40 +150,57 @@
     var individual = document.getElementById("individual");
     var groups = document.getElementById("groups");
     var trainList = document.getElementById("trainerList");
+    var indiList = document.getElementById("indiList");
+    var groupList = document.getElementById("groupList");
 
     indiButton.addEventListener("click", function () {
+        if (individual.style.display == "flex") {
+            individual.style.display = "none";
+        } else {
+            individual.style.display = "flex";
+        }
         groups.style.display = "none";
-        individual.style.display = "block";
+        
     });
-
     groupButton.addEventListener("click", function () {
+        if (groups.style.display == "flex") {
+            groups.style.display = "none";
+        } else {
+            groups.style.display = "flex";
+        }
         individual.style.display = "none";
-        groups.style.display = "block";
     });
-
     trainList.addEventListener("click", function (event) {
         if (event.target.tagName === "LI") {
             event.target.remove();
         }
     });
+    indiList.addEventListener("click", function (event) {
+        if (event.target.tagName === "LI") {
+            trainer1(event.target.textContent);
+        }
+    });
+    groupList.addEventListener("click", function (event) {
+        if (event.target.tagName === "LI") {
+            trainer2(event.target.textContent);
+        }
+    });
 
-    function trainer1() {
-        var name = individual.options[individual.selectedIndex].value;
+    function trainer1(name) {
         if (!trainList.innerHTML.includes(name)) {
             trainList.innerHTML += "<li>" + name + "</li>";
         }
         groups.selectedIndex = -1;
         individual.selectedIndex = -1;
     }
-
-    function trainer2() {
-        var name = groups.options[groups.selectedIndex].value;
+    function trainer2(name) {
         if (!trainList.innerHTML.includes(name)) {
             trainList.innerHTML += "<li>" + name + "</li>";
         }
         individual.selectedIndex = -1;
         groups.selectedIndex = -1;
     }
+
 </script>
 
 @section Scripts {
