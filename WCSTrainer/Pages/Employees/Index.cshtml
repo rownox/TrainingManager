@@ -8,51 +8,33 @@
 <div class="panel">
     <div class="body">
         <div class="side-bar">
-
+            <div class="ul">
+                <a href=""><div class="li">Statistics</div></a>
+                <a href="TrainingOrders"><div class="selected">Training Orders</div></a>
+                <a href="Employees"><div class="li">Manage Employees</div></a>
+                <a href=""><div class="li">Account Settings</div></a>
+            </div>
         </div>
         <div class="properties">
-            <p>
-                <a asp-page="Create">Create New</a>
-            </p>
+            <a asp-page="Create">Create New</a>
             <table class="table">
                 <thead>
                     <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Employee[0].FirstName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Employee[0].LastName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Employee[0].Status)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Employee[0].Trainings)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Employee[0].Availability)
-                        </th>
-                        <th></th>
+                        <th>@Html.DisplayNameFor(model => model.Employee[0].FirstName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Employee[0].LastName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Employee[0].Status)</th>
+                        <th>@Html.DisplayNameFor(model => model.Employee[0].Trainings)</th>
+                        <th>@Html.DisplayNameFor(model => model.Employee[0].Availability)</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model.Employee) {
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FirstName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LastName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Status)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Trainings)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Availability)
-                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Trainings)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Availability)</td>
                             <td>
                                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
                                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |

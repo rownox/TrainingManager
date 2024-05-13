@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WCSTrainer.styles.css" asp-append-version="true" />
 </head>
+
 <body>
     <nav>
         <ul>
             <li><a href="Home">WCS Trainer</a></li>
-            <li><a href="Index">Home</a></li>
-            <li><a href="TrainingOrders">Admin Panel</a></li>
+            <li><a asp-page="TrainingOrders/Index">Home</a></li>
+            <li><a asp-page="TrainingOrders/Index">Admin Panel</a></li>
         </ul>
     </nav>
     <div class="content">

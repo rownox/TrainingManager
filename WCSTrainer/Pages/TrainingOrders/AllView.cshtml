@@ -9,9 +9,8 @@
         <div class="side-bar">
             <div class="ul">
                 <a href=""><div class="li">Statistics</div></a>
-                <a asp-page="./Index"><div class="selected">Training Orders</div></a>
-                <a href=""><div class="li">Manage Trainers</div></a>
-                <a href=""><div class="li">Manage Trainees</div></a>
+                <a href="TrainingOrders"><div class="selected">Training Orders</div></a>
+                <a href="Employees"><div class="li">Manage Employees</div></a>
                 <a href=""><div class="li">Account Settings</div></a>
             </div>
         </div>
@@ -63,7 +62,6 @@
             for (i = 1; i < (rows.length - 1); i++) {
 
                 shouldSwitch = false;
-
                 var x = parseFloat(rows[i].getElementsByTagName("TD")[column].innerHTML.toLowerCase());
                 var y = parseFloat(rows[i + 1].getElementsByTagName("TD")[column].innerHTML.toLowerCase());
 

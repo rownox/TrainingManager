@@ -69,16 +69,13 @@
                     <p class="title">Show in List:</p>
                     <div class="section">
                         <input type="checkbox" id="co" onchange="completed(this)"/>
-                        <p class="info">Completed</p>
-                    </div>
+                        <p class="info">Completed</p></div>
                     <div class="section">
                         <input type="checkbox" id="ac" onchange="active(this)" />
-                        <p class="info">Active</p>
-                    </div>
+                        <p class="info">Active</p></div>
                     <div class="section">
                         <input type="checkbox" id="aw" onchange="awaiting(this)" />
-                        <p class="info">Awaiting Approval</p>
-                    </div>
+                        <p class="info">Awaiting Approval</p></div>
                 </div>
                 <a asp-page="Create" class="btn btnWhite">Create New Order</a>
                 <a asp-page="AllView" class="btn btnWhite">Database Planning</a>
@@ -88,11 +85,11 @@
 </div>
 
 <script>
-    const modal = document.querySelector(".modal");
-    const overlay = document.querySelector(".overlay");
     const closeModalBtn = document.querySelector(".btn-close");
     const deleteText = document.getElementById("deleteText");
     const deleteBtn = document.querySelector("#deleteBtn");
+    const overlay = document.querySelector(".overlay");
+    const modal = document.querySelector(".modal");
 
     const openModal = function (orderID) {
         modal.classList.remove("hidden");

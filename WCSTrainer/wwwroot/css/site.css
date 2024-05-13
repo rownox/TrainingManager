@@ -268,7 +268,7 @@ body {
                 .panel .body .properties .user-form .field-container .text-group {
                     display: flex;
                     flex-direction: row;
-                    padding: 3px 0;
+                    padding: 5px 0;
                     width: 75%;
                     border-bottom: 1px solid gray;
                 }
