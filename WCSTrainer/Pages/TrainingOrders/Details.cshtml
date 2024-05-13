@@ -25,80 +25,127 @@
                 <div class="field-container">
 
                     <div class="text-group">
-                        <p class="title">Status</p>
-                        
-                        @if(Model.TrainingOrder.status.Equals("Awaiting Approval")) {
-                            <p class="info awaiting">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
-                        } else if (Model.TrainingOrder.status.Equals("Active")) {
-                            <p class="info active">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
-                        } else {
-                            <p class="info completed">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
-                        }
+                        <div class="identifier">
+                            <p class="title">Status</p>
+                        </div>
+                        <div class="info-content">
+                            @if (Model.TrainingOrder.status.Equals("Awaiting Approval")) {
+                                <p class="info awaiting">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
+                            } else if (Model.TrainingOrder.status.Equals("Active")) {
+                                <p class="info active">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
+                            } else {
+                                <p class="info completed">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
+                            }
+                        </div>
                     </div>
 
-                    <div class="text-group">
-                        <p class="title">Trainers</p>
-                        @foreach (string trainer in Model.TrainingOrder.trainers) {
-                            <p class="info">@trainer</p>
+                    @if (!Model.TrainingOrder.status.Equals("Awaiting Approval")) {
+                        <div class="text-group">
+                            <div class="identifier">
+                                <p class="title">Trainers</p>
+                            </div>
+                            <div class="info-content">
+                                @foreach (string trainer in Model.TrainingOrder.trainers) {
+                                    <p class="info">@trainer</p>
 
-                        }
-                    </div>
-
-                    <div class="text-group">
-                        <p class="title">Trainee</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainee)</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Skill</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.skill)</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Begin Date</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.beginDate)</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">End Date</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.endDate)</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Location</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.location)</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Medium</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.medium)</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Session Duration</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.duration) Hours</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Description</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.description)</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Order Creation Date</p>
-                        <p class="info">@Html.DisplayFor(model => model.TrainingOrder.createDate)</p>
-                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
 
                     
-                    @if (!Model.TrainingOrder.status.Equals("Completed")) {
-                        <a class="btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
-                            Edit Order
-                        </a>
-                    }
-                    <a class="btn btnBlue" asp-page="./Index">Return To Menu</a>
 
-                    @if (Model.TrainingOrder.status.Equals("Awaiting Approval")) {
-                        <a class="btn btnRed" asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">
-                            Approve Order
-                        </a>
-                    } else if (Model.TrainingOrder.status.Equals("Active")) {
-                        <a class="btn btnRed" asp-page="./Conclude" asp-route-id="@Model.TrainingOrder.Id">
-                            Conclude Training
-                        </a>
+                    <div class="text-group">
+                        <div class="identifier">
+                            <p class="title">Trainee</p>
+                        </div>
+                        <div class="info-content">
+                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainee)</p>
+                        </div>
+                    </div>
+                    <div class="text-group">
+                        <div class="identifier">
+                            <p class="title">Skill</p>
+                        </div>
+                        <div class="info-content">
+                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.skill)</p>
+                        </div>
+                    </div>
+                    @if (!Model.TrainingOrder.status.Equals("Awaiting Approval")) {
+                        <div class="text-group">
+                            <div class="identifier">
+                                <p class="title">Begin Date</p>
+                            </div>
+                            <div class="info-content">
+                                <p class="info">@Html.DisplayFor(model => model.TrainingOrder.beginDate)</p>
+                            </div>
+                        </div>
+                        <div class="text-group">
+                            <div class="identifier">
+                                <p class="title">End Date</p>
+                            </div>
+                            <div class="info-content">
+                                <p class="info">@Html.DisplayFor(model => model.TrainingOrder.endDate)</p>
+                            </div>
+                        </div>
                     }
+                    <div class="text-group">
+                        <div class="identifier">
+                            <p class="title">Location</p>
+                        </div>
+                        <div class="info-content">
+                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.location)</p>
+                        </div>
+                    </div>
+                    <div class="text-group">
+                        <div class="identifier">
+                            <p class="title">Medium</p>
+                        </div>
+                        <div class="info-content">
+                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.medium)</p>
+                        </div>
+                    </div>
+                    <div class="text-group">
+                        <div class="identifier">
+                            <p class="title">Session Duration</p>
+                        </div>
+                        <div class="info-content">
+                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.duration) Hours</p>
+                        </div>
+                    </div>
+                    <div class="text-group">
+                        <div class="identifier">
+                            <p class="title">Description</p>
+                        </div>
+                        <div class="info-content">
+                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.description)</p>
+                        </div>
+                    </div>
+                    <div class="text-group">
+                        <div class="identifier">
+                            <p class="title">Order Creation Date</p>
+                        </div>
+                        <div class="info-content">
+                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.createDate)</p>
+                        </div>
+                    </div>
                 </div>
+                @if (!Model.TrainingOrder.status.Equals("Completed")) {
+                    <a class="btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
+                        Edit Order
+                    </a>
+                }
+                <a class="btn btnBlue" asp-page="./Index">Return To Menu</a>
+
+                @if (Model.TrainingOrder.status.Equals("Awaiting Approval")) {
+                    <a class="btn btnRed" asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">
+                        Approve Order
+                    </a>
+                } else if (Model.TrainingOrder.status.Equals("Active")) {
+                    <a class="btn btnRed" asp-page="./Conclude" asp-route-id="@Model.TrainingOrder.Id">
+                        Conclude Training
+                    </a>
+                }
             </div>
         </div>
     </div>
