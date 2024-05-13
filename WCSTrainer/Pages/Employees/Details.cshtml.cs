@@ -12,9 +12,9 @@ namespace WCSTrainer.Pages.Employees
 {
     public class DetailsModel : PageModel
     {
-        private readonly WCSTrainer.Data.WCSTrainerContext _context;
+        private readonly WCSTrainer.Data.EmployeeContext _context;
 
-        public DetailsModel(WCSTrainer.Data.WCSTrainerContext context)
+        public DetailsModel(WCSTrainer.Data.EmployeeContext context)
         {
             _context = context;
         }
@@ -28,7 +28,7 @@ namespace WCSTrainer.Pages.Employees
                 return NotFound();
             }
 
-            var employee = await _context.Employee.FirstOrDefaultAsync(m => m.EmployeeID == id);
+            var employee = await _context.Employee.FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)
             {
                 return NotFound();

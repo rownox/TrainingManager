@@ -12,9 +12,9 @@ namespace WCSTrainer.Pages.Employees
 {
     public class DeleteModel : PageModel
     {
-        private readonly WCSTrainer.Data.WCSTrainerContext _context;
+        private readonly WCSTrainer.Data.EmployeeContext _context;
 
-        public DeleteModel(WCSTrainer.Data.WCSTrainerContext context)
+        public DeleteModel(WCSTrainer.Data.EmployeeContext context)
         {
             _context = context;
         }
@@ -29,7 +29,7 @@ namespace WCSTrainer.Pages.Employees
                 return NotFound();
             }
 
-            var employee = await _context.Employee.FirstOrDefaultAsync(m => m.EmployeeID == id);
+            var employee = await _context.Employee.FirstOrDefaultAsync(m => m.Id == id);
 
             if (employee == null)
             {

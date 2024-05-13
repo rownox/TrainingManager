@@ -15,7 +15,5 @@ namespace WCSTrainer.Data
         }
 
         public DbSet<WebApplication2.Models.TrainingOrder> TrainingOrder { get; set; } = default!;
-        public DbSet<WCSTrainer.Models.Trainer> Trainer { get; set; } = default!;
-        public DbSet<WCSTrainer.Models.Employee> Employee { get; set; } = default!;
     }
 }
