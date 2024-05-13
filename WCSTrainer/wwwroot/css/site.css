@@ -8,7 +8,6 @@
     padding: 0;
     margin: 0;
     user-select: none;
-    color: white;
 }
 
 nav {
@@ -47,6 +46,7 @@ nav {
 html {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     min-width: 100%;
+    
 }
 
 body {
@@ -56,6 +56,7 @@ body {
     align-items: center;
     margin-bottom: 60px;
     background-color: var(--gray1);
+    color: white;
 }
 
 .content {
