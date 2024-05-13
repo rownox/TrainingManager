@@ -1,20 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using WCSTrainer.Models;
 using WebApplication2.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
     public class ApprovalModel : PageModel {
         private readonly WCSTrainer.Data.WCSTrainerContext _context;
+        private readonly WCSTrainer.Data.EmployeeContext _context2;
 
-        public ApprovalModel(WCSTrainer.Data.WCSTrainerContext context) {
+        public ApprovalModel(WCSTrainer.Data.WCSTrainerContext context, WCSTrainer.Data.EmployeeContext context2) {
             _context = context;
+            _context2 = context2;
         }
 
         [BindProperty]
         public TrainingOrder TrainingOrder { get; set; } = default!;
 
+        public IList<Employee> Employees { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id) {
+            Employees = await _context2.Employee.ToListAsync();
+
             if (id == null) {
                 return NotFound();
             }

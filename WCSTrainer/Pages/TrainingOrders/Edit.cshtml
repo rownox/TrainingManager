@@ -49,17 +49,11 @@
                                     <div class="btn btnWhite" id="indiButton"><p>Individual</p></div>
                                     <div class="form-drop" id="individual">
                                         <ul id="indiList">
-                                            <li>Aadam</li>
-                                            <li>Alex</li>
-                                            <li>Bob</li>
-                                            <li>Carter</li>
-                                        <!--foreach (Models.Trainer trainer in Model.Trainers) {
-                                                foreach (Models.Employee employee in Model.Employees) {
-                                                    if (trainer.EmployeeID == employee.EmployeeID) {
-                                                        <li>employee.FirstName employee.LastName</li>
-                                                    }
+                                            @foreach (Models.Employee employee in Model.Employees) {
+                                                if (employee.Status.Equals("Trainer")) {
+                                                    <li>@employee.FirstName @employee.LastName</li>
                                                 }
-                                            }-->
+                                            }
                                         </ul>
                                     </div>
                                 </div>
