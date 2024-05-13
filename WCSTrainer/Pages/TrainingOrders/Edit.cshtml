@@ -10,9 +10,8 @@
         <div class="side-bar">
             <div class="ul">
                 <a href=""><div class="li">Statistics</div></a>
-                <a asp-page="Index"><div class="selected">Training Orders</div></a>
-                <a href=""><div class="li">Manage Trainers</div></a>
-                <a href=""><div class="li">Manage Trainees</div></a>
+                <a href="TrainingOrders"><div class="selected">Training Orders</div></a>
+                <a href="Employees"><div class="li">Manage Employees</div></a>
                 <a href=""><div class="li">Account Settings</div></a>
             </div>
         </div>
@@ -139,13 +138,13 @@
 </div>
 
 <script>
-    var indiButton = document.getElementById("indiButton");
     var groupButton = document.getElementById("groupButton");
-    var individual = document.getElementById("individual");
-    var groups = document.getElementById("groups");
+    var indiButton = document.getElementById("indiButton");
     var trainList = document.getElementById("trainerList");
-    var indiList = document.getElementById("indiList");
+    var individual = document.getElementById("individual");
     var groupList = document.getElementById("groupList");
+    var indiList = document.getElementById("indiList");
+    var groups = document.getElementById("groups");
 
     indiButton.addEventListener("click", function () {
         if (individual.style.display == "flex") {
