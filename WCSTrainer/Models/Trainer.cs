@@ -2,7 +2,6 @@
 using WebApplication2.Models;
 
 namespace WCSTrainer.Models {
-    [Keyless]
     public class Trainer {
         public int EmployeeID { get; set; }
         public string Skills { get; set; }

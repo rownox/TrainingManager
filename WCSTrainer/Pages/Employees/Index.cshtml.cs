@@ -12,9 +12,9 @@ namespace WCSTrainer.Pages.Employees
 {
     public class IndexModel : PageModel
     {
-        private readonly WCSTrainer.Data.WCSTrainerContext _context;
+        private readonly WCSTrainer.Data.EmployeeContext _context;
 
-        public IndexModel(WCSTrainer.Data.WCSTrainerContext context)
+        public IndexModel(WCSTrainer.Data.EmployeeContext context)
         {
             _context = context;
         }

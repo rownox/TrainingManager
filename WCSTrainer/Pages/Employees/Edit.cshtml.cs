@@ -13,9 +13,9 @@ namespace WCSTrainer.Pages.Employees
 {
     public class EditModel : PageModel
     {
-        private readonly WCSTrainer.Data.WCSTrainerContext _context;
+        private readonly WCSTrainer.Data.EmployeeContext _context;
 
-        public EditModel(WCSTrainer.Data.WCSTrainerContext context)
+        public EditModel(WCSTrainer.Data.EmployeeContext context)
         {
             _context = context;
         }
@@ -30,7 +30,7 @@ namespace WCSTrainer.Pages.Employees
                 return NotFound();
             }
 
-            var employee =  await _context.Employee.FirstOrDefaultAsync(m => m.EmployeeID == id);
+            var employee =  await _context.Employee.FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)
             {
                 return NotFound();
@@ -56,7 +56,7 @@ namespace WCSTrainer.Pages.Employees
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmployeeExists(Employee.EmployeeID))
+                if (!EmployeeExists(Employee.Id))
                 {
                     return NotFound();
                 }
@@ -71,7 +71,7 @@ namespace WCSTrainer.Pages.Employees
 
         private bool EmployeeExists(int id)
         {
-            return _context.Employee.Any(e => e.EmployeeID == id);
+            return _context.Employee.Any(e => e.Id == id);
         }
     }
 }
