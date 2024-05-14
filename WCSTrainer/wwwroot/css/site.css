@@ -162,9 +162,9 @@ body {
                     width: 100%;
                 }
                 .panel .body .properties .user-form .btn {
-                    margin-top: 10px;
+                    margin-top: 5px;
                     padding: 10px 0;
-                    width: 250px;
+                    width: 200px;
                     font-size: 15px;
                 }
                     .panel .body .properties .user-form .btn:hover .form-drop {
@@ -194,6 +194,12 @@ body {
                     .panel .body .properties .user-form .field-container .form-group .form-control {
                         height: 25px;
                         margin-bottom: 20px;
+                    }
+
+                    .panel .body .properties .user-form .field-container .form-group textarea {
+                        margin-bottom: 20px;
+                        border-radius: 5px;
+                        font-size: 15px;
                     }
                     
                     .panel .body .properties .user-form .field-container .form-group .form-drop2 {
@@ -280,6 +286,7 @@ body {
                         height: 100%;
                         display: flex;
                         align-items: flex-start;
+                        justify-content: space-between;
                         width: 70%;
                     }
 

@@ -11,8 +11,8 @@
         <div class="side-bar">
             <div class="ul">
                 <a href=""><div class="li">Statistics</div></a>
-                <a href="TrainingOrders"><div class="selected">Training Orders</div></a>
-                <a href="Employees"><div class="li">Manage Employees</div></a>
+                <a asp-page="./Index"><div class="selected">Training Orders</div></a>
+                <a asp-page="./Index"><div class="li">Manage Employees</div></a>
                 <a href=""><div class="li">Account Settings</div></a>
             </div>
         </div>
@@ -118,6 +118,7 @@
                         </div>
                         <div class="info-content">
                             <p class="info">@Html.DisplayFor(model => model.TrainingOrder.description)</p>
+                            <p class="info" style="text-decoration: underline; color: lightblue;">Link to Training Resources</p>
                         </div>
                     </div>
                     <div class="text-group">
@@ -128,7 +129,45 @@
                             <p class="info">@Html.DisplayFor(model => model.TrainingOrder.createDate)</p>
                         </div>
                     </div>
+
+                    @if (Model.TrainingOrder.status.Equals("Completed")) {
+                        <br></br>
+                        <p style="font-size: 20px;">Verification</p>
+                        <div class="text-group">
+                            <div class="identifier">
+                                <p class="title">Signed By</p>
+                            </div>
+                            <div class="info-content">
+                                <p class="info">Aadam Husain</p>
+                            </div>
+                        </div>
+                        <div class="text-group">
+                            <div class="identifier">
+                                <p class="title">Date Signed</p>
+                            </div>
+                            <div class="info-content">
+                                <p class="info">5/14/2024</p>
+                            </div>
+                        </div>
+                        <div class="text-group">
+                            <div class="identifier">
+                                <p class="title">Notes</p>
+                            </div>
+                            <div class="info-content">
+                                <p class="info">No Data</p>
+                            </div>
+                        </div>
+                        <div class="text-group">
+                            <div class="identifier">
+                                <p class="title">Effectiveness</p>
+                            </div>
+                            <div class="info-content">
+                                <p class="info">No Data</p>
+                            </div>
+                        </div>
+                    }
                 </div>
+                <br />
                 @if (!Model.TrainingOrder.status.Equals("Completed")) {
                     <a class="btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
                         Edit Order
