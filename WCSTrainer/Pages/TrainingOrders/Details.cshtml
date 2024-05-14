@@ -22,7 +22,6 @@
                 <p class="title">Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
                 <hr />
                 <div class="field-container">
-
                     <div class="text-group">
                         <div class="identifier">
                             <p class="title">Status</p>
@@ -40,19 +39,18 @@
 
                     @if (!Model.TrainingOrder.status.Equals("Awaiting Approval")) {
                         <div class="text-group">
+
                             <div class="identifier">
                                 <p class="title">Trainers</p>
                             </div>
+
                             <div class="info-content">
                                 @foreach (string trainer in Model.TrainingOrder.trainers) {
                                     <p class="info">@trainer</p>
-
                                 }
                             </div>
                         </div>
                     }
-
-                    
 
                     <div class="text-group">
                         <div class="identifier">
@@ -62,6 +60,7 @@
                             <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainee)</p>
                         </div>
                     </div>
+
                     <div class="text-group">
                         <div class="identifier">
                             <p class="title">Skill</p>
@@ -70,6 +69,7 @@
                             <p class="info">@Html.DisplayFor(model => model.TrainingOrder.skill)</p>
                         </div>
                     </div>
+
                     @if (!Model.TrainingOrder.status.Equals("Awaiting Approval")) {
                         <div class="text-group">
                             <div class="identifier">
@@ -88,6 +88,7 @@
                             </div>
                         </div>
                     }
+
                     <div class="text-group">
                         <div class="identifier">
                             <p class="title">Location</p>

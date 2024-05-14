@@ -24,17 +24,20 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id"/>
 
-                        <input asp-for="TrainingOrder.skill" type="hidden"/>
-                        <input asp-for="TrainingOrder.trainee" type="hidden"/>
-                        <input asp-for="TrainingOrder.createDate" type="hidden"/>
-                        <input asp-for="TrainingOrder.location" type="hidden"/>
-                        <input asp-for="TrainingOrder.medium" type="hidden"/>
-                        <input asp-for="TrainingOrder.status" type="hidden" value="Completed"/>
-                        <input asp-for="TrainingOrder.duration" type="hidden"/>
-                        <input asp-for="TrainingOrder.description" type="hidden"/>
-                        <input asp-for="TrainingOrder.trainers" type="hidden"/>
-                        <input asp-for="TrainingOrder.beginDate" type="hidden"/>
-                        <input asp-for="TrainingOrder.endDate" type="hidden"/>
+                        
+                        <input asp-for="TrainingOrder.description"    type="hidden" />
+                        <input asp-for="TrainingOrder.createDate"    type="hidden" />
+                        <input asp-for="TrainingOrder.beginDate"    type="hidden" />
+                        <input asp-for="TrainingOrder.location"    type="hidden" />
+                        <input asp-for="TrainingOrder.duration"   type="hidden" />
+                        <input asp-for="TrainingOrder.trainers"  type="hidden" />
+                        <input asp-for="TrainingOrder.trainee"  type="hidden" />
+                        <input asp-for="TrainingOrder.endDate" type="hidden" />
+                        <input asp-for="TrainingOrder.medium" type="hidden" />
+                        <input asp-for="TrainingOrder.skill" type="hidden" />
+
+                        <input asp-for="TrainingOrder.status" type="hidden" value="Completed" />
+                        
 
                         @if (!Model.TrainingOrder.status.Equals("Awaiting Approval")) {
                             <div class="text-group">
@@ -44,14 +47,10 @@
                                 <div class="info-content">
                                     @foreach (string trainer in Model.TrainingOrder.trainers) {
                                         <p class="info">@trainer</p>
-
                                     }
                                 </div>
                             </div>
                         }
-
-
-
                         <div class="text-group">
                             <div class="identifier">
                                 <p class="title">Trainee</p>
@@ -86,23 +85,19 @@
                                 </div>
                             </div>
                         }
-
                         <br />
-
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">Closing Notes</p>
                             </div>
-                            <textarea rows="5" /></textarea>
+                            <textarea rows="5"/></textarea>
                         </div>
-                        
                         <div class="form-group">
                             <div class="labels">
                                 <p class="control-label">How effective was the training?</p>
                             </div>
-                            <textarea rows="5" /></textarea>
+                            <textarea rows="5"/></textarea>
                         </div>
-
                         <div class="form-group">
                             <input type="submit" value="Submit" class="btn btnGreen"/>
                         </div>
