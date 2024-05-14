@@ -10,40 +10,36 @@
         <div class="side-bar">
             <div class="ul">
                 <a href=""><div class="li">Statistics</div></a>
-                <a href="TrainingOrders"><div class="selected">Training Orders</div></a>
-                <a href="Employees"><div class="li">Manage Employees</div></a>
+                <a href="TrainingOrders"><div class="li">Training Orders</div></a>
+                <a asp-page="./Index"><div class="selected">Manage Employees</div></a>
                 <a href=""><div class="li">Account Settings</div></a>
             </div>
         </div>
         <div class="properties">
-            <a asp-page="Create">Create New</a>
-            <table class="table">
-                <thead>
+            <div class="order-list2">
+                <table id="dataTable">
                     <tr>
-                        <th>@Html.DisplayNameFor(model => model.Employee[0].FirstName)</th>
-                        <th>@Html.DisplayNameFor(model => model.Employee[0].LastName)</th>
-                        <th>@Html.DisplayNameFor(model => model.Employee[0].Status)</th>
-                        <th>@Html.DisplayNameFor(model => model.Employee[0].Trainings)</th>
-                        <th>@Html.DisplayNameFor(model => model.Employee[0].Availability)</th>
+                        <th>Employee ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Status</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
-                </thead>
-                <tbody>
                     @foreach (var item in Model.Employee) {
-                        <tr>
+                        <tr class="clickable">
+                            <td>@Html.DisplayFor(modelItem => item.Id)</td>
                             <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
                             <td>@Html.DisplayFor(modelItem => item.LastName)</td>
                             <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Trainings)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Availability)</td>
-                            <td>
-                                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                            </td>
+                            <td><a asp-page="./Edit" asp-route-id="@item.Id">Edit</a></td>
+                            <td><a asp-page="./Details" asp-route-id="@item.Id">Details</a></td>
+                            <td><a asp-page="./Delete" asp-route-id="@item.Id">Delete</a></td>
                         </tr>
                     }
-                </tbody>
-            </table>
+                </table>
+            </div>
         </div>
     </div>
 </div>
