@@ -33,13 +33,13 @@
                         </div>
                         <div class="form-group">
                             <div class="labels">
-                                <p class="control-label">Trainers</p> 
-                                <span asp-validation-for="TrainingOrder.trainers" class="text-danger"></span>
+                                <p class="control-label">Trainers</p>
+                                <p id="trainerDanger" class="text-danger" style="display: none;">Please select at least one trainer.</p>
                             </div>
                             <div class="selections">
                                 <ul id="trainerList">
                                     @foreach (string trainerName in Model.TrainingOrder.trainers) {
-                                        <li>@trainerName </li>
+                                        <li>@trainerName</li>
                                     }
                                 </ul>
                             </div>
@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <input asp-for="TrainingOrder.trainers" type="hidden"/>
+                            <input id="trainersInput" asp-for="TrainingOrder.trainers" type="hidden" />
                         </div>
                         <div class="form-group">
                             <div class="labels">
@@ -138,13 +138,16 @@
 </div>
 
 <script>
+    var trainersInput = document.getElementById("trainersInput");
     var groupButton = document.getElementById("groupButton");
     var indiButton = document.getElementById("indiButton");
-    var trainList = document.getElementById("trainerList");
     var individual = document.getElementById("individual");
+    var trainList = document.getElementById("trainerList");
     var groupList = document.getElementById("groupList");
     var indiList = document.getElementById("indiList");
+    var testList = document.getElementById("testList");
     var groups = document.getElementById("groups");
+    var trainerDanger = document.getElementById("trainerDanger");
 
     indiButton.addEventListener("click", function () {
         if (individual.style.display == "flex") {
@@ -153,8 +156,8 @@
             individual.style.display = "flex";
         }
         groups.style.display = "none";
-        
     });
+
     groupButton.addEventListener("click", function () {
         if (groups.style.display == "flex") {
             groups.style.display = "none";
@@ -163,16 +166,19 @@
         }
         individual.style.display = "none";
     });
+
     trainList.addEventListener("click", function (event) {
         if (event.target.tagName === "LI") {
             event.target.remove();
         }
     });
+
     indiList.addEventListener("click", function (event) {
         if (event.target.tagName === "LI") {
             trainer1(event.target.textContent);
         }
     });
+
     groupList.addEventListener("click", function (event) {
         if (event.target.tagName === "LI") {
             trainer2(event.target.textContent);
@@ -182,17 +188,50 @@
     function trainer1(name) {
         if (!trainList.innerHTML.includes(name)) {
             trainList.innerHTML += "<li>" + name + "</li>";
+            updateTrainersInput();
+            testList.textContent = "g";
         }
         groups.selectedIndex = -1;
         individual.selectedIndex = -1;
     }
+
     function trainer2(name) {
         if (!trainList.innerHTML.includes(name)) {
             trainList.innerHTML += "<li>" + name + "</li>";
+            updateTrainersInput();
         }
         individual.selectedIndex = -1;
         groups.selectedIndex = -1;
     }
+
+    function updateTrainersInput() {
+        var trainers = Array.from(trainList.getElementsByTagName("li")).map(function (item) {
+            return item.textContent;
+        });
+        trainersInput.value = trainers.join(", ");
+    }
+
+    function toggleSubmitButton() {
+        var submitButton = document.querySelector('input[type="submit"]');
+        if (trainList.getElementsByTagName("li").length > 0) {
+            submitButton.disabled = false;
+        } else {
+            submitButton.disabled = true;
+            trainerDanger.style.display = "none";
+        }
+    }
+
+    trainList.addEventListener("DOMNodeInserted", toggleSubmitButton);
+    trainList.addEventListener("DOMNodeRemoved", toggleSubmitButton);
+
+    function validateForm(event) {
+        if (trainList.getElementsByTagName("li").length === 0) {
+            event.preventDefault();
+            trainerDanger.style.display = "block";
+        }
+    }
+
+    document.querySelector('form').addEventListener("submit", validateForm);
 
 </script>
 

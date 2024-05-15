@@ -34,7 +34,23 @@ namespace WCSTrainer.Pages.TrainingOrders
                 return Page();
             }
 
-            _context.Attach(TrainingOrder).State = EntityState.Modified;
+            var existingTrainingOrder = await _context.TrainingOrder.FindAsync(TrainingOrder.Id);
+            if (existingTrainingOrder == null) {
+                return NotFound();
+            }
+
+            existingTrainingOrder.status = TrainingOrder.status;
+            existingTrainingOrder.description = TrainingOrder.description;
+            existingTrainingOrder.createDate = TrainingOrder.createDate;
+            existingTrainingOrder.beginDate = TrainingOrder.beginDate;
+            existingTrainingOrder.location = TrainingOrder.location;
+            existingTrainingOrder.duration = TrainingOrder.duration;
+            existingTrainingOrder.trainee = TrainingOrder.trainee;
+            existingTrainingOrder.endDate = TrainingOrder.endDate;
+            existingTrainingOrder.medium = TrainingOrder.medium;
+            existingTrainingOrder.skill = TrainingOrder.skill;
+
+            _context.Entry(existingTrainingOrder).State = EntityState.Modified;
 
             try {
                 await _context.SaveChangesAsync();
@@ -48,7 +64,7 @@ namespace WCSTrainer.Pages.TrainingOrders
 
             return RedirectToPage("./Index");
         }
-
+        
         private bool TrainingOrderExists(int id) {
             return _context.TrainingOrder.Any(e => e.Id == id);
         }
