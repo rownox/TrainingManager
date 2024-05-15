@@ -35,6 +35,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
         }
 
         public async Task<IActionResult> OnPostAsync() {
+
             if (!ModelState.IsValid) {
                 return Page();
             }
