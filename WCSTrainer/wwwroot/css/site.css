@@ -3,18 +3,15 @@
     --gray2: #30383b;
     --gray3: #282e31;
 }
-
 * {
     padding: 0;
     margin: 0;
     user-select: none;
 }
-
 .main-title {
     font-size: 20px;
     margin-right: 40px;
 }
-
 nav {
     top: 0;
     display: flex;
@@ -23,7 +20,6 @@ nav {
     justify-content: center;
     margin-bottom: 50px;
 }
-
     nav ul {
         display: flex;
         flex-direction: row;
@@ -32,38 +28,34 @@ nav {
         max-width: 80%;
         height: 60px;
     }
-
     nav li {
         list-style: none;
         height: 100%;
         display: flex;
         align-items: center;
     }
-
         nav li a {
             display: flex;
             align-items: center;
             color: #bababa;
             font-size: 20px;
             text-decoration: none;
+            text-align: center;
             padding: 0 20px;
             height: 100%;
             width: 100%;
         }
-
         nav li a:hover {
             background-color: var(--gray3);
             color: white;
         }
 
-
-
 html {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     min-width: 100%;
-    
+    padding: 0;
+    margin: 0;
 }
-
 body {
     width: 100%;
     display: flex;
@@ -73,7 +65,6 @@ body {
     background-color: var(--gray1);
     color: white;
 }
-
 .content {
     display: flex;
     justify-content: flex-start;
@@ -82,13 +73,11 @@ body {
     width: 1500px;
     max-width: 80%;
 }
-
 .maintitle {
     margin-top: 100px;
     color: white;
     font-size: 50px;
 }
-
 .maintitle2 {
     margin-top: 10px;
     color: white;
@@ -103,7 +92,6 @@ body {
     display: flex;
     width: 100%;
 }
-
     .panel .body {
         display: flex;
         flex-direction: row;
@@ -111,14 +99,13 @@ body {
         width: 100%;
         min-height: 800px;
     }
-
         .panel .body .side-bar {
             display: flex;
             flex-direction: column;
-            width: 20%;
+            width: 200px;
+            min-width: 170px;
             background-color: var(--gray2);
         }
-
             .panel .body .side-bar ul {
                 display: flex;
                 flex-direction: column;
@@ -128,25 +115,19 @@ body {
             }
             .panel .body .side-bar a {
                 text-decoration: none;
-            }
-
-                .panel .body .side-bar a .li {
-                    width: 100%;
-                    color: #D9DADA;
-                    padding: 15px 20px;
-                }
-
-            .panel .body .side-bar .selected {
+                width: 100%;
+                color: #D9DADA;
                 padding: 15px 20px;
+            }
+                .panel .body .side-bar a:hover {
+                    background-color: var(--gray3);
+                    color: white;
+                }
+            .panel .body .side-bar .selected {
                 color: white;
                 background-color: var(--gray3);
                 border-bottom: 2px solid #76B5BA;
             }
-            .panel .body .side-bar .li:hover {
-                background-color: var(--gray3);
-                color: white;
-            }
-
         .panel .body .properties {
             padding: 40px;
             background-color: var(--gray3);
@@ -154,13 +135,11 @@ body {
             flex-direction: row;
             width: 80%;
         }
-
             .panel .body .properties .user-form {
                 display: flex;
                 flex-direction: column;
                 width: 100%;
             }
-
                 .panel .body .properties .user-form .title {
                     color: white;
                     font-size: 30px;
@@ -173,7 +152,7 @@ body {
                     color: white;
                     display: flex;
                     flex-direction: column;
-                    margin-top: 40px;
+                    margin-top: 30px;
                     width: 100%;
                 }
                 .panel .body .properties .user-form .btn {
@@ -185,19 +164,16 @@ body {
                     .panel .body .properties .user-form .btn:hover .form-drop {
                         display: block;
                     }
-
                 .panel .body .properties .user-form .field-container .form-group {
                     display: flex;
                     flex-direction: column;
                     width: 40%;
                 }
-
                     .panel .body .properties .user-form .field-container .form-group .labels {
                         display: flex;
                         flex-direction: row;
                         align-items: center;
                     }
-
                         .panel .body .properties .user-form .field-container .form-group .labels .control-label {
 
                         }
@@ -205,18 +181,15 @@ body {
                             color: #ff3434;
                             margin-left: 10px;
                         }
-
                     .panel .body .properties .user-form .field-container .form-group .form-control {
                         height: 25px;
                         margin-bottom: 20px;
                     }
-
                     .panel .body .properties .user-form .field-container .form-group textarea {
                         margin-bottom: 20px;
                         border-radius: 5px;
                         font-size: 15px;
                     }
-                    
                     .panel .body .properties .user-form .field-container .form-group .form-drop2 {
                         margin-bottom: 20px;
                         display: block;
@@ -228,14 +201,12 @@ body {
                         padding: 3px;
                         min-height: 30px;
                     }
-
                         .panel .body .properties .user-form .field-container .form-group .selections ul {
                             display: flex;
                             flex-direction: row;
                             flex-wrap: wrap;
                             
                         }
-
                             .panel .body .properties .user-form .field-container .form-group .selections ul li {
                                 list-style: none;
                                 background-color: var(--gray2);
@@ -245,7 +216,6 @@ body {
                                 margin: 2px;
 
                             }
-
                     .panel .body .properties .user-form .field-container .form-group .selectors {
                         display: flex;
                         flex-direction: row;
@@ -253,7 +223,6 @@ body {
                         width: 100%;
                         justify-content: space-between;
                     }
-
                         .panel .body .properties .user-form .field-container .form-group .selectors .selector {
                             display: flex;
                             flex-direction: column;
@@ -264,19 +233,16 @@ body {
                                 width: 100%;
                                 font-size: 15px;
                             }
-
                             .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop {
                                 display: none;
                                 color: black;
                                 font-size: 15px;
                                 width: 100%;
                             }
-
                                 .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul {
                                     list-style: none;
                                     width: 100%;
                                 }
-
                                     .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul li {
                                         cursor: pointer;
                                         padding: 5px;
@@ -285,36 +251,31 @@ body {
                                         .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul li:hover {
                                             background-color: #dbdbdb;
                                         }
-
                 .panel .body .properties .user-form .field-container .text-group {
                     display: flex;
                     flex-direction: row;
                     padding: 5px 0;
-                    width: 75%;
+                    width: 100%;
+                    max-width: 800px;
                     border-bottom: 1px solid #45494e;
                 }
                     .panel .body .properties .user-form .field-container .text-group .identifier {
                         height: 100%;
-                        width: 30%;
+                        width: 40%;
                     }
                     .panel .body .properties .user-form .field-container .text-group .info-content {
                         height: 100%;
-                        display: flex;
-                        align-items: flex-start;
-                        justify-content: space-between;
-                        width: 70%;
+                        width: 60%;
                     }
-
                     .panel .body .properties .user-form .field-container .text-group .title {
-                        font-size: 20px;
                         color: #a0a2a8;
                         margin: 0;
+                        font-size: 18px;
                     }
                     .panel .body .properties .user-form .field-container .text-group .info {
                         margin-left: 10px;
-                        font-size: 20px;
+                        font-size: 18px;
                     }
-
             .panel .body .properties .tools {
                 margin-left: 30px;
                 display: flex;
@@ -322,8 +283,11 @@ body {
                 color: white;
                 width: 30%;
             }
-
-                .panel .body .properties .tools .btn {
+                .panel .body .properties .tools .btns {
+                    display: flex;
+                    flex-direction: column;
+                }
+                .panel .body .properties .tools .btns .btn {
                     margin: 10px 0 0 0;
                     width: 45%;
                     text-align: center;
@@ -338,7 +302,6 @@ body {
                     border-bottom: 1px solid #808080;
                     margin-bottom: 20px;
                 }
-
                     .panel .body .properties .tools .search input {
                         height: 35px;
                         margin-top: 10px;
@@ -347,28 +310,23 @@ body {
                         font-size: 20px;
                         color: white;
                     }
-
                 .panel .body .properties .tools .selections {
                     margin-bottom: 20px;
                 }
-
                     .panel .body .properties .tools .selections .title {
                     }
                     .panel .body .properties .tools .selections .section {
                         margin-top: 10px;
                         display: flex;
                     }
-
                         .panel .body .properties .tools .selections .section .info {
                             margin-left: 7px;
                         }
-
             .panel .body .properties .order-list {
                 overflow-y: scroll;
                 width: 70%;
                 max-height: 750px;
             }
-
                 .panel .body .properties .order-list ul {
                     list-style: none;
                 }
@@ -381,7 +339,6 @@ body {
                     justify-content: space-between;
                     align-items: center;
                 }
-
                     .panel .body .properties .order-list li:hover {
                         background-color: #1f2223;
                     }
@@ -391,7 +348,6 @@ body {
                         flex-direction: column;
                         text-decoration: none;
                     }
-
                         .panel .body .properties .order-list li .info .title {
                             display: flex;
                             width: 100%;
@@ -405,11 +361,9 @@ body {
                             font-size: 15px;
                             color: #B2B3B4;
                         }
-
                             .panel .body .properties .order-list li .info .sub p {
                                 margin-right: 5px;
                             }
-
                     .panel .body .properties .order-list li .btn {
                         padding: 8px 10px;
                         font-size: 15px;
@@ -417,17 +371,14 @@ body {
                         align-items: center;
                         justify-content: center;
                     }
-
             .panel .body .properties .order-list2 {
                 overflow-y: scroll;
-                width: 100%;
                 max-height: 750px;
+                width: 100%;
             }
-
                 .panel .body .properties .order-list2 .sorters {
                     width: 100%;
                 }
-
                     .panel .body .properties .order-list2 .sorters .btn {
                         padding: 8px 10px;
                         margin: 10px 0;
@@ -435,33 +386,28 @@ body {
                     .panel .body .properties .order-list2 .sorters p {
                         color: white;
                     }
-
                 .panel .body .properties .order-list2 table {
-                    width: 100%;
                     padding-right: 20px;
+                    width: 100%;
                 }
-
                     .panel .body .properties .order-list2 table tr {
                         font-size: 18px;
                     }
                     .panel .body .properties .order-list2 table .clickable {
-
                     }
-
                         .panel .body .properties .order-list2 table .clickable:hover {
                             background-color: #1a1b1b;
                             cursor: pointer;
                         }
-
                     .panel .body .properties .order-list2 table tr td {
-                        color: #b1b6bb;
                         border-bottom: 1px solid #51565b;
+                        color: #b1b6bb;
                         height: 25px;
                     }
                     .panel .body .properties .order-list2 table tr th {
-                        color: white;
                         border-bottom: 1px solid white;
                         text-align: start;
+                        color: white;
                     }
 
 /*--------------------------------------------------------*/
@@ -511,7 +457,6 @@ body {
     top: 30vh;
     position: fixed;
 }
-
     .modal .one {
         display: flex;
         justify-content: flex-end;
@@ -522,7 +467,6 @@ body {
         align-items: center;
         gap: 10px;
     }
-
         .modal .two .title {
             font-size: 22px;
             font-weight: bold;
@@ -531,7 +475,6 @@ body {
             text-align: center;
             font-size: 18px;
         }
-
     .modal .three {
         display: flex;
         flex-direction: column;
@@ -575,3 +518,312 @@ body {
 .active    { color: #1fff38; }
 .awaiting  { color: #ffed20; }
 .completed { color: #ffffff; }
+
+
+@media only screen and (max-width: 600px) {
+
+    .main-title {
+        font-size: 3.5vw;
+    }
+    nav {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+        padding: 0;
+    }
+        nav ul {
+            max-width: 100%;
+            padding: 0 10px;
+            height: 50px;
+        }
+        nav li {
+            list-style: none;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            
+        }
+            nav li a {
+                font-size: 3.5vw;
+                padding: 0 15px;
+                height: 100%;
+            }
+    body {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .content {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .panel {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+        .panel .body {
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            min-height: 800px;
+        }
+            .panel .body .side-bar {
+                width: 100%;
+                max-width: 100%;
+            }
+                .panel .body .side-bar ul {
+                    flex-direction: row;
+                    width: 100%;
+                    padding: 0;
+                    margin: 0;
+                }
+                .panel .body .side-bar a {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    width: none;
+                    padding: 2% 5px;
+                    margin: 0;
+                    font-size: 3.5vw;
+                    border-bottom: 1px solid white;
+                }
+                    .panel .body .side-bar a:hover {
+                    }
+                .panel .body .side-bar .selected {
+                    border-bottom: none;
+                }
+            .panel .body .properties {
+                padding: 0;
+                flex-direction: column;
+                width: 100%;
+            }
+                .panel .body .properties .user-form {
+                    flex-direction: column;
+                    align-items: center;
+                    width: 100%;
+                }
+                    .panel .body .properties .user-form .title {
+                        font-size: 9vw;
+                        margin-bottom: 0;
+                        margin-top: 20px;
+                    }
+                    .panel .body .properties .user-form .description {
+                    }
+                    .panel .body .properties .user-form .field-container {
+                        align-items: center;
+                        margin-top: 40px;
+                        width: 100%;
+                    }
+                    .panel .body .properties .user-form .btn {
+                        margin-top: 5px;
+                        padding: 10px 0;
+                        width: 200px;
+                        font-size: 15px;
+                    }
+                        .panel .body .properties .user-form .btn:hover .form-drop {
+                        }
+                    .panel .body .properties .user-form .field-container .form-group {
+                        width: 100%;
+                    }
+                        .panel .body .properties .user-form .field-container .form-group .labels {
+                        }
+                            .panel .body .properties .user-form .field-container .form-group .labels .control-label {
+                            }
+                            .panel .body .properties .user-form .field-container .form-group .labels .text-danger {
+                                margin-left: 10px;
+                            }
+                        .panel .body .properties .user-form .field-container .form-group .form-control {
+                            height: 25px;
+                            margin-bottom: 20px;
+                        }
+                        .panel .body .properties .user-form .field-container .form-group textarea {
+                            margin-bottom: 20px;
+                            border-radius: 5px;
+                            font-size: 15px;
+                        }
+                        .panel .body .properties .user-form .field-container .form-group .form-drop2 {
+                            margin-bottom: 20px;
+                            height: 30px;
+                        }
+                        .panel .body .properties .user-form .field-container .form-group .selections {
+                            padding: 3px;
+                            min-height: 30px;
+                        }
+                            .panel .body .properties .user-form .field-container .form-group .selections ul {
+                                flex-direction: row;
+                                flex-wrap: wrap;
+                            }
+                                .panel .body .properties .user-form .field-container .form-group .selections ul li {
+                                    padding: 3px 10px;
+                                    border-radius: 20px;
+                                    margin: 2px;
+                                }
+                        .panel .body .properties .user-form .field-container .form-group .selectors {
+                            margin-bottom: 10px;
+                            width: 100%;
+                        }
+                            .panel .body .properties .user-form .field-container .form-group .selectors .selector {
+                                width: 48%;
+                            }
+                                .panel .body .properties .user-form .field-container .form-group .selectors .selector .btn {
+                                    padding: 10px 0;
+                                    width: 100%;
+                                    font-size: 15px;
+                                }
+                                .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop {
+                                    font-size: 15px;
+                                    width: 100%;
+                                }
+                                    .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul {
+                                        list-style: none;
+                                        width: 100%;
+                                    }
+                                        .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul li {
+                                            cursor: pointer;
+                                            padding: 5px;
+                                        }
+                                            .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul li:hover {
+                                            }
+                    .panel .body .properties .user-form .field-container .text-group {
+                        flex-direction: row;
+                        padding: 10px 0;
+                        width: 100%;
+
+                    }
+                        .panel .body .properties .user-form .field-container .text-group .identifier {
+                            padding-left: 10px;
+                            height: 100%;
+                            width: 30%;
+                        }
+                        .panel .body .properties .user-form .field-container .text-group .info-content {
+                            height: 100%;
+                            width: 70%;
+                        }
+                        .panel .body .properties .user-form .field-container .text-group .title {
+                            font-size: 4.5vw;
+                            margin: 0;
+                        }
+                        .panel .body .properties .user-form .field-container .text-group .info {
+                            margin-left: 10px;
+                            font-size: 4.5vw;
+                        }
+                .panel .body .properties .tools {
+                    margin-left: 0;
+                    flex-direction: column;
+                    align-items: center;
+                    width: 100%;
+                }
+                    .panel .body .properties .tools .btns {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                    }
+                        .panel .body .properties .tools .btns .btn {
+                            width: 35%;
+                            padding: 0 10px;
+                            font-size: 15px;
+                            margin-bottom: 10px;
+                        }
+                    .panel .body .properties .tools .search {
+                        text-align: center;
+                        width: 80%;
+                        height: 20px;
+                        flex-direction: column;
+                        border-bottom: 1px solid #808080;
+                        margin-bottom: 20px;
+                        padding: 5px;
+                    }
+                        .panel .body .properties .tools .search input {
+                            height: 50px;
+                            margin-top: 10px;
+                            margin-bottom: 20px;
+                        }
+                        .panel .body .properties .tools .search p {
+                            font-size: 20px;
+                        }
+                    .panel .body .properties .tools .selections {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        margin-bottom: 0;
+                        width: 100%;
+                        padding: 20px 0;
+                    }
+                        .panel .body .properties .tools .selections .title {
+                            
+                        }
+                        .panel .body .properties .tools .selections .section {
+                            margin-top: 5px;
+                            display: flex;
+                        }
+                            .panel .body .properties .tools .selections .section .info {
+                                margin-left: 7px;
+                            }
+                .panel .body .properties .order-list {
+                    overflow-y: scroll;
+                    width: 100%;
+                    height: 600px;
+                    border-bottom: 1px solid white;
+                }
+                    .panel .body .properties .order-list ul {
+                    }
+                    .panel .body .properties .order-list li {
+                        margin-right: 20px;
+                        padding: 10px;
+                    }
+                        .panel .body .properties .order-list li:hover {
+                        }
+                        .panel .body .properties .order-list li .info {
+                            width: 80%;
+                        }
+                            .panel .body .properties .order-list li .info .title {
+                                width: 100%;
+                                height: 100%;
+                                font-size: 17px;
+                            }
+                            .panel .body .properties .order-list li .info .sub {
+                                margin-top: 2px;
+                                font-size: 15px;
+                            }
+                                .panel .body .properties .order-list li .info .sub p {
+                                    margin-right: 5px;
+                                }
+                        .panel .body .properties .order-list li .btn {
+                            padding: 8px 10px;
+                            font-size: 15px;
+                        }
+                .panel .body .properties .order-list2 {
+                    width: 100%;
+                    max-height: 750px;
+                }
+                    .panel .body .properties .order-list2 .sorters {
+                        width: 100%;
+                    }
+                        .panel .body .properties .order-list2 .sorters .btn {
+                            padding: 8px 10px;
+                            margin: 10px 0;
+                        }
+                        .panel .body .properties .order-list2 .sorters p {
+                        }
+                    .panel .body .properties .order-list2 table {
+                        width: 100%;
+                        padding-right: 20px;
+                    }
+                        .panel .body .properties .order-list2 table tr {
+                            font-size: 18px;
+                        }
+                        .panel .body .properties .order-list2 table .clickable {
+                        }
+                            .panel .body .properties .order-list2 table .clickable:hover {
+                            }
+                        .panel .body .properties .order-list2 table tr td {
+                            height: 25px;
+                        }
+                        .panel .body .properties .order-list2 table tr th {
+                        }
+}
