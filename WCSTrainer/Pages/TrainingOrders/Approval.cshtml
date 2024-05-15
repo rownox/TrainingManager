@@ -177,7 +177,6 @@
     }
 
 
-    // Function to enable or disable the submit button based on the trainers list
     function toggleSubmitButton() {
         var submitButton = document.querySelector('input[type="submit"]');
         if (trainList.getElementsByTagName("li").length > 0) {
@@ -191,7 +190,6 @@
     trainList.addEventListener("DOMNodeInserted", toggleSubmitButton);
     trainList.addEventListener("DOMNodeRemoved", toggleSubmitButton);
 
-    // Function to validate the form before submission
     function validateForm(event) {
         if (trainList.getElementsByTagName("li").length === 0) {
             event.preventDefault();
@@ -199,7 +197,6 @@
         }
     }
 
-    // Add event listener to form submission
     document.querySelector('form').addEventListener("submit", validateForm);
 
 </script>

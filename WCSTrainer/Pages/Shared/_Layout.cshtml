@@ -8,22 +8,19 @@
     <link rel="stylesheet" href="~/WCSTrainer.styles.css" asp-append-version="true" />
 </head>
 
-<nav>
-    <ul>
-        <li class="main-title">WCS Trainer</li>
-        <li><a asp-page="/Index">Home</a></li>
-        <li><a asp-page="TrainingOrders/Index">Admin Panel</a></li>
-        <li><a asp-page="TrainingOrders/Index">My Panel</a></li>
-    </ul>
-</nav>
 <body>
+    <nav>
+        <ul>
+            <li class="main-title">WCS Trainer</li>
+            <li><a asp-page="/Index">Home</a></li>
+            <li><a asp-page="TrainingOrders/Index">Admin Panel</a></li>
+            <li><a asp-page="TrainingOrders/Index">My Panel</a></li>
+        </ul>
+    </nav>
+
     <div class="content">
         @RenderBody()
     </div>
-
-    <footer>
-
-    </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
