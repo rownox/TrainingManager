@@ -26,12 +26,12 @@
 <div class="panel">
     <div class="body">
         <div class="side-bar">
-            <div class="ul">
-                <a href=""><div class="li">Statistics</div></a>
-                <a href="TrainingOrders"><div class="selected">Training Orders</div></a>
-                <a href="Employees"><div class="li">Manage Employees</div></a>
-                <a href=""><div class="li">Account Settings</div></a>
-            </div>
+            <ul>
+                <a href="">Statistics</a>
+                <a href="TrainingOrders" class="selected">Training Orders</a>
+                <a href="Employees">Manage Employees</a>
+                <a href="">Account Settings</a>
+            </ul>
         </div>
 
         <div class="properties">
@@ -65,6 +65,7 @@
                     <p>Search for a training order ID:</p>
                     <input type="search">
                 </div>
+                
                 <div class="selections">
                     <p class="title">Show in List:</p>
                     <div class="section">
@@ -77,8 +78,10 @@
                         <input type="checkbox" id="aw" onchange="awaiting(this)" />
                         <p class="info">Awaiting Approval</p></div>
                 </div>
-                <a asp-page="Create" class="btn btnWhite">Create New Order</a>
-                <a asp-page="AllView" class="btn btnWhite">Database Planning</a>
+                <div class="btns">
+                    <a asp-page="Create" class="btn btnWhite">Create New Order</a>
+                    <a asp-page="AllView" class="btn btnWhite">Database Planning</a>
+                </div>
             </div>
         </div>
     </div>

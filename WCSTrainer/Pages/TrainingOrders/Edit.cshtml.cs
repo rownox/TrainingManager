@@ -42,8 +42,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             _context.Attach(TrainingOrder).State = EntityState.Modified;
 
-            //TrainingOrder.trainers = Request.Form["TrainingOrder.trainers"].ToList();
-
             try {
                 await _context.SaveChangesAsync();
             } catch (DbUpdateConcurrencyException) {
