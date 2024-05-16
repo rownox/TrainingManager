@@ -21,8 +21,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         public async Task<IActionResult> OnPostAsync() {
 
-            TrainingOrder.trainers.Clear();
-
             if (!ModelState.IsValid) {
                 return Page();
             }

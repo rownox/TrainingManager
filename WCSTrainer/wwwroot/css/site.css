@@ -553,17 +553,20 @@ body {
         max-width: 100%;
         margin: 0;
         padding: 0;
+        height: 100%;
     }
     .content {
         width: 100%;
         max-width: 100%;
         margin: 0;
         padding: 0;
+        height: 100%;
     }
     .panel {
         width: 100%;
         margin: 0;
         padding: 0;
+        height: 100%;
     }
         .panel .body {
             flex-direction: column;
@@ -601,6 +604,7 @@ body {
                 padding: 0;
                 flex-direction: column;
                 width: 100%;
+                height: 850px;
             }
                 .panel .body .properties .user-form {
                     flex-direction: column;
