@@ -196,7 +196,7 @@ body {
                     }
                     .panel .body .properties .user-form .field-container .form-group .selections {
                         display: flex;
-                        background-color: black;
+                        border-bottom: 1px solid var(--gray4);
                         padding: 3px;
                         min-height: 30px;
                     }
@@ -208,7 +208,7 @@ body {
                         }
                             .panel .body .properties .user-form .field-container .form-group .selections ul li {
                                 list-style: none;
-                                background-color: var(--gray2);
+                                background-color: #3d2b9b;
                                 cursor: pointer;
                                 padding: 3px 10px;
                                 border-radius: 20px;
@@ -221,16 +221,19 @@ body {
                         margin-bottom: 10px;
                         width: 100%;
                         justify-content: space-between;
+                        
                     }
                         .panel .body .properties .user-form .field-container .form-group .selectors .selector {
                             display: flex;
                             flex-direction: column;
                             width: 48%;
+                            
                         }
                             .panel .body .properties .user-form .field-container .form-group .selectors .selector .btn {
                                 padding: 10px 0;
                                 width: 100%;
                                 font-size: 15px;
+                                border-bottom: 1px solid var(--gray4);
                             }
                             .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop {
                                 display: none;
@@ -289,7 +292,7 @@ body {
                 .panel .body .properties .tools .btns .btn {
                     text-align: center;
                     text-decoration: none;
-                    padding: 5px;
+                    padding: 7px 5px;
                     border-bottom: 1px solid var(--gray4);
                     text-align: left;
                 }
@@ -395,7 +398,7 @@ body {
                     .panel .body .properties .order-list2 table .clickable {
                     }
                         .panel .body .properties .order-list2 table .clickable:hover {
-                            background-color: #1a1b1b;
+                            background-color: var(--gray4);
                             cursor: pointer;
                         }
                     .panel .body .properties .order-list2 table tr td {
@@ -417,7 +420,7 @@ body {
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    background-color: none;
+    background: none;
     border: none;
 }
 
