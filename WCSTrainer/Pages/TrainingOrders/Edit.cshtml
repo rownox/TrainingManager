@@ -39,7 +39,7 @@
                             </div>
                             <div class="selections">
                                 <ul id="trainerList">
-                                    @foreach (string trainerName in Model.TrainingOrder.trainers) {
+                                    @foreach (string trainerName in Model.trainersList) {
                                         <li>@trainerName</li>
                                     }
                                 </ul>
@@ -146,7 +146,6 @@
     var trainList = document.getElementById("trainerList");
     var groupList = document.getElementById("groupList");
     var indiList = document.getElementById("indiList");
-    var testList = document.getElementById("testList");
     var groups = document.getElementById("groups");
     var trainerDanger = document.getElementById("trainerDanger");
 
@@ -171,6 +170,7 @@
     trainList.addEventListener("click", function (event) {
         if (event.target.tagName === "LI") {
             event.target.remove();
+            updateTrainersInput();
         }
     });
 
@@ -190,7 +190,6 @@
         if (!trainList.innerHTML.includes(name)) {
             trainList.innerHTML += "<li>" + name + "</li>";
             updateTrainersInput();
-            testList.textContent = "g";
         }
         groups.selectedIndex = -1;
         individual.selectedIndex = -1;

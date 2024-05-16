@@ -20,6 +20,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         public IList<Employee> Employees { get; set; }
 
+        public string[] trainersList;
+
         public async Task<IActionResult> OnGetAsync(int? id) {
             Employees = await _context2.Employee.ToListAsync();
 
@@ -32,6 +34,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 return NotFound();
             }
             TrainingOrder = trainingorder;
+
+            trainersList = TrainingOrder.trainers.Split(',');
             return Page();
         }
 

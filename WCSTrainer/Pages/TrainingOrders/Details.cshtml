@@ -7,7 +7,6 @@
 
 <div class="panel">
     <div class="body">
-
         <div class="side-bar">
             <ul>
                 <a href="">Statistics</a>
@@ -16,7 +15,6 @@
                 <a href="">Account Settings</a>
             </ul>
         </div>
-
         <div class="properties">
             <div class="user-form">
                 <p class="title">Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
@@ -45,13 +43,10 @@
                             </div>
 
                             <div class="info-content">
-                                @foreach (string trainer in Model.TrainingOrder.trainers) {
-                                    <p class="info">@trainer</p>
-                                }
+                                <p class="info">@Model.TrainingOrder.trainers</p>
                             </div>
                         </div>
                     }
-
                     <div class="text-group">
                         <div class="identifier">
                             <p class="title">Trainee</p>
@@ -60,7 +55,6 @@
                             <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainee)</p>
                         </div>
                     </div>
-
                     <div class="text-group">
                         <div class="identifier">
                             <p class="title">Skill</p>
@@ -69,7 +63,6 @@
                             <p class="info">@Html.DisplayFor(model => model.TrainingOrder.skill)</p>
                         </div>
                     </div>
-
                     @if (!Model.TrainingOrder.status.Equals("Awaiting Approval")) {
                         <div class="text-group">
                             <div class="identifier">
@@ -88,7 +81,6 @@
                             </div>
                         </div>
                     }
-
                     <div class="text-group">
                         <div class="identifier">
                             <p class="title">Location</p>

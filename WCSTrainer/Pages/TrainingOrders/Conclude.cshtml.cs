@@ -26,6 +26,7 @@ namespace WCSTrainer.Pages.TrainingOrders
                 return NotFound();
             }
             TrainingOrder = trainingorder;
+
             return Page();
         }
 

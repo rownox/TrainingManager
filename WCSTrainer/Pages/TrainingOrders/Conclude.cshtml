@@ -23,7 +23,6 @@
 
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id"/>
-
                         
                         <input asp-for="TrainingOrder.description" type="hidden" />
                         <input asp-for="TrainingOrder.createDate" type="hidden" />
@@ -44,9 +43,7 @@
                                     <p class="title">Trainers</p>
                                 </div>
                                 <div class="info-content">
-                                    @foreach (string trainer in Model.TrainingOrder.trainers) {
-                                        <p class="info">@trainer</p>
-                                    }
+                                    <p class="info">@Model.TrainingOrder.trainers</p>
                                 </div>
                             </div>
                         }

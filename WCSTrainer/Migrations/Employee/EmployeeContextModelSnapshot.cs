@@ -45,9 +45,13 @@ namespace WCSTrainer.Migrations.Employee
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Trainings")
+                    b.Property<string>("Skills")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrainingOrders")
+                       .IsRequired()
+                       .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

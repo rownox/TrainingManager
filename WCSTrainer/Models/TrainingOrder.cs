@@ -2,7 +2,7 @@
     public class TrainingOrder {
         public int Id { get; set; }
         public string skill { get; set; }
-        public List<string> trainers { get; set; }
+        public string trainers { get; set; }
         public string trainee { get; set; }
         public DateOnly beginDate { get; set; }
         public DateOnly endDate { get; set; }
