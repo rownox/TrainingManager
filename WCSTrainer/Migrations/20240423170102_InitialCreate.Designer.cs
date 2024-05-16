@@ -57,7 +57,7 @@ namespace WCSTrainer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("duration")
+                    b.Property<int>("duration")
                         .IsRequired()
                         .HasColumnType("int");
 
@@ -72,6 +72,10 @@ namespace WCSTrainer.Migrations
                     b.Property<string>("skill")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("priorityLevel")
+                        .IsRequired()
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

@@ -12,5 +12,6 @@
         public string status { get; set; }
         public int duration { get; set; }
         public string description { get; set; }
+        public int priorityLevel { get; set; }
     }
 }
