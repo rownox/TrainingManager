@@ -11,7 +11,7 @@
         <div class="side-bar">
             <ul>
                 <a href="">Statistics</a>
-                <a asp-page="./Index" class="selected">Training Orders</a>
+                <a asp-page="./Index">Training Orders</a>
                 <a asp-page="./Index">Manage Employees</a>
                 <a href="">Account Settings</a>
             </ul>
@@ -21,7 +21,6 @@
             <div class="user-form">
                 <p class="title">Create New Training Order</p>
                 <p class="description">Fill out each required field.</p>
-                <hr />
                 <div class="field-container">
                     <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -96,7 +95,6 @@
                         </div>
                     </form>
                 </div>
-                <a asp-page="Index" class="btn btnBlue">Return To Menu</a>
             </div>
         </div>
     </div>
