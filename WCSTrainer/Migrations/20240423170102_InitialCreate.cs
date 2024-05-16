@@ -27,7 +27,8 @@ namespace WCSTrainer.Migrations
                     medium = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     duration = table.Column<int>(type: "int", nullable: false),
-                    description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    priorityLevel = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

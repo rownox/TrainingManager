@@ -55,6 +55,17 @@
                             <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainee)</p>
                         </div>
                     </div>
+
+                    <div class="text-group">
+                        <div class="identifier">
+                            <p class="title">Priority Level</p>
+                        </div>
+                        <div class="info-content">
+                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.priorityLevel)</p>
+                        </div>
+                    </div>
+
+
                     <div class="text-group">
                         <div class="identifier">
                             <p class="title">Skill</p>
@@ -63,6 +74,9 @@
                             <p class="info">@Html.DisplayFor(model => model.TrainingOrder.skill)</p>
                         </div>
                     </div>
+
+                    
+
                     @if (!Model.TrainingOrder.status.Equals("Awaiting Approval")) {
                         <div class="text-group">
                             <div class="identifier">
