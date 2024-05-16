@@ -10,7 +10,7 @@
         <div class="side-bar">
             <ul>
                 <a href="">Statistics</a>
-                <a asp-page="./Index" class="selected">Training Orders</a>
+                <a asp-page="./Index">Training Orders</a>
                 <a asp-page="./Index">Manage Employees</a>
                 <a href="">Account Settings</a>
             </ul>
@@ -18,7 +18,6 @@
         <div class="properties">
             <div class="user-form">
                 <p class="title">Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
-                <hr />
                 <div class="field-container">
                     <div class="text-group">
                         <div class="identifier">
@@ -29,6 +28,8 @@
                                 <p class="info awaiting">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
                             } else if (Model.TrainingOrder.status.Equals("Active")) {
                                 <p class="info active">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
+                            } else if (Model.TrainingOrder.status.Equals("Verified")) {
+                                <p class="info verified">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
                             } else {
                                 <p class="info completed">@Html.DisplayFor(model => model.TrainingOrder.status)</p>
                             }
@@ -137,7 +138,7 @@
                         </div>
                     </div>
 
-                    @if (Model.TrainingOrder.status.Equals("Completed")) {
+                    @if (Model.TrainingOrder.status.Equals("Completed") || Model.TrainingOrder.status.Equals("Verified")) {
                         <br></br>
                         <p style="font-size: 20px;">Verification</p>
                         <div class="text-group">
@@ -175,18 +176,17 @@
                     }
                 </div>
                 <br />
-                @if (!Model.TrainingOrder.status.Equals("Completed")) {
+                @if (!Model.TrainingOrder.status.Equals("Completed") & !Model.TrainingOrder.status.Equals("Verified")) {
                     <a class="btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
                         Edit Order
                     </a>
                 }
-                <a class="btn btnBlue" asp-page="./Index">Return To Menu</a>
-
                 @if (Model.TrainingOrder.status.Equals("Awaiting Approval")) {
                     <a class="btn btnRed" asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">
                         Approve Order
                     </a>
-                } else if (Model.TrainingOrder.status.Equals("Active")) {
+                } 
+                else if (Model.TrainingOrder.status.Equals("Active")) {
                     <a class="btn btnRed" asp-page="./Conclude" asp-route-id="@Model.TrainingOrder.Id">
                         Conclude Training
                     </a>

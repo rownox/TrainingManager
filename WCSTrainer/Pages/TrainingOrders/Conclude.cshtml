@@ -8,7 +8,7 @@
         <div class="side-bar">
             <ul>
                 <a href="">Statistics</a>
-                <a asp-page="./Index" class="selected">Training Orders</a>
+                <a asp-page="./Index">Training Orders</a>
                 <a asp-page="./Index">Manage Employees</a>
                 <a href="">Account Settings</a>
             </ul>
@@ -17,7 +17,6 @@
         <div class="properties">
             <div class="user-form">
                 <p class="title">Conclude Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
-                <hr />
                 <div class="field-container">
                     <form method="post">
 
@@ -99,7 +98,6 @@
                         </div>
                     </form>
                 </div>
-                <a asp-page="Index" class="btn btnBlue">Return To Menu</a>
             </div>
         </div>
     </div>

@@ -1,7 +1,8 @@
 :root {
     --gray1: #141516;
-    --gray2: #30383b;
-    --gray3: #282e31;
+    --gray2: #1b2124;
+    --gray3: #22272a;
+    --gray4: #45494e;
 }
 * {
     padding: 0;
@@ -16,9 +17,10 @@ nav {
     top: 0;
     display: flex;
     width: 100%;
-    background-color: var(--gray2);
+    background-color: black;
     justify-content: center;
     margin-bottom: 50px;
+    border-bottom: 1px solid var(--gray4);
 }
     nav ul {
         display: flex;
@@ -102,9 +104,8 @@ body {
         .panel .body .side-bar {
             display: flex;
             flex-direction: column;
-            width: 200px;
+            width: 250px;
             min-width: 170px;
-            background-color: var(--gray2);
         }
             .panel .body .side-bar ul {
                 display: flex;
@@ -117,7 +118,8 @@ body {
                 text-decoration: none;
                 width: 100%;
                 color: #D9DADA;
-                padding: 15px 20px;
+                padding: 10px 5px;
+                border-bottom: 1px solid var(--gray4);
             }
                 .panel .body .side-bar a:hover {
                     background-color: var(--gray3);
@@ -126,11 +128,9 @@ body {
             .panel .body .side-bar .selected {
                 color: white;
                 background-color: var(--gray3);
-                border-bottom: 2px solid #76B5BA;
             }
         .panel .body .properties {
             padding: 40px;
-            background-color: var(--gray3);
             display: flex;
             flex-direction: row;
             width: 80%;
@@ -143,7 +143,6 @@ body {
                 .panel .body .properties .user-form .title {
                     color: white;
                     font-size: 30px;
-                    margin-bottom: 40px;
                 }
                 .panel .body .properties .user-form .description {
                     color: white;
@@ -257,7 +256,7 @@ body {
                     padding: 5px 0;
                     width: 100%;
                     max-width: 800px;
-                    border-bottom: 1px solid #45494e;
+                    border-bottom: 1px solid var(--gray4);
                 }
                     .panel .body .properties .user-form .field-container .text-group .identifier {
                         height: 100%;
@@ -281,26 +280,24 @@ body {
                 display: flex;
                 flex-direction: column;
                 color: white;
-                width: 30%;
+                width: 25%;
             }
                 .panel .body .properties .tools .btns {
                     display: flex;
                     flex-direction: column;
                 }
                 .panel .body .properties .tools .btns .btn {
-                    margin: 10px 0 0 0;
-                    width: 45%;
                     text-align: center;
                     text-decoration: none;
-                    padding: 10px;
+                    padding: 5px;
+                    border-bottom: 1px solid var(--gray4);
+                    text-align: left;
                 }
                 .panel .body .properties .tools .search {
                     width: 100%;
                     display: flex;
                     height: 99px;
                     flex-direction: column;
-                    border-bottom: 1px solid #808080;
-                    margin-bottom: 20px;
                 }
                     .panel .body .properties .tools .search input {
                         height: 35px;
@@ -324,6 +321,8 @@ body {
                         }
             .panel .body .properties .order-list {
                 overflow-y: scroll;
+                scrollbar-width: none;
+                scroll-behavior: smooth;
                 width: 70%;
                 max-height: 750px;
             }
@@ -333,7 +332,7 @@ body {
                 .panel .body .properties .order-list li {
                     margin-right: 20px;
                     padding: 10px;
-                    border-bottom: 1px solid gray;
+                    border-bottom: 1px solid var(--gray4);
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
@@ -343,7 +342,7 @@ body {
                         background-color: #1f2223;
                     }
                     .panel .body .properties .order-list li .info {
-                        width: 80%;
+                        width: 100%;
                         display: flex;
                         flex-direction: column;
                         text-decoration: none;
@@ -415,28 +414,24 @@ body {
 /*--------------------------------------------------------*/
 
 .btn {
-    background-color: black;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    border: 1px solid black;
+    background-color: none;
+    border: none;
 }
 
-.btnWhite        { color: white;              }
-.btnWhite:hover  { background-color: #282828; }
-.btnWhite:active { border-color: #585858;     }
+.btnWhite        { color: white;                    }
+.btnWhite:hover  { background-color: var(--gray3);  }
 
 .btnBlue         { color: #31d9ff;            }
 .btnBlue:hover   { background-color: #0b2930; }
-.btnBlue:active  { border-color: #185362;     }
 
 .btnRed          { color: #ff4d4d;            }
-.btnRed:hover    { background-color: #2c0d0d; }
-.btnRed:active   { border-color: #5c1d1d;     }
+.btnRed:hover    { background-color: #481515; }
 
 .btnGreen        { color: #64ff76;            }
 .btnGreen:hover  { background-color: #102813; }
-.btnGreen:active { border-color: #235b2a;     }
 
 
 /*--------------------------------------------------------*/
@@ -515,9 +510,15 @@ body {
                      DELETION POPUP                     
 --------------------------------------------------------*/
 
-.active    { color: #1fff38; }
-.awaiting  { color: #ffed20; }
-.completed { color: #ffffff; }
+.active    { color: #81ff8f; }
+.awaiting  { color: #fff764; }
+.completed { color: #1bc0ff; }
+.verified { color: #ff6c6c; }
+
+button {
+    background: none;
+    border: none;
+}
 
 
 @media only screen and (max-width: 600px) {
@@ -697,7 +698,6 @@ body {
                         flex-direction: row;
                         padding: 10px 0;
                         width: 100%;
-
                     }
                         .panel .body .properties .user-form .field-container .text-group .identifier {
                             padding-left: 10px;
@@ -777,8 +777,8 @@ body {
                     .panel .body .properties .order-list ul {
                     }
                     .panel .body .properties .order-list li {
-                        margin-right: 20px;
-                        padding: 10px;
+                        margin-right: 0;
+                        padding: 10px 15px;
                     }
                         .panel .body .properties .order-list li:hover {
                         }
