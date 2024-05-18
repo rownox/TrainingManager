@@ -112,30 +112,29 @@
     var trainersInput = document.getElementById("trainersInput");
     var groupButton = document.getElementById("groupButton");
     var indiButton = document.getElementById("indiButton");
-    var individual = document.getElementById("individual");
     var trainList = document.getElementById("trainerList");
     var groupList = document.getElementById("groupList");
     var indiList = document.getElementById("indiList");
-    var groups = document.getElementById("groups");
     var trainerDanger = document.getElementById("trainerDanger");
   
     indiButton.addEventListener("click", function () {
-        if (individual.style.display == "flex") {
-            individual.style.display = "none";
-        } else {
-            individual.style.display = "flex";
-        }
-        groups.style.display = "none";
+        toggleDisplay("individual", "groups");
     });
 
     groupButton.addEventListener("click", function () {
-        if (groups.style.display == "flex") {
-            groups.style.display = "none";
-        } else {
-            groups.style.display = "flex";
-        }
-        individual.style.display = "none";
+        toggleDisplay("groups", "individual");
     });
+
+    function toggleDisplay(dropdown, other) {
+        var dropdownElement = document.getElementById(dropdown);
+        var hideElement = document.getElementById(other);
+        if (dropdownElement.style.display == "flex") {
+            dropdownElement.style.display = "none";
+        } else {
+            dropdownElement.style.display = "flex";
+        }
+        hideElement.style.display = "none";
+    }
 
     trainList.addEventListener("click", function (event) {
         if (event.target.tagName === "LI") {
