@@ -1,26 +1,36 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using WCSTrainer.Data;
+using WCSTrainer.Models;
 using WebApplication2.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
     public class CreateModel : PageModel {
-        private readonly WCSTrainer.Data.WCSTrainerContext _context;
+        private readonly WCSTrainerContext _context;
+        private readonly EmployeeContext _context2;
 
-        public CreateModel(WCSTrainer.Data.WCSTrainerContext context) {
+        public CreateModel(WCSTrainerContext context, EmployeeContext context2) {
             _context = context;
+            _context2 = context2;
         }
 
-        public IActionResult OnGet() {
+        public async Task<IActionResult> OnGetAsync() {
+            Employees = await _context2.Employee.ToListAsync();
             return Page();
         }
 
         [BindProperty]
-        public TrainingOrder TrainingOrder { get; set; } = default!;
+        public TrainingOrder TrainingOrder { get; set; } = new TrainingOrder();
 
-        public DateOnly day = DateOnly.FromDateTime(DateTime.Now);
+        public DateOnly Day { get; } = DateOnly.FromDateTime(DateTime.Now);
+
+        public IList<Employee> Employees { get; set; }
 
         public async Task<IActionResult> OnPostAsync() {
-
             if (!ModelState.IsValid) {
                 return Page();
             }

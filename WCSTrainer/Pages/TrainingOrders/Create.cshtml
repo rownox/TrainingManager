@@ -16,7 +16,6 @@
                 <a href="">Account Settings</a>
             </ul>
         </div>
-
         <div class="properties">
             <div class="user-form">
                 <p class="title">Create New Training Order</p>
@@ -24,74 +23,95 @@
                 <div class="field-container">
                     <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input asp-for="TrainingOrder.createDate" type="hidden" value="@Model.Day" />
+                        <input asp-for="TrainingOrder.trainers" type="hidden" value="Placeholder" />
+                        <input asp-for="TrainingOrder.beginDate" type="hidden" value="@Model.Day" />
+                        <input asp-for="TrainingOrder.endDate" type="hidden" value="@Model.Day" />
+                        <input asp-for="TrainingOrder.status" type="hidden" value="Awaiting Approval" />
                         <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">Trainee*</p>
-                                <span asp-validation-for="TrainingOrder.trainee" class="text-danger"></span>
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">Trainee*</p>
+                                    <span asp-validation-for="TrainingOrder.trainee" class="text-danger"></span>
+                                </div>
+                                <select asp-for="TrainingOrder.trainee" class="form-drop2">
+                                    @foreach (Models.Employee employee in Model.Employees) {
+                                        if (employee.Status.Equals("Trainee")) {
+                                            <option value="@employee.Id">@employee.FirstName @employee.LastName</option>
+                                        }
+                                    }
+                                </select>
                             </div>
-                            <input asp-for="TrainingOrder.trainee" class="form-control" />
-                            <input asp-for="TrainingOrder.createDate" type="hidden" value="@Model.day"/>
-                            <input asp-for="TrainingOrder.trainers" type="hidden" value="a"/>
-                            <input asp-for="TrainingOrder.beginDate" type="hidden" value="@Model.day"/>
-                            <input asp-for="TrainingOrder.endDate" type="hidden" value="@Model.day"/>
-                            <input asp-for="TrainingOrder.status" type="hidden" value="Awaiting Approval"/>
                         </div>
                         <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">Skill*</p>
-                                <span asp-validation-for="TrainingOrder.skill" class="text-danger"></span>
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">Skill*</p>
+                                    <span asp-validation-for="TrainingOrder.skill" class="text-danger"></span>
+                                </div>
+                                <input asp-for="TrainingOrder.skill" class="form-control" />
                             </div>
-                            <input asp-for="TrainingOrder.skill" class="form-control"/>
                         </div>
                         <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">Location*</p>
-                                <span asp-validation-for="TrainingOrder.location" class="text-danger"></span>
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">Location*</p>
+                                    <span asp-validation-for="TrainingOrder.location" class="text-danger"></span>
+                                </div>
+                                <select asp-for="TrainingOrder.location" class="form-drop2">
+                                    <option value="One">One</option>
+                                    <option value="Two">Two</option>
+                                    <option value="Three">Three</option>
+                                    <option value="Four">Four</option>
+                                </select>
                             </div>
-                            <select asp-for="TrainingOrder.location" class="form-drop2">
-                                <option value="One">One</option>
-                                <option value="Two">Two</option>
-                                <option value="Three">Three</option>
-                                <option value="Four">Four</option>
-                            </select>
                         </div>
                         <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">Medium*</p>
-                                <span asp-validation-for="TrainingOrder.medium" class="text-danger"></span>
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">Medium*</p>
+                                    <span asp-validation-for="TrainingOrder.medium" class="text-danger"></span>
+                                </div>
+                                <input asp-for="TrainingOrder.medium" class="form-control" />
                             </div>
-                            <input asp-for="TrainingOrder.medium" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">Session Duration* (Hours)</p>
-                                <span asp-validation-for="TrainingOrder.duration" class="text-danger"></span>
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">Session Duration* (Hours)</p>
+                                    <span asp-validation-for="TrainingOrder.duration" class="text-danger"></span>
+                                </div>
+                                <input asp-for="TrainingOrder.duration" class="form-control"/>
                             </div>
-                            <input asp-for="TrainingOrder.duration" class="form-control" />
-                        </div>
-
-                        <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">Priority Level*</p>
-                                <span asp-validation-for="TrainingOrder.priorityLevel" class="text-danger"></span>
-                            </div>
-                            <select asp-for="TrainingOrder.priorityLevel" class="form-drop2">
-                                <option value="3">3 - High</option>
-                                <option value="2">2 - Medium</option>
-                                <option value="1">1 - Low</option>
-                            </select>
-                        </div>
-
-
-                        <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">Description</p>
-                                <span asp-validation-for="TrainingOrder.description" class="text-danger"></span>
-                            </div>
-                            <input asp-for="TrainingOrder.description" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Create" class="btn btnGreen" />
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">Priority Level*</p>
+                                    <span asp-validation-for="TrainingOrder.priorityLevel" class="text-danger"></span>
+                                </div>
+                                <select asp-for="TrainingOrder.priorityLevel" class="form-drop2">
+                                    <option value="3">3 - High</option>
+                                    <option value="2">2 - Medium</option>
+                                    <option value="1">1 - Low</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">Description</p>
+                                    <span asp-validation-for="TrainingOrder.description" class="text-danger"></span>
+                                </div>
+                                <input asp-for="TrainingOrder.description" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form">
+                                <div class="btn-container">
+                                    <input type="submit" value="Create" class="btn bg-btn btnGreen" />
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>

@@ -18,7 +18,7 @@
     <div class="three">
         <form method="post">
             <input type="hidden" id="orderId" name="id" />
-            <button id="deleteBtn" class="btn-submit btn btnRed">Delete</button>
+            <button id="deleteBtn" class="btn bg-btn btnRed">Delete</button>
         </form>
     </div>
 </section>
@@ -41,12 +41,15 @@
             <div class="order-list">
                 <ul>
                     @foreach (var item in Model.TrainingOrder) {
-                        <li class="@item.status.ToString()">
+                        <li id="@item.Id.ToString() @Model.getEmployee(item.trainee)" class="@item.status.ToString() searchable">
                             <a asp-page="./Details" asp-route-id="@item.Id" class="info">
                                 <div class="title">
                                     <p>Training Order ID: @Html.DisplayFor(modelItem => item.Id) </p>
                                 </div>
-                                <div class="sub">Trainee - @Html.DisplayFor(modelItem => item.trainee)</div>
+                                <div class="sub">
+                                    <p>Trainee - </p>
+                                    @Model.getEmployee(item.trainee)
+                                </div>
                                 <div class="sub">
                                     <p>Status - </p>
                                     @if (item.status.Equals("Awaiting Approval")) {
@@ -60,7 +63,7 @@
                                     }
                                 </div>
                             </a>
-                            <a class="btn-open btn btnRed" onclick="openModal(@item.Id)">Delete</a>
+                            <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
                         </li>
                     }
                 </ul>
@@ -68,7 +71,7 @@
             <div class="tools">
                 <div class="search">
                     <p>Search for a training order ID:</p>
-                    <input type="search">
+                    <input type="search" onchange="update(this)">
                 </div>
                 <div class="selections">
                     <p class="title">Show in List:</p>
@@ -92,7 +95,7 @@
                 <div class="btns">
                     <a asp-page="Create" class="btn btnWhite">Create Training Order</a>
                     <a asp-page="AllView" class="btn btnWhite">Planning</a>
-                    <a asp-page="AllView" class="btn btnWhite">Scheduling</a>
+                    <a asp-page="Scheduling" class="btn btnWhite">Scheduling</a>
                 </div>
             </div>
         </div>
@@ -132,4 +135,23 @@
         toggleDisplay(checkboxElem.id, checkboxElem.checked);
     }
 
+    function update(searchElement) {
+        var value = searchElement.value.toLowerCase();
+        var elements = document.getElementsByClassName("searchable");
+
+        if (value == "") {
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].style.display = "flex";
+            }
+        } else {
+            for (var i = 0; i < elements.length; i++) {
+                var id = elements[i].id.toLowerCase(); 
+                if (id.indexOf(value) === -1) {
+                    elements[i].style.display = "none";
+                } else {
+                    elements[i].style.display = "flex";
+                }
+            }
+        }
+    }
 </script>
