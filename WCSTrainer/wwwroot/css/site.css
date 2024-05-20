@@ -1,9 +1,25 @@
 :root {
+    --black: black;
     --gray1: #141516;
     --gray2: #1b2124;
     --gray3: #22272a;
     --gray4: #45494e;
+    --textMain: white;
+    --textSub1: #b5b5b5;
+    --textSub2: #8a8a8a;
 }
+
+.light-mode {
+    --black: #efead8;
+    --gray1: #c8c4b6;
+    --gray2: #b5b09d;
+    --gray3: #e9e5d6;
+    --gray4: black;
+    --textMain: black;
+    --textSub1: black;
+    --textSub2: black;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -17,40 +33,57 @@ nav {
     top: 0;
     display: flex;
     width: 100%;
-    background-color: black;
+    background-color: var(--black);
     justify-content: center;
     margin-bottom: 50px;
     border-bottom: 1px solid var(--gray4);
 }
-    nav ul {
+    nav .nav-container {
         display: flex;
-        flex-direction: row;
         align-items: center;
         width: 1500px;
-        max-width: 80%;
-        height: 60px;
+        justify-content: space-between;
     }
-    nav li {
-        list-style: none;
-        height: 100%;
-        display: flex;
-        align-items: center;
-    }
-        nav li a {
-            display: flex;
-            align-items: center;
-            color: #bababa;
-            font-size: 20px;
-            text-decoration: none;
-            text-align: center;
-            padding: 0 20px;
-            height: 100%;
-            width: 100%;
+
+        nav .nav-container .nav-buttons {
+            width: 50%;
         }
-        nav li a:hover {
-            background-color: var(--gray3);
-            color: white;
+            nav .nav-container .nav-buttons ul {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                max-width: 80%;
+                height: 60px;
+            }
+
+                nav .nav-container .nav-buttons ul li {
+                    list-style: none;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                }
+                    nav .nav-container .nav-buttons ul li a {
+                        display: flex;
+                        align-items: center;
+                        color: var(--textSub1);
+                        font-size: 20px;
+                        text-decoration: none;
+                        text-align: center;
+                        padding: 0 20px;
+                        height: 100%;
+                        width: 100%;
+                    }
+                        nav .nav-container .nav-buttons ul li a:hover {
+                            background-color: var(--gray3);
+                            color: white;
+                        }
+
+        nav .nav-container .nav-options {
         }
+
+            nav .nav-container .nav-options a {
+                padding: 5px 10px;
+            }
 
 html {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -63,9 +96,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 60px;
     background-color: var(--gray1);
-    color: white;
+    color: var(--textMain);
 }
 .content {
     display: flex;
@@ -77,12 +109,12 @@ body {
 }
 .maintitle {
     margin-top: 100px;
-    color: white;
+    color: var(--textMain);
     font-size: 50px;
 }
 .maintitle2 {
     margin-top: 10px;
-    color: white;
+    color: var(--textMain);
     font-size: 40px;
 }
 
@@ -113,24 +145,24 @@ body {
                 width: 100%;
                 margin: 0;
                 padding: 0;
+
             }
             .panel .body .side-bar a {
                 text-decoration: none;
-                width: 100%;
-                color: #D9DADA;
+                color: var(--textSub1);
                 padding: 10px 5px;
                 border-bottom: 1px solid var(--gray4);
             }
                 .panel .body .side-bar a:hover {
                     background-color: var(--gray3);
-                    color: white;
+                    color: var(--textMain);
                 }
             .panel .body .side-bar .selected {
-                color: white;
+                color: var(--textMain);
                 background-color: var(--gray3);
             }
         .panel .body .properties {
-            padding: 40px;
+            padding: 10px 40px;
             display: flex;
             flex-direction: row;
             width: 80%;
@@ -141,64 +173,84 @@ body {
                 width: 100%;
             }
                 .panel .body .properties .user-form .title {
-                    color: white;
+                    color: var(--textMain);
                     font-size: 30px;
                 }
                 .panel .body .properties .user-form .description {
-                    color: white;
+                    color: var(--textMain);
                 }
                 .panel .body .properties .user-form .field-container {
-                    color: white;
+                    color: var(--textMain);
                     display: flex;
                     flex-direction: column;
                     margin-top: 30px;
                     width: 100%;
                 }
-                .panel .body .properties .user-form .btn {
-                    margin-top: 5px;
-                    padding: 10px 0;
-                    width: 200px;
-                    font-size: 15px;
-                }
-                    .panel .body .properties .user-form .btn:hover .form-drop {
-                        display: block;
-                    }
-                .panel .body .properties .user-form .field-container .form-group {
+                .panel .body .properties .user-form .btn-container {
+                    padding-top: 10px;
+                    width: 100%;
                     display: flex;
-                    flex-direction: column;
-                    width: 40%;
-                }
-                    .panel .body .properties .user-form .field-container .form-group .labels {
-                        display: flex;
-                        flex-direction: row;
-                        align-items: center;
-                    }
-                        .panel .body .properties .user-form .field-container .form-group .labels .control-label {
+                    flex-direction: row;
+                    gap: 10px;
 
-                        }
-                        .panel .body .properties .user-form .field-container .form-group .labels .text-danger {
-                            color: #ff3434;
-                            margin-left: 10px;
-                        }
-                    .panel .body .properties .user-form .field-container .form-group .form-control {
-                        height: 25px;
-                        margin-bottom: 20px;
-                    }
-                    .panel .body .properties .user-form .field-container .form-group textarea {
-                        margin-bottom: 20px;
-                        border-radius: 5px;
+                }
+                    .panel .body .properties .user-form .btn-container .btn {
+                        margin-top: 5px;
+                        padding: 6px 10px;
                         font-size: 15px;
                     }
+                        .panel .body .properties .user-form .btn-container .btn:hover .form-drop {
+                            display: block;
+                        }
+
+                .panel .body .properties .user-form .field-container .form-group {
+                    display: flex;
+                    flex-direction: row;
+                    min-width: 350px;
+                    width: 45%;
+                    gap: 20px;
+                    margin-bottom: 20px;
+                }
+                    .panel .body .properties .user-form .field-container .form-group .form {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        min-height: 45px;
+                    }
+
+                        .panel .body .properties .user-form .field-container .form-group .form .labels {
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                        }
+                            .panel .body .properties .user-form .field-container .form-group .form .labels .control-label {
+                            }
+                            .panel .body .properties .user-form .field-container .form-group .form .labels .text-danger {
+                                color: #ff3434;
+                                margin-left: 10px;
+                            }
+                    .panel .body .properties .user-form .field-container .form-group .form-control {
+                        width: 100%;
+                        border: none;
+                        height: 100%;
+                    }
+                    .panel .body .properties .user-form .field-container .form-group textarea {
+                        border-radius: 5px;
+                        font-size: 15px;
+                        border: none;
+                    }
                     .panel .body .properties .user-form .field-container .form-group .form-drop2 {
-                        margin-bottom: 20px;
                         display: block;
-                        height: 30px;
+                        width: 100%;
+                        border: none;
+                        height: 100%;
                     }
                     .panel .body .properties .user-form .field-container .form-group .selections {
                         display: flex;
                         border-bottom: 1px solid var(--gray4);
-                        padding: 3px;
+                        padding: 5px;
                         min-height: 30px;
+                        margin-bottom: 10px;
                     }
                         .panel .body .properties .user-form .field-container .form-group .selections ul {
                             display: flex;
@@ -230,10 +282,8 @@ body {
                             
                         }
                             .panel .body .properties .user-form .field-container .form-group .selectors .selector .btn {
-                                padding: 10px 0;
-                                width: 100%;
+                                padding: 6px 0;
                                 font-size: 15px;
-                                border-bottom: 1px solid var(--gray4);
                             }
                             .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop {
                                 display: none;
@@ -270,32 +320,34 @@ body {
                         width: 60%;
                     }
                     .panel .body .properties .user-form .field-container .text-group .title {
-                        color: #a0a2a8;
+                        color: var(--textSub1);
                         margin: 0;
                         font-size: 18px;
                     }
                     .panel .body .properties .user-form .field-container .text-group .info {
                         margin-left: 10px;
                         font-size: 18px;
+                        color: var(--textMain);
                     }
             .panel .body .properties .tools {
                 margin-left: 30px;
                 display: flex;
                 flex-direction: column;
-                color: white;
+                color: var(--textMain);
                 width: 25%;
             }
                 .panel .body .properties .tools .btns {
                     display: flex;
                     flex-direction: column;
                 }
-                .panel .body .properties .tools .btns .btn {
-                    text-align: center;
-                    text-decoration: none;
-                    padding: 7px 5px;
-                    border-bottom: 1px solid var(--gray4);
-                    text-align: left;
-                }
+                    .panel .body .properties .tools .btns .btn {
+                        text-align: center;
+                        text-decoration: none;
+                        padding: 7px 5px;
+                        border-bottom: 1px solid var(--gray4);
+                        text-align: left;
+                        color: var(--textMain);
+                    }
                 .panel .body .properties .tools .search {
                     width: 100%;
                     display: flex;
@@ -308,7 +360,7 @@ body {
                     }
                     .panel .body .properties .tools .search p {
                         font-size: 20px;
-                        color: white;
+                        color: var(--textMain);
                     }
                 .panel .body .properties .tools .selections {
                     margin-bottom: 20px;
@@ -342,7 +394,7 @@ body {
                     align-items: center;
                 }
                     .panel .body .properties .order-list li:hover {
-                        background-color: #1f2223;
+                        background-color: var(--gray3);
                     }
                     .panel .body .properties .order-list li .info {
                         width: 100%;
@@ -354,20 +406,20 @@ body {
                             display: flex;
                             width: 100%;
                             height: 100%;
-                            color: white;
+                            color: var(--textMain);
                             font-size: 17px;
                         }
                         .panel .body .properties .order-list li .info .sub {
                             display: flex;
                             margin-top: 2px;
                             font-size: 15px;
-                            color: #B2B3B4;
+                            color: var(--textSub2);
                         }
                             .panel .body .properties .order-list li .info .sub p {
                                 margin-right: 5px;
                             }
                     .panel .body .properties .order-list li .btn {
-                        padding: 8px 10px;
+                        padding: 6px 10px;
                         font-size: 15px;
                         display: flex;
                         align-items: center;
@@ -377,17 +429,30 @@ body {
                 overflow-y: scroll;
                 max-height: 750px;
                 width: 100%;
+                scrollbar-width: none;
             }
                 .panel .body .properties .order-list2 .sorters {
                     width: 100%;
+                    display: flex;
+                    flex-direction: column;
                 }
-                    .panel .body .properties .order-list2 .sorters .btn {
-                        padding: 8px 10px;
-                        margin: 10px 0;
-                    }
                     .panel .body .properties .order-list2 .sorters p {
                         color: white;
+                        font-size: 15px;
                     }
+
+                    .panel .body .properties .order-list2 .sorters .btns {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 10px;
+                    }
+
+                        .panel .body .properties .order-list2 .sorters .btns .btn {
+                            padding: 8px 10px;
+                            margin: 10px 0;
+                            font-size: 15px;
+                        }
+                    
                 .panel .body .properties .order-list2 table {
                     padding-right: 20px;
                     width: 100%;
@@ -420,21 +485,52 @@ body {
     text-align: center;
     text-decoration: none;
     cursor: pointer;
+}
+
+.nbg-btn {
     background: none;
     border: none;
 }
 
-.btnWhite        { color: white;                    }
-.btnWhite:hover  { background-color: var(--gray3);  }
+.bg-btn {
+    border: 1px solid var(--gray4);
+    background-color: var(--gray2);
+    border-radius: 5px;
+}
 
-.btnBlue         { color: #31d9ff;            }
-.btnBlue:hover   { background-color: #0b2930; }
+.btnWhite {
+    color: var(--textMain);
+}
+    .btnWhite:hover {
+        background-color: var(--gray3);
+    }
 
-.btnRed          { color: #ff4d4d;            }
-.btnRed:hover    { background-color: #481515; }
+.btnBlue {
+    color: #31d9ff;
+}
+    .btnBlue:hover {
+        border-color: black;
+        background-color: #0b2930;
+        color: white;
+    }
 
-.btnGreen        { color: #64ff76;            }
-.btnGreen:hover  { background-color: #102813; }
+.btnRed {
+    color: #ff4d4d;
+}
+    .btnRed:hover {
+        border-color: black;
+        background-color: #d42f2f;
+        color: white;
+    }
+
+.btnGreen {
+    color: #64ff76;
+}
+    .btnGreen:hover {
+        border-color: black;
+        background-color: #00740d;
+        color: white;
+    }
 
 
 /*--------------------------------------------------------*/
@@ -448,12 +544,13 @@ body {
     padding: 1.3rem;
     min-height: 250px;
     position: absolute;
-    background-color: var(--gray2);
+    background-color: var(--gray1);
     z-index: 2;
-    color: white;
+    color: var(--textMain);
     gap: 30px;
     top: 30vh;
     position: fixed;
+    border: 1px solid var(--gray4);
 }
     .modal .one {
         display: flex;
@@ -479,16 +576,17 @@ body {
         align-items: center;
     }
 
+        .modal .three .btn {
+            padding: 10px 50px;
+            font-size: 15px;
+        }
+
 .btn-close {
     top: 10px;
     text-align: center;
     padding: 3px 8px;
     border-radius: 50%;
     font-size: 20px;
-}
-.btn-submit {
-    padding: 10px 50px;
-    font-size: 15px;
 }
 .overlay {
     display: flex;
@@ -638,17 +736,20 @@ button {
                     .panel .body .properties .user-form .field-container .form-group {
                         width: 100%;
                     }
-                        .panel .body .properties .user-form .field-container .form-group .labels {
+                        .panel .body .properties .user-form .field-container .form-group .form {
+                            
                         }
-                            .panel .body .properties .user-form .field-container .form-group .labels .control-label {
+                            .panel .body .properties .user-form .field-container .form-group .form .labels {
                             }
-                            .panel .body .properties .user-form .field-container .form-group .labels .text-danger {
-                                margin-left: 10px;
+                                .panel .body .properties .user-form .field-container .form-group .form .labels .control-label {
+                                }
+                                .panel .body .properties .user-form .field-container .form-group .form .labels .text-danger {
+                                    margin-left: 10px;
+                                }
+                            .panel .body .properties .user-form .field-container .form-group .form .form-control {
+                                height: 25px;
+                                margin-bottom: 20px;
                             }
-                        .panel .body .properties .user-form .field-container .form-group .form-control {
-                            height: 25px;
-                            margin-bottom: 20px;
-                        }
                         .panel .body .properties .user-form .field-container .form-group textarea {
                             margin-bottom: 20px;
                             border-radius: 5px;

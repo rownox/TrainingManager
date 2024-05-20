@@ -33,73 +33,79 @@
                         <input asp-for="TrainingOrder.skill" type="hidden" />
 
                         <div class="form-group">
-
-                            <div class="labels">
-                                <p class="control-label">Trainers</p>
-                                <p id="trainerDanger" class="text-danger" style="display: none;">Please select at least one trainer.</p>
-                            </div>
-                            <div class="selections">
-                                <ul id="trainerList">
-                                </ul>
-                            </div>
-                            <div class="selectors">
-                                <div class="selector">
-                                    <div class="btn btnWhite" id="indiButton"><p>Individual</p></div>
-                                    <div class="form-drop" id="individual">
-                                        <ul id="indiList">
-                                            @foreach (Models.Employee employee in Model.Employees) {
-                                                if (employee.Status.Equals("Trainer")) {
-                                                    <li>@employee.FirstName @employee.LastName</li>
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">Trainers</p>
+                                    <p id="trainerDanger" class="text-danger" style="display: none;">Please select at least one trainer.</p>
+                                </div>
+                                <div class="selections">
+                                    <ul id="trainerList">
+                                    </ul>
+                                </div>
+                                <div class="selectors">
+                                    <div class="selector">
+                                        <div class="btn bg-btn btnWhite" id="indiButton"><p>Individual</p></div>
+                                        <div class="form-drop" id="individual">
+                                            <ul id="indiList">
+                                                @foreach (Models.Employee employee in Model.Employees) {
+                                                    if (employee.Status.Equals("Trainer")) {
+                                                        <li>@employee.FirstName @employee.LastName</li>
+                                                    }
                                                 }
-                                            }
-                                        </ul>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="selector">
+                                        <div class="btn bg-btn btnWhite" id="groupButton"><p>Groups</p></div>
+                                        <div class="form-drop" id="groups">
+                                            <ul id="groupList">
+                                                <li>HR</li>
+                                                <li>Shipping</li>
+                                                <li>Sales</li>
+                                                <li>Engineering</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="selector">
-                                    <div class="btn btnWhite" id="groupButton"><p>Groups</p></div>
-                                    <div class="form-drop" id="groups">
-                                        <ul id="groupList">
-                                            <li>HR</li>
-                                            <li>Shipping</li>
-                                            <li>Sales</li>
-                                            <li>Engineering</li>
-                                        </ul>
-                                    </div>
+                                <input id="trainersInput" asp-for="TrainingOrder.trainers" type="hidden" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">Begin Date*</p>
+                                    <span asp-validation-for="TrainingOrder.beginDate" class="text-danger"></span>
                                 </div>
+                                <input type="date" asp-for="TrainingOrder.beginDate" class="form-control" />
                             </div>
-                            <input id="trainersInput" asp-for="TrainingOrder.trainers" type="hidden" />
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">End Date*</p>
+                                    <span asp-validation-for="TrainingOrder.endDate" class="text-danger"></span>
+                                </div>
+                                <input type="date" asp-for="TrainingOrder.endDate" class="form-control" />
+                            </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">Priority Level*</p>
+                                    <span asp-validation-for="TrainingOrder.priorityLevel" class="text-danger"></span>
+                                </div>
+                                <select asp-for="TrainingOrder.priorityLevel" class="form-drop2">
+                                    <option value="3">3 - High</option>
+                                    <option value="2">2 - Medium</option>
+                                    <option value="1">1 - Low</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">Begin Date*</p>
-                                <span asp-validation-for="TrainingOrder.beginDate" class="text-danger"></span>
+                            <div class="btn-container">
+                                <input type="submit" value="Approve" class="btn bg-btn btnGreen" />
                             </div>
-                            <input type="date" asp-for="TrainingOrder.beginDate" class="form-control" />
-                        </div>
-
-                        <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">End Date*</p>
-                                <span asp-validation-for="TrainingOrder.endDate" class="text-danger"></span>
-                            </div>
-                            <input type="date" asp-for="TrainingOrder.endDate" class="form-control" />
-                        </div>
-
-                        <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">Priority Level*</p>
-                                <span asp-validation-for="TrainingOrder.priorityLevel" class="text-danger"></span>
-                            </div>
-                            <select asp-for="TrainingOrder.priorityLevel" class="form-drop2">
-                                <option value="3">3 - High</option>
-                                <option value="2">2 - Medium</option>
-                                <option value="1">1 - Low</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="submit" value="Save" class="btn btnGreen" />
                         </div>
                     </form>
                 </div>

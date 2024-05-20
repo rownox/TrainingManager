@@ -53,7 +53,11 @@
                             <p class="title">Trainee</p>
                         </div>
                         <div class="info-content">
-                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainee)</p>
+                            @foreach (Models.Employee employee in Model.Employees) {
+                                if (employee.Id.ToString().Equals(Model.TrainingOrder.trainee)) {
+                                    <p class="info">@employee.FirstName @employee.LastName</p>
+                                }
+                            }
                         </div>
                     </div>
 
@@ -138,7 +142,7 @@
                         </div>
                     </div>
 
-                    @if (Model.TrainingOrder.status.Equals("Completed") || Model.TrainingOrder.status.Equals("Verified")) {
+                    @if (Model.TrainingOrder.status.Equals("Verified")) {
                         <br></br>
                         <p style="font-size: 20px;">Verification</p>
                         <div class="text-group">
@@ -176,21 +180,26 @@
                     }
                 </div>
                 <br />
-                @if (!Model.TrainingOrder.status.Equals("Completed") & !Model.TrainingOrder.status.Equals("Verified")) {
-                    <a class="btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
-                        Edit Order
-                    </a>
-                }
-                @if (Model.TrainingOrder.status.Equals("Awaiting Approval")) {
-                    <a class="btn btnRed" asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">
-                        Approve Order
-                    </a>
-                } 
-                else if (Model.TrainingOrder.status.Equals("Active")) {
-                    <a class="btn btnRed" asp-page="./Conclude" asp-route-id="@Model.TrainingOrder.Id">
-                        Conclude Training
-                    </a>
-                }
+                <div class="btn-container">
+                    @if (!Model.TrainingOrder.status.Equals("Completed") & !Model.TrainingOrder.status.Equals("Verified")) {
+                        <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
+                            Edit Order
+                        </a>
+                    }
+                    @if (Model.TrainingOrder.status.Equals("Awaiting Approval")) {
+                        <a class="btn bg-btn btnRed" asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">
+                            Approve Order
+                        </a>
+                    } else if (Model.TrainingOrder.status.Equals("Active")) {
+                        <a class="btn bg-btn btnRed" asp-page="./Conclude" asp-route-id="@Model.TrainingOrder.Id">
+                            Conclude Order
+                        </a>
+                    } else if (Model.TrainingOrder.status.Equals("Completed")) {
+                        <a class="btn bg-btn btnRed" asp-page="./Verification" asp-route-id="@Model.TrainingOrder.Id">
+                            Verify Order
+                        </a>
+                    }
+                </div>
             </div>
         </div>
     </div>

@@ -19,48 +19,55 @@
 
         <div class="properties">
             <div class="user-form">
-                <p class="title">Create New Training Order</p>
-                <p class="description">Fill out each required field.</p>
-                <hr />
+                <p class="title">Register New Employee</p>
                 <div class="field-container">
                     <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input asp-for="Employee.TrainingOrders" type="hidden" value="1" />
+                        <input asp-for="Employee.Availability" type="hidden" value="None" />
                         <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">First Name*</p>
-                                <span asp-validation-for="Employee.FirstName" class="text-danger"></span>
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">First Name*</p>
+                                    <span asp-validation-for="Employee.FirstName" class="text-danger"></span>
+                                </div>
+                                <input asp-for="Employee.FirstName" class="form-control" />
                             </div>
-                            <input asp-for="Employee.FirstName" class="form-control" />
-                            <input asp-for="Employee.TrainingOrders" type="hidden" value="a" />
-                            <input asp-for="Employee.Availability" type="hidden" value="a" />
                         </div>
                         <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">Last Name*</p>
-                                <span asp-validation-for="Employee.LastName" class="text-danger"></span>
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">Last Name*</p>
+                                    <span asp-validation-for="Employee.LastName" class="text-danger"></span>
+                                </div>
+                                <input asp-for="Employee.LastName" class="form-control" />
                             </div>
-                            <input asp-for="Employee.LastName" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">Status*</p>
-                                <span asp-validation-for="Employee.Status" class="text-danger"></span>
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">Status*</p>
+                                    <span asp-validation-for="Employee.Status" class="text-danger"></span>
+                                </div>
+                                <input asp-for="Employee.Status" class="form-control" />
                             </div>
-                            <input asp-for="Employee.Status" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <div class="labels">
-                                <p class="control-label">Skills*</p>
-                                <span asp-validation-for="Employee.Skills" class="text-danger"></span>
+                            <div class="form">
+                                <div class="labels">
+                                    <p class="control-label">Skills*</p>
+                                    <span asp-validation-for="Employee.Skills" class="text-danger"></span>
+                                </div>
+                                <input asp-for="Employee.Skills" class="form-control" />
                             </div>
-                            <input asp-for="Employee.Skills" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Create" class="btn btnGreen" />
+                            <div class="btn-container">
+                                <input type="submit" value="Create" class="btn bg-btn btnGreen" />
+                            </div>
                         </div>
                     </form>
                 </div>
-                <a asp-page="Index" class="btn btnBlue">Return To Menu</a>
             </div>
         </div>
     </div>
