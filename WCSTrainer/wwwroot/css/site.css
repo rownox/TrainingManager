@@ -8,6 +8,14 @@
     --textSub1: #a0a9b4;
     --textSub2: #787f87;
     --mainTheme: #3d2b9b;
+    --red1: #ff4d4d;
+    --red2: #d81d1d;
+    --blue1: #1bc0ff;
+    --blue2: #0a8dbf;
+    --green1: #81ff8f;
+    --green2: #0fb021;
+    --yellow1: #fff764;
+    --yellow2: #d8ce13;
 }
 
 .light-mode {
@@ -20,6 +28,14 @@
     --textSub1: black;
     --textSub2: black;
     --mainTheme: #ffffff;
+    --red1: #e00606;
+    --red2: #d81d1d;
+    --blue1: black;
+    --blue2: black;
+    --green1: black;
+    --green2: black;
+    --yellow1: black;
+    --yellow2: black;
 }
 
 * {
@@ -47,7 +63,6 @@ nav {
         justify-content: space-between;
         max-width: 80%;
     }
-
         nav .nav-container .nav-buttons {
             width: 50%;
         }
@@ -58,7 +73,6 @@ nav {
                 
                 height: 60px;
             }
-
                 nav .nav-container .nav-buttons ul li {
                     list-style: none;
                     height: 100%;
@@ -80,10 +94,8 @@ nav {
                             background-color: var(--gray3);
                             color: var(--textMain);
                         }
-
         nav .nav-container .nav-options {
         }
-
             nav .nav-container .nav-options a {
                 padding: 5px 10px;
             }
@@ -148,7 +160,6 @@ body {
                 width: 100%;
                 margin: 0;
                 padding: 0;
-
             }
             .panel .body .side-bar a {
                 text-decoration: none;
@@ -195,7 +206,6 @@ body {
                     display: flex;
                     flex-direction: row;
                     gap: 10px;
-
                 }
                     .panel .body .properties .user-form .btn-container .btn {
                         margin-top: 5px;
@@ -205,7 +215,6 @@ body {
                         .panel .body .properties .user-form .btn-container .btn:hover .form-drop {
                             display: block;
                         }
-
                 .panel .body .properties .user-form .field-container .form-group {
                     display: flex;
                     flex-direction: row;
@@ -220,7 +229,6 @@ body {
                         flex-direction: column;
                         min-height: 45px;
                     }
-
                         .panel .body .properties .user-form .field-container .form-group .form .labels {
                             display: flex;
                             flex-direction: row;
@@ -259,7 +267,6 @@ body {
                             display: flex;
                             flex-direction: row;
                             flex-wrap: wrap;
-                            
                         }
                             .panel .body .properties .user-form .field-container .form-group .selections ul li {
                                 list-style: none;
@@ -276,7 +283,6 @@ body {
                         margin-bottom: 10px;
                         width: 100%;
                         justify-content: space-between;
-                        
                     }
                         .panel .body .properties .user-form .field-container .form-group .selectors .selector {
                             display: flex;
@@ -426,6 +432,7 @@ body {
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        margin-left: 5px;
                     }
             .panel .body .properties .order-list2 {
                 overflow-y: scroll;
@@ -442,19 +449,16 @@ body {
                         color: var(--textMain);
                         font-size: 15px;
                     }
-
                     .panel .body .properties .order-list2 .sorters .btns {
                         display: flex;
                         flex-direction: row;
                         gap: 10px;
                     }
-
                         .panel .body .properties .order-list2 .sorters .btns .btn {
                             padding: 8px 10px;
                             margin: 10px 0;
                             font-size: 15px;
                         }
-                    
                 .panel .body .properties .order-list2 table {
                     padding-right: 20px;
                     width: 100%;
@@ -478,7 +482,6 @@ body {
                         text-align: start;
                         color: var(--textMain);
                     }
-
             .panel .body .properties .scheduling {
                 width: 100%;
                 display: flex;
@@ -494,16 +497,17 @@ body {
                     height: 100%;
                 }
                     .panel .body .properties .scheduling .main-view .schedule {
-                        width: 80%;
                         height: 100%;
                         display: flex;
                         flex-wrap: wrap;
                         align-content: flex-start;
                         gap: 10px;
+                        max-width: 850px;
+                        margin-right: 20px;
                     }
                         .panel .body .properties .scheduling .main-view .schedule .month {
-                            width: 200px;
-                            min-height: 220px;
+                            width: 180px;
+                            min-height: 200px;
                             display: flex;
                             flex-direction: column;
                             background-color: var(--gray2);
@@ -530,14 +534,33 @@ body {
                                     padding: 3px 5px;
                                     background-color: var(--mainTheme);
                                     font-size: 13px;
+                                    border-radius: 5px;
                                 }
                             .panel .body .properties .scheduling .main-view .schedule .month .stats {
+                                padding: 5px;
                                 color: var(--textSub2);
                             }
                     .panel .body .properties .scheduling .main-view .options {
                         height: 100%;
-                        width: 20%;
+                        min-width: 250px;
+                        display: flex;
+                        flex-direction: column;
                     }
+                        .panel .body .properties .scheduling .main-view .options .search {
+
+                        }
+                        .panel .body .properties .scheduling .main-view .options .selections {
+
+                        }
+                        .panel .body .properties .scheduling .main-view .options .buttons {
+                            display: flex;
+                            flex-direction: column;
+                        }
+                            .panel .body .properties .scheduling .main-view .options .buttons .btn {
+                                display: flex;
+                                border-bottom: 1px solid var(--gray4);
+                                padding: 6px 0;
+                            }
 
 /*--------------------------------------------------------*/
 /*                   UNIVERSAL BUTTONS                    */
@@ -548,49 +571,43 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
-
 .nbg-btn {
     background: none;
     border: none;
 }
-
 .bg-btn {
     border: 1px solid var(--gray4);
     background-color: var(--gray2);
     border-radius: 5px;
 }
-
 .btnWhite {
     color: var(--textMain);
 }
     .btnWhite:hover {
         background-color: var(--gray3);
     }
-
 .btnBlue {
-    color: #31d9ff;
+    color: var(--blue1);
 }
     .btnBlue:hover {
         border-color: black;
-        background-color: #0b2930;
+        background-color: var(--blue2);
         color: white;
     }
-
 .btnRed {
-    color: #ff4d4d;
+    color: var(--red1);
 }
     .btnRed:hover {
         border-color: black;
-        background-color: #d42f2f;
+        background-color: var(--red2);
         color: white;
     }
-
 .btnGreen {
-    color: #64ff76;
+    color: var(--green1);
 }
     .btnGreen:hover {
         border-color: black;
-        background-color: #00740d;
+        background-color: var(--green2);
         color: white;
     }
 
@@ -637,12 +654,10 @@ body {
         flex-direction: column;
         align-items: center;
     }
-
         .modal .three .btn {
             padding: 10px 50px;
             font-size: 15px;
         }
-
 .btn-close {
     top: 10px;
     text-align: center;
@@ -674,23 +689,21 @@ body {
 --------------------------------------------------------*/
 
 .active {
-    color: #81ff8f;
+    color: var(--green1);
 }
 .awaiting {
-    color: #fff764;
+    color: var(--yellow1);
 }
 .completed {
-    color: #1bc0ff;
+    color: var(--blue1);
 }
 .verified {
-    color: #ff6c6c;
+    color: var(--red1);
 }
-
 button {
     background: none;
     border: none;
 }
-
 
 @media only screen and (max-width: 600px) {
 

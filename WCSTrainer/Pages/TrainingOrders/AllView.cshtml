@@ -16,6 +16,7 @@
                     <div class="btns">
                         <button onclick="sortTable(4)" class="btn bg-btn btnWhite">Begin Date</button>
                         <button onclick="sortTable(0)" class="btn bg-btn btnWhite">ID Number</button>
+                        <button onclick="sortTable(6)" class="btn bg-btn btnWhite">Priority Level</button>
                     </div>
                 </div>
                 <table id="dataTable">
@@ -26,6 +27,7 @@
                         <th>Skill</th>
                         <th>Begin Date</th>
                         <th>End Date</th>
+                        <th>Priority Level</th>
                     </tr>
                     @foreach (var item in Model.TrainingOrder) {
                         <tr class="clickable">
@@ -35,6 +37,7 @@
                             <td>@Html.DisplayFor(modelItem => item.skill)</td>
                             <td>@Html.DisplayFor(modelItem => item.beginDate)</td>
                             <td>@Html.DisplayFor(modelItem => item.endDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.priorityLevel)</td>
                         </tr>
                     }
                 </table>
