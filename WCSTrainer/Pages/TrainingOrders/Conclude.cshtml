@@ -28,7 +28,6 @@
                         <input asp-for="TrainingOrder.endDate" type="hidden" />
                         <input asp-for="TrainingOrder.medium" type="hidden" />
                         <input asp-for="TrainingOrder.skill" type="hidden" />
-
                         <input asp-for="TrainingOrder.status" type="hidden" value="Completed" />
 
                         @if (!Model.TrainingOrder.status.Equals("Awaiting Approval")) {
