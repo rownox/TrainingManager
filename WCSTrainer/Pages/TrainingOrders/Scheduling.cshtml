@@ -15,9 +15,6 @@
                     Settings
                 </div>
                 <div class="main-view">
-                    <div class="options">
-                        Options
-                    </div>
                     <div class="schedule">
                         @for (int month = 1; month <= 12; month++) {
                             DateTime date = new DateTime(2024, month, 1);
@@ -26,13 +23,12 @@
                             <div class="month">
                                 <div class="title">
                                     <p>@monthName</p>
-                                    
                                 </div>
                                 <div class="info">
                                     <p>Upcoming:</p>
-                                    <div class="order">Order #100 - Aadam Husain</div>
-                                    <div class="order">Order #200 - Jay Dunwell</div>
-                                    <div class="order">Order #300 - Kay Selim</div>
+                                    <div class="order">Order #100 - 12/13/24</div>
+                                    <div class="order">Order #200 - 7/22/24</div>
+                                    <div class="order">Order #300 - 3/6/24</div>
                                 </div>
                                 <div class="stats">
                                     <p>Total Hours: 10</p>
@@ -40,6 +36,32 @@
                                 </div>
                             </div>
                         }
+                    </div>
+                    <div class="options">
+                        <div class="search">
+                            <p>Search</p>
+                            <input type="search" />
+                        </div>
+                        <div class="selections">
+                            <p class="title">Show in List:</p>
+                            <div class="section">
+                                <input type="checkbox" checked id="Verified" onchange="checkedBox(this)" />
+                                <p class="info">Verified</p>
+                            </div>
+                            <div class="section">
+                                <input type="checkbox" checked id="Active" onchange="checkedBox(this)" />
+                                <p class="info">Active</p>
+                            </div>
+                            <div class="section">
+                                <input type="checkbox" checked id="Awaiting Approval" onchange="checkedBox(this)" />
+                                <p class="info">Awaiting Approval</p>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <a asp-page="Create" class="btn nbg-btn btnWhite">Create Training Order</a>
+                            <a asp-page="AllView" class="btn nbg-btn btnWhite">Planning</a>
+                            <a asp-page="Scheduling" class="btn nbg-btn btnWhite">Scheduling</a>
+                        </div>
                     </div>
                 </div>
             </div>
