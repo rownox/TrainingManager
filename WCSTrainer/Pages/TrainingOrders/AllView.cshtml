@@ -4,16 +4,11 @@
     ViewData["Title"] = "AllView";
 }
 
+@using WCSTrainer.Pages.Components
+
 <div class="panel">
     <div class="body">
-        <div class="side-bar">
-            <ul>
-                <a href="">Statistics</a>
-                <a asp-page="./Index">Training Orders</a>
-                <a asp-page="./Index">Manage Employees</a>
-                <a href="">Account Settings</a>
-            </ul>
-        </div>
+        <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
         <div class="properties">
             <div class="order-list2">
                 <div class="sorters">
@@ -22,7 +17,6 @@
                         <button onclick="sortTable(4)" class="btn bg-btn btnWhite">Begin Date</button>
                         <button onclick="sortTable(0)" class="btn bg-btn btnWhite">ID Number</button>
                     </div>
-                    
                 </div>
                 <table id="dataTable">
                     <tr>

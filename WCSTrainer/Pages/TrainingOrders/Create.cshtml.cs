@@ -11,15 +11,13 @@ using WebApplication2.Models;
 namespace WCSTrainer.Pages.TrainingOrders {
     public class CreateModel : PageModel {
         private readonly WCSTrainerContext _context;
-        private readonly EmployeeContext _context2;
 
-        public CreateModel(WCSTrainerContext context, EmployeeContext context2) {
+        public CreateModel(WCSTrainerContext context) {
             _context = context;
-            _context2 = context2;
         }
 
         public async Task<IActionResult> OnGetAsync() {
-            Employees = await _context2.Employee.ToListAsync();
+            Employees = await _context.Employee.ToListAsync();
             return Page();
         }
 

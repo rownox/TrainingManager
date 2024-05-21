@@ -3,20 +3,46 @@
 @{
 }
 
+@using WCSTrainer.Pages.Components
+
 
 <div class="panel">
     <div class="body">
-        <div class="side-bar">
-            <ul>
-                <a href="">Statistics</a>
-                <a asp-page="./Index">Training Orders</a>
-                <a asp-page="./Index">Manage Employees</a>
-                <a href="">Account Settings</a>
-            </ul>
-        </div>
-
+        <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
         <div class="properties">
+            <div class="scheduling">
+                <div class="settings">
+                    Settings
+                </div>
+                <div class="main-view">
+                    <div class="options">
+                        Options
+                    </div>
+                    <div class="schedule">
+                        @for (int month = 1; month <= 12; month++) {
+                            DateTime date = new DateTime(2024, month, 1);
+                            string monthName = date.ToString("MMMM");
 
+                            <div class="month">
+                                <div class="title">
+                                    <p>@monthName</p>
+                                    
+                                </div>
+                                <div class="info">
+                                    <p>Upcoming:</p>
+                                    <div class="order">Order #100 - Aadam Husain</div>
+                                    <div class="order">Order #200 - Jay Dunwell</div>
+                                    <div class="order">Order #300 - Kay Selim</div>
+                                </div>
+                                <div class="stats">
+                                    <p>Total Hours: 10</p>
+                                    <p>Training Orders: 5</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

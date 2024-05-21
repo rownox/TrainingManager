@@ -4,52 +4,51 @@
 @{
     ViewData["Title"] = "Edit";
 }
+@using WCSTrainer.Pages.Components
+<div class="panel">
+    <div class="body">
+        <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Employee.Id" />
-            <div class="form-group">
-                <label asp-for="Employee.FirstName" class="control-label"></label>
-                <input asp-for="Employee.FirstName" class="form-control" />
-                <span asp-validation-for="Employee.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Employee.LastName" class="control-label"></label>
-                <input asp-for="Employee.LastName" class="form-control" />
-                <span asp-validation-for="Employee.LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Employee.Status" class="control-label"></label>
-                <input asp-for="Employee.Status" class="form-control" />
-                <span asp-validation-for="Employee.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Employee.TrainingOrders" class="control-label"></label>
-                <input asp-for="Employee.TrainingOrders" class="form-control" />
-                <span asp-validation-for="Employee.TrainingOrders" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Employee.Skills" class="control-label"></label>
-                <input asp-for="Employee.Skills" class="form-control" />
-                <span asp-validation-for="Employee.Skills" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Employee.Availability" class="control-label"></label>
-                <input asp-for="Employee.Availability" class="form-control" />
-                <span asp-validation-for="Employee.Availability" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        <div class="properties">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Employee.Id" />
+                <div class="form-group">
+                    <label asp-for="Employee.FirstName" class="control-label"></label>
+                    <input asp-for="Employee.FirstName" class="form-control" />
+                    <span asp-validation-for="Employee.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Employee.LastName" class="control-label"></label>
+                    <input asp-for="Employee.LastName" class="form-control" />
+                    <span asp-validation-for="Employee.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Employee.Status" class="control-label"></label>
+                    <input asp-for="Employee.Status" class="form-control" />
+                    <span asp-validation-for="Employee.Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Employee.TrainingOrders" class="control-label"></label>
+                    <input asp-for="Employee.TrainingOrders" class="form-control" />
+                    <span asp-validation-for="Employee.TrainingOrders" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Employee.Skills" class="control-label"></label>
+                    <input asp-for="Employee.Skills" class="form-control" />
+                    <span asp-validation-for="Employee.Skills" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Employee.Availability" class="control-label"></label>
+                    <input asp-for="Employee.Availability" class="form-control" />
+                    <span asp-validation-for="Employee.Availability" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {
