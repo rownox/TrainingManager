@@ -45,5 +45,10 @@
 
     modeToggleBtn.addEventListener('click', () => {
         document.body.classList.toggle('light-mode');
+        if (modeToggleBtn.textContent == "Light Mode") {
+            modeToggleBtn.textContent = "Dark Mode";
+        } else {
+            modeToggleBtn.textContent = "Light Mode";
+        }
     });
 </script>

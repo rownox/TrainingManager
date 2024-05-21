@@ -5,12 +5,13 @@
     --gray3: #22272a;
     --gray4: #45494e;
     --textMain: white;
-    --textSub1: #b5b5b5;
-    --textSub2: #8a8a8a;
+    --textSub1: #a0a9b4;
+    --textSub2: #787f87;
+    --mainTheme: #3d2b9b;
 }
 
 .light-mode {
-    --black: #efead8;
+    --black: #dcd7c7;
     --gray1: #c8c4b6;
     --gray2: #b5b09d;
     --gray3: #e9e5d6;
@@ -18,6 +19,7 @@
     --textMain: black;
     --textSub1: black;
     --textSub2: black;
+    --mainTheme: #ffffff;
 }
 
 * {
@@ -43,6 +45,7 @@ nav {
         align-items: center;
         width: 1500px;
         justify-content: space-between;
+        max-width: 80%;
     }
 
         nav .nav-container .nav-buttons {
@@ -52,7 +55,7 @@ nav {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                max-width: 80%;
+                
                 height: 60px;
             }
 
@@ -75,7 +78,7 @@ nav {
                     }
                         nav .nav-container .nav-buttons ul li a:hover {
                             background-color: var(--gray3);
-                            color: white;
+                            color: var(--textMain);
                         }
 
         nav .nav-container .nav-options {
@@ -260,7 +263,7 @@ body {
                         }
                             .panel .body .properties .user-form .field-container .form-group .selections ul li {
                                 list-style: none;
-                                background-color: #3d2b9b;
+                                background-color: var(--mainTheme);
                                 cursor: pointer;
                                 padding: 3px 10px;
                                 border-radius: 20px;
@@ -327,7 +330,6 @@ body {
                     .panel .body .properties .user-form .field-container .text-group .info {
                         margin-left: 10px;
                         font-size: 18px;
-                        color: var(--textMain);
                     }
             .panel .body .properties .tools {
                 margin-left: 30px;
@@ -437,7 +439,7 @@ body {
                     flex-direction: column;
                 }
                     .panel .body .properties .order-list2 .sorters p {
-                        color: white;
+                        color: var(--textMain);
                         font-size: 15px;
                     }
 
@@ -463,18 +465,78 @@ body {
                     .panel .body .properties .order-list2 table .clickable {
                     }
                         .panel .body .properties .order-list2 table .clickable:hover {
-                            background-color: var(--gray4);
+                            background-color: var(--gray3);
                             cursor: pointer;
                         }
                     .panel .body .properties .order-list2 table tr td {
-                        border-bottom: 1px solid #51565b;
-                        color: #b1b6bb;
+                        border-bottom: 1px solid var(--gray4);
+                        color: var(--textSub1);
                         height: 25px;
                     }
                     .panel .body .properties .order-list2 table tr th {
-                        border-bottom: 1px solid white;
+                        border-bottom: 1px solid var(--textMain);
                         text-align: start;
-                        color: white;
+                        color: var(--textMain);
+                    }
+
+            .panel .body .properties .scheduling {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+                .panel .body .properties .scheduling .settings {
+                    width: 100%;
+                    height: 150px;
+                }
+                .panel .body .properties .scheduling .main-view {
+                    display: flex;
+                    flex-direction: row;
+                    height: 100%;
+                }
+                    .panel .body .properties .scheduling .main-view .schedule {
+                        width: 80%;
+                        height: 100%;
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-content: flex-start;
+                        gap: 10px;
+                    }
+                        .panel .body .properties .scheduling .main-view .schedule .month {
+                            width: 200px;
+                            min-height: 220px;
+                            display: flex;
+                            flex-direction: column;
+                            background-color: var(--gray2);
+                            border: 1px solid var(--gray2);
+                            cursor: pointer;
+                        }
+                            .panel .body .properties .scheduling .main-view .schedule .month:hover {
+                                background-color: var(--gray3);
+                                border: 1px solid var(--gray4);
+                            }
+                            .panel .body .properties .scheduling .main-view .schedule .month .title {
+                                font-weight: bold;
+                                margin-bottom: 10px;
+                                border-bottom: 1px solid var(--gray4);
+                                padding: 5px;
+                            }
+                            .panel .body .properties .scheduling .main-view .schedule .month .info {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 5px;
+                                padding: 5px;
+                            }
+                                .panel .body .properties .scheduling .main-view .schedule .month .info .order {
+                                    padding: 3px 5px;
+                                    background-color: var(--mainTheme);
+                                    font-size: 13px;
+                                }
+                            .panel .body .properties .scheduling .main-view .schedule .month .stats {
+                                color: var(--textSub2);
+                            }
+                    .panel .body .properties .scheduling .main-view .options {
+                        height: 100%;
+                        width: 20%;
                     }
 
 /*--------------------------------------------------------*/
@@ -611,10 +673,18 @@ body {
                      DELETION POPUP                     
 --------------------------------------------------------*/
 
-.active    { color: #81ff8f; }
-.awaiting  { color: #fff764; }
-.completed { color: #1bc0ff; }
-.verified { color: #ff6c6c; }
+.active {
+    color: #81ff8f;
+}
+.awaiting {
+    color: #fff764;
+}
+.completed {
+    color: #1bc0ff;
+}
+.verified {
+    color: #ff6c6c;
+}
 
 button {
     background: none;
