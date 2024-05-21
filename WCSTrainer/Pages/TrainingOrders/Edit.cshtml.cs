@@ -8,11 +8,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
     public class EditModel : PageModel {
 
         private readonly WCSTrainer.Data.WCSTrainerContext _context;
-        private readonly WCSTrainer.Data.EmployeeContext _context2;
 
-        public EditModel(WCSTrainer.Data.WCSTrainerContext context, WCSTrainer.Data.EmployeeContext context2) {
+        public EditModel(WCSTrainer.Data.WCSTrainerContext context) {
             _context = context;
-            _context2 = context2;
         }
 
         [BindProperty]
@@ -23,7 +21,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public string[] trainersList;
 
         public async Task<IActionResult> OnGetAsync(int? id) {
-            Employees = await _context2.Employee.ToListAsync();
+            Employees = await _context.Employee.ToListAsync();
 
             if (id == null) {
                 return NotFound();

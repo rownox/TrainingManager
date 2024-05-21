@@ -12,9 +12,9 @@ namespace WCSTrainer.Pages.Employees
 {
     public class CreateModel : PageModel
     {
-        private readonly WCSTrainer.Data.EmployeeContext _context;
+        private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
-        public CreateModel(WCSTrainer.Data.EmployeeContext context)
+        public CreateModel(WCSTrainer.Data.WCSTrainerContext context)
         {
             _context = context;
         }

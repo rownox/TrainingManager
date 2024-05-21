@@ -3,16 +3,11 @@
 @{
 }
 
+@using WCSTrainer.Pages.Components
+
 <div class="panel">
     <div class="body">
-        <div class="side-bar">
-            <ul>
-                <a href="">Statistics</a>
-                <a asp-page="./Index">Training Orders</a>
-                <a asp-page="./Index">Manage Employees</a>
-                <a href="">Account Settings</a>
-            </ul>
-        </div>
+        <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
 
         <div class="properties">
             <div class="user-form">
