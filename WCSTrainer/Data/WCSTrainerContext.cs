@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using WebApplication2.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace WCSTrainer.Data
-{
-    public class WCSTrainerContext : DbContext
-    {
-        public WCSTrainerContext (DbContextOptions<WCSTrainerContext> options)
-            : base(options)
-        {
+namespace WCSTrainer.Data {
+    public class WCSTrainerContext : DbContext {
+        public WCSTrainerContext(DbContextOptions<WCSTrainerContext> options)
+            : base(options) {
         }
 
         public DbSet<WebApplication2.Models.TrainingOrder> TrainingOrder { get; set; } = default!;
+        public DbSet<WCSTrainer.Models.Employee> Employee { get; set; } = default!;
     }
 }

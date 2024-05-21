@@ -12,9 +12,9 @@ namespace WCSTrainer.Pages.Employees
 {
     public class DeleteModel : PageModel
     {
-        private readonly WCSTrainer.Data.EmployeeContext _context;
+        private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
-        public DeleteModel(WCSTrainer.Data.EmployeeContext context)
+        public DeleteModel(WCSTrainer.Data.WCSTrainerContext context)
         {
             _context = context;
         }

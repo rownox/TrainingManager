@@ -4,13 +4,17 @@
 @{
     ViewData["Title"] = "Delete";
 }
+@using WCSTrainer.Pages.Components
+<div class="panel">
+    <div class="body">
+        <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
 
-<div>
-    <hr />
-    
-    <form method="post">
-        <input type="hidden" asp-for="Employee.Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
-    </form>
+        <div class="properties">
+            <form method="post">
+                <input type="hidden" asp-for="Employee.Id" />
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                <a asp-page="./Index">Back to List</a>
+            </form>
+        </div>
+    </div>
 </div>

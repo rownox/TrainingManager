@@ -13,9 +13,9 @@ namespace WCSTrainer.Pages.Employees
 {
     public class EditModel : PageModel
     {
-        private readonly WCSTrainer.Data.EmployeeContext _context;
+        private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
-        public EditModel(WCSTrainer.Data.EmployeeContext context)
+        public EditModel(WCSTrainer.Data.WCSTrainerContext context)
         {
             _context = context;
         }
