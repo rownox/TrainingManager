@@ -12,6 +12,7 @@
         <div class="properties">
             <div class="scheduling">
                 <div class="settings">
+                    <p>Year: @DateTime.Now.Year</p>
                     <p>Total Training Orders: @Model.countOrders()</p>
                     <p>Total Training Hours: @Model.countTotalOrderHours()</p>
                 </div>
@@ -21,18 +22,35 @@
                             DateTime date = new DateTime(2024, month, 1);
                             string monthName = date.ToString("MMMM");
 
-                            <div class="month">
+                            string type = "month-inactive";
+
+                            if (DateTime.Now.Month == month) {
+                                type = "month-active";
+                            }
+
+                            <div class="month @type">
                                 <div class="title">
                                     <p>@monthName</p>
                                 </div>
                                 <div class="info">
                                     <p>Preview:</p>
-                                    <div class="order">Order #100 - 12/13/24</div>
-                                    <div class="order">Order #300 - 3/6/24</div>
+                                    @if (Model.getFirstTrainingOrder(month, 0) != null) {
+                                        var order = @Model.getFirstTrainingOrder(month, 0);
+                                        <div class="order live">Order #@order.Id - @order.beginDate</div>
+                                    } else {
+                                        <div class="order gray"></div>
+                                    }
+                                    @if (Model.getFirstTrainingOrder(month, 1) != null) {
+                                        var order = @Model.getFirstTrainingOrder(month, 1);
+                                        <div class="order live">Order #@order.Id - @order.beginDate</div>
+                                    } else {
+                                        <div class="order gray"></div>
+                                    }
                                 </div>
                                 <div class="stats">
-                                    <p>Total Hours: 10</p>
-                                    <p>Training Orders: 5</p>
+                                    
+                                    <p>Total Hours: @Model.countOrderHours(month)</p>
+                                    <p>Training Orders: @Model.countMonthOrders(month)</p>
                                 </div>
                             </div>
                         }
