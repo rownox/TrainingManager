@@ -23,7 +23,7 @@
                             string monthName = date.ToString("MMMM");
                             string type = "month-inactive";
 
-                            if (DateTime.Now.Month == month) {
+                            if (DateTime.Now.Month == month && DateTime.Now.Year == Model.selectedYear) {
                                 type = "month-active";
                             }
 
@@ -55,16 +55,23 @@
                     </div>
                     <div class="options">
                         <div class="search">
-                            <p>Search</p>
-                            <input type="search" />
-                        </div>
-                        <div class="buttons">
-                            <a class="btn nbg-btn btnWhite">Button</a>
-                            <a class="btn nbg-btn btnWhite">Button</a>
-                            <form method="post">
-                                <input asp-for="selectedYear" value="@Model.selectedYear" />
-                                <input type="submit" value="Save" class="btn bg-btn btnGreen" />
-                            </form>
+                            <p class="title">Options: </p>
+                            <div class="section">
+                                <p>Search By Trainer:</p>
+                                <input type="search" />
+                            </div>
+                            <div class="section">
+                                <p>Year:</p>
+                                <form method="post">
+                                    <select asp-for="selectedYear" class="form-drop2">
+                                        @for (int i = 0; i <= 10; i++) {
+                                            int newYear = (DateTime.Now.Year - 5) + i;
+                                            <option value="@newYear">@newYear</option>
+                                        }
+                                    </select>
+                                    <input type="submit" value="Search" class="btn bg-btn btnGreen" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
