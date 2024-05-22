@@ -63,7 +63,66 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public int countOrderHours(int month) {
             int count = 0;
 
+            DateTime currentDate = DateTime.Now;
+            DateOnly monthStart = new DateOnly(currentDate.Year, month, 1);
+            DateOnly monthEnd = monthStart.AddMonths(1).AddDays(-1);
+
+            foreach (TrainingOrder order in TrainingOrders) {
+                DateOnly orderStart = order.beginDate;
+                DateOnly orderEnd = order.endDate;
+
+                DateOnly effectiveStart = orderStart > monthStart ? orderStart : monthStart;
+                DateOnly effectiveEnd = orderEnd < monthEnd ? orderEnd : monthEnd;
+
+                if (effectiveStart <= effectiveEnd) {
+                    int days = (effectiveEnd.ToDateTime(new TimeOnly(0, 0)) - effectiveStart.ToDateTime(new TimeOnly(0, 0))).Days + 1;
+
+                    count += order.duration * days;
+                }
+            }
+
             return count;
         }
+
+        public int countMonthOrders(int month) {
+            int count = 0;
+
+            DateTime currentDate = DateTime.Now;
+            DateOnly monthStart = new DateOnly(currentDate.Year, month, 1);
+            DateOnly monthEnd = monthStart.AddMonths(1).AddDays(-1);
+
+            foreach (var order in TrainingOrders) {
+                DateOnly orderStart = order.beginDate;
+                DateOnly orderEnd = order.endDate;
+
+                if ((orderStart <= monthEnd) && (orderEnd >= monthStart)) {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+
+        public TrainingOrder getFirstTrainingOrder(int month, int place) {
+            DateTime currentDate = DateTime.Now;
+            DateOnly monthStart = new DateOnly(currentDate.Year, month, 1);
+            DateOnly monthEnd = monthStart.AddMonths(1).AddDays(-1);
+
+            int placeCount = 0;
+
+            foreach (TrainingOrder order in TrainingOrders) {
+                if (order.beginDate >= monthStart && order.beginDate <= monthEnd) {
+                    if (placeCount == place) {
+                        return order;
+                    } else {
+                        placeCount++;
+                    }
+                }
+            }
+
+            return null;
+        }
+
     }
 }

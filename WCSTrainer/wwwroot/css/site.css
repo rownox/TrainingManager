@@ -7,7 +7,7 @@
     --textMain: white;
     --textSub1: #a0a9b4;
     --textSub2: #787f87;
-    --mainTheme: #3d2b9b;
+    --mainTheme: #4631ae;
     --red1: #ff4d4d;
     --red2: #d81d1d;
     --blue1: #1bc0ff;
@@ -59,9 +59,9 @@ nav {
     nav .nav-container {
         display: flex;
         align-items: center;
-        width: 1500px;
         justify-content: space-between;
-        max-width: 80%;
+        width: 1500px;
+        max-width: 90%;
     }
         nav .nav-container .nav-buttons {
             width: 50%;
@@ -120,7 +120,7 @@ body {
     align-items: center;
     flex-direction: column;
     width: 1500px;
-    max-width: 80%;
+    max-width: 90%;
 }
 .maintitle {
     margin-top: 100px;
@@ -498,6 +498,7 @@ body {
                     display: flex;
                     flex-direction: row;
                     height: 100%;
+                    justify-content: space-between;
                 }
                     .panel .body .properties .scheduling .main-view .schedule {
                         height: 100%;
@@ -513,14 +514,27 @@ body {
                             min-height: 180px;
                             display: flex;
                             flex-direction: column;
-                            background-color: var(--gray2);
-                            border: 1px solid var(--gray2);
                             cursor: pointer;
+                            background-color: var(--gray2);
                         }
-                            .panel .body .properties .scheduling .main-view .schedule .month:hover {
-                                background-color: var(--gray3);
-                                border: 1px solid var(--gray4);
-                            }
+
+                        .panel .body .properties .scheduling .main-view .schedule .month-inactive {
+                            border: 1px solid var(--gray2);
+                        }
+
+                        .panel .body .properties .scheduling .main-view .schedule .month-active {
+                            border: 1px solid var(--mainTheme);
+                        }
+
+                        .panel .body .properties .scheduling .main-view .schedule .month-inactive:hover {
+                            background-color: var(--gray3);
+                            border: 1px solid var(--gray4);
+                        }
+
+                        .panel .body .properties .scheduling .main-view .schedule .month-active:hover {
+                            background-color: var(--gray3);
+                        }
+
                             .panel .body .properties .scheduling .main-view .schedule .month .title {
                                 font-weight: bold;
                                 margin-bottom: 10px;
@@ -535,9 +549,17 @@ body {
                             }
                                 .panel .body .properties .scheduling .main-view .schedule .month .info .order {
                                     padding: 3px 5px;
-                                    background-color: var(--mainTheme);
                                     font-size: 13px;
                                     border-radius: 5px;
+                                    height: 14px;
+                                    display: flex;
+                                    align-items: center;
+                                }
+                                .panel .body .properties .scheduling .main-view .schedule .month .info .gray {
+                                    background-color: var(--gray1);
+                                }
+                                .panel .body .properties .scheduling .main-view .schedule .month .info .live {
+                                    background-color: var(--mainTheme);
                                 }
                             .panel .body .properties .scheduling .main-view .schedule .month .stats {
                                 padding: 5px;
