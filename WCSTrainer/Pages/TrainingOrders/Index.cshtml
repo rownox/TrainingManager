@@ -66,34 +66,36 @@
                     }
                 </ul>
             </div>
-            <div class="tools">
-                <div class="search">
-                    <p>Search for a training order ID:</p>
-                    <input type="search" onchange="update(this)">
-                </div>
-                <div class="selections">
-                    <p class="title">Show in List:</p>
-                    <div class="section">
-                        <input type="checkbox" checked id="Verified" onchange="checkedBox(this)" />
-                        <p class="info">Verified</p>
+            <div class="tool-container">
+                <div class="tools">
+                    <div class="search">
+                        <p>Search for a training order ID:</p>
+                        <input type="search" onchange="update(this)">
                     </div>
-                    <div class="section">
-                        <input type="checkbox" checked id="Completed" onchange="checkedBox(this)" />
-                        <p class="info">Completed</p>
+                    <div class="selections">
+                        <p class="title">Show in List:</p>
+                        <div class="section">
+                            <input type="checkbox" checked id="Verified" onchange="checkedBox(this)" />
+                            <p class="info">Verified</p>
+                        </div>
+                        <div class="section">
+                            <input type="checkbox" checked id="Completed" onchange="checkedBox(this)" />
+                            <p class="info">Completed</p>
+                        </div>
+                        <div class="section">
+                            <input type="checkbox" checked id="Active" onchange="checkedBox(this)" />
+                            <p class="info">Active</p>
+                        </div>
+                        <div class="section">
+                            <input type="checkbox" checked id="Awaiting Approval" onchange="checkedBox(this)" />
+                            <p class="info">Awaiting Approval</p>
+                        </div>
                     </div>
-                    <div class="section">
-                        <input type="checkbox" checked id="Active" onchange="checkedBox(this)" />
-                        <p class="info">Active</p>
+                    <div class="btns">
+                        <a asp-page="Create" class="btn btnWhite">Create Training Order</a>
+                        <a asp-page="AllView" class="btn btnWhite">Planning</a>
+                        <a asp-page="Scheduling" class="btn btnWhite">Scheduling</a>
                     </div>
-                    <div class="section">
-                        <input type="checkbox" checked id="Awaiting Approval" onchange="checkedBox(this)" />
-                        <p class="info">Awaiting Approval</p>
-                    </div>
-                </div>
-                <div class="btns">
-                    <a asp-page="Create" class="btn btnWhite">Create Training Order</a>
-                    <a asp-page="AllView" class="btn btnWhite">Planning</a>
-                    <a asp-page="Scheduling" class="btn btnWhite">Scheduling</a>
                 </div>
             </div>
         </div>

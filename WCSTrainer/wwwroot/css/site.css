@@ -337,51 +337,56 @@ body {
                         margin-left: 10px;
                         font-size: 18px;
                     }
-            .panel .body .properties .tools {
+
+            .panel .body .properties .tool-container {
                 margin-left: 30px;
                 display: flex;
-                flex-direction: column;
-                color: var(--textMain);
                 width: 25%;
             }
-                .panel .body .properties .tools .btns {
-                    display: flex;
-                    flex-direction: column;
-                }
-                    .panel .body .properties .tools .btns .btn {
-                        text-align: center;
-                        text-decoration: none;
-                        padding: 7px 5px;
-                        border-bottom: 1px solid var(--gray4);
-                        text-align: left;
-                        color: var(--textMain);
-                    }
-                .panel .body .properties .tools .search {
-                    width: 100%;
-                    display: flex;
-                    height: 99px;
-                    flex-direction: column;
-                }
-                    .panel .body .properties .tools .search input {
-                        height: 35px;
-                        margin-top: 10px;
-                    }
-                    .panel .body .properties .tools .search p {
-                        font-size: 20px;
-                        color: var(--textMain);
-                    }
-                .panel .body .properties .tools .selections {
-                    margin-bottom: 20px;
-                }
-                    .panel .body .properties .tools .selections .title {
-                    }
-                    .panel .body .properties .tools .selections .section {
-                        margin-top: 10px;
-                        display: flex;
-                    }
-                        .panel .body .properties .tools .selections .section .info {
-                            margin-left: 7px;
+                        .panel .body .properties .tool-container .tools {
+                            display: flex;
+                            flex-direction: column;
+                            color: var(--textMain);
+                            width: 100%;
                         }
+                            .panel .body .properties .tool-container .tools .btns {
+                                display: flex;
+                                flex-direction: column;
+                            }
+                                .panel .body .properties .tool-container .tools .btns .btn {
+                                    text-align: center;
+                                    text-decoration: none;
+                                    padding: 7px 5px;
+                                    border-bottom: 1px solid var(--gray4);
+                                    text-align: left;
+                                    color: var(--textMain);
+                                }
+                            .panel .body .properties .tool-container .tools .search {
+                                width: 100%;
+                                display: flex;
+                                height: 99px;
+                                flex-direction: column;
+                            }
+                                .panel .body .properties .tool-container .tools .search input {
+                                    height: 35px;
+                                    margin-top: 10px;
+                                }
+                                .panel .body .properties .tool-container .tools .search p {
+                                    font-size: 20px;
+                                    color: var(--textMain);
+                                }
+                            .panel .body .properties .tool-container .tools .selections {
+                                margin-bottom: 20px;
+                            }
+                                .panel .body .properties .tool-container .tools .selections .title {
+                                }
+                                .panel .body .properties .tool-container .tools .selections .section {
+                                    margin-top: 10px;
+                                    display: flex;
+                                }
+                                    .panel .body .properties .tool-container .tools .selections .section .info {
+                                        margin-left: 7px;
+                                    }
             .panel .body .properties .order-list {
                 overflow-y: scroll;
                 scrollbar-width: none;
@@ -518,24 +523,19 @@ body {
                             cursor: pointer;
                             background-color: var(--gray2);
                         }
-
                         .panel .body .properties .scheduling .main-view .schedule .month-inactive {
                             border: 1px solid var(--gray2);
                         }
-
                         .panel .body .properties .scheduling .main-view .schedule .month-active {
                             border: 1px solid var(--mainTheme);
                         }
-
                         .panel .body .properties .scheduling .main-view .schedule .month-inactive:hover {
                             background-color: var(--gray3);
                             border: 1px solid var(--gray4);
                         }
-
                         .panel .body .properties .scheduling .main-view .schedule .month-active:hover {
                             background-color: var(--gray3);
                         }
-
                             .panel .body .properties .scheduling .main-view .schedule .month .title {
                                 font-weight: bold;
                                 margin-bottom: 10px;
@@ -573,12 +573,40 @@ body {
                         display: flex;
                         flex-direction: column;
                     }
+
+                    .panel .body .properties .scheduling .main-view .options .title {
+                        padding-bottom: 10px;
+                        border-bottom: 1px solid var(--gray4);
+                        font-weight: bold;
+                    }
                         .panel .body .properties .scheduling .main-view .options .search {
+                            display: flex;
+                            flex-direction: column;
                             width: 100%;
+                            gap: 20px;
                         }
-                        .panel .body .properties .scheduling .main-view .options .search input {
-                            width: 100%;
-                        }
+                            .panel .body .properties .scheduling .main-view .options .search .section {
+                                width: 100%;
+                            }
+                                .panel .body .properties .scheduling .main-view .options .search .section input {
+                                    width: 100%;
+                                    height: 30px;
+                                }
+
+                                .panel .body .properties .scheduling .main-view .options .search .section form {
+                                    display: flex;
+                                    gap: 20px;
+                                }
+
+                                    .panel .body .properties .scheduling .main-view .options .search .section form select {
+                                        height: 30px;
+                                        font-size: 15px;
+                                    }
+
+                                    .panel .body .properties .scheduling .main-view .options .search .section form input {
+                                        height: 30px;
+                                    }
+
                         .panel .body .properties .scheduling .main-view .options .selections {
 
                         }
@@ -592,9 +620,9 @@ body {
                                 padding: 6px 0;
                             }
 
-/*--------------------------------------------------------*/
-/*                   UNIVERSAL BUTTONS                    */
-/*--------------------------------------------------------*/
+/*-------------------------------------------------------*/
+/*                   UNIVERSAL BUTTONS                   */
+/*-------------------------------------------------------*/
 
 .btn {
     text-align: center;
@@ -735,316 +763,3 @@ button {
     border: none;
 }
 
-@media only screen and (max-width: 600px) {
-
-    .main-title {
-        font-size: 3.5vw;
-    }
-    nav {
-        width: 100%;
-        max-width: 100%;
-        margin-bottom: 5px;
-        padding: 0;
-    }
-        nav ul {
-            max-width: 100%;
-            padding: 0 10px;
-            height: 50px;
-        }
-        nav li {
-            list-style: none;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            
-        }
-            nav li a {
-                font-size: 3.5vw;
-                padding: 0 15px;
-                height: 100%;
-            }
-    body {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-        height: 100%;
-    }
-    .content {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-        height: 100%;
-    }
-    .panel {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        height: 100%;
-    }
-        .panel .body {
-            flex-direction: column;
-            height: 100%;
-            width: 100%;
-            min-height: 800px;
-        }
-            .panel .body .side-bar {
-                width: 100%;
-                max-width: 100%;
-            }
-                .panel .body .side-bar ul {
-                    flex-direction: row;
-                    width: 100%;
-                    padding: 0;
-                    margin: 0;
-                }
-                .panel .body .side-bar a {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    text-align: center;
-                    width: none;
-                    padding: 2% 5px;
-                    margin: 0;
-                    font-size: 3.5vw;
-                    border-bottom: 1px solid white;
-                }
-                    .panel .body .side-bar a:hover {
-                    }
-                .panel .body .side-bar .selected {
-                    border-bottom: none;
-                }
-            .panel .body .properties {
-                padding: 0;
-                flex-direction: column;
-                width: 100%;
-                height: 850px;
-            }
-                .panel .body .properties .user-form {
-                    flex-direction: column;
-                    align-items: center;
-                    width: 100%;
-                }
-                    .panel .body .properties .user-form .title {
-                        font-size: 9vw;
-                        margin-bottom: 0;
-                        margin-top: 20px;
-                    }
-                    .panel .body .properties .user-form .description {
-                    }
-                    .panel .body .properties .user-form .field-container {
-                        align-items: center;
-                        margin-top: 40px;
-                        width: 100%;
-                    }
-                    .panel .body .properties .user-form .btn {
-                        margin-top: 5px;
-                        padding: 10px 0;
-                        width: 200px;
-                        font-size: 15px;
-                    }
-                        .panel .body .properties .user-form .btn:hover .form-drop {
-                        }
-                    .panel .body .properties .user-form .field-container .form-group {
-                        width: 100%;
-                    }
-                        .panel .body .properties .user-form .field-container .form-group .form {
-                            
-                        }
-                            .panel .body .properties .user-form .field-container .form-group .form .labels {
-                            }
-                                .panel .body .properties .user-form .field-container .form-group .form .labels .control-label {
-                                }
-                                .panel .body .properties .user-form .field-container .form-group .form .labels .text-danger {
-                                    margin-left: 10px;
-                                }
-                            .panel .body .properties .user-form .field-container .form-group .form .form-control {
-                                height: 25px;
-                                margin-bottom: 20px;
-                            }
-                        .panel .body .properties .user-form .field-container .form-group textarea {
-                            margin-bottom: 20px;
-                            border-radius: 5px;
-                            font-size: 15px;
-                        }
-                        .panel .body .properties .user-form .field-container .form-group .form-drop2 {
-                            margin-bottom: 20px;
-                            height: 30px;
-                        }
-                        .panel .body .properties .user-form .field-container .form-group .selections {
-                            padding: 3px;
-                            min-height: 30px;
-                        }
-                            .panel .body .properties .user-form .field-container .form-group .selections ul {
-                                flex-direction: row;
-                                flex-wrap: wrap;
-                            }
-                                .panel .body .properties .user-form .field-container .form-group .selections ul li {
-                                    padding: 3px 10px;
-                                    border-radius: 20px;
-                                    margin: 2px;
-                                }
-                        .panel .body .properties .user-form .field-container .form-group .selectors {
-                            margin-bottom: 10px;
-                            width: 100%;
-                        }
-                            .panel .body .properties .user-form .field-container .form-group .selectors .selector {
-                                width: 48%;
-                            }
-                                .panel .body .properties .user-form .field-container .form-group .selectors .selector .btn {
-                                    padding: 10px 0;
-                                    width: 100%;
-                                    font-size: 15px;
-                                }
-                                .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop {
-                                    font-size: 15px;
-                                    width: 100%;
-                                }
-                                    .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul {
-                                        list-style: none;
-                                        width: 100%;
-                                    }
-                                        .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul li {
-                                            cursor: pointer;
-                                            padding: 5px;
-                                        }
-                                            .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul li:hover {
-                                            }
-                    .panel .body .properties .user-form .field-container .text-group {
-                        flex-direction: row;
-                        padding: 10px 0;
-                        width: 100%;
-                    }
-                        .panel .body .properties .user-form .field-container .text-group .identifier {
-                            padding-left: 10px;
-                            height: 100%;
-                            width: 30%;
-                        }
-                        .panel .body .properties .user-form .field-container .text-group .info-content {
-                            height: 100%;
-                            width: 70%;
-                        }
-                        .panel .body .properties .user-form .field-container .text-group .title {
-                            font-size: 4.5vw;
-                            margin: 0;
-                        }
-                        .panel .body .properties .user-form .field-container .text-group .info {
-                            margin-left: 10px;
-                            font-size: 4.5vw;
-                        }
-                .panel .body .properties .tools {
-                    margin-left: 0;
-                    flex-direction: column;
-                    align-items: center;
-                    width: 100%;
-                }
-                    .panel .body .properties .tools .btns {
-                        display: flex;
-                        flex-direction: row;
-                        justify-content: space-between;
-                    }
-                        .panel .body .properties .tools .btns .btn {
-                            width: 35%;
-                            padding: 0 10px;
-                            font-size: 15px;
-                            margin-bottom: 10px;
-                        }
-                    .panel .body .properties .tools .search {
-                        text-align: center;
-                        width: 80%;
-                        height: 20px;
-                        flex-direction: column;
-                        border-bottom: 1px solid #808080;
-                        margin-bottom: 20px;
-                        padding: 5px;
-                    }
-                        .panel .body .properties .tools .search input {
-                            height: 50px;
-                            margin-top: 10px;
-                            margin-bottom: 20px;
-                        }
-                        .panel .body .properties .tools .search p {
-                            font-size: 20px;
-                        }
-                    .panel .body .properties .tools .selections {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        margin-bottom: 0;
-                        width: 100%;
-                        padding: 20px 0;
-                    }
-                        .panel .body .properties .tools .selections .title {
-                            
-                        }
-                        .panel .body .properties .tools .selections .section {
-                            margin-top: 5px;
-                            display: flex;
-                        }
-                            .panel .body .properties .tools .selections .section .info {
-                                margin-left: 7px;
-                            }
-                .panel .body .properties .order-list {
-                    overflow-y: scroll;
-                    width: 100%;
-                    height: 600px;
-                    border-bottom: 1px solid white;
-                }
-                    .panel .body .properties .order-list ul {
-                    }
-                    .panel .body .properties .order-list li {
-                        margin-right: 0;
-                        padding: 10px 15px;
-                    }
-                        .panel .body .properties .order-list li:hover {
-                        }
-                        .panel .body .properties .order-list li .info {
-                            width: 80%;
-                        }
-                            .panel .body .properties .order-list li .info .title {
-                                width: 100%;
-                                height: 100%;
-                                font-size: 17px;
-                            }
-                            .panel .body .properties .order-list li .info .sub {
-                                margin-top: 2px;
-                                font-size: 15px;
-                            }
-                                .panel .body .properties .order-list li .info .sub p {
-                                    margin-right: 5px;
-                                }
-                        .panel .body .properties .order-list li .btn {
-                            padding: 8px 10px;
-                            font-size: 15px;
-                        }
-                .panel .body .properties .order-list2 {
-                    width: 100%;
-                    max-height: 750px;
-                }
-                    .panel .body .properties .order-list2 .sorters {
-                        width: 100%;
-                    }
-                        .panel .body .properties .order-list2 .sorters .btn {
-                            padding: 8px 10px;
-                            margin: 10px 0;
-                        }
-                        .panel .body .properties .order-list2 .sorters p {
-                        }
-                    .panel .body .properties .order-list2 table {
-                        width: 100%;
-                        padding-right: 20px;
-                    }
-                        .panel .body .properties .order-list2 table tr {
-                            font-size: 18px;
-                        }
-                        .panel .body .properties .order-list2 table .clickable {
-                        }
-                            .panel .body .properties .order-list2 table .clickable:hover {
-                            }
-                        .panel .body .properties .order-list2 table tr td {
-                            height: 25px;
-                        }
-                        .panel .body .properties .order-list2 table tr th {
-                        }
-}
