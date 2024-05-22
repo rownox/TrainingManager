@@ -152,7 +152,7 @@ body {
             display: flex;
             flex-direction: column;
             width: 250px;
-            min-width: 170px;
+            min-width: 150px;
         }
             .panel .body .side-bar ul {
                 display: flex;
@@ -510,7 +510,8 @@ body {
                         margin-right: 20px;
                     }
                         .panel .body .properties .scheduling .main-view .schedule .month {
-                            width: 180px;
+                            width: 23%;
+                            min-width: 160px;
                             min-height: 180px;
                             display: flex;
                             flex-direction: column;
@@ -566,13 +567,17 @@ body {
                                 color: var(--textSub2);
                             }
                     .panel .body .properties .scheduling .main-view .options {
+                        min-width: 170px;
                         height: 100%;
-                        min-width: 250px;
+                        width: 20%;
                         display: flex;
                         flex-direction: column;
                     }
                         .panel .body .properties .scheduling .main-view .options .search {
-
+                            width: 100%;
+                        }
+                        .panel .body .properties .scheduling .main-view .options .search input {
+                            width: 100%;
                         }
                         .panel .body .properties .scheduling .main-view .options .selections {
 
@@ -582,8 +587,8 @@ body {
                             flex-direction: column;
                         }
                             .panel .body .properties .scheduling .main-view .options .buttons .btn {
-                                display: flex;
                                 border-bottom: 1px solid var(--gray4);
+                                display: flex;
                                 padding: 6px 0;
                             }
 

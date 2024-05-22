@@ -1,10 +1,19 @@
-﻿@page "/sidebar"
+﻿@inject NavigationManager Navigation
 
 <div class="side-bar">
     <ul>
         <a>Statistics</a>
-        <a href="/TrainingOrders">Training Orders</a>
-        <a href="/Employees">Manage Employees</a>
+        @if (Navigation.Uri.EndsWith("TrainingOrders") || Navigation.Uri.EndsWith("TrainingOrders/Index")) {
+            <a href="/TrainingOrders" class="selected">Training Orders</a>
+        } else {
+            <a href="/TrainingOrders">Training Orders</a>
+        }
+        @if (Navigation.Uri.EndsWith("Employees") || Navigation.Uri.EndsWith("Employees/Index")) {
+            <a href="/Employees" class="selected">Employees</a>
+        } else {
+            <a href="/Employees">Employees</a>
+        }
+        
         <a>Account Settings</a>
     </ul>
 </div>

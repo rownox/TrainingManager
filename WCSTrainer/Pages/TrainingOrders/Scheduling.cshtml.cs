@@ -15,22 +15,18 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public IList<TrainingOrder> TrainingOrders { get; set; } = default!;
         public IList<Employee> Employees { get; set; }
 
+        [BindProperty]
+        public int selectedYear { get; set; } = DateTime.Now.Year;
+
         public async Task OnGetAsync() {
             Employees = await _context.Employee.ToListAsync();
             TrainingOrders = await _context.TrainingOrder.ToListAsync();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id) {
-            var trainingOrder = await _context.TrainingOrder.FindAsync(id);
-
-            if (trainingOrder == null) {
-                return NotFound();
-            }
-
-            _context.TrainingOrder.Remove(trainingOrder);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+        public async Task<IActionResult> OnPostAsync() {
+            Employees = await _context.Employee.ToListAsync();
+            TrainingOrders = await _context.TrainingOrder.ToListAsync();
+            return Page();
         }
 
         public string getEmployee(string traineeID) {
@@ -44,7 +40,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         public int countOrders() {
             int count = 0;
-            foreach (var order in TrainingOrders) { 
+            foreach (TrainingOrder order in TrainingOrders) { 
                 count++;
             }
             return count;
@@ -52,19 +48,32 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         public int countTotalOrderHours() {
             int count = 0;
-            foreach (var order in TrainingOrders) {
-                int days = (order.endDate.ToDateTime(TimeOnly.MinValue) - order.beginDate.ToDateTime(TimeOnly.MinValue)).Days + 1;
 
-                count += order.duration * days;
+            foreach (var order in TrainingOrders) {
+                DateOnly orderStart = order.beginDate;
+                DateOnly orderEnd = order.endDate;
+
+                DateOnly yearStart = new DateOnly(selectedYear, 1, 1);
+                DateOnly yearEnd = new DateOnly(selectedYear, 12, 31);
+
+                DateOnly effectiveStart = orderStart > yearStart ? orderStart : yearStart;
+                DateOnly effectiveEnd = orderEnd < yearEnd ? orderEnd : yearEnd;
+
+                if (effectiveStart <= effectiveEnd) {
+                    int days = (effectiveEnd.ToDateTime(TimeOnly.MinValue) - effectiveStart.ToDateTime(TimeOnly.MinValue)).Days + 1;
+
+                    count += order.duration * days;
+                }
             }
+
             return count;
         }
+
 
         public int countOrderHours(int month) {
             int count = 0;
 
-            DateTime currentDate = DateTime.Now;
-            DateOnly monthStart = new DateOnly(currentDate.Year, month, 1);
+            DateOnly monthStart = new DateOnly(selectedYear, month, 1);
             DateOnly monthEnd = monthStart.AddMonths(1).AddDays(-1);
 
             foreach (TrainingOrder order in TrainingOrders) {
@@ -87,8 +96,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public int countMonthOrders(int month) {
             int count = 0;
 
-            DateTime currentDate = DateTime.Now;
-            DateOnly monthStart = new DateOnly(currentDate.Year, month, 1);
+            DateOnly monthStart = new DateOnly(selectedYear, month, 1);
             DateOnly monthEnd = monthStart.AddMonths(1).AddDays(-1);
 
             foreach (var order in TrainingOrders) {
@@ -105,8 +113,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
 
         public TrainingOrder getFirstTrainingOrder(int month, int place) {
-            DateTime currentDate = DateTime.Now;
-            DateOnly monthStart = new DateOnly(currentDate.Year, month, 1);
+            DateOnly monthStart = new DateOnly(selectedYear, month, 1);
             DateOnly monthEnd = monthStart.AddMonths(1).AddDays(-1);
 
             int placeCount = 0;
@@ -124,5 +131,11 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return null;
         }
 
+
+        public int setSelectedYear(int year) {
+            selectedYear = year;
+            
+            return selectedYear;
+        }
     }
 }
