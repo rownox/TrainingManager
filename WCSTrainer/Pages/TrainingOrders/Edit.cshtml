@@ -7,12 +7,16 @@
 
 @using WCSTrainer.Pages.Components
 
+
+<div id="people-component" class="people-component hidden">
+    <component type="typeof(People)" render-mode="WebAssemblyPrerendered" />
+</div>
+
+<div class="overlay hidden"></div>
+
 <div class="panel">
     <div class="body">
-        
-
         <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
-
         <div class="properties">
             <div class="user-form">
                 <p class="title">Edit Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
@@ -38,6 +42,7 @@
                                     <div class="selectors">
                                         <div class="selector">
                                             <div class="btn bg-btn btnWhite" id="indiButton"><p>Individual</p></div>
+                                            
                                             <div class="form-drop" id="individual">
                                                 <ul id="indiList">
                                                     @foreach (Models.Employee employee in Model.Employees) {
@@ -49,7 +54,7 @@
                                             </div>
                                         </div>
                                         <div class="selector">
-                                            <div class="btn bg-btn btnWhite" id="groupButton"><p>Groups</p></div>
+                                            <div class="btn bg-btn btnWhite" onclick="openComponent()"><p>Groups</p></div>
                                             <div class="form-drop" id="groups">
                                                 <ul id="groupList">
                                                     <li>HR</li>
@@ -158,7 +163,6 @@
                                     <span asp-validation-for="TrainingOrder.description" class="text-danger"></span>
                                 </div>
                                 <input asp-for="TrainingOrder.description" class="form-control" />
-
                             </div>
                         </div>
                         <div class="form-group">
@@ -177,7 +181,6 @@
 
 <script>
     var trainersInput = document.getElementById("trainersInput");
-    var groupButton = document.getElementById("groupButton");
     var indiButton = document.getElementById("indiButton");
     var individual = document.getElementById("individual");
     var trainList = document.getElementById("trainerList");
@@ -185,24 +188,35 @@
     var indiList = document.getElementById("indiList");
     var groups = document.getElementById("groups");
     var trainerDanger = document.getElementById("trainerDanger");
+    const overlay = document.querySelector(".overlay");
+    var peopleComponent = document.getElementById("people-component");
 
-    indiButton.addEventListener("click", function () {
-        if (individual.style.display == "flex") {
-            individual.style.display = "none";
-        } else {
-            individual.style.display = "flex";
-        }
-        groups.style.display = "none";
-    });
+    indiButton.addEventListener("click", function () { toggleDisplay("individual", "groups"); });
 
-    groupButton.addEventListener("click", function () {
-        if (groups.style.display == "flex") {
-            groups.style.display = "none";
+
+    const openComponent = function () {
+        peopleComponent.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+    };
+
+    const closeComponent = function () {
+        peopleComponent.classList.add("hidden");
+        overlay.classList.add("hidden");
+    };
+
+    overlay.addEventListener("click", closeComponent);
+
+
+    function toggleDisplay(dropdown, other) {
+        var dropdownElement = document.getElementById(dropdown);
+        var hideElement = document.getElementById(other);
+        if (dropdownElement.style.display == "flex") {
+            dropdownElement.style.display = "none";
         } else {
-            groups.style.display = "flex";
+            dropdownElement.style.display = "flex";
         }
-        individual.style.display = "none";
-    });
+        hideElement.style.display = "none";
+    }
 
     trainList.addEventListener("click", function (event) {
         if (event.target.tagName === "LI") {
@@ -211,34 +225,19 @@
         }
     });
 
-    indiList.addEventListener("click", function (event) {
+    indiList.addEventListener("click", function (event) { addTrainer(event); });
+    groupList.addEventListener("click", function (event) { addTrainer(event); });
+
+    function addTrainer(event) {
         if (event.target.tagName === "LI") {
-            trainer1(event.target.textContent);
+            var name = event.target.textContent
+            if (!trainList.innerHTML.includes(name)) {
+                trainList.innerHTML += "<li>" + name + "</li>";
+                updateTrainersInput();
+            }
+            individual.selectedIndex = -1;
+            groups.selectedIndex = -1;
         }
-    });
-
-    groupList.addEventListener("click", function (event) {
-        if (event.target.tagName === "LI") {
-            trainer2(event.target.textContent);
-        }
-    });
-
-    function trainer1(name) {
-        if (!trainList.innerHTML.includes(name)) {
-            trainList.innerHTML += "<li>" + name + "</li>";
-            updateTrainersInput();
-        }
-        groups.selectedIndex = -1;
-        individual.selectedIndex = -1;
-    }
-
-    function trainer2(name) {
-        if (!trainList.innerHTML.includes(name)) {
-            trainList.innerHTML += "<li>" + name + "</li>";
-            updateTrainersInput();
-        }
-        individual.selectedIndex = -1;
-        groups.selectedIndex = -1;
     }
 
     function updateTrainersInput() {
