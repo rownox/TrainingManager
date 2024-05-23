@@ -759,41 +759,40 @@ button {
     z-index: 2;
     bottom: 10%;
 }
-
     .people-component .people-container {
         display: flex;
         flex-direction: column;
         border-right: 1px solid var(--gray4);
         width: 30%;
-        padding: 10px;
+        padding: 20px;
     }
-
         .people-component .people-container .search {
             display: flex;
             border-bottom: 1px solid var(--gray4);
         }
-
             .people-component .people-container .search input {
                 height: 30px;
-                margin: 0;
-                padding: 0;
                 font-size: 18px;
                 width: 100%;
             }
-
         .people-component .people-container .people {
-            padding-top: 10px;
+            padding-top: 20px;
             flex-grow: 1;
             display: flex;
             font-size: 18px;
         }
-
     .people-component .details {
-        padding: 10px;
+        padding: 20px;
         display: flex;
         flex-grow: 1;
         font-size: 18px;
+        flex-direction: column;
     }
+        .people-component .details .title {
+            font-size: 25px;
+            width: 50%;
+            padding-bottom: 10px;
+        }
 
 .hidden {
     display: none;
