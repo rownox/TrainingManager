@@ -17,6 +17,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         [BindProperty]
         public int selectedYear { get; set; } = DateTime.Now.Year;
+        [BindProperty]
+        public string searchFor { get; set; } = "All";
 
         public async Task OnGetAsync() {
             Employees = await _context.Employee.ToListAsync();
@@ -40,9 +42,22 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         public int countOrders() {
             int count = 0;
-            foreach (TrainingOrder order in TrainingOrders) { 
-                count++;
+
+            foreach (var order in TrainingOrders) {
+                DateOnly orderStart = order.beginDate;
+                DateOnly orderEnd = order.endDate;
+
+                DateOnly yearStart = new DateOnly(selectedYear, 1, 1);
+                DateOnly yearEnd = new DateOnly(selectedYear, 12, 31);
+
+                DateOnly effectiveStart = orderStart > yearStart ? orderStart : yearStart;
+                DateOnly effectiveEnd = orderEnd < yearEnd ? orderEnd : yearEnd;
+
+                if (effectiveStart <= effectiveEnd) {
+                    count ++;
+                }
             }
+
             return count;
         }
 

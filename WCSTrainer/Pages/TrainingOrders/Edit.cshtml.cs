@@ -60,5 +60,11 @@ namespace WCSTrainer.Pages.TrainingOrders {
         private bool TrainingOrderExists(int id) {
             return _context.TrainingOrder.Any(e => e.Id == id);
         }
+
+        public bool ShowPeopleComponent { get; set; } = true;
+
+        public void TogglePeopleComponent() {
+            ShowPeopleComponent = !ShowPeopleComponent;
+        }
     }
 }
