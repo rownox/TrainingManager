@@ -235,7 +235,9 @@ body {
                             flex-direction: row;
                             align-items: center;
                             background-color: var(--gray3);
-
+                            width: 50%;
+                            border: 1px solid var(--gray4);
+                            border-radius: 0 5px 0 0;
                         }
                             .panel .body .properties .user-form .field-container .form-group .form .labels .control-label {
                             }
@@ -782,7 +784,12 @@ button {
             flex-grow: 1;
             display: flex;
             font-size: 18px;
-            border: 1px solid red;
+            flex-direction: column;
+        }
+        .people-component .people-container .people .person {
+            border-bottom: 1px solid var(--gray4);
+            padding: 10px;
+            font-size: 15px;
         }
     .people-component .details {
         padding: 20px;
@@ -790,7 +797,7 @@ button {
         flex-grow: 1;
         font-size: 18px;
         flex-direction: column;
-        border: 1px solid red;
+
     }
         .people-component .details .title {
             font-size: 25px;

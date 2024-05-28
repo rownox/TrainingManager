@@ -15,7 +15,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         [BindProperty]
         public TrainingOrder TrainingOrder { get; set; } = default!;
-
+        [BindProperty]
         public IList<Employee> Employees { get; set; }
 
         public string[] trainersList;
