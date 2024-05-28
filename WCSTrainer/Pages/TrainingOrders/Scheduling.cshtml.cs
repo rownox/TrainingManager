@@ -127,7 +127,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
         }
 
 
-        public TrainingOrder getFirstTrainingOrder(int month, int place) {
+        public TrainingOrder? getFirstTrainingOrder(int month, int place) {
             DateOnly monthStart = new DateOnly(selectedYear, month, 1);
             DateOnly monthEnd = monthStart.AddMonths(1).AddDays(-1);
 
@@ -144,13 +144,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
 
             return null;
-        }
-
-
-        public int setSelectedYear(int year) {
-            selectedYear = year;
-            
-            return selectedYear;
         }
     }
 }

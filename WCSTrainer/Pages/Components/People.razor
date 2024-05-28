@@ -1,20 +1,39 @@
-﻿<div class="people-container">
+﻿@page "/employee-list"
+
+<div class="people-container">
     <div class="search">
-        <input type="search" value="Search By Name"/>
+        <input type="search" placeholder="Search By Name" @bind="searchText" />
     </div>
     <div class="people">
-        People
+        @foreach (var employee in FilteredEmployees) {
+            <div class="person" @onclick="() => SelectEmployee(employee)">
+                @employee.FirstName @employee.LastName
+            </div>
+        }
     </div>
 </div>
 <div class="details">
-    <p class="title">FirstName LastName</p>
-    Description
-    <br />
-    Availability
-    <br />
-    Hours
+    @if (selectedEmployee != null) {
+        <p class="title">@selectedEmployee.FirstName @selectedEmployee.LastName</p>
+        <p>Availability: @selectedEmployee.Availability</p>
+    }
 </div>
 
 @code {
+    @using WCSTrainer.Models
 
+    [Parameter]
+    public IList<Employee> Employees { get; set; }
+
+    private Employee selectedEmployee;
+    private string searchText = "";
+
+    private IEnumerable<Employee> FilteredEmployees =>
+        string.IsNullOrWhiteSpace(searchText)
+        ? Employees
+        : Employees.Where(e => e.FirstName.Contains(searchText, StringComparison.OrdinalIgnoreCase) || e.LastName.Contains(searchText, StringComparison.OrdinalIgnoreCase));
+
+    private void SelectEmployee(Employee employee) {
+        selectedEmployee = employee;
+    }
 }
