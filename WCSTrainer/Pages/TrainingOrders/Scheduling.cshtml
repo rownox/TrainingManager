@@ -51,22 +51,25 @@
             <div class="tool-container">
                 <div class="tools">
                     <p class="title">Options: </p>
-                    <div class="search">
-                        <p class="section-title">Search By Trainer:</p>
-                        <input type="search" />
-                    </div>
-                    <div class="search">
-                        <p>Year:</p>
-                        <form method="post">
-                            <select asp-for="selectedYear" class="form-drop2">
-                                @for (int i = 0; i <= 10; i++) {
-                                    int newYear = (DateTime.Now.Year - 5) + i;
-                                    <option value="@newYear">@newYear</option>
-                                }
-                            </select>
-                            <input type="submit" value="Search" class="btn bg-btn btnGreen" />
-                        </form>
-                    </div>
+                    <form method="post">
+                        <div class="search">
+                            <p class="section-title">Search By Trainer:</p>
+                            <input asp-for="searchFor" type="search" />
+                        </div>
+                        <div class="search">
+                            <p>Year:</p>
+                            <div class="side">
+                                <select asp-for="selectedYear" class="form-drop2">
+                                    @for (int i = 0; i <= 10; i++) {
+                                        int newYear = (DateTime.Now.Year - 5) + i;
+                                        <option value="@newYear">@newYear</option>
+                                    }
+                                </select>
+                                <input type="submit" value="Search" class="btn bg-btn btnGreen" />
+                            </div>
+                            
+                        </div>
+                    </form>
                     <div class="info">
                         <div class="info-section">
                             <p>Training Orders For:</p>

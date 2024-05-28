@@ -234,6 +234,8 @@ body {
                             display: flex;
                             flex-direction: row;
                             align-items: center;
+                            background-color: var(--gray3);
+
                         }
                             .panel .body .properties .user-form .field-container .form-group .form .labels .control-label {
                             }
@@ -379,11 +381,11 @@ body {
                                 flex-direction: column;
                                 margin-top: 20px;
                             }
-                                .panel .body .properties .tool-container .tools .search form {
+                                .panel .body .properties .tool-container .tools .search .side {
                                     display: flex;
                                     justify-content: space-between;
                                 }
-                                    .panel .body .properties .tool-container .tools .search form input {
+                                    .panel .body .properties .tool-container .tools .search .side input {
                                         width: 65%;
                                     }
                                 .panel .body .properties .tool-container .tools .search input {
@@ -780,6 +782,7 @@ button {
             flex-grow: 1;
             display: flex;
             font-size: 18px;
+            border: 1px solid red;
         }
     .people-component .details {
         padding: 20px;
@@ -787,6 +790,7 @@ button {
         flex-grow: 1;
         font-size: 18px;
         flex-direction: column;
+        border: 1px solid red;
     }
         .people-component .details .title {
             font-size: 25px;
