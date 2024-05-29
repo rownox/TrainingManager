@@ -54,12 +54,7 @@
                                     }
                                 </div>
                             </div>
-                            <a class="btn bg-btn btnBlue" asp-page="./Details" asp-route-id="@item.Id">View</a>
-                            @if (item.status.Equals("Active")) {
-                                <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
-                            } else {
-                                <a class="btn bg-btn btnWhite" style="text-decoration: line-through;">Edit</a>
-                            }
+                            <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
                             <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
                         </li>
                     }
