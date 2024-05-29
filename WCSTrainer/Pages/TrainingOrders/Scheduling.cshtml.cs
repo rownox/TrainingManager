@@ -11,7 +11,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public SchedulingModel(WCSTrainer.Data.WCSTrainerContext context) {
             _context = context;
         }
-
         public IList<TrainingOrder> TrainingOrders { get; set; }
         public IList<Employee> Employees { get; set; }
 
@@ -33,25 +32,14 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return Page();
         }
 
-        public string getEmployee(string traineeID) {
-            foreach (Employee employee in Employees) {
-                if (employee.Id.ToString().Equals(traineeID)) {
-                    return employee.FirstName + " " + employee.LastName;
-                }
-            }
-            return traineeID;
-        }
-
         public int countOrders() {
             int count = 0;
 
             foreach (var order in TrainingOrders) {
                 DateOnly orderStart = order.beginDate;
                 DateOnly orderEnd = order.endDate;
-
                 DateOnly yearStart = new DateOnly(selectedYear, 1, 1);
                 DateOnly yearEnd = new DateOnly(selectedYear, 12, 31);
-
                 DateOnly effectiveStart = orderStart > yearStart ? orderStart : yearStart;
                 DateOnly effectiveEnd = orderEnd < yearEnd ? orderEnd : yearEnd;
 
@@ -60,7 +48,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
                         count++;
                     }
                 }
-                
             }
             return count;
         }
@@ -71,10 +58,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
             foreach (var order in TrainingOrders) {
                 DateOnly orderStart = order.beginDate;
                 DateOnly orderEnd = order.endDate;
-
                 DateOnly yearStart = new DateOnly(selectedYear, 1, 1);
                 DateOnly yearEnd = new DateOnly(selectedYear, 12, 31);
-
                 DateOnly effectiveStart = orderStart > yearStart ? orderStart : yearStart;
                 DateOnly effectiveEnd = orderEnd < yearEnd ? orderEnd : yearEnd;
 
@@ -88,17 +73,14 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return count;
         }
 
-
         public int countOrderHours(int month) {
-            int count = 0;
-
             DateOnly monthStart = new DateOnly(selectedYear, month, 1);
             DateOnly monthEnd = monthStart.AddMonths(1).AddDays(-1);
+            int count = 0;
 
             foreach (TrainingOrder order in TrainingOrders) {
                 DateOnly orderStart = order.beginDate;
                 DateOnly orderEnd = order.endDate;
-
                 DateOnly effectiveStart = orderStart > monthStart ? orderStart : monthStart;
                 DateOnly effectiveEnd = orderEnd < monthEnd ? orderEnd : monthEnd;
 
@@ -109,13 +91,11 @@ namespace WCSTrainer.Pages.TrainingOrders {
                     }
                 }
             }
-
             return count;
         }
 
         public int countMonthOrders(int month) {
             int count = 0;
-
             DateOnly monthStart = new DateOnly(selectedYear, month, 1);
             DateOnly monthEnd = monthStart.AddMonths(1).AddDays(-1);
 
@@ -132,11 +112,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return count;
         }
 
-
         public TrainingOrder? getFirstTrainingOrder(int month, int place) {
             DateOnly monthStart = new DateOnly(selectedYear, month, 1);
             DateOnly monthEnd = monthStart.AddMonths(1).AddDays(-1);
-
             int placeCount = 0;
 
             foreach (TrainingOrder order in TrainingOrders) {
@@ -150,7 +128,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
                     }
                 }
             }
-
             return null;
         }
 

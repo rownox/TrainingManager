@@ -17,24 +17,26 @@
                         <button onclick="sortTable(0)" class="btn bg-btn btnWhite">ID Number</button>
                         <button onclick="sortTable(6)" class="btn bg-btn btnWhite">Priority Level</button>
                     </div>
-                    <form method="post" id="maxCountForm">
-                        <select asp-for="maxCount" class="drop-main" onchange="submitForm()">
-                            <option value="15">15</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                            <option value="@Model.TrainingOrder.Count()">Max</option>
-                        </select>
-                        <div class="labels">
-                            <p class="control-label">From</p>
-                            <span asp-validation-for="@Model.From" class="text-danger"></span>
-                        </div>
-                        <input type="date" asp-for="TrainingOrder.@Model.From" class="form-control" />
-                        <div class="labels">
-                            <p class="control-label">To</p>
-                            <span asp-validation-for="TrainingOrder.@Model.To" class="text-danger"></span>
-                        </div>
-                        <input type="date" asp-for="TrainingOrder.@Model.To" class="form-control" />
-                    </form>
+                    <div class="options">
+                        <form method="post" id="maxCountForm">
+                            <select asp-for="maxCount" class="drop-main" onchange="submitForm()">
+                                <option value="15">15</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="@Model.TrainingOrder.Count()">Max</option>
+                            </select>
+                            
+                            <div class="selector">
+                                <p>From</p>
+                                <input type="date" asp-for="TrainingOrder.@Model.From" class="form-control" />
+                            </div>
+                            <div class="selector">
+                                <p>To</p>
+                                <input type="date" asp-for="TrainingOrder.@Model.To" class="form-control" />
+                            </div>
+                            
+                        </form>
+                    </div>
                 </div>
                 <table id="dataTable">
                     <tr>
@@ -88,7 +90,6 @@
                     break;
                 }
             }
-
             if (shouldSwitch) {
                 rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
                 switching = true;
