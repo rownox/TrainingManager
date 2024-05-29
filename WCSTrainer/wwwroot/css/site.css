@@ -255,7 +255,7 @@ body {
                         display: block;
                         width: 100%;
                         border: none;
-                        height: 100%;
+                        height: 25px;
                     }
                     .panel .body .properties .user-form .field-container .form-group .selections {
                         display: flex;
@@ -427,58 +427,72 @@ body {
                                 display: flex;
                                 justify-content: space-between;
                             }
-            .panel .body .properties .order-list {
-                overflow-y: scroll;
-                scrollbar-width: none;
-                scroll-behavior: smooth;
+            .panel .body .properties .list-container {
+                display: flex;
+                flex-direction: column;
                 width: 70%;
                 max-height: 750px;
             }
-                .panel .body .properties .order-list ul {
-                    list-style: none;
-                }
-                .panel .body .properties .order-list li {
-                    margin-right: 20px;
-                    padding: 10px;
+
+                .panel .body .properties .list-container .top {
                     border-bottom: 1px solid var(--gray4);
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-                    align-items: center;
+                    padding: 8px;
                 }
-                    .panel .body .properties .order-list li:hover {
-                        background-color: var(--gray3);
+                .panel .body .properties .list-container .order-list {
+                    overflow-y: scroll;
+                    scrollbar-width: none;
+                    scroll-behavior: smooth;
+                    height: 100%;
+                    width: 100%;
+                }
+
+                    .panel .body .properties .list-container .order-list ul {
+                        list-style: none;
                     }
-                    .panel .body .properties .order-list li .info {
-                        width: 100%;
+                    .panel .body .properties .list-container .order-list li {
+                        margin-right: 20px;
+                        border-bottom: 1px solid var(--gray4);
                         display: flex;
-                        flex-direction: column;
-                        text-decoration: none;
-                    }
-                        .panel .body .properties .order-list li .info .title {
-                            display: flex;
-                            width: 100%;
-                            height: 100%;
-                            color: var(--textMain);
-                            font-size: 17px;
-                        }
-                        .panel .body .properties .order-list li .info .sub {
-                            display: flex;
-                            margin-top: 2px;
-                            font-size: 15px;
-                            color: var(--textSub2);
-                        }
-                            .panel .body .properties .order-list li .info .sub p {
-                                margin-right: 5px;
-                            }
-                    .panel .body .properties .order-list li .btn {
-                        padding: 6px 10px;
-                        font-size: 15px;
-                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
                         align-items: center;
-                        justify-content: center;
-                        margin-left: 5px;
+                        width: 100%;
+                        padding: 10px 0;
                     }
+                        .panel .body .properties .list-container .order-list li:hover {
+                            background-color: var(--gray3);
+                        }
+                        .panel .body .properties .list-container .order-list li .info {
+                            margin-left: 10px;
+                            width: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            text-decoration: none;
+                        }
+                            .panel .body .properties .list-container .order-list li .info .title {
+                                display: flex;
+                                width: 100%;
+                                height: 100%;
+                                color: var(--textMain);
+                                font-size: 17px;
+                            }
+                            .panel .body .properties .list-container .order-list li .info .sub {
+                                display: flex;
+                                margin-top: 2px;
+                                font-size: 15px;
+                                color: var(--textSub2);
+                            }
+                                .panel .body .properties .list-container .order-list li .info .sub p {
+                                    margin-right: 5px;
+                                }
+                        .panel .body .properties .list-container .order-list li .btn {
+                            padding: 6px 10px;
+                            font-size: 15px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin-right: 10px;
+                        }
             .panel .body .properties .order-list2 {
                 overflow-y: scroll;
                 max-height: 750px;
@@ -616,6 +630,10 @@ body {
     background: none;
     border: none;
 }
+    .nbg-btn:active {
+        background-color: var(--gray4);
+        cursor: default;
+    }
 .bg-btn {
     border: 1px solid var(--gray4);
     background-color: var(--gray2);
@@ -788,11 +806,19 @@ button {
             font-size: 18px;
             flex-direction: column;
         }
-        .people-component .people-container .people .person {
-            border-bottom: 1px solid var(--gray4);
-            padding: 10px;
-            font-size: 15px;
-        }
+            .people-component .people-container .people .person {
+                border-bottom: 1px solid var(--gray4);
+                padding: 5px 5px;
+                font-size: 13px;
+            }
+                .people-component .people-container .people .person:hover {
+                    background-color: var(--gray3);
+                    cursor: pointer;
+                }
+                .people-component .people-container .people .person:active {
+                    background-color: var(--gray4);
+                    cursor: default;
+                }
     .people-component .details {
         padding: 20px;
         display: flex;
@@ -809,4 +835,11 @@ button {
 
 .hidden {
     display: none;
+}
+
+.drop-main {
+    background-color: var(--gray3);
+    color: var(--textMain);
+    border-color: var(--gray4);
+    padding: 3px;
 }

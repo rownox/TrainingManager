@@ -9,7 +9,7 @@
 
 
 <div id="people-component" class="people-component hidden">
-    <component type="typeof(People)" render-mode="WebAssemblyPrerendered" param-Employees="@Model.Employees" />
+    <component type="typeof(People)" render-mode="WebAssemblyPrerendered" param-Employees="@Model.Employees" param-addTrainees="false" />
 </div>
 
 <div class="overlay hidden"></div>
@@ -42,7 +42,6 @@
                                     <div class="selectors">
                                         <div class="selector">
                                             <div class="btn bg-btn btnWhite" id="indiButton"><p>Individual</p></div>
-                                            
                                             <div class="form-drop" id="individual">
                                                 <ul id="indiList">
                                                     @foreach (Models.Employee employee in Model.Employees) {
@@ -71,7 +70,6 @@
                         } else {
                             <input id="trainersInput" asp-for="TrainingOrder.trainers" type="hidden" />
                         }
-
                         <div class="form-group">
                             <div class="form">
                                 <div class="labels">

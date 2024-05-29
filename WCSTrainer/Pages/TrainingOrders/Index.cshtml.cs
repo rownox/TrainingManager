@@ -14,23 +14,31 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         public IList<TrainingOrder> TrainingOrder { get; set; } = default!;
         public IList<Employee> Employees { get; set; }
+        public int listCount = 0;
+        [BindProperty]
+        public int maxCount { get; set; } = 10;
 
         public async Task OnGetAsync() {
             Employees = await _context.Employee.ToListAsync();
             TrainingOrder = await _context.TrainingOrder.ToListAsync();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id) {
-            var trainingOrder = await _context.TrainingOrder.FindAsync(id);
+        public async Task<IActionResult> OnPostAsync(int? id) {
+            if (id != null) {
+                var trainingOrder = await _context.TrainingOrder.FindAsync(id);
 
-            if (trainingOrder == null) {
-                return NotFound();
+                if (trainingOrder == null) {
+                    return NotFound();
+                }
+
+                _context.TrainingOrder.Remove(trainingOrder);
+                await _context.SaveChangesAsync();
             }
 
-            _context.TrainingOrder.Remove(trainingOrder);
-            await _context.SaveChangesAsync();
+            Employees = await _context.Employee.ToListAsync();
+            TrainingOrder = await _context.TrainingOrder.ToListAsync();
 
-            return RedirectToPage("./Index");
+            return Page();
         }
 
         public string getEmployee(string traineeID) {

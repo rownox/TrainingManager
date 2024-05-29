@@ -31,8 +31,16 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
 
             _context.TrainingOrder.Add(TrainingOrder);
-            await _context.SaveChangesAsync();
 
+            Employees = await _context.Employee.ToListAsync();
+
+            foreach (Employee employee in Employees) {
+                if (TrainingOrder.trainee.Contains(employee.FirstName) && TrainingOrder.trainee.Contains(employee.LastName)) {
+                    employee.TrainingOrders = employee.TrainingOrders + TrainingOrder.Id + " ";
+                }
+            }
+
+            await _context.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
     }

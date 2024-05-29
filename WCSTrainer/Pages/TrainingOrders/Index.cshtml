@@ -29,37 +29,54 @@
     <div class="body">
         <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
         <div class="properties">
-            <div class="order-list">
-                <ul>
-                    @foreach (var item in Model.TrainingOrder) {
-                        <li id="@item.Id.ToString() @Model.getEmployee(item.trainee)" class="@item.status.ToString() searchable">
-                            <div class="info">
-                                <div class="title">
-                                    <p>Training Order ID: @Html.DisplayFor(modelItem => item.Id) </p>
-                                </div>
-                                <div class="sub">
-                                    <p>Trainee - </p>
-                                    @Model.getEmployee(item.trainee)
-                                </div>
-                                <div class="sub">
-                                    <p>Status - </p>
-                                    @if (item.status.Equals("Awaiting Approval")) {
-                                        <p class="awaiting">@Html.DisplayFor(modelItem => item.status)</p>
-                                    } else if (item.status.Equals("Active")) {
-                                        <p class="active">@Html.DisplayFor(modelItem => item.status)</p>
-                                    } else if (item.status.Equals("Verified")) {
-                                        <p class="verified">@Html.DisplayFor(modelItem => item.status)</p>
-                                    } else {
-                                        <p class="completed">@Html.DisplayFor(modelItem => item.status)</p>
-                                    }
-                                </div>
-                            </div>
-                            <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
-                            <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
-                        </li>
-                    }
-                </ul>
+            <div class="list-container">
+                <div class="top">
+                    <form method="post" id="maxCountForm">
+                        <select asp-for="maxCount" class="drop-main" onchange="submitForm()">
+                            <option value="10">10</option>
+                            <option value="50">50</option>
+                            <option value="@Model.TrainingOrder.Count()">Max</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="order-list">
+                    
+                    <ul>
+                        @foreach (var item in Model.TrainingOrder.Reverse()) {
+                            if (Model.listCount < Model.maxCount) {
+                                <li id="@item.Id.ToString() @Model.getEmployee(item.trainee)" class="@item.status.ToString() searchable">
+                                    <div class="info">
+                                        <div class="title">
+                                            <p>Training Order ID: @Html.DisplayFor(modelItem => item.Id) </p>
+                                        </div>
+                                        <div class="sub">
+                                            <p>Trainee - </p>
+                                            @Model.getEmployee(item.trainee)
+                                        </div>
+                                        <div class="sub">
+                                            <p>Status - </p>
+                                            @if (item.status.Equals("Awaiting Approval")) {
+                                                <p class="awaiting">@Html.DisplayFor(modelItem => item.status)</p>
+                                            } else if (item.status.Equals("Active")) {
+                                                <p class="active">@Html.DisplayFor(modelItem => item.status)</p>
+                                            } else if (item.status.Equals("Verified")) {
+                                                <p class="verified">@Html.DisplayFor(modelItem => item.status)</p>
+                                            } else {
+                                                <p class="completed">@Html.DisplayFor(modelItem => item.status)</p>
+                                            }
+                                        </div>
+                                    </div>
+                                    <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
+                                    <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
+                                </li>
+                                Model.listCount++;
+                            }
+
+                        }
+                    </ul>
+                </div>
             </div>
+            
             <div class="tool-container">
                 <div class="tools">
                     <p class="title">Options:</p>
@@ -148,5 +165,9 @@
                 }
             }
         }
+    }
+
+    function submitForm() {
+        document.getElementById('maxCountForm').submit();
     }
 </script>

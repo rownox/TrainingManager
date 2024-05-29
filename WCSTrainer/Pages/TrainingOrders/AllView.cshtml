@@ -12,12 +12,29 @@
         <div class="properties">
             <div class="order-list2">
                 <div class="sorters">
-                    <p>Sort By:</p>
                     <div class="btns">
                         <button onclick="sortTable(4)" class="btn bg-btn btnWhite">Begin Date</button>
                         <button onclick="sortTable(0)" class="btn bg-btn btnWhite">ID Number</button>
                         <button onclick="sortTable(6)" class="btn bg-btn btnWhite">Priority Level</button>
                     </div>
+                    <form method="post" id="maxCountForm">
+                        <select asp-for="maxCount" class="drop-main" onchange="submitForm()">
+                            <option value="15">15</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="@Model.TrainingOrder.Count()">Max</option>
+                        </select>
+                        <div class="labels">
+                            <p class="control-label">From</p>
+                            <span asp-validation-for="@Model.From" class="text-danger"></span>
+                        </div>
+                        <input type="date" asp-for="TrainingOrder.@Model.From" class="form-control" />
+                        <div class="labels">
+                            <p class="control-label">To</p>
+                            <span asp-validation-for="TrainingOrder.@Model.To" class="text-danger"></span>
+                        </div>
+                        <input type="date" asp-for="TrainingOrder.@Model.To" class="form-control" />
+                    </form>
                 </div>
                 <table id="dataTable">
                     <tr>
@@ -29,16 +46,19 @@
                         <th>End Date</th>
                         <th>Priority Level</th>
                     </tr>
-                    @foreach (var item in Model.TrainingOrder) {
-                        <tr class="clickable">
-                            <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                            <td>@Html.DisplayFor(modelItem => item.status)</td>
-                            <td>@Html.DisplayFor(modelItem => item.trainee)</td>
-                            <td>@Html.DisplayFor(modelItem => item.skill)</td>
-                            <td>@Html.DisplayFor(modelItem => item.beginDate)</td>
-                            <td>@Html.DisplayFor(modelItem => item.endDate)</td>
-                            <td>@Html.DisplayFor(modelItem => item.priorityLevel)</td>
-                        </tr>
+                    @foreach (var item in Model.TrainingOrder.Reverse()) {
+                        if (Model.listCount < Model.maxCount) {
+                            <tr class="clickable">
+                                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                <td>@Html.DisplayFor(modelItem => item.status)</td>
+                                <td>@Html.DisplayFor(modelItem => item.trainee)</td>
+                                <td>@Html.DisplayFor(modelItem => item.skill)</td>
+                                <td>@Html.DisplayFor(modelItem => item.beginDate)</td>
+                                <td>@Html.DisplayFor(modelItem => item.endDate)</td>
+                                <td>@Html.DisplayFor(modelItem => item.priorityLevel)</td>
+                            </tr>
+                            Model.listCount++;
+                        }
                     }
                 </table>
             </div>
@@ -74,6 +94,10 @@
                 switching = true;
             }
         }
+    }
+
+    function submitForm() {
+        document.getElementById('maxCountForm').submit();
     }
 
 </script>
