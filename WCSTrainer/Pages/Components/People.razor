@@ -1,14 +1,30 @@
-﻿@page "/employee-list"
-
-<div class="people-container">
+﻿<div class="people-container">
     <div class="search">
         <input type="search" placeholder="Search By Name" @bind="searchText" />
     </div>
     <div class="people">
         @foreach (var employee in FilteredEmployees) {
-            <div class="person" @onclick="() => SelectEmployee(employee)">
-                @employee.FirstName @employee.LastName
-            </div>
+            if (!addTrainees) {
+                if (employee.Status.Equals("Trainer")) {
+                    <div class="person" @onclick="() => SelectEmployee(employee)">
+                        <div>
+                            <p>@employee.FirstName @employee.LastName</p>
+                        </div>
+                        <div>
+                            <p>Status: @employee.Status</p>
+                        </div>
+                    </div>
+                }
+            } else {
+                <div class="person" @onclick="() => SelectEmployee(employee)">
+                    <div>
+                        <p>@employee.FirstName @employee.LastName</p>
+                    </div>
+                    <div>
+                        <p>Status: @employee.Status</p>
+                    </div>
+                </div>
+            }
         }
     </div>
 </div>
@@ -23,9 +39,11 @@
     @using WCSTrainer.Models
 
     [Parameter]
+    public bool addTrainees { get; set; }
+    [Parameter]
     public IList<Employee> Employees { get; set; }
 
-    private Employee selectedEmployee;
+    private Employee? selectedEmployee;
     private string searchText = "";
 
     private IEnumerable<Employee> FilteredEmployees =>
@@ -35,5 +53,6 @@
 
     private void SelectEmployee(Employee employee) {
         selectedEmployee = employee;
+        StateHasChanged();
     }
 }
