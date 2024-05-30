@@ -70,34 +70,28 @@
                     border-bottom: 1px solid var(--textMain);
                     background-color: var(--gray1);
                 }
-
             .panel .body .properties {
                 padding: 0;
                 display: flex;
                 flex-direction: column;
                 width: 100%;
             }
-
                 .panel .body .properties .user-form {
                     display: flex;
                     flex-direction: column;
                     width: 100%;
                 }
-
                     .panel .body .properties .user-form .title {
                         font-size: 30px;
                     }
-
                     .panel .body .properties .user-form .description {
                     }
-
                     .panel .body .properties .user-form .field-container {
                         display: flex;
                         flex-direction: column;
                         margin-top: 30px;
                         width: 100%;
                     }
-
                     .panel .body .properties .user-form .btn-container {
                         padding-top: 10px;
                         width: 100%;
@@ -105,13 +99,11 @@
                         flex-direction: row;
                         gap: 10px;
                     }
-
                         .panel .body .properties .user-form .btn-container .btn {
                             margin-top: 5px;
                             padding: 6px 10px;
                             font-size: 15px;
                         }
-
                             .panel .body .properties .user-form .btn-container .btn:hover .form-drop {
                                 display: block;
                             }
@@ -250,7 +242,6 @@
                         }
                 .panel .body .properties .tool-container {
                     bottom: 0;
-                    position: absolute;
                     margin: 0;
                     display: flex;
                     width: 100%;
@@ -260,7 +251,7 @@
                         display: flex;
                         flex-direction: column;
                         width: 100%;
-                        padding: 20px;
+                        padding: 10px 20px;
                     }
 
                         .panel .body .properties .tool-container .tools .btns {
@@ -280,49 +271,59 @@
                         .panel .body .properties .tool-container .tools .search {
                             width: 100%;
                             display: flex;
-                            height: 99px;
                             flex-direction: column;
+                            margin-top: 5px;
                         }
 
                             .panel .body .properties .tool-container .tools .search input {
-                                height: 35px;
+                                height: 30px;
                                 margin-top: 10px;
                             }
 
                             .panel .body .properties .tool-container .tools .search p {
-                                font-size: 20px;
+                                font-size: 15px;
                                 color: var(--textMain);
                             }
 
                         .panel .body .properties .tool-container .tools .selections {
-                            margin-bottom: 20px;
+                            margin-bottom: 10px;
                         }
 
                             .panel .body .properties .tool-container .tools .selections .title {
                             }
 
                             .panel .body .properties .tool-container .tools .selections .section {
-                                margin-top: 10px;
                                 display: flex;
+                                margin: 3px 10px;
                             }
 
                                 .panel .body .properties .tool-container .tools .selections .section .info {
                                     margin-left: 7px;
                                 }
 
-                .panel .body .properties .order-list {
+                .panel .body .properties .list-container {
+                    display: flex;
+                    flex-direction: column;
                     width: 100%;
-                    max-height: 400px;
-                    border-bottom: 2px solid var(--textMain);
+                    height: 400px;
                 }
 
-                    .panel .body .properties .order-list li {
-                        margin-right: 0;
-                        padding: 10px;
-                        border-bottom: 1px solid var(--gray4);
+                    .panel .body .properties .list-container .top {
+                        display: none;
                     }
 
-                .panel .body .properties .order-list2 {
+                    .panel .body .properties .list-container .order-list {
+                        width: 100%;
+                        max-height: 400px;
+                        border-bottom: 2px solid var(--textMain);
+                    }
+
+                        .panel .body .properties .list-container .order-list li {
+                            margin-right: 0;
+                            border-bottom: 1px solid var(--gray4);
+                        }
+
+                .panel .body .properties .list-container .order-list2 {
                     overflow-y: scroll;
                     max-height: 750px;
                     width: 100%;
