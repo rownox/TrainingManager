@@ -41,27 +41,7 @@
                                     </div>
                                     <div class="selectors">
                                         <div class="selector">
-                                            <div class="btn bg-btn btnWhite" id="indiButton"><p>Individual</p></div>
-                                            <div class="form-drop" id="individual">
-                                                <ul id="indiList">
-                                                    @foreach (Models.Employee employee in Model.Employees) {
-                                                        if (employee.Status.Equals("Trainer")) {
-                                                            <li>@employee.FirstName @employee.LastName</li>
-                                                        }
-                                                    }
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="selector">
-                                            <div class="btn bg-btn btnWhite" onclick="openComponent()"><p>Groups</p></div>
-                                            <div class="form-drop" id="groups">
-                                                <ul id="groupList">
-                                                    <li>HR</li>
-                                                    <li>Shipping</li>
-                                                    <li>Sales</li>
-                                                    <li>Engineering</li>
-                                                </ul>
-                                            </div>
+                                            <div class="btn bg-btn btnWhite" onclick="openComponent()"><p>Select Trainers</p></div>
                                         </div>
                                     </div>
                                     <input id="trainersInput" asp-for="TrainingOrder.trainers" type="hidden" />
@@ -179,42 +159,22 @@
 
 <script>
     var trainersInput = document.getElementById("trainersInput");
-    var indiButton = document.getElementById("indiButton");
-    var individual = document.getElementById("individual");
     var trainList = document.getElementById("trainerList");
-    var groupList = document.getElementById("groupList");
-    var indiList = document.getElementById("indiList");
-    var groups = document.getElementById("groups");
     var trainerDanger = document.getElementById("trainerDanger");
     const overlay = document.querySelector(".overlay");
     var peopleComponent = document.getElementById("people-component");
-
-    indiButton.addEventListener("click", function () { toggleDisplay("individual", "groups"); });
-
+    var person = document.getElementsByClassName("person");
 
     const openComponent = function () {
         peopleComponent.classList.remove("hidden");
         overlay.classList.remove("hidden");
     };
-
     const closeComponent = function () {
         peopleComponent.classList.add("hidden");
         overlay.classList.add("hidden");
     };
 
     overlay.addEventListener("click", closeComponent);
-
-
-    function toggleDisplay(dropdown, other) {
-        var dropdownElement = document.getElementById(dropdown);
-        var hideElement = document.getElementById(other);
-        if (dropdownElement.style.display == "flex") {
-            dropdownElement.style.display = "none";
-        } else {
-            dropdownElement.style.display = "flex";
-        }
-        hideElement.style.display = "none";
-    }
 
     trainList.addEventListener("click", function (event) {
         if (event.target.tagName === "LI") {
@@ -223,18 +183,21 @@
         }
     });
 
-    indiList.addEventListener("click", function (event) { addTrainer(event); });
-    groupList.addEventListener("click", function (event) { addTrainer(event); });
+    person.forEach(item => {
+        item.addEventListener("click", event => {
+            test(event);
+        });
+    });
+
+    function test(event) {
+        event.target.style.display = "none";
+    }
 
     function addTrainer(event) {
-        if (event.target.tagName === "LI") {
-            var name = event.target.textContent
-            if (!trainList.innerHTML.includes(name)) {
-                trainList.innerHTML += "<li>" + name + "</li>";
-                updateTrainersInput();
-            }
-            individual.selectedIndex = -1;
-            groups.selectedIndex = -1;
+        var name = event.target.value
+        if (!trainList.innerHTML.includes(name)) {
+            trainList.innerHTML += "<li>" + name + "</li>";
+            updateTrainersInput();
         }
     }
 

@@ -9,7 +9,6 @@
 
 <div class="panel">
     <div class="body">
-
         <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
         <div class="properties">
             <div class="user-form">
@@ -37,8 +36,6 @@
                                     }
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-group">
                             <div class="form">
                                 <div class="labels">
                                     <p class="control-label">Skill*</p>
@@ -60,8 +57,6 @@
                                     <option value="Four">Four</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-group">
                             <div class="form">
                                 <div class="labels">
                                     <p class="control-label">Medium*</p>
@@ -78,8 +73,6 @@
                                 </div>
                                 <input asp-for="TrainingOrder.duration" class="form-control"/>
                             </div>
-                        </div>
-                        <div class="form-group">
                             <div class="form">
                                 <div class="labels">
                                     <p class="control-label">Priority Level*</p>
@@ -98,7 +91,7 @@
                                     <p class="control-label">Description</p>
                                     <span asp-validation-for="TrainingOrder.description" class="text-danger"></span>
                                 </div>
-                                <input asp-for="TrainingOrder.description" class="form-control" />
+                                <textarea rows="5" asp-for="TrainingOrder.description"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
