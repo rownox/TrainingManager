@@ -133,9 +133,9 @@ body {
     font-size: 40px;
 }
 
-/*--------------------------------------------------------*/
-/*                       MAIN PANEL                       */
-/*--------------------------------------------------------*/
+/*--------------------------------------------------------
+                       MAIN PANEL                       
+--------------------------------------------------------*/
 
 .panel {
     display: flex;
@@ -276,7 +276,6 @@ body {
                                 padding: 3px 10px;
                                 border-radius: 20px;
                                 margin: 2px;
-
                             }
                     .panel .body .properties .user-form .field-container .form-group .selectors {
                         display: flex;
@@ -289,7 +288,6 @@ body {
                             display: flex;
                             flex-direction: column;
                             width: 48%;
-                            
                         }
                             .panel .body .properties .user-form .field-container .form-group .selectors .selector .btn {
                                 padding: 6px 0;
@@ -481,9 +479,6 @@ body {
                         .panel .body .properties .list-container .order-list li .btn {
                             padding: 6px 10px;
                             font-size: 15px;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
                             margin-right: 10px;
                         }
             .panel .body .properties .order-list2 {
@@ -766,8 +761,8 @@ button {
 }
 
 /*--------------------------------------------------------
-                        COMPONENTS                     
---------------------------------------------------------*/
+                        COMPONENTS                        
+--------------------------------------------------------*/ 
 
 .people-component {
     top: 20%;
@@ -825,9 +820,9 @@ button {
     .people-component .details {
         padding: 20px;
         display: flex;
+        flex-direction: column;
         flex-grow: 1;
         font-size: 18px;
-        flex-direction: column;
         gap: 10px;
     }
         .people-component .details .title {
@@ -856,6 +851,14 @@ button {
                 border-radius: 3px;
                 padding: 2px 5px;
             }
+        .people-component .details .btn {
+            margin-top: 45%;
+            align-self: flex-end;
+            justify-self: flex-end;
+            padding: 2px;
+            width: 150px;
+            font-size: 17px;
+        }
 .hidden {    
     display: none;
 }
