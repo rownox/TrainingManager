@@ -22,7 +22,6 @@
                             <select asp-for="maxCount" class="drop-main" onchange="submitForm()">
                                 <option value="15">15</option>
                                 <option value="50">50</option>
-                                <option value="100">100</option>
                                 <option value="@Model.TrainingOrder.Count()">Max</option>
                             </select>
                             
@@ -70,31 +69,23 @@
 
 <script>
 
+    var sortOrder = true;
+
     function sortTable(column) {
-        var table, rows, switching, i, shouldSwitch;
-        table = document.getElementById("dataTable");
-        switching = true;
+        var table = document.getElementById("dataTable");
+        var rows = Array.from(table.rows).slice(1);
 
-        while (switching) {
-            switching = false;
-            rows = table.rows;
+        rows.sort(function (row1, row2) {
+            var x = parseFloat(row1.cells[column].innerText);
+            var y = parseFloat(row2.cells[column].innerText);
+            return sortOrder ? x - y : y - x;
+        });
 
-            for (i = 1; i < (rows.length - 1); i++) {
+        rows.forEach(function (row) {
+            table.appendChild(row);
+        });
 
-                shouldSwitch = false;
-                var x = parseFloat(rows[i].getElementsByTagName("TD")[column].innerHTML.toLowerCase());
-                var y = parseFloat(rows[i + 1].getElementsByTagName("TD")[column].innerHTML.toLowerCase());
-
-                if (x > y) {
-                    shouldSwitch = true;
-                    break;
-                }
-            }
-            if (shouldSwitch) {
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-            }
-        }
+        sortOrder = !sortOrder;
     }
 
     function submitForm() {

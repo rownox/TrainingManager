@@ -3,36 +3,67 @@
         <input type="search" placeholder="Search By Name" @bind="searchText" />
     </div>
     <div class="people">
-        @foreach (var employee in FilteredEmployees) {
+        <p>People</p>
+        <br />
+        @foreach (var employee in Employees) {
             if (!addTrainees) {
                 if (employee.Status.Equals("Trainer")) {
-                    <div class="person" @onclick="() => SelectEmployee(employee)">
-                        <div>
-                            <p>@employee.FirstName @employee.LastName</p>
-                        </div>
-                        <div>
-                            <p>Status: @employee.Status</p>
-                        </div>
+                    <div class="person" value="@employee.FirstName @employee.LastName">
+                        <p>@employee.FirstName @employee.LastName</p>
+                        <p class="sub">Status: @employee.Status</p>
                     </div>
                 }
             } else {
-                <div class="person" @onclick="() => SelectEmployee(employee)">
-                    <div>
-                        <p>@employee.FirstName @employee.LastName</p>
-                    </div>
-                    <div>
-                        <p>Status: @employee.Status</p>
-                    </div>
+                <div class="person">
+                    <p>@employee.FirstName @employee.LastName</p>
+                    <p class="sub">Status: @employee.Status</p>
                 </div>
             }
         }
     </div>
+    <div class="people">
+        <p>Groups</p>
+        <br />
+        <div class="person">
+            <p>HR</p>
+            <p class="sub">Member Count: 6</p>
+        </div>
+        <div class="person">
+            <p>Shipping</p>
+            <p class="sub">Member Count: 12</p>
+        </div>
+        <div class="person">
+            <p>Sales</p>
+            <p class="sub">Member Count: 7</p>
+        </div>
+        <div class="person">
+            <p>Management</p>
+            <p class="sub">Member Count: 9</p>
+        </div>
+
+    </div>
 </div>
 <div class="details">
-    @if (selectedEmployee != null) {
-        <p class="title">@selectedEmployee.FirstName @selectedEmployee.LastName</p>
-        <p>Availability: @selectedEmployee.Availability</p>
-    }
+    <p class="title">Firstname Lastname</p>
+    <div class="info">
+        <p class="one">Status:</p>
+        <p class="two">Trainer</p>
+    </div>
+    <div class="info">
+        <p class="one">Affiliated groups:</p>
+        <p class="two">HR</p>
+    </div>
+    <div class="info">
+        <p class="one">Assigned Trainings:</p>
+    </div>
+    <div class="trainings">
+        <p class="training">Order #183 -+- 3/12/2024 - 4/2/2024</p>
+        <p class="training">Order #162 -+- 4/8/2024 - 5/9/2024</p>
+        <p class="training">Order #197 -+- 6/22/2024 - 7/13/2024</p>
+        <p class="training">Order #233 -+- 8/2/2024 - 12/1/2024</p>
+    </div>
+    
+    
 </div>
 
 @code {
@@ -42,17 +73,4 @@
     public bool addTrainees { get; set; }
     [Parameter]
     public IList<Employee> Employees { get; set; }
-
-    private Employee? selectedEmployee;
-    private string searchText = "";
-
-    private IEnumerable<Employee> FilteredEmployees =>
-        string.IsNullOrWhiteSpace(searchText)
-        ? Employees
-        : Employees.Where(e => e.FirstName.Contains(searchText, StringComparison.OrdinalIgnoreCase) || e.LastName.Contains(searchText, StringComparison.OrdinalIgnoreCase));
-
-    private void SelectEmployee(Employee employee) {
-        selectedEmployee = employee;
-        StateHasChanged();
-    }
 }

@@ -511,23 +511,19 @@ body {
                             margin: 10px 0;
                             font-size: 15px;
                         }
-
                     .panel .body .properties .order-list2 .sorters .options {
                         display: flex;
                         flex-direction: row;
                         padding: 10px 0;
                     }
-
                         .panel .body .properties .order-list2 .sorters .options form {
                             display: flex;
                             gap: 20px;
                         }
-
                         .panel .body .properties .order-list2 .sorters .options .selector {
                             display: flex;
                             flex-direction: column;
                         }
-
                 .panel .body .properties .order-list2 table {
                     padding-right: 20px;
                     width: 100%;
@@ -541,13 +537,10 @@ body {
                             background-color: var(--gray3);
                             cursor: pointer;
                         }
-
                         .panel .body .properties .order-list2 table .clickable .btn {
                             padding: 2px 10px;
                             font-size: 15px;
                         }
-
-
                     .panel .body .properties .order-list2 table tr td {
                         border-bottom: 1px solid var(--gray4);
                         color: var(--textSub1);
@@ -569,7 +562,6 @@ body {
                     gap: 10px;
                     flex-wrap: wrap;
                 }
-
                     .panel .body .properties .scheduling .schedule .month {
                         width: 23%;
                         height: 200px;
@@ -580,38 +572,31 @@ body {
                         cursor: pointer;
                         background-color: var(--gray2);
                     }
-
                     .panel .body .properties .scheduling .schedule .month-inactive {
                         border: 1px solid var(--gray2);
                     }
-
                     .panel .body .properties .scheduling .schedule .month-active {
                         border: 1px solid var(--mainTheme);
                     }
-
                     .panel .body .properties .scheduling .schedule .month-inactive:hover {
                         background-color: var(--gray3);
                         border: 1px solid var(--gray4);
                     }
-
                     .panel .body .properties .scheduling .schedule .month-active:hover {
                         background-color: var(--gray3);
                     }
-
                     .panel .body .properties .scheduling .schedule .month .title {
                         font-weight: bold;
                         margin-bottom: 10px;
                         border-bottom: 1px solid var(--gray4);
                         padding: 5px;
                     }
-
                     .panel .body .properties .scheduling .schedule .month .info {
                         display: flex;
                         flex-direction: column;
                         gap: 5px;
                         padding: 5px;
                     }
-
                         .panel .body .properties .scheduling .schedule .month .info .order {
                             padding: 3px 5px;
                             font-size: 13px;
@@ -620,15 +605,12 @@ body {
                             display: flex;
                             align-items: center;
                         }
-
                         .panel .body .properties .scheduling .schedule .month .info .gray {
                             background-color: var(--gray1);
                         }
-
                         .panel .body .properties .scheduling .schedule .month .info .live {
                             background-color: var(--mainTheme);
                         }
-
                     .panel .body .properties .scheduling .schedule .month .stats {
                         padding: 5px;
                         color: var(--textSub2);
@@ -788,15 +770,15 @@ button {
 --------------------------------------------------------*/
 
 .people-component {
-    top: 10%;
+    top: 20%;
     position: fixed;
     background-color: var(--gray1);
-    width: 1000px;
+    width: 800px;
     display: flex;
     flex-direction: row;
     border: 1px solid var(--gray4);
     z-index: 2;
-    bottom: 10%;
+    bottom: 20%;
 }
     .people-component .people-container {
         display: flex;
@@ -807,23 +789,22 @@ button {
     }
         .people-component .people-container .search {
             display: flex;
-            border-bottom: 1px solid var(--gray4);
         }
             .people-component .people-container .search input {
                 height: 30px;
-                font-size: 18px;
+                font-size: 15px;
                 width: 100%;
             }
         .people-component .people-container .people {
             padding-top: 20px;
-            flex-grow: 1;
+            height: 50%;
             display: flex;
-            font-size: 18px;
+            font-size: 15px;
             flex-direction: column;
         }
             .people-component .people-container .people .person {
                 border-bottom: 1px solid var(--gray4);
-                padding: 5px 5px;
+                padding: 5px 0;
                 font-size: 13px;
             }
                 .people-component .people-container .people .person:hover {
@@ -834,21 +815,48 @@ button {
                     background-color: var(--gray4);
                     cursor: default;
                 }
+                .people-component .people-container .people .person .sub {
+                    color: var(--textSub1);
+                }
+        .people-component .people-container .groups {
+            height: 50%;
+            font-size: 15px;
+        }
     .people-component .details {
         padding: 20px;
         display: flex;
         flex-grow: 1;
         font-size: 18px;
         flex-direction: column;
-
+        gap: 10px;
     }
         .people-component .details .title {
-            font-size: 25px;
-            width: 50%;
+            font-size: 30px;
             padding-bottom: 10px;
         }
-
-.hidden {
+        .people-component .details .info {
+            display: flex;
+            gap: 6px;
+        }
+            .people-component .details .info .one {
+                color: var(--textSub1);
+            }
+            .people-component .details .info .two {
+                color: var(--textMain);
+            }
+        .people-component .details .trainings {
+            padding: 0 10px;
+            display: flex;
+            flex-direction: column;
+        }
+            .people-component .details .trainings .training {
+                border-bottom: 1px solid var(--gray4);
+                margin-top: 5px;
+                font-size: 15px;
+                border-radius: 3px;
+                padding: 2px 5px;
+            }
+.hidden {    
     display: none;
 }
 .drop-main {
