@@ -40,7 +40,6 @@
                     </form>
                 </div>
                 <div class="order-list">
-                    
                     <ul>
                         @foreach (var item in Model.TrainingOrder.Reverse()) {
                             if (Model.listCount < Model.maxCount) {
@@ -71,7 +70,6 @@
                                 </li>
                                 Model.listCount++;
                             }
-
                         }
                     </ul>
                 </div>
