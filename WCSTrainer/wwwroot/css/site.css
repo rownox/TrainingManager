@@ -553,63 +553,82 @@ body {
                 .panel .body .properties .scheduling .schedule {
                     max-width: 100%;
                     display: flex;
-                    align-content: flex-start;
-                    gap: 10px;
-                    flex-wrap: wrap;
+                    flex-direction: column;
+                    gap: 50px;
                 }
-                    .panel .body .properties .scheduling .schedule .month {
-                        width: 23%;
-                        height: 200px;
-                        min-width: 160px;
-                        min-height: 180px;
+                    .panel .body .properties .scheduling .schedule .months {
+                        width: 100%;
                         display: flex;
-                        flex-direction: column;
-                        cursor: pointer;
-                        background-color: var(--gray2);
+                        align-content: flex-start;
+                        gap: 10px;
+                        flex-wrap: wrap;
                     }
-                    .panel .body .properties .scheduling .schedule .month-inactive {
-                        border: 1px solid var(--gray2);
-                    }
-                    .panel .body .properties .scheduling .schedule .month-active {
-                        border: 1px solid var(--mainTheme);
-                    }
-                    .panel .body .properties .scheduling .schedule .month-inactive:hover {
-                        background-color: var(--gray3);
-                        border: 1px solid var(--gray4);
-                    }
-                    .panel .body .properties .scheduling .schedule .month-active:hover {
-                        background-color: var(--gray3);
-                    }
-                    .panel .body .properties .scheduling .schedule .month .title {
-                        font-weight: bold;
-                        margin-bottom: 10px;
-                        border-bottom: 1px solid var(--gray4);
-                        padding: 5px;
-                    }
-                    .panel .body .properties .scheduling .schedule .month .info {
+                        .panel .body .properties .scheduling .schedule .months .month {
+                            width: 23%;
+                            height: 200px;
+                            min-width: 160px;
+                            min-height: 180px;
+                            display: flex;
+                            flex-direction: column;
+                            cursor: pointer;
+                            background-color: var(--gray2);
+                        }
+                        .panel .body .properties .scheduling .schedule .months .month-inactive {
+                            border: 1px solid var(--gray2);
+                        }
+                        .panel .body .properties .scheduling .schedule .months .month-active {
+                            border: 1px solid var(--mainTheme);
+                        }
+                        .panel .body .properties .scheduling .schedule .months .month-inactive:hover {
+                            background-color: var(--gray3);
+                            border: 1px solid var(--gray4);
+                        }
+                        .panel .body .properties .scheduling .schedule .months .month-active:hover {
+                            background-color: var(--gray3);
+                        }
+                        .panel .body .properties .scheduling .schedule .months .month .title {
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                            border-bottom: 1px solid var(--gray4);
+                            padding: 5px;
+                        }
+                        .panel .body .properties .scheduling .schedule .months .month .info {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 5px;
+                            padding: 5px;
+                        }
+                            .panel .body .properties .scheduling .schedule .months .month .info .order {
+                                padding: 3px 5px;
+                                font-size: 13px;
+                                border-radius: 5px;
+                                min-height: 14px;
+                                display: flex;
+                                align-items: center;
+                            }
+                            .panel .body .properties .scheduling .schedule .months .month .info .gray {
+                                background-color: var(--gray1);
+                            }
+                            .panel .body .properties .scheduling .schedule .months .month .info .live {
+                                background-color: var(--mainTheme);
+                            }
+                        .panel .body .properties .scheduling .schedule .months .month .stats {
+                            padding: 5px;
+                            color: var(--textSub2);
+                        }
+                    .panel .body .properties .scheduling .schedule .days {
                         display: flex;
-                        flex-direction: column;
-                        gap: 5px;
-                        padding: 5px;
+                        gap: 10px;
+                        flex-wrap: wrap;
                     }
-                        .panel .body .properties .scheduling .schedule .month .info .order {
-                            padding: 3px 5px;
-                            font-size: 13px;
-                            border-radius: 5px;
-                            min-height: 14px;
+                        .panel .body .properties .scheduling .schedule .days .day {
+                            height: 5vw;
+                            width: 5vw;
                             display: flex;
                             align-items: center;
+                            justify-content: center;
+                            background-color: var(--gray3);
                         }
-                        .panel .body .properties .scheduling .schedule .month .info .gray {
-                            background-color: var(--gray1);
-                        }
-                        .panel .body .properties .scheduling .schedule .month .info .live {
-                            background-color: var(--mainTheme);
-                        }
-                    .panel .body .properties .scheduling .schedule .month .stats {
-                        padding: 5px;
-                        color: var(--textSub2);
-                    }
 
 /*-------------------------------------------------------*/
 /*                   UNIVERSAL BUTTONS                   */
