@@ -52,7 +52,11 @@
                             <tr class="clickable">
                                 <td>@Html.DisplayFor(modelItem => item.Id)</td>
                                 <td>@Html.DisplayFor(modelItem => item.status)</td>
-                                <td>@Html.DisplayFor(modelItem => item.trainee)</td>
+                                @foreach (var emp in Model.Employees) {
+                                    if (emp.Id.ToString() == item.trainee) {
+                                        <td>@emp.FirstName @emp.LastName</td>
+                                    }
+                                }
                                 <td>@Html.DisplayFor(modelItem => item.skill)</td>
                                 <td>@Html.DisplayFor(modelItem => item.beginDate)</td>
                                 <td>@Html.DisplayFor(modelItem => item.endDate)</td>

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using WCSTrainer.Models;
 using WebApplication2.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
@@ -12,6 +13,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
         }
 
         public IList<TrainingOrder> TrainingOrder { get; set; } = default!;
+        public IList<Employee> Employees { get; set; } = default!;
         public int listCount = 0;
         [BindProperty]
         public int maxCount { get; set; } = 15;
@@ -22,11 +24,12 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         public async Task OnGetAsync() {
             TrainingOrder = await _context.TrainingOrder.ToListAsync();
+            Employees = await _context.Employee.ToListAsync();
         }
 
         public async Task<IActionResult> OnPostAsync() {
             TrainingOrder = await _context.TrainingOrder.ToListAsync();
-
+            Employees = await _context.Employee.ToListAsync();
             return Page();
         }
     }
