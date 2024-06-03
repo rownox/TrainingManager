@@ -16,18 +16,18 @@
                     <form method="post">
 
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="TrainingOrder.Id" />
+                        <input type="hidden" asp-for="TrainingOrder.Id"/>
+                        <input asp-for="TrainingOrder.duration" type="hidden"/>
+                        <input asp-for="TrainingOrder.trainers" type="hidden"/>
+                        <input asp-for="TrainingOrder.trainee" type="hidden"/>
 
-                        <input asp-for="TrainingOrder.description" type="hidden" />
-                        <input asp-for="TrainingOrder.createDate" type="hidden" />
-                        <input asp-for="TrainingOrder.beginDate" type="hidden" />
-                        <input asp-for="TrainingOrder.location" type="hidden" />
-                        <input asp-for="TrainingOrder.duration" type="hidden" />
-                        <input asp-for="TrainingOrder.trainers" type="hidden" />
-                        <input asp-for="TrainingOrder.trainee" type="hidden" />
-                        <input asp-for="TrainingOrder.endDate" type="hidden" />
-                        <input asp-for="TrainingOrder.medium" type="hidden" />
-                        <input asp-for="TrainingOrder.skill" type="hidden" />
+                        <input asp-for="TrainingOrder.description" type="hidden"/>
+                        <input asp-for="TrainingOrder.createDate" type="hidden"/>
+                        <input asp-for="TrainingOrder.beginDate" type="hidden"/>
+                        <input asp-for="TrainingOrder.location" type="hidden"/>
+                        <input asp-for="TrainingOrder.endDate" type="hidden"/>
+                        <input asp-for="TrainingOrder.medium" type="hidden"/>
+                        <input asp-for="TrainingOrder.skill" type="hidden"/>
 
                         <input asp-for="TrainingOrder.status" type="hidden" value="Verified" />
 

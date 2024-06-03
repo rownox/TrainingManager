@@ -18,14 +18,14 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id" />
 
-                        <input asp-for="TrainingOrder.status" type="hidden" value="Active" />
-                        <input asp-for="TrainingOrder.description" type="hidden" />
-                        <input asp-for="TrainingOrder.createDate" type="hidden" />
+                        <input asp-for="TrainingOrder.status" type="hidden" value="Active"/>
+                        <input asp-for="TrainingOrder.description" type="hidden"/>
+                        <input asp-for="TrainingOrder.createDate" type="hidden"/>
                         <input asp-for="TrainingOrder.location" type="hidden" />
-                        <input asp-for="TrainingOrder.duration" type="hidden" />
-                        <input asp-for="TrainingOrder.trainee" type="hidden" />
-                        <input asp-for="TrainingOrder.medium" type="hidden" />
-                        <input asp-for="TrainingOrder.skill" type="hidden" />
+                        <input asp-for="TrainingOrder.duration" type="hidden"/>
+                        <input asp-for="TrainingOrder.trainee" type="hidden"/>
+                        <input asp-for="TrainingOrder.medium" type="hidden"/>
+                        <input asp-for="TrainingOrder.skill" type="hidden"/>
 
                         <div class="form-group">
                             <div class="form">
@@ -177,7 +177,6 @@
         });
         trainersInput.value = trainers.join(", ");
     }
-
 
     function toggleSubmitButton() {
         var submitButton = document.querySelector('input[type="submit"]');

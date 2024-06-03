@@ -9,17 +9,16 @@
     }
 }
 
-<h1>Manage your account</h1>
+@using WCSTrainer.Pages.Components
 
-<div>
-    <h2>Change your account settings</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
+<div class="panel">
+    <div class="body">
+        <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
+        <div class="properties">
+            <div>
+                <partial name="_ManageNav" />
+                @RenderBody()
+            </div>
         </div>
     </div>
 </div>
