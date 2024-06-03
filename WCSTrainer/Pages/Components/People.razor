@@ -43,44 +43,33 @@
     </div>
 </div>
 <div class="details">
-    <p class="title">Firstname Lastname</p>
-    <div class="info">
-        <p class="one">Status:</p>
-        <p class="two">Trainer</p>
+    <div class="top">
+        <p class="title">Firstname Lastname</p>
+        <div class="info">
+            <p class="one">Status:</p>
+            <p class="two">Trainer</p>
+        </div>
+        <div class="info">
+            <p class="one">Affiliated groups:</p>
+            <p class="two">HR</p>
+        </div>
+        <div class="info">
+            <p class="one">Assigned Trainings:</p>
+        </div>
+        <div class="trainings">
+            <p class="training">Order #183 -+- 22 Hours</p>
+            <p class="training">Order #162 -+- 36 Hours</p>
+            <p class="training">Order #197 -+- 11 Hours</p>
+            <p class="training">Order #233 -+- 24 Hours</p>
+        </div>
     </div>
-    <div class="info">
-        <p class="one">Affiliated groups:</p>
-        <p class="two">HR</p>
+    
+    <div class="bottom">
+        <a class="btn btnBlue bg-btn">Add Trainer</a>
     </div>
-    <div class="info">
-        <p class="one">Assigned Trainings:</p>
-    </div>
-    <div class="trainings">
-        <p class="training">Order #183 -+- 22 Hours</p>
-        <p class="training">Order #162 -+- 36 Hours</p>
-        <p class="training">Order #197 -+- 11 Hours</p>
-        <p class="training">Order #233 -+- 24 Hours</p>
-    </div>
-    <a class="btn btnBlue bg-btn">Add Trainer</a>
+    
 
-    <PageTitle>Control Render</PageTitle>
-
-    <h1>Control Render Example</h1>
-
-    <label>
-        <input type="checkbox" @bind="shouldRender" />
-        Should Render?
-    </label>
-
-    <p>Current count: @currentCount</p>
-
-    <p>
-        <button @onclick="IncrementCount">Click me</button>
-    </p>
-    <p>Current count: @currentCount</p>
-    <p>
-        <button @onclick="IncrementCount">Click me</button>
-    </p>
+    
 </div>
 
 @code {
