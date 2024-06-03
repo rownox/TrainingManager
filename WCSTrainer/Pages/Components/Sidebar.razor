@@ -2,7 +2,6 @@
 
 <div class="side-bar">
     <ul>
-        <a>Statistics</a>
         @if (Navigation.Uri.EndsWith("TrainingOrders") || Navigation.Uri.EndsWith("TrainingOrders/Index")) {
             <a href="/TrainingOrders" class="selected">Training Orders</a>
         } else {
@@ -13,9 +12,10 @@
         } else {
             <a href="/Employees">Employees</a>
         }
-        <a>Account Settings</a>
+        <a href="/Identity/Account/Manage" >Account Settings</a>
     </ul>
 </div>
 
 @code {
+
 }
