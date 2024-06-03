@@ -41,7 +41,7 @@
 * {
     padding: 0;
     margin: 0;
-    user-select: none;
+    
 }
 .main-title {
     font-size: 20px;
@@ -95,9 +95,14 @@ nav {
                             color: var(--textMain);
                         }
         nav .nav-container .nav-options {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
         }
-            nav .nav-container .nav-options a {
+            nav .nav-container .nav-options a, form button {
                 padding: 5px 10px;
+                height: 100%;
+                font-size: 15px;
             }
 
 html {
@@ -638,6 +643,7 @@ body {
     text-align: center;
     text-decoration: none;
     cursor: pointer;
+    user-select: none;
 }
 .nbg-btn {
     background: none;

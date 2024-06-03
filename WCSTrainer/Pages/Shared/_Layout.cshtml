@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using WCSTrainer.Models
+
+@inject SignInManager<UserAccount> SignInManager
+@inject UserManager<UserAccount> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -15,11 +21,14 @@
                 <ul>
                     <li class="main-title">WCS Trainer</li>
                     <li><a asp-page="/Index">Home</a></li>
-                    <li><a asp-page="TrainingOrders/Index">My Panel</a></li>
+                    @if (SignInManager.IsSignedIn(User)) {
+                        <li><a asp-page="/TrainingOrders/Index">My Panel</a></li>
+                    }
                 </ul>
             </div>
             <div class="nav-options">
                 <a id="modeToggleBtn" class="btn bg-btn btnWhite">Light Mode</a>
+                <partial name="_LoginPartial" />
             </div>
         </div>
     </nav>

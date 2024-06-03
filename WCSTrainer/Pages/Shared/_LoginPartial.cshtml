@@ -1,0 +1,18 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using WCSTrainer.Models
+
+@inject SignInManager<UserAccount> SignInManager
+@inject UserManager<UserAccount> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    
+    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+        <button id="logout" type="submit" class="btn bg-btn btnWhite">Logout</button>
+    </form>
+}
+else
+{
+    <a id="register" asp-area="Identity" asp-page="/Account/Register" class="btn bg-btn btnWhite">Register</a>
+    <a id="login" asp-area="Identity" asp-page="/Account/Login" class="btn bg-btn btnWhite">Login</a>
+}
