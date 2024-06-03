@@ -16,8 +16,10 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         [BindProperty]
         public int selectedYear { get; set; } = DateTime.Now.Year;
+
         [BindProperty]
         public int selectedMonth { get; set; }
+
         [BindProperty]
         public string searchFor { get; set; } = "All";
 
@@ -64,9 +66,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 DateOnly effectiveEnd = orderEnd < yearEnd ? orderEnd : yearEnd;
 
                 if (effectiveStart <= effectiveEnd) {
-                    int days = (effectiveEnd.ToDateTime(TimeOnly.MinValue) - effectiveStart.ToDateTime(TimeOnly.MinValue)).Days + 1;
                     if (employeeHasOrder(order.Id.ToString())) {
-                        count += order.duration * days;
+                        count += order.duration;
                     }
                 }
             }
@@ -85,9 +86,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 DateOnly effectiveEnd = orderEnd < monthEnd ? orderEnd : monthEnd;
 
                 if (effectiveStart <= effectiveEnd) {
-                    int days = (effectiveEnd.ToDateTime(new TimeOnly(0, 0)) - effectiveStart.ToDateTime(new TimeOnly(0, 0))).Days + 1;
                     if (employeeHasOrder(order.Id.ToString())) {
-                        count += order.duration * days;
+                        count += order.duration;
                     }
                 }
             }
