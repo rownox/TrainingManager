@@ -35,14 +35,13 @@
                             <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
                             <td>@Html.DisplayFor(modelItem => item.LastName)</td>
                             <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                            <td><a asp-page="./Edit" asp-route-id="@item.Id" class="btn bg-btn btnGreen">Edit</a></td>
-                            <td><a asp-page="./Details" asp-route-id="@item.Id" class="btn bg-btn btnGreen">Details</a></td>
-                            <td><a asp-page="./Delete" asp-route-id="@item.Id" class="btn bg-btn btnGreen">Delete</a></td>
+                            <td><a asp-page="./Edit" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Edit</a></td>
+                            <td><a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Details</a></td>
+                            <td><a asp-page="./Delete" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Delete</a></td>
                         </tr>
                     }
                 </table>
             </div>
-            
         </div>
     </div>
 </div>
