@@ -2,17 +2,21 @@
 
 <div class="side-bar">
     <ul>
-        @if (Navigation.Uri.EndsWith("TrainingOrders") || Navigation.Uri.EndsWith("TrainingOrders/Index")) {
+        @if (Navigation.Uri.Contains("TrainingOrders")) {
             <a href="/TrainingOrders" class="selected">Training Orders</a>
         } else {
             <a href="/TrainingOrders">Training Orders</a>
         }
-        @if (Navigation.Uri.EndsWith("Employees") || Navigation.Uri.EndsWith("Employees/Index")) {
+        @if (Navigation.Uri.Contains("Employees")) {
             <a href="/Employees" class="selected">Employees</a>
         } else {
             <a href="/Employees">Employees</a>
         }
-        <a href="/Identity/Account/Manage" >Account Settings</a>
+        @if (Navigation.Uri.Contains("Account/Manage")) {
+            <a href="/Identity/Account/Manage" class="selected">Account Settings</a>
+        } else {
+            <a href="/Identity/Account/Manage">Account Settings</a>
+        }
     </ul>
 </div>
 

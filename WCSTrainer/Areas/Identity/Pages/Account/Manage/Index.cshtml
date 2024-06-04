@@ -20,8 +20,12 @@
         <input asp-for="Input.PhoneNumber" placeholder="Please enter your phone number." />
         <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
     </div>
-    <button id="update-profile-button" type="submit">Save</button>
+    <button id="update-profile-button" type="submit" class="btn bg-btn btnWhite">Save</button>
+
+    <a class="btn bg-btn btnWhite">Light Mode</a>
 </form>
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

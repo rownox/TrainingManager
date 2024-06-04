@@ -5,43 +5,47 @@
 @inject UserManager<UserAccount> UserManager
 
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WCSTrainer</title>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/mobileSite.css" asp-append-version="true" />
-</head>
 
-<body>
-    <nav>
-        <div class="nav-container">
-            <div class="nav-buttons">
-                <ul>
-                    <li class="main-title">WCS Trainer</li>
-                    <li><a asp-page="/Index">Home</a></li>
-                    @if (SignInManager.IsSignedIn(User)) {
-                        <li><a asp-page="/TrainingOrders/Index">My Panel</a></li>
-                    }
-                </ul>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - WCSTrainer</title>
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/mobileSite.css" asp-append-version="true" />
+    </head>
+
+    <body>
+        <nav>
+            <div class="nav-container">
+                <div class="nav-buttons">
+                    <ul>
+                        <li class="main-title">WCS Trainer</li>
+                        <li><a asp-page="/Index">Home</a></li>
+                        @if (SignInManager.IsSignedIn(User)) {
+                            <li><a asp-page="/TrainingOrders/Index">My Panel</a></li>
+                        }
+                    </ul>
+                </div>
+                <div class="nav-options">
+                    
+                    <partial name="_LoginPartial" />
+                </div>
             </div>
-            <div class="nav-options">
-                <a id="modeToggleBtn" class="btn bg-btn btnWhite">Light Mode</a>
-                <partial name="_LoginPartial" />
-            </div>
+        </nav>
+
+        <div class="content">
+            @RenderBody()
         </div>
-    </nav>
-    <div class="content">
-        @RenderBody()
-    </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
+
 </html>
 
 <script>
