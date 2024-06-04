@@ -15,9 +15,13 @@
     <div class="body">
         <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
         <div class="properties">
-            <div>
-                <partial name="_ManageNav" />
-                @RenderBody()
+            <div class="identity-container">
+                <div class="top">
+                    <partial name="_ManageNav" />
+                </div>
+                <div class="content">
+                    @RenderBody()
+                </div>
             </div>
         </div>
     </div>

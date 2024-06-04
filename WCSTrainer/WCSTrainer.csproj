@@ -20,6 +20,11 @@
 
   <ItemGroup>
     <Folder Include="Pages\Trainers\" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\1N.png" />
   </ItemGroup>
 
 </Project>
