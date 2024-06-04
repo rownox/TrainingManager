@@ -14,13 +14,16 @@ namespace WCSTrainer.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<UserAccount> _userManager;
         private readonly SignInManager<UserAccount> _signInManager;
+        private readonly WCSTrainer.Data.IdentityContext _context;
 
         public IndexModel(
             UserManager<UserAccount> userManager,
-            SignInManager<UserAccount> signInManager)
+            SignInManager<UserAccount> signInManager,
+            WCSTrainer.Data.IdentityContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         /// <summary>
@@ -56,12 +59,17 @@ namespace WCSTrainer.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            public string LightMode { get; set; }
         }
 
         private async Task LoadAsync(UserAccount user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            
+            //TODO: Allow lightMode to be set here
 
             Username = userName;
 
