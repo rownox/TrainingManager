@@ -5,6 +5,5 @@ namespace WCSTrainer.Models {
         public string EmployeeID { get; set; }
         public bool LightMode { get; set; }
         public DateTime DateCreated { get; set; }
-
     }
 }
