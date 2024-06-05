@@ -15,7 +15,7 @@
     --green1: #81ff8f;
     --green2: #0fb021;
     --yellow1: #fff764;
-    --yellow2: #d8ce13;
+    --yellow2: #d8ce13; 
 }
 .light-mode {
     --black: #dcd7c7;
@@ -36,11 +36,9 @@
     --yellow1: black;
     --yellow2: black;
 }
-
 * {
     padding: 0;
     margin: 0;
-    
 }
 .main-title {
     font-size: 20px;
@@ -1000,10 +998,8 @@ button {
     color: white;
     flex-direction: column;
 }
-
     .identity-container .top {
     }
-
     .identity-container .content {
         display: flex;
         justify-content: flex-start;
@@ -1013,20 +1009,17 @@ button {
         font-size: 15px;
         gap: 10px;
     }
-
         .identity-container .content form {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
-
         .identity-container .content input {
             display: flex;
             flex-direction: column;
             height: 25px;
             width: 300px;
         }
-
         .identity-container .content a, button {
             color: lightblue;
         }

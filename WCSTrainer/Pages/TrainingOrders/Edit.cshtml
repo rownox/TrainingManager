@@ -8,7 +8,7 @@
 @using WCSTrainer.Pages.Components
 
 <div id="people-component" class="people-component hidden">
-    <component type="typeof(People)" render-mode="WebAssemblyPrerendered" param-Employees="@Model.Employees" param-addTrainees="false" />
+    <component type="typeof(People)" render-mode="WebAssemblyPrerendered" param-Employees="Model.Employees" param-addTrainees="false" />
 </div>
 
 <div class="overlay hidden"></div>
