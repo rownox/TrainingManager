@@ -14,6 +14,9 @@ builder.Services.AddDefaultIdentity<UserAccount>(options => options.SignIn.Requi
 builder.Services.AddDbContext<IdentityContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection") ?? throw new InvalidOperationException("Connection string 'WCSTrainerContext' not found.")));
 
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -31,5 +34,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+//app.MapRazorComponents<>()
+//    .AddInteractiveServerRenderMode();
 
 app.Run();
