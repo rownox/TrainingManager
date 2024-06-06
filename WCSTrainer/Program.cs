@@ -1,6 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity;
 using WCSTrainer.Data;
 using WCSTrainer.Models;
 var builder = WebApplication.CreateBuilder(args);
