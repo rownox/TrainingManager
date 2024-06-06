@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WebApplication2.Models;
 
-namespace WCSTrainer.Pages.TrainingOrders
-{
-    public class VerificationModel : PageModel
-    {
+namespace WCSTrainer.Pages.TrainingOrders {
+    public class VerificationModel : PageModel {
         private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
         public VerificationModel(WCSTrainer.Data.WCSTrainerContext context) {

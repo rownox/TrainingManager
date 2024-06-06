@@ -36,6 +36,7 @@
     --yellow1: black;
     --yellow2: black;
 }
+
 * {
     padding: 0;
     margin: 0;
@@ -136,7 +137,7 @@ body {
 
 /*--------------------------------------------------------
                        MAIN PANEL                         
---------------------------------------------------------*/ 
+--------------------------------------------------------*/
 
 .panel {
     display: flex;
@@ -424,6 +425,7 @@ body {
                 display: flex;
                 flex-direction: column;
                 flex-grow: 1;
+                max-height: 750px;
             }
                 .panel .body .properties .list-container .top {
                     border-bottom: 1px solid var(--gray4);

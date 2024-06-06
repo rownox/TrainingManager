@@ -2,18 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using WCSTrainer.Models;
 
-namespace WCSTrainer.Areas.Identity.Pages.Account.Manage
-{
-    public class ResetAuthenticatorModel : PageModel
-    {
+namespace WCSTrainer.Areas.Identity.Pages.Account.Manage {
+    public class ResetAuthenticatorModel : PageModel {
         private readonly UserManager<UserAccount> _userManager;
         private readonly SignInManager<UserAccount> _signInManager;
         private readonly ILogger<ResetAuthenticatorModel> _logger;
@@ -21,8 +16,7 @@ namespace WCSTrainer.Areas.Identity.Pages.Account.Manage
         public ResetAuthenticatorModel(
             UserManager<UserAccount> userManager,
             SignInManager<UserAccount> signInManager,
-            ILogger<ResetAuthenticatorModel> logger)
-        {
+            ILogger<ResetAuthenticatorModel> logger) {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
@@ -35,22 +29,18 @@ namespace WCSTrainer.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
 
-        public async Task<IActionResult> OnGet()
-        {
+        public async Task<IActionResult> OnGet() {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
-        {
+        public async Task<IActionResult> OnPostAsync() {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 

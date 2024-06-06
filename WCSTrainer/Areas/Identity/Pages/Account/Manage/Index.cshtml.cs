@@ -2,16 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 using WCSTrainer.Models;
 
-namespace WCSTrainer.Areas.Identity.Pages.Account.Manage
-{
-    public class IndexModel : PageModel
-    {
+namespace WCSTrainer.Areas.Identity.Pages.Account.Manage {
+    public class IndexModel : PageModel {
         private readonly UserManager<UserAccount> _userManager;
         private readonly SignInManager<UserAccount> _signInManager;
         private readonly WCSTrainer.Data.IdentityContext _context;
@@ -19,8 +17,7 @@ namespace WCSTrainer.Areas.Identity.Pages.Account.Manage
         public IndexModel(
             UserManager<UserAccount> userManager,
             SignInManager<UserAccount> signInManager,
-            WCSTrainer.Data.IdentityContext context)
-        {
+            WCSTrainer.Data.IdentityContext context) {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
@@ -50,8 +47,7 @@ namespace WCSTrainer.Areas.Identity.Pages.Account.Manage
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public class InputModel
-        {
+        public class InputModel {
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -64,26 +60,22 @@ namespace WCSTrainer.Areas.Identity.Pages.Account.Manage
             public string LightMode { get; set; }
         }
 
-        private async Task LoadAsync(UserAccount user)
-        {
+        private async Task LoadAsync(UserAccount user) {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            
+
             //TODO: Allow lightMode to be set here
 
             Username = userName;
 
-            Input = new InputModel
-            {
+            Input = new InputModel {
                 PhoneNumber = phoneNumber
             };
         }
 
-        public async Task<IActionResult> OnGetAsync()
-        {
+        public async Task<IActionResult> OnGetAsync() {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
@@ -91,26 +83,21 @@ namespace WCSTrainer.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
-        {
+        public async Task<IActionResult> OnPostAsync() {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid) {
                 await LoadAsync(user);
                 return Page();
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
+            if (Input.PhoneNumber != phoneNumber) {
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
+                if (!setPhoneResult.Succeeded) {
                     StatusMessage = "Unexpected error when trying to set phone number.";
                     return RedirectToPage();
                 }

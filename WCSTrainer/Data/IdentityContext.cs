@@ -5,7 +5,7 @@ using WCSTrainer.Models;
 
 namespace WCSTrainer.Data {
     public class IdentityContext : IdentityDbContext<UserAccount> {
-        
+
         public IdentityContext(DbContextOptions<IdentityContext> options) : base(options) {
 
         }

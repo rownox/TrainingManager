@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WebApplication2.Models;
 
-namespace WCSTrainer.Pages.TrainingOrders
-{
-    public class ConcludeModel : PageModel
-    {
+namespace WCSTrainer.Pages.TrainingOrders {
+    public class ConcludeModel : PageModel {
         private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
         public ConcludeModel(WCSTrainer.Data.WCSTrainerContext context) {
@@ -65,7 +63,7 @@ namespace WCSTrainer.Pages.TrainingOrders
 
             return RedirectToPage("./Index");
         }
-        
+
         private bool TrainingOrderExists(int id) {
             return _context.TrainingOrder.Any(e => e.Id == id);
         }

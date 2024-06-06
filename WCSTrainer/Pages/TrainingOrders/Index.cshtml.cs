@@ -42,7 +42,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
         }
 
         public string getEmployee(string traineeID) {
-            foreach(Employee employee in Employees) {
+            foreach (Employee employee in Employees) {
                 if (employee.Id.ToString().Equals(traineeID)) {
                     return employee.FirstName + " " + employee.LastName;
                 }
