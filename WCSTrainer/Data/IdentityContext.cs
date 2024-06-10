@@ -25,4 +25,5 @@ namespace WCSTrainer.Data {
             builder.Entity<IdentityRole>().HasData(admin, trainee, trainer);
         }
     }
+
 }

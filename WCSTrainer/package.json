@@ -21,5 +21,6 @@
     "@rollup/plugin-terser": "^0.4.4",
     "rollup": "^4.18.0",
     "rollup-plugin-svelte": "^7.2.2"
-  }
+  },
+  "type": "module"
 }
