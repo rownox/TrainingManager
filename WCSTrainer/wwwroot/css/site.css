@@ -1027,4 +1027,70 @@ button {
         }
 
 
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    gap: 20px;
+}
 
+    .login-container .title {
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .login-container form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 20px;
+    }
+
+        .login-container form .field {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+            .login-container form .field .label {
+                color: var(--textSub1);
+            }
+
+            .login-container form .field input {
+                height: 25px;
+            }
+
+        .login-container form .login-remember {
+            width: 100%;
+            color: var(--textSub1);
+        }
+
+        .login-container form .login-btns {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+            .login-container form .login-btns .btn {
+                padding: 8px 30px;
+            }
+
+        .login-container form .login-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 10px;
+        }
+
+            .login-container form .login-links a {
+                text-decoration: none;
+                color: var(--textSub1);
+            }
+
+            .login-container form .login-links a:hover {
+                color: var(--textMain);
+            }
