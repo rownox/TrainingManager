@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="rollup.config.js" />
+    <Content Include="src\App.svelte" />
+    <Content Include="src\main.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.4" />
