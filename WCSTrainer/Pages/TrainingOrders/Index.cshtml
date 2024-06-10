@@ -65,8 +65,10 @@
                                             }
                                         </div>
                                     </div>
-                                    <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
-                                    <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
+                                    <div class="btns">
+                                        <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
+                                        <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
+                                    </div>
                                 </li>
                                 Model.listCount++;
                             }
