@@ -7,9 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="rollup.config.js" />
-    <Content Include="src\App.svelte" />
-    <Content Include="src\main.js" />
+    <Content Include="rollup.config.cjs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +29,8 @@
 
   <ItemGroup>
     <None Include="wwwroot\images\1N.png" />
+    <None Include="wwwroot\src\App.svelte" />
+    <None Include="wwwroot\src\main.js" />
   </ItemGroup>
 
 </Project>
