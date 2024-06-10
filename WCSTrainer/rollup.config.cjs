@@ -1,13 +1,12 @@
-import svelte from 'rollup-plugin-svelte';
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import { terser } from 'rollup-plugin-terser';
-import json from '@rollup/plugin-json';
-import path from 'path';
+const svelte = require('rollup-plugin-svelte');
+const resolve = require('@rollup/plugin-node-resolve').default;
+const commonjs = require('@rollup/plugin-commonjs');
+const json = require('@rollup/plugin-json');
+const path = require('path');
 
 const production = !process.env.ROLLUP_WATCH;
 
-export default {
+module.exports = {
     input: 'src/main.js',
     output: {
         sourcemap: true,
@@ -22,9 +21,11 @@ export default {
                 css.write(path.resolve(__dirname, 'wwwroot/css/bundle.css'));
             }
         }),
-        resolve(),
+        resolve({
+            browser: true,
+            dedupe: ['svelte']
+        }),
         commonjs(),
-        json(),
-        production && terser()
+        json()
     ]
 };
