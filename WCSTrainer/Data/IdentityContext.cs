@@ -5,7 +5,6 @@ using WCSTrainer.Models;
 
 namespace WCSTrainer.Data {
     public class IdentityContext : IdentityDbContext<UserAccount> {
-
         public IdentityContext(DbContextOptions<IdentityContext> options) : base(options) {
 
         }
@@ -25,5 +24,4 @@ namespace WCSTrainer.Data {
             builder.Entity<IdentityRole>().HasData(admin, trainee, trainer);
         }
     }
-
 }
