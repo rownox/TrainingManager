@@ -1,32 +1,42 @@
-﻿@media only screen and (max-width: 600px) {
+﻿@media only screen and (max-width: 900px) {
     .main-title {
         font-size: 15px;
         margin-right: 40px;
     }
     nav {
         margin-bottom: 0;
+        height: 50px;
     }
         nav .nav-container {
+            height: 100%;
             width: 100%;
+            max-width: 100%;
+            padding: 0;
         }
             nav .nav-container .nav-buttons {
                 width: 70%;
+                flex-grow: 1;
+                height: 100%;
             }
                 nav .nav-container .nav-buttons ul {
-                    height: 60px;
+                    height: 100%;
                 }
                     nav .nav-container .nav-buttons ul li {
                         margin: 0;
-                        padding-right: 20px;
+                        flex-grow: 1;
                     }
                         nav .nav-container .nav-buttons ul li a {
                             font-size: 15px;
-                            padding: 0px;
+                            padding: 0;
+                            display: flex;
+                            justify-content: center;
+                            
                         }
-                nav .nav-container .nav-options a {
-                    padding: 5px 10px;
-                    font-size: 15px;
-                }
+            nav .nav-container .nav-options a {
+                padding: 5px 10px;
+                font-size: 15px;
+                height: 100%;
+            }
     .content {
         width: 100%;
         max-width: 100%;
@@ -47,24 +57,28 @@
             height: 100%;
             width: 100%;
             min-height: 100%;
+            gap: 0;
         }
             .panel .body .side-bar {
                 flex-direction: column;
                 width: 100%;
                 min-width: 100%;
-                height: 60px;
+                height: 50px;
+                
             }
                 .panel .body .side-bar ul {
                     flex-direction: row;
                     height: 100%;
+                    width: 100%;
+
                 }
                 .panel .body .side-bar a {
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     text-align: center;
-                    padding: 0;
-                    width: 25%;
+                    padding: 10px;
+                    flex-grow: 1;
                 }
                 .panel .body .side-bar .selected {
                     border-bottom: 1px solid var(--textMain);
@@ -75,6 +89,7 @@
                 display: flex;
                 flex-direction: column;
                 width: 100%;
+                gap: 0;
             }
                 .panel .body .properties .user-form {
                     display: flex;
@@ -241,7 +256,7 @@
                             font-size: 18px;
                         }
                 .panel .body .properties .tool-container {
-                    bottom: 0;
+                    font-size: 14px;
                     margin: 0;
                     display: flex;
                     width: 100%;
@@ -281,7 +296,7 @@
                             }
 
                             .panel .body .properties .tool-container .tools .search p {
-                                font-size: 15px;
+                                font-size: 14px;
                                 color: var(--textMain);
                             }
 
@@ -290,6 +305,7 @@
                         }
 
                             .panel .body .properties .tool-container .tools .selections .title {
+                                font-size: 14px;
                             }
 
                             .panel .body .properties .tool-container .tools .selections .section {
@@ -305,7 +321,7 @@
                     display: flex;
                     flex-direction: column;
                     width: 100%;
-                    height: 400px;
+                    height: 300px;
                 }
 
                     .panel .body .properties .list-container .top {
@@ -322,6 +338,25 @@
                             margin-right: 0;
                             border-bottom: 1px solid var(--gray4);
                         }
+                                .panel .body .properties .list-container .order-list li .info .title {
+                                    font-size: 15px;
+                                }
+                                .panel .body .properties .list-container .order-list li .info .sub {
+                                    font-size: 14px;
+                                }
+                            .panel .body .properties .list-container .order-list li .btns {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 5px;
+                                margin-right: 10px;
+                            }
+                                .panel .body .properties .list-container .order-list li .btns .btn {
+                                    padding: 5px 15px;
+                                    font-size: 14px;
+                                    border-radius: 0;
+                                    border: none;
+                                    background-color: var(--black);
+                                }
 
                 .panel .body .properties .list-container .order-list2 {
                     overflow-y: scroll;
@@ -517,4 +552,70 @@
                                     display: flex;
                                     padding: 6px 0;
                                 }
+
+    .main-banner {
+        background-image: linear-gradient(to bottom right, #135868,#172a3d);
+        background-color: black;
+        display: flex;
+        width: 100vw;
+        justify-content: center;
+        height: 500px;
+    }
+
+        .main-banner .banner-container {
+            width: 1400px;
+            max-width: 95%;
+            display: flex;
+            justify-content: center;
+            height: 500px;
+        }
+
+            .main-banner .banner-container .right {
+                display: flex;
+                align-items: center;
+                width: 50%;
+            }
+
+                .main-banner .banner-container .right .info {
+                    display: flex;
+                    flex-direction: column;
+                    height: 300px;
+                    width: 600px;
+                    gap: 50px;
+                }
+
+                    .main-banner .banner-container .right .info p {
+                        font-size: 50px;
+                        font-weight: bold;
+                        text-shadow: 2px 2px 10px black;
+                        user-select: none;
+                    }
+
+                    .main-banner .banner-container .right .info .btn {
+                        color: black;
+                        font-weight: bold;
+                        background-color: #21c9ef;
+                        width: 200px;
+                        justify-self: flex-end;
+                        padding: 10px;
+                        box-shadow: 2px 2px 5px black;
+                    }
+
+                        .main-banner .banner-container .right .info .btn:hover {
+                            background-color: #cff6ff;
+                        }
+
+            .main-banner .banner-container .left {
+                width: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+                .main-banner .banner-container .left .image {
+                    display: none;
+                }
+
+                    .main-banner .banner-container .left .image img {
+                    }
 }

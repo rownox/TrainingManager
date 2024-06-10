@@ -477,11 +477,16 @@ body {
                                 .panel .body .properties .list-container .order-list li .info .sub p {
                                     margin-right: 5px;
                                 }
-                        .panel .body .properties .list-container .order-list li .btn {
-                            padding: 6px 10px;
-                            font-size: 15px;
+                        .panel .body .properties .list-container .order-list li .btns {
+                            display: flex;
+                            gap: 10px;
                             margin-right: 10px;
                         }
+
+                            .panel .body .properties .list-container .order-list li .btns .btn {
+                                padding: 6px 10px;
+                                font-size: 15px;
+                            }
             .panel .body .properties .order-list2 {
                 overflow-y: scroll;
                 max-height: 750px;
@@ -665,7 +670,7 @@ body {
 .btnGray {
     color: var(--gray4);
 }
-    .btnWhite:hover {
+    .btnGray:hover {
         background-color: var(--gray3);
     }
 .btnBlue {
@@ -944,6 +949,7 @@ button {
 }
     .main-banner .banner-container {
         width: 1400px;
+        max-width: 95%;
         display: flex;
         justify-content: center;
         height: 500px;
