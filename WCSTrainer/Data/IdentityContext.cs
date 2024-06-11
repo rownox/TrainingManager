@@ -6,9 +6,7 @@ using WCSTrainer.Models;
 namespace WCSTrainer.Data {
     public class IdentityContext : IdentityDbContext<UserAccount> {
         public IdentityContext(DbContextOptions<IdentityContext> options) : base(options) {
-
         }
-
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
 
