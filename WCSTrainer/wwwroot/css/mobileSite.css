@@ -1,23 +1,28 @@
 ﻿@media only screen and (max-width: 900px) {
-    
+
     nav {
         margin-bottom: 0;
-        height: 50px;
+        min-height: 50px;
     }
+
         nav .nav-container {
             height: 100%;
             width: 100%;
             max-width: 100%;
             padding: 0;
+            
         }
+
             nav .nav-container .nav-buttons {
                 width: 100%;
                 flex-grow: 1;
                 height: 100%;
             }
+
                 nav .nav-container .nav-buttons ul {
                     height: 100%;
                 }
+
                     nav .nav-container .nav-buttons ul li {
                         margin: 0;
                     }
@@ -25,13 +30,13 @@
                     nav .nav-container .nav-buttons ul .main-title {
                         display: none;
                     }
-                        nav .nav-container .nav-buttons ul li a {
-                            font-size: 15px;
-                            padding: 0 20px;
-                            display: flex;
-                            justify-content: center;
-                            
-                        }
+
+                    nav .nav-container .nav-buttons ul li a {
+                        font-size: 15px;
+                        padding: 0 20px;
+                        display: flex;
+                        justify-content: center;
+                    }
 
             nav .nav-container .nav-options {
                 padding-right: 10px;
@@ -54,17 +59,21 @@
         max-width: 100%;
         height: 100%;
     }
+
     .maintitle {
         margin-top: 100px;
         font-size: 50px;
     }
+
     .maintitle2 {
         margin-top: 10px;
         font-size: 40px;
     }
+
     .panel {
         height: 100%;
     }
+
         .panel .body {
             flex-direction: column;
             height: 100%;
@@ -72,19 +81,21 @@
             min-height: 100%;
             gap: 0;
         }
+
             .panel .body .side-bar {
                 flex-direction: column;
                 width: 100%;
                 min-width: 100%;
-                height: 40px;
-                
+                min-height: 40px;
             }
+
                 .panel .body .side-bar ul {
                     flex-direction: row;
                     height: 100%;
                     width: 100%;
-
+                    flex-wrap: wrap;
                 }
+
                 .panel .body .side-bar a {
                     display: flex;
                     align-items: center;
@@ -93,11 +104,14 @@
                     padding: 0 10px;
                     flex-grow: 1;
                     font-size: 15px;
+                    min-height: 30px;
                 }
+
                 .panel .body .side-bar .selected {
                     border-bottom: 1px solid var(--textMain);
                     background-color: var(--gray1);
                 }
+
             .panel .body .properties {
                 padding: 0;
                 display: flex;
@@ -106,40 +120,46 @@
                 gap: 0;
                 flex-grow: 1;
             }
+
                 .panel .body .properties .user-form {
                     display: flex;
                     flex-direction: column;
                     width: 100%;
                     align-items: center;
                 }
+
                     .panel .body .properties .user-form .title {
                         margin-top: 20px;
                         font-size: 25px;
                     }
+
                     .panel .body .properties .user-form .description {
                     }
+
                     .panel .body .properties .user-form .field-container {
                         display: flex;
                         flex-direction: column;
                         margin-top: 30px;
                         width: 95%;
                     }
+
                     .panel .body .properties .user-form .btn-container {
                         padding-top: 10px;
-                        width: 50%;
+                        width: 100%;
                         display: flex;
                         flex-direction: column;
                         gap: 10px;
-                        justify-content: center;
+                        align-items: center;
                     }
+
                         .panel .body .properties .user-form .btn-container .btn {
                             margin-top: 0;
                             padding: 6px 10px;
                             font-size: 15px;
-                            border: none;
-                            background: none;
                             text-decoration: underline;
+                            width: 50%;
                         }
+
                             .panel .body .properties .user-form .btn-container .btn:hover .form-drop {
                                 display: block;
                             }
@@ -260,24 +280,30 @@
                         max-width: 800px;
                         border-bottom: 1px solid var(--gray4);
                     }
+
                         .panel .body .properties .user-form .field-container .text-group .identifier {
                             height: 100%;
                             width: 40%;
                         }
+
                         .panel .body .properties .user-form .field-container .text-group .info-content {
                             height: 100%;
                             width: 60%;
                         }
+
                         .panel .body .properties .user-form .field-container .text-group .title {
                             margin: 0;
                             padding-left: 10px;
                             font-size: 15px;
                         }
+
                         .panel .body .properties .user-form .field-container .text-group .info {
                             margin-left: 10px;
                             font-size: 15px;
                         }
+
                 .panel .body .properties .tool-container {
+                    border-top: 1px solid var(--textMain);
                     font-size: 15px;
                     margin: 0;
                     padding: 0;
@@ -362,27 +388,34 @@
                         width: 100%;
                         height: 100%;
                         max-height: 100%;
-                        border-bottom: 1px solid var(--textMain);
+                        
                     }
 
                         .panel .body .properties .list-container .order-list li {
                             margin-right: 0;
                             border-bottom: 1px solid var(--gray4);
                         }
-                                .panel .body .properties .list-container .order-list li .info .title {
-                                    font-size: 15px;
-                                }
+
+                            .panel .body .properties .list-container .order-list li .info .title {
+                                font-size: 15px;
+                            }
+
                             .panel .body .properties .list-container .order-list li .info .sub {
                                 font-size: 15px;
                             }
+
                                 .panel .body .properties .list-container .order-list li .info .sub .identifier {
                                     display: none;
                                 }
+
                             .panel .body .properties .list-container .order-list li .btns {
                                 display: flex;
-                                gap: 0;
+                                gap: 5px;
                                 margin-right: 10px;
+                                flex-grow: 1;
+                                flex-direction: column;
                             }
+
                                 .panel .body .properties .list-container .order-list li .btns .btn {
                                     padding: 5px 10px;
                                     font-size: 15px;
@@ -390,59 +423,59 @@
                                     border: none;
                                 }
 
-                .panel .body .properties .list-container .order-list2 {
-                    overflow-y: scroll;
-                    max-height: 750px;
+                    .panel .body .properties .list-container .order-list2 {
+                        overflow-y: scroll;
+                        max-height: 750px;
+                        width: 100%;
+                        scrollbar-width: none;
+                    }
+
+                .panel .body .properties .order-list2 .sorters {
                     width: 100%;
-                    scrollbar-width: none;
+                    display: flex;
+                    flex-direction: column;
                 }
 
-                    .panel .body .properties .order-list2 .sorters {
-                        width: 100%;
+                    .panel .body .properties .order-list2 .sorters p {
+                        font-size: 15px;
+                    }
+
+                    .panel .body .properties .order-list2 .sorters .btns {
                         display: flex;
-                        flex-direction: column;
+                        flex-direction: row;
+                        gap: 10px;
                     }
 
-                        .panel .body .properties .order-list2 .sorters p {
+                        .panel .body .properties .order-list2 .sorters .btns .btn {
+                            padding: 8px 10px;
+                            margin: 10px 0;
                             font-size: 15px;
                         }
 
-                        .panel .body .properties .order-list2 .sorters .btns {
-                            display: flex;
-                            flex-direction: row;
-                            gap: 10px;
-                        }
+                .panel .body .properties .order-list2 table {
+                    padding-right: 20px;
+                    width: 100%;
+                }
 
-                            .panel .body .properties .order-list2 .sorters .btns .btn {
-                                padding: 8px 10px;
-                                margin: 10px 0;
-                                font-size: 15px;
-                            }
-
-                    .panel .body .properties .order-list2 table {
-                        padding-right: 20px;
-                        width: 100%;
+                    .panel .body .properties .order-list2 table tr {
+                        font-size: 15px;
                     }
 
-                        .panel .body .properties .order-list2 table tr {
-                            font-size: 15px;
+                    .panel .body .properties .order-list2 table .clickable {
+                    }
+
+                        .panel .body .properties .order-list2 table .clickable:hover {
                         }
 
-                        .panel .body .properties .order-list2 table .clickable {
-                        }
+                    .panel .body .properties .order-list2 table tr td {
+                        border-bottom: 1px solid var(--gray4);
+                        height: 25px;
+                    }
 
-                            .panel .body .properties .order-list2 table .clickable:hover {
-                            }
-
-                        .panel .body .properties .order-list2 table tr td {
-                            border-bottom: 1px solid var(--gray4);
-                            height: 25px;
-                        }
-
-                        .panel .body .properties .order-list2 table tr th {
-                            border-bottom: 1px solid var(--textMain);
-                            text-align: start;
-                        }
+                    .panel .body .properties .order-list2 table tr th {
+                        border-bottom: 1px solid var(--textMain);
+                        text-align: start;
+                    }
 
                 .panel .body .properties .scheduling {
                     display: flex;
@@ -474,7 +507,6 @@
                             .panel .body .properties .scheduling .schedule .months .month {
                                 width: 30%;
                                 height: fit-content;
-                                min-width: 30%;
                                 min-height: 0;
                                 flex-grow: 1;
                                 display: flex;
@@ -505,7 +537,6 @@
                                 width: 100%;
                                 display: flex;
                                 justify-content: center;
-
                             }
 
                             .panel .body .properties .scheduling .schedule .months .month .info {

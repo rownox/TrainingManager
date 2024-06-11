@@ -33,7 +33,6 @@
                                 <p>To</p>
                                 <input type="date" asp-for="@Model.To" class="form-control" />
                             </div>
-                            
                         </form>
                     </div>
                 </div>
@@ -43,8 +42,6 @@
                         <th>Status</th>
                         <th>Trainee</th>
                         <th>Skill</th>
-                        <th>Begin Date</th>
-                        <th>End Date</th>
                         <th>Priority Level</th>
                     </tr>
                     @foreach (var item in Model.TrainingOrder.Reverse()) {
@@ -58,8 +55,6 @@
                                     }
                                 }
                                 <td>@Html.DisplayFor(modelItem => item.skill)</td>
-                                <td>@Html.DisplayFor(modelItem => item.beginDate)</td>
-                                <td>@Html.DisplayFor(modelItem => item.endDate)</td>
                                 <td>@Html.DisplayFor(modelItem => item.priorityLevel)</td>
                             </tr>
                             Model.listCount++;
