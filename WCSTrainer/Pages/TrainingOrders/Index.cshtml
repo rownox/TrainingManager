@@ -49,11 +49,11 @@
                                             <p>Training Order ID: @Html.DisplayFor(modelItem => item.Id) </p>
                                         </div>
                                         <div class="sub">
-                                            <p>Trainee - </p>
+                                            <p class="identifier">Trainee - </p>
                                             @Model.getEmployee(item.trainee)
                                         </div>
                                         <div class="sub">
-                                            <p>Status - </p>
+                                            <p class="identifier">Status - </p>
                                             @if (item.status.Equals("Awaiting Approval")) {
                                                 <p class="awaiting">@Html.DisplayFor(modelItem => item.status)</p>
                                             } else if (item.status.Equals("Active")) {
@@ -81,8 +81,7 @@
                 <div class="tools">
                     <p class="title">Options:</p>
                     <div class="search">
-                        <p class="section-title">Search Training Orders:</p>
-                        <input type="search" onchange="update(this)">
+                        <input placeholder="Search Training Orders" type="search" onchange="update(this)">
                     </div>
                     <div class="selections">
                         <p class="section-title">Show in List:</p>
