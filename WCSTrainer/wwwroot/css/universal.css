@@ -19,15 +19,6 @@ body {
     color: var(--textMain);
 }
 
-.content {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
-    width: 1500px;
-    max-width: 95%;
-}
-
 .maintitle {
     margin-top: 100px;
     color: var(--textMain);

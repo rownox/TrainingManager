@@ -4,9 +4,8 @@
     <div class="search">
         <input type="search" placeholder="Search By Name" @bind="searchText" />
     </div>
+    <p>People</p>
     <div class="people">
-        <p>People</p>
-        <br />
         @foreach (var employee in Employees) {
             if (!addTrainees) {
                 if (employee.Status.Equals("Trainer")) {
@@ -23,9 +22,8 @@
             }
         }
     </div>
+    <p>Groups</p>
     <div class="people">
-        <p>Groups</p>
-        <br />
         <div class="person">
             <p>HR</p>
             <p class="sub">Member Count: 6</p>

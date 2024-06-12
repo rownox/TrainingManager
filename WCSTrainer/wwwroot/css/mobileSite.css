@@ -1,5 +1,39 @@
 ﻿@media only screen and (max-width: 900px) {
 
+    * {
+        font-size: 15px;
+        padding: 0;
+    }
+
+    html {
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    body {
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .content {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        display: flex;
+    }
+
+    .maintitle {
+        margin-top: 100px;
+        font-size: 50px;
+    }
+
+    .maintitle2 {
+        margin-top: 10px;
+        font-size: 40px;
+    }
+
     nav {
         margin-bottom: 0;
         min-height: 50px;
@@ -41,34 +75,6 @@
             nav .nav-container .nav-options {
                 padding-right: 10px;
             }
-
-    * {
-        font-size: 15px;
-    }
-
-    html {
-        height: 100%;
-    }
-
-    body {
-        height: 100%;
-    }
-
-    .content {
-        width: 100%;
-        max-width: 100%;
-        height: 100%;
-    }
-
-    .maintitle {
-        margin-top: 100px;
-        font-size: 50px;
-    }
-
-    .maintitle2 {
-        margin-top: 10px;
-        font-size: 40px;
-    }
 
     .panel {
         height: 100%;
@@ -278,7 +284,6 @@
                         padding: 5px 0;
                         width: 100%;
                         max-width: 800px;
-                        border-bottom: 1px solid var(--gray4);
                     }
 
                         .panel .body .properties .user-form .field-container .text-group .identifier {
@@ -333,9 +338,7 @@
                                 text-align: center;
                                 text-decoration: none;
                                 padding: 7px 5px;
-                                border-bottom: 1px solid var(--gray4);
                                 text-align: left;
-                                color: var(--textMain);
                             }
 
                         .panel .body .properties .tool-container .tools .search {
@@ -352,7 +355,6 @@
 
                             .panel .body .properties .tool-container .tools .search p {
                                 font-size: 15px;
-                                color: var(--textMain);
                             }
 
                         .panel .body .properties .tool-container .tools .selections {
@@ -393,7 +395,6 @@
 
                         .panel .body .properties .list-container .order-list li {
                             margin-right: 0;
-                            border-bottom: 1px solid var(--gray4);
                         }
 
                             .panel .body .properties .list-container .order-list li .info .title {
@@ -512,23 +513,6 @@
                                 display: flex;
                             }
 
-                            .panel .body .properties .scheduling .schedule .months .month-inactive {
-                                border: 1px solid var(--gray2);
-                            }
-
-                            .panel .body .properties .scheduling .schedule .months .month-active {
-                                border: 1px solid var(--mainTheme);
-                            }
-
-                            .panel .body .properties .scheduling .schedule .months .month-inactive:hover {
-                                background-color: var(--gray3);
-                                border: 1px solid var(--gray4);
-                            }
-
-                            .panel .body .properties .scheduling .schedule .months .month-active:hover {
-                                background-color: var(--gray3);
-                            }
-
                             .panel .body .properties .scheduling .schedule .months .month .title {
                                 font-weight: normal;
                                 margin: 0;
@@ -545,7 +529,6 @@
 
                             .panel .body .properties .scheduling .schedule .months .month .stats {
                                 padding: 10px;
-                                color: var(--textSub2);
                             }
 
                         .panel .body .properties .scheduling .schedule .days {
@@ -564,17 +547,14 @@
                             }
 
     .main-banner {
-        background-image: linear-gradient(to bottom right, #135868,#172a3d);
-        background-color: black;
-        display: flex;
-        width: 100vw;
         justify-content: center;
-        height: 500px;
+        height: fit-content;
+        border-top: none;
     }
 
         .main-banner .banner-container {
-            width: 1400px;
-            max-width: 95%;
+            width: 100%;
+            max-width: 100%;
             display: flex;
             justify-content: center;
             height: 500px;
@@ -595,37 +575,19 @@
                 }
 
                     .main-banner .banner-container .right .info p {
-                        font-size: 50px;
+                        font-size: 30px;
                         font-weight: bold;
                         text-shadow: 2px 2px 10px black;
                         user-select: none;
                     }
 
                     .main-banner .banner-container .right .info .btn {
-                        color: black;
-                        font-weight: bold;
-                        background-color: #21c9ef;
-                        width: 200px;
-                        justify-self: flex-end;
-                        padding: 10px;
-                        box-shadow: 2px 2px 5px black;
                     }
 
                         .main-banner .banner-container .right .info .btn:hover {
-                            background-color: #cff6ff;
                         }
 
             .main-banner .banner-container .left {
-                width: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                display: none;
             }
-
-                .main-banner .banner-container .left .image {
-                    display: none;
-                }
-
-                    .main-banner .banner-container .left .image img {
-                    }
 }

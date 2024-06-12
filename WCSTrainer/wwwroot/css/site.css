@@ -1,3 +1,12 @@
+.content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    width: 1500px;
+    max-width: 95%;
+}
+
 nav {
     top: 0;
     display: flex;
@@ -44,12 +53,16 @@ nav {
                         padding: 0 20px;
                         height: 100%;
                         width: 100%;
+                        user-select: none;
                     }
 
-                        nav .nav-container .nav-buttons ul li a:hover {
-                            background-color: var(--gray3);
-                            color: var(--textMain);
-                        }
+                    nav .nav-container .nav-buttons ul li .clickable {
+
+                    }
+
+                    nav .nav-container .nav-buttons ul li .clickable:hover {
+                        color: var(--textMain);
+                    }
 
         nav .nav-container .nav-options {
             display: flex;
@@ -62,10 +75,6 @@ nav {
                 height: 100%;
                 font-size: 15px;
             }
-
-/*--------------------------------------------------------
-                       MAIN PANEL                         
---------------------------------------------------------*/
 
 .panel {
     display: flex;
@@ -427,7 +436,7 @@ nav {
 
                     .panel .body .properties .list-container .order-list li {
                         margin-right: 20px;
-                        border-bottom: 1px solid var(--gray4);
+                        border-bottom: 1px solid var(--gray3);
                         display: flex;
                         flex-direction: row;
                         justify-content: space-between;
@@ -671,12 +680,6 @@ nav {
                                 cursor: pointer;
                             }
 
-
-
-/*--------------------------------------------------------*/
-/*                     DELETION POPUP                     */
-/*--------------------------------------------------------*/
-
 .modal {
     display: flex;
     flex-direction: column;
@@ -750,11 +753,6 @@ nav {
     z-index: 1;
 }
 
-
-/*--------------------------------------------------------
-                        COMPONENTS                        
---------------------------------------------------------*/
-
 .people-component {
     top: 20%;
     position: fixed;
@@ -773,6 +771,7 @@ nav {
         border-right: 1px solid var(--gray4);
         width: 30%;
         padding: 20px;
+        gap: 10px;
     }
 
         .people-component .people-container .search {
@@ -786,11 +785,12 @@ nav {
             }
 
         .people-component .people-container .people {
-            padding-top: 20px;
             height: 50%;
             display: flex;
             font-size: 15px;
             flex-direction: column;
+            overflow: scroll;
+            scrollbar-width: none;
         }
 
             .people-component .people-container .people .person {
@@ -969,9 +969,12 @@ nav {
                     font-weight: bold;
                     width: 200px;
                     padding: 10px;
-                    background-color: var(--blue1);
-                    color: white;
+                    background-color: var(--blue2);
                 }
+
+                    .main-banner .banner-container .right .info .btn:hover {
+                        background-color: var(--blue1);
+                    }
 
         .main-banner .banner-container .left {
             width: 50%;
