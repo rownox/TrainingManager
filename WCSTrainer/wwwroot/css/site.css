@@ -754,15 +754,15 @@ nav {
 }
 
 .people-component {
-    top: 20%;
+    width: 50%;
+    bottom: 15%;
+    top: 15%;
     position: fixed;
     background-color: var(--gray1);
-    width: 800px;
     display: flex;
     flex-direction: row;
     border: 1px solid var(--gray4);
     z-index: 2;
-    bottom: 20%;
 }
 
     .people-component .people-container {
@@ -823,6 +823,8 @@ nav {
         flex-grow: 1;
         display: flex;
         flex-direction: column;
+        overflow: scroll;
+        scrollbar-width: none;
     }
 
         .people-component .details .top {
