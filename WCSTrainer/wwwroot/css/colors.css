@@ -10,8 +10,8 @@
     --mainTheme: #4631ae;
     --red1: #ff4d4d;
     --red2: #d81d1d;
-    --blue1: #1bc0ff;
-    --blue2: #0b6385;
+    --blue1: #00abf5;
+    --blue2: #00415e;
     --green1: #81ff8f;
     --green2: #0fb021;
     --yellow1: #fff764;
@@ -87,7 +87,7 @@
 
     .btnBlue:hover {
         border-color: black;
-        background-color: var(--blue2);
+        background-color: var(--blue1);
         color: white;
     }
 
