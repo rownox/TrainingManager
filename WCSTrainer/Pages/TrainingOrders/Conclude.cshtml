@@ -14,7 +14,6 @@
                 <p class="title">Conclude Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
                 <div class="field-container">
                     <form method="post">
-
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id"/>
                         <input asp-for="TrainingOrder.trainers" type="hidden" />
