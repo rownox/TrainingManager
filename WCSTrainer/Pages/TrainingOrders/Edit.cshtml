@@ -7,10 +7,7 @@
 
 @using WCSTrainer.Components
 
-<div id="people-component" class="people-component hidden">
-    <component type="typeof(People)" render-mode="WebAssemblyPrerendered" param-Employees="Model.Employees" param-addTrainees="false" />
-</div>
-
+<div id="sv-comp-people" class="people-component hidden"></div>
 <div class="overlay hidden"></div>
 
 <div class="panel">
@@ -31,7 +28,6 @@
                                         <p class="control-label">Trainers</p>
                                         <p id="trainerDanger" class="text-danger" style="display: none;">Please select at least one trainer.</p>
                                     </div>
-                                    <div class="sv-comp-app"></div>
                                     <div class="selections">
                                         <ul id="trainerList">
                                             @foreach (string trainerName in Model.trainersList) {
@@ -162,7 +158,7 @@
     var trainList = document.getElementById("trainerList");
     var trainerDanger = document.getElementById("trainerDanger");
     const overlay = document.querySelector(".overlay");
-    var peopleComponent = document.getElementById("people-component");
+    var peopleComponent = document.getElementById("sv-comp-people");
     var person = document.getElementsByClassName("person");
 
     const openComponent = function () {
