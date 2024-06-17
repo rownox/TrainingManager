@@ -8,43 +8,47 @@
 
 <html lang="en">
 
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewData["Title"] - WCSTrainer</title>
-        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/mobileSite.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/colors.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/universal.css" asp-append-version="true" />
-    </head>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WCSTrainer</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/mobileSite.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/colors.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/universal.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/svelteApp/public/build/bundle.css">
+</head>
 
-    <body>
-        <nav>
-            <div class="nav-container">
-                <div class="nav-buttons">
-                    <ul>
-                        <li class="main-title"><a>WCS Trainer</a></li>
-                        <li><a asp-page="/Index" class="clickable">Home</a></li>
-                        @if (SignInManager.IsSignedIn(User)) {
-                            <li><a asp-page="/TrainingOrders/Index" class="clickable">My Panel</a></li>
-                        }
-                    </ul>
-                </div>
-                <div class="nav-options">
-                    <partial name="_LoginPartial" />
-                </div>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-buttons">
+                <ul>
+                    <li class="main-title"><a>WCS Trainer</a></li>
+                    <li><a asp-page="/Index" class="clickable">Home</a></li>
+                    @if (SignInManager.IsSignedIn(User)) {
+                        <li><a asp-page="/TrainingOrders/Index" class="clickable">My Panel</a></li>
+                    }
+                </ul>
             </div>
-        </nav>
-
-        <div class="content">
-            @RenderBody()
+            <div class="nav-options">
+                <partial name="_LoginPartial" />
+            </div>
         </div>
+    </nav>
 
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        @await RenderSectionAsync("Scripts", required: false)
-    </body>
+    <div class="content">
+        @RenderBody()
+    </div>
+
+    <script src="~/svelteApp/src/main.js"></script>
+    <script src="~/svelteApp/public/build/bundle.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
 </html>
 
 <script>

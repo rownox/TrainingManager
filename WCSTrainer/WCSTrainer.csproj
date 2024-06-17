@@ -25,6 +25,18 @@
 
   <ItemGroup>
     <None Include="wwwroot\images\1N.png" />
+    <None Include="wwwroot\svelteApp\.gitignore" />
+    <None Include="wwwroot\svelteApp\public\build\bundle.css" />
+    <None Include="wwwroot\svelteApp\public\build\bundle.js" />
+    <None Include="wwwroot\svelteApp\public\build\bundle.js.map" />
+    <None Include="wwwroot\svelteApp\public\favicon.png" />
+    <None Include="wwwroot\svelteApp\public\global.css" />
+    <None Include="wwwroot\svelteApp\public\index.html" />
+    <None Include="wwwroot\svelteApp\README.md" />
+    <None Include="wwwroot\svelteApp\rollup.config.js" />
+    <None Include="wwwroot\svelteApp\scripts\setupTypeScript.js" />
+    <None Include="wwwroot\svelteApp\src\App.svelte" />
+    <None Include="wwwroot\svelteApp\src\main.js" />
   </ItemGroup>
 
 </Project>
