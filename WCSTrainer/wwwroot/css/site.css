@@ -772,6 +772,7 @@ nav {
         width: 30%;
         padding: 20px;
         gap: 10px;
+        
     }
 
         .people-component .people-container .search {
@@ -791,10 +792,12 @@ nav {
             flex-direction: column;
             overflow: scroll;
             scrollbar-width: none;
+            border-top: 1px solid var(--gray4);
+            border-bottom: 1px solid var(--gray4);
         }
 
             .people-component .people-container ul li {
-                border-bottom: 1px solid var(--gray4);
+                border-bottom: 1px solid var(--gray3);
                 padding: 5px 0;
                 font-size: 13px;
             }
