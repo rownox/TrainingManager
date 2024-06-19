@@ -220,6 +220,17 @@
     trainList.addEventListener("DOMNodeInserted", toggleSubmitButton);
     trainList.addEventListener("DOMNodeRemoved", toggleSubmitButton);
     document.querySelector('form').addEventListener("submit", validateForm);
+
+    function addTrainer2(name) {
+        if (!Array.from(trainList.getElementsByTagName("li")).some(item => item.textContent === name)) {
+            trainList.innerHTML += `<li>${name}</li>`;
+            updateTrainersInput();
+        }add
+    }
+
+    document.addEventListener('addTrainerEvent', function (event) {
+        closeComponent();
+    });
 </script>
 
 @section Scripts {

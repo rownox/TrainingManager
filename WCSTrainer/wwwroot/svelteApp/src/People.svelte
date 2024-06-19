@@ -54,6 +54,19 @@
             detailValue: selectedGroup.count
         };
     }
+
+    function addTrainer(btn) {
+        const event = new CustomEvent('addTrainerEvent', { detail: selected.name });
+        document.dispatchEvent(event);
+    }
+
+    onMount(() => {
+        window.addTrainerEvent = function(selectedPerson) {
+            const event = new CustomEvent('addTrainerEvent', { detail: selectedPerson });
+            document.dispatchEvent(event);
+        };
+    });
+
 </script>
 
 <div class="people-container">
@@ -127,11 +140,12 @@
                 </div>
             {/if}
         </div>
+
+        <div class="bottom">
+            <button class="btn btnBlue bg-btn" on:click={addTrainer}>Add Trainer</button>
+        </div>
     {/if}
     
-    <div class="bottom">
-        <a class="btn btnBlue bg-btn">Add Trainer</a>
-    </div>
 </div>
 
 <style>
