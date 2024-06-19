@@ -800,6 +800,7 @@ nav {
                 border-bottom: 1px solid var(--gray3);
                 padding: 5px 0;
                 font-size: 13px;
+                user-select: none;
             }
 
                 .people-component .people-container ul li:hover {
@@ -888,7 +889,6 @@ nav {
                 width: 150px;
                 font-size: 17px;
             }
-
 .drop-main {
     background-color: var(--gray3);
     color: var(--textMain);
@@ -932,7 +932,6 @@ nav {
                 .account-links ul li a:active {
                     background-color: var(--gray4);
                 }
-
 .main-banner {
     background-image: linear-gradient(to bottom right, var(--gray1),var(--gray3),var(--gray1),var(--gray1),var(--gray3),var(--gray1));
     background-color: black;
