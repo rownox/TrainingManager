@@ -41,7 +41,7 @@
                                         <div class="btn bg-btn btnWhite" id="indiButton"><p>Individual</p></div>
                                         <div class="form-drop" id="individual">
                                             <ul id="indiList">
-                                                @foreach (Models.Employee employee in Model.Employees) {
+                                                @foreach (var employee in Model.Employees) {
                                                     if (employee.Status.Equals("Trainer")) {
                                                         <li>@employee.FirstName @employee.LastName</li>
                                                     }
