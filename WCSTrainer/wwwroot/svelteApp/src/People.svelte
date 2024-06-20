@@ -145,7 +145,6 @@
             <button class="btn btnBlue bg-btn" on:click={addTrainer}>Add Trainer</button>
         </div>
     {/if}
-    
 </div>
 
 <style>
