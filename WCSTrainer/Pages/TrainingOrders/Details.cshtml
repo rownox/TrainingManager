@@ -32,11 +32,9 @@
                     </div>
                     @if (!Model.TrainingOrder.status.Equals("Awaiting Approval")) {
                         <div class="text-group">
-
                             <div class="identifier">
                                 <p class="title">Trainers</p>
                             </div>
-
                             <div class="info-content">
                                 <p class="info">@Model.TrainingOrder.trainers</p>
                             </div>
@@ -129,7 +127,6 @@
                             <p class="info">@Html.DisplayFor(model => model.TrainingOrder.createDate)</p>
                         </div>
                     </div>
-
                     @if (Model.TrainingOrder.status.Equals("Verified")) {
                         <br></br>
                         <p style="font-size: 20px;">Verification</p>

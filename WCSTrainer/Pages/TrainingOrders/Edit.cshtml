@@ -157,14 +157,15 @@
     var trainersInput = document.getElementById("trainersInput");
     var trainList = document.getElementById("trainerList");
     var trainerDanger = document.getElementById("trainerDanger");
-    const overlay = document.querySelector(".overlay");
     var peopleComponent = document.getElementById("sv-comp-people");
     var person = document.getElementsByClassName("person");
+    const overlay = document.querySelector(".overlay");
 
     const openComponent = function () {
         peopleComponent.classList.remove("hidden");
         overlay.classList.remove("hidden");
     };
+
     const closeComponent = function () {
         peopleComponent.classList.add("hidden");
         overlay.classList.add("hidden");
@@ -231,6 +232,7 @@
     document.addEventListener('addTrainerEvent', function (event) {
         closeComponent();
     });
+
 </script>
 
 @section Scripts {

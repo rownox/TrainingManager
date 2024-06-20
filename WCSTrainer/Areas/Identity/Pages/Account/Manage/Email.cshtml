@@ -11,18 +11,15 @@
     <div class="col-md-6">
         <form id="email-form" method="post">
             <div asp-validation-summary="All" class="text-danger" role="alert"></div>
-            @if (Model.IsEmailConfirmed)
-            {
+            @if (Model.IsEmailConfirmed) {
                 <div class="form-floating mb-3 input-group">
                     <label asp-for="Email" class="form-label"></label>
                     <input asp-for="Email" class="form-control" placeholder="Please enter your email." disabled />
-                        <div class="input-group-append">
-                            <span class="h-100 input-group-text text-success font-weight-bold">✓</span>
-                        </div>
+                    <div class="input-group-append">
+                        <span class="h-100 input-group-text text-success font-weight-bold">✓</span>
+                    </div>
                 </div>
-            }
-            else
-            {
+            } else {
                 <div class="form-floating mb-3">
                     <label asp-for="Email" class="form-label"></label>
                     <input asp-for="Email" class="form-control" placeholder="Please enter your email." disabled />
