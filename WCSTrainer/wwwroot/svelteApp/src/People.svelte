@@ -51,13 +51,17 @@
         selected = {
             name: selectedGroup.name,
             detailLabel: 'Member Count:',
-            detailValue: selectedGroup.count
+            detailValue: selectedGroup.count,
+            affGroup: '',
+            hours: null
         };
     }
 
-    function addTrainer(btn) {
-        const event = new CustomEvent('addTrainerEvent', { detail: selected.name });
-        document.dispatchEvent(event);
+    function addTrainer() {
+        if (selected && selected.name) {
+            const event = new CustomEvent('addTrainerEvent', { detail: selected.name });
+            document.dispatchEvent(event);
+        }
     }
 
     onMount(() => {
@@ -66,7 +70,6 @@
             document.dispatchEvent(event);
         };
     });
-
 </script>
 
 <div class="people-container">
@@ -78,7 +81,7 @@
     <ul id="people">
         {#each people as person}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <li on:click={() => selectPerson(person)} class:selected={selectedPerson === person}>
+            <li on:click={() => selectPerson(person)} class:selected={selectedPerson === person} tabindex="0">
                 <p>{person.name}</p>
                 <p class="sub">Status: {person.status}</p>
             </li>
@@ -89,7 +92,7 @@
     <ul id="groups">
         {#each groups as group}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <li on:click={() => selectGroup(group)} class:selected={selectedGroup === group}>
+            <li on:click={() => selectGroup(group)} class:selected={selectedGroup === group} tabindex="0">
                 <p>{group.name}</p>
                 <p class="sub">Member Count: {group.count}</p>
             </li>

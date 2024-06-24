@@ -173,6 +173,11 @@
 
     overlay.addEventListener("click", closeComponent);
 
+    document.addEventListener("addTrainerEvent", function (event) {
+        addTrainer2(event.detail);
+        closeComponent();
+    });
+
     trainList.addEventListener("click", function (event) {
         if (event.target.tagName === "LI") {
             event.target.remove();
@@ -226,12 +231,11 @@
         if (!Array.from(trainList.getElementsByTagName("li")).some(item => item.textContent === name)) {
             trainList.innerHTML += `<li>${name}</li>`;
             updateTrainersInput();
-        }add
+        }
     }
 
-    document.addEventListener('addTrainerEvent', function (event) {
-        closeComponent();
-    });
+
+    
 
 </script>
 
