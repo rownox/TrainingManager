@@ -1,15 +1,16 @@
 <script>
     import { onMount } from 'svelte';
+    import { writable } from 'svelte/store';
 
     let people = [
         { id: 1, name: 'John Doe', status: 'Trainer', groups: 'Sales', hours: 1 },
         { id: 2, name: 'Jane Smith', status: 'Trainer', groups: 'HR', hours: 1 },
-        { id: 3, name: 'Heath Simmons', status: 'Trainee', groups: 'HR, Sales', hours: 1 },
-        { id: 4, name: 'Alex Johnson', status: 'Trainee', groups: 'HR', hours: 1 },
-        { id: 5, name: 'Jamie Lee', status: 'Trainee', groups: '', hours: 1 },
-        { id: 6, name: 'Taylor Morgan', status: 'Trainee', groups: 'HR', hours: 1 },
+        { id: 3, name: 'Heath Simmons', status: 'Trainer', groups: 'HR, Sales', hours: 1 },
+        { id: 4, name: 'Alex Johnson', status: 'Trainer', groups: 'HR', hours: 1 },
+        { id: 5, name: 'Jamie Lee', status: 'Trainer', groups: '', hours: 1 },
+        { id: 6, name: 'Taylor Morgan', status: 'Trainee', groups: '', hours: 1 },
         { id: 7, name: 'Casey Smith', status: 'Trainee', groups: '', hours: 1 },
-        { id: 8, name: 'Jordan Brown', status: 'Trainee', groups: 'Sales', hours: 1 }
+        { id: 8, name: 'Jordan Brown', status: 'Trainee', groups: '', hours: 1 }
     ];
 
     let groups = [
@@ -23,45 +24,47 @@
         { id: 8, name: 'Operations', count: 9 }
     ];
 
-    let selected = null;
-    let selectedPerson = null;
-    let selectedGroup = null;
+    // Using writable stores for reactive selections
+    const selectedPeople = writable([]);
+    const selectedGroups = writable([]);
+    let peopleShowing = true; // Initially show people
 
-    function selectPerson(person) {
-        selectedPerson = person;
-        selectedGroup = null;
-    }
-
-    function selectGroup(group) {
-        selectedGroup = group;
-        selectedPerson = null;
-    }
-
-    $: if (selectedPerson) {
-        selected = {
-            name: selectedPerson.name,
-            detailLabel: 'Status:',
-            detailValue: selectedPerson.status,
-            affGroup: selectedPerson.groups,
-            hours: selectedPerson.hours
-        };
-    }
-
-    $: if (selectedGroup) {
-        selected = {
-            name: selectedGroup.name,
-            detailLabel: 'Member Count:',
-            detailValue: selectedGroup.count,
-            affGroup: '',
-            hours: null
-        };
-    }
-
-    function addTrainer() {
-        if (selected && selected.name) {
-            const event = new CustomEvent('addTrainerEvent', { detail: selected.name });
-            document.dispatchEvent(event);
+    function toggleSelection(item, type) {
+        if (type === 'person') {
+            selectedPeople.update(people => {
+                const index = people.findIndex(person => person.id === item.id);
+                if (index !== -1) {
+                    people.splice(index, 1); // Remove from selectedPeople if already selected
+                } else {
+                    people.push(item); // Add to selectedPeople if not selected
+                }
+                return [...people];
+            });
+        } else {
+            selectedGroups.update(groups => {
+                const index = groups.findIndex(group => group.id === item.id);
+                if (index !== -1) {
+                    groups.splice(index, 1); // Remove from selectedGroups if already selected
+                } else {
+                    groups.push(item); // Add to selectedGroups if not selected
+                }
+                return [...groups];
+            });
         }
+    }
+
+    function toggleVisible() {
+        peopleShowing = !peopleShowing;
+    }
+
+    function addTrainers() {
+        selectedPeople.subscribe(people => {
+            const selectedNames = people.map(person => person.name).join(', ');
+            if (selectedNames) {
+                const event = new CustomEvent('addTrainerEvent', { detail: selectedNames });
+                document.dispatchEvent(event);
+            }
+        });
     }
 
     onMount(() => {
@@ -77,75 +80,80 @@
         <input type="search" placeholder="Search By Name" />
     </div>
 
-    <p>People</p>
-    <ul id="people">
-        {#each people as person}
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <li on:click={() => selectPerson(person)} class:selected={selectedPerson === person} tabindex="0">
-                <p>{person.name}</p>
-                <p class="sub">Status: {person.status}</p>
-            </li>
-        {/each}
-    </ul>
+    <div class="tabs">
+        <button class="tab" on:click={toggleVisible} class:selected={peopleShowing}>People</button>
+        <button class="tab" on:click={toggleVisible} class:selected={!peopleShowing}>Groups</button>
+    </div>
 
-    <p>Groups</p>
-    <ul id="groups">
-        {#each groups as group}
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <li on:click={() => selectGroup(group)} class:selected={selectedGroup === group} tabindex="0">
-                <p>{group.name}</p>
-                <p class="sub">Member Count: {group.count}</p>
-            </li>
-        {/each}
-    </ul>
+    <p>Selected:</p>
+
+    {#if peopleShowing}
+        <ul id="people">
+            {#each people as person}
+                <li on:click={() => toggleSelection(person, 'person')}
+                    class:selected={$selectedPeople.some(p => p.id === person.id)} tabindex="0">
+                    <p>{person.name}</p>
+                    <p class="sub">Status: {person.status}</p>
+                </li>
+            {/each}
+        </ul>
+    {:else}
+        <ul id="groups">
+            {#each groups as group}
+                <li on:click={() => toggleSelection(group, 'group')}
+                    class:selected={$selectedGroups.some(g => g.id === group.id)} tabindex="0">
+                    <p>{group.name}</p>
+                    <p class="sub">Member Count: {group.count}</p>
+                </li>
+            {/each}
+        </ul>
+    {/if}
+
+    <div class="list-container">
+        <div class="selected-list">
+            {#each $selectedPeople as selectedPerson}
+                <div class="selection pill">{selectedPerson.name}</div>
+            {/each}
+
+            {#each $selectedGroups as selectedGroup}
+                <div class="selection pill">{selectedGroup.name}</div>
+            {/each}
+        </div>
+    </div>
+    
+    <button class="btn btnWhite nbg-btn" on:click={addTrainers}>Add Trainers</button>
 </div>
 
 <div class="details">
-    {#if selected}
+    {#if $selectedPeople.length || $selectedGroups.length}
         <div class="top">
-            {#if selectedPerson}
+            {#each $selectedPeople as selectedPerson}
                 <div class="person-info info-container">
-                    <p class="title">{selected.name}</p>
+                    <p class="title">{selectedPerson.name}</p>
                     <div class="info">
                         <p class="one">Status:</p>
-                        <p class="two">{selected.detailValue}</p>
+                        <p class="two">{selectedPerson.status}</p>
                     </div>
                     <div class="info">
                         <p class="one">Affiliated groups:</p>
-                        <p class="two">{selected.affGroup}</p>
-                    </div>
-                    <div class="info">
-                        <p class="one">Assigned Trainings:</p>
-                    </div>
-                    <div class="list">
-                        <p class="item">Placeholder</p>
+                        <p class="two">{selectedPerson.groups}</p>
                     </div>
                     <div class="info">
                         <p class="one">Total Assigned Hours:</p>
-                        <p class="two">{selected.hours}</p>
+                        <p class="two">{selectedPerson.hours}</p>
                     </div>
                 </div>
-            {/if}
+            {/each}
 
-            {#if selectedGroup}
+            {#each $selectedGroups as selectedGroup}
                 <div class="group-info info-container">
-                    <p class="title">{selected.name}</p>
+                    <p class="title">{selectedGroup.name}</p>
                     <div class="info">
                         <p class="one">Member Count:</p>
-                        <p class="two">{selected.detailValue}</p>
-                    </div>
-                    <div class="info">
-                        <p class="one">Members:</p>
-                    </div>
-                    <div class="list">
-                        <p class="item">Placeholder</p>
+                        <p class="two">{selectedGroup.count}</p>
                     </div>
                 </div>
-            {/if}
-        </div>
-
-        <div class="bottom">
-            <button class="btn btnBlue bg-btn" on:click={addTrainer}>Add Trainer</button>
+            {/each}
         </div>
     {/if}
 </div>
