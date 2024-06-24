@@ -24,19 +24,18 @@
         { id: 8, name: 'Operations', count: 9 }
     ];
 
-    // Using writable stores for reactive selections
     const selectedPeople = writable([]);
     const selectedGroups = writable([]);
-    let peopleShowing = true; // Initially show people
+    let peopleShowing = true;
 
     function toggleSelection(item, type) {
         if (type === 'person') {
             selectedPeople.update(people => {
                 const index = people.findIndex(person => person.id === item.id);
                 if (index !== -1) {
-                    people.splice(index, 1); // Remove from selectedPeople if already selected
+                    people.splice(index, 1);
                 } else {
-                    people.push(item); // Add to selectedPeople if not selected
+                    people.push(item);
                 }
                 return [...people];
             });
@@ -44,9 +43,9 @@
             selectedGroups.update(groups => {
                 const index = groups.findIndex(group => group.id === item.id);
                 if (index !== -1) {
-                    groups.splice(index, 1); // Remove from selectedGroups if already selected
+                    groups.splice(index, 1);
                 } else {
-                    groups.push(item); // Add to selectedGroups if not selected
+                    groups.push(item);
                 }
                 return [...groups];
             });
@@ -58,13 +57,19 @@
     }
 
     function addTrainers() {
+        let selectedNames = [];
         selectedPeople.subscribe(people => {
-            const selectedNames = people.map(person => person.name).join(', ');
-            if (selectedNames) {
-                const event = new CustomEvent('addTrainerEvent', { detail: selectedNames });
-                document.dispatchEvent(event);
-            }
+            selectedNames = people.map(person => person.name);
         });
+        selectedGroups.subscribe(groups => {
+            selectedNames = selectedNames.concat(groups.map(group => group.name));
+        });
+
+        const selectedData = selectedNames.join(', ');
+        if (selectedData) {
+            const event = new CustomEvent('addTrainerEvent', { detail: selectedData });
+            document.dispatchEvent(event);
+        }
     }
 
     onMount(() => {
@@ -81,11 +86,9 @@
     </div>
 
     <div class="tabs">
-        <button class="tab" on:click={toggleVisible} class:selected={peopleShowing}>People</button>
-        <button class="tab" on:click={toggleVisible} class:selected={!peopleShowing}>Groups</button>
+        <button class="tab" on:click={toggleVisible}>People</button>
+        <button class="tab" on:click={toggleVisible}>Groups</button>
     </div>
-
-    <p>Selected:</p>
 
     {#if peopleShowing}
         <ul id="people">
@@ -108,6 +111,8 @@
             {/each}
         </ul>
     {/if}
+
+    <p>Selected:</p>
 
     <div class="list-container">
         <div class="selected-list">

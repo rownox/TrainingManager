@@ -174,7 +174,7 @@
     overlay.addEventListener("click", closeComponent);
 
     document.addEventListener("addTrainerEvent", function (event) {
-        addTrainer2(event.detail);
+        addTrainer(event.detail);
         closeComponent();
     });
 
@@ -191,13 +191,18 @@
         });
     });
 
-    function addTrainer(event) {
-        var name = event.target.value
-        if (!trainList.innerHTML.includes(name)) {
-            trainList.innerHTML += "<li>" + name + "</li>";
-            updateTrainersInput();
-        }
+    function addTrainer(list) {
+        let items = list.split(',').map(item => item.trim());
+
+        items.forEach(item => {
+            if (!Array.from(trainList.getElementsByTagName("li")).some(li => li.textContent.trim() === item)) {
+                trainList.innerHTML += `<li>${item}</li>`;
+            }
+        });
+
+        updateTrainersInput();
     }
+
 
     function updateTrainersInput() {
         var trainers = Array.from(trainList.getElementsByTagName("li")).map(function (item) {
@@ -226,16 +231,6 @@
     trainList.addEventListener("DOMNodeInserted", toggleSubmitButton);
     trainList.addEventListener("DOMNodeRemoved", toggleSubmitButton);
     document.querySelector('form').addEventListener("submit", validateForm);
-
-    function addTrainer2(name) {
-        if (!Array.from(trainList.getElementsByTagName("li")).some(item => item.textContent === name)) {
-            trainList.innerHTML += `<li>${name}</li>`;
-            updateTrainersInput();
-        }
-    }
-
-
-    
 
 </script>
 
