@@ -28,6 +28,38 @@
     const selectedGroups = writable([]);
     let peopleShowing = true;
 
+    let selectedPerson = null;
+    let selectedGroup = null;
+    let selected = null;
+
+    function selectPerson(person) {
+        selectedPerson = person;
+        selectedGroup = null;
+    }
+
+    function selectGroup(group) {
+        selectedGroup = group;
+        selectedPerson = null;
+    }
+
+    $: if (selectedPerson) {
+        selected = {
+            name: selectedPerson.name,
+            detailLabel: 'Status:',
+            detailValue: selectedPerson.status,
+            affGroup: selectedPerson.groups,
+            hours: selectedPerson.hours
+        };
+    }
+
+    $: if (selectedGroup) {
+        selected = {
+            name: selectedGroup.name,
+            detailLabel: 'Member Count:',
+            detailValue: selectedGroup.count
+        };
+    }
+
     function toggleSelection(item, type) {
         if (type === 'person') {
             selectedPeople.update(people => {
@@ -52,8 +84,11 @@
         }
     }
 
-    function toggleVisible() {
-        peopleShowing = !peopleShowing;
+    function setCurrent(item) {
+    }
+
+    function toggleVisible(isVisible) {
+        peopleShowing = isVisible;
     }
 
     function addTrainers() {
@@ -86,27 +121,39 @@
     </div>
 
     <div class="tabs">
-        <button class="tab" on:click={toggleVisible}>People</button>
-        <button class="tab" on:click={toggleVisible}>Groups</button>
+        <button class="tab" on:click={() => toggleVisible(true)} class:open-tab={peopleShowing}>People</button>
+        <button class="tab" on:click={() => toggleVisible(false)} class:open-tab={!peopleShowing}>Groups</button>
     </div>
 
     {#if peopleShowing}
         <ul id="people">
             {#each people as person}
-                <li on:click={() => toggleSelection(person, 'person')}
-                    class:selected={$selectedPeople.some(p => p.id === person.id)} tabindex="0">
-                    <p>{person.name}</p>
-                    <p class="sub">Status: {person.status}</p>
+                <li 
+                    on:click={() => selectPerson(person)}
+                    class:selected={$selectedPeople.some(p => p.id === person.id)}>
+                    <div class="info">
+                        <p>{person.name}</p>
+                        <p class="sub">Status: {person.status}</p>
+                    </div>
+                    <div class="selector">
+                        <input type="checkbox" on:click={() => toggleSelection(person, 'person')}>
+                    </div>
                 </li>
             {/each}
         </ul>
     {:else}
         <ul id="groups">
             {#each groups as group}
-                <li on:click={() => toggleSelection(group, 'group')}
-                    class:selected={$selectedGroups.some(g => g.id === group.id)} tabindex="0">
-                    <p>{group.name}</p>
-                    <p class="sub">Member Count: {group.count}</p>
+                <li 
+                    on:click={() => selectGroup(group)}
+                    class:selected={$selectedGroups.some(g => g.id === group.id)}>
+                    <div class="info">
+                        <p>{group.name}</p>
+                        <p class="sub">Member Count: {group.count}</p>
+                    </div>
+                    <div class="selector">
+                        <input type="checkbox" on:click={() => toggleSelection(group, 'group')}>
+                    </div>
                 </li>
             {/each}
         </ul>
@@ -130,35 +177,47 @@
 </div>
 
 <div class="details">
-    {#if $selectedPeople.length || $selectedGroups.length}
+    {#if selected}
         <div class="top">
-            {#each $selectedPeople as selectedPerson}
+            {#if selectedPerson}
                 <div class="person-info info-container">
-                    <p class="title">{selectedPerson.name}</p>
+                    <p class="title">{selected.name}</p>
                     <div class="info">
                         <p class="one">Status:</p>
-                        <p class="two">{selectedPerson.status}</p>
+                        <p class="two">{selected.detailValue}</p>
                     </div>
                     <div class="info">
                         <p class="one">Affiliated groups:</p>
-                        <p class="two">{selectedPerson.groups}</p>
+                        <p class="two">{selected.affGroup}</p>
+                    </div>
+                    <div class="info">
+                        <p class="one">Assigned Trainings:</p>
+                    </div>
+                    <div class="list">
+                        <p class="item">Placeholder</p>
                     </div>
                     <div class="info">
                         <p class="one">Total Assigned Hours:</p>
-                        <p class="two">{selectedPerson.hours}</p>
+                        <p class="two">{selected.hours}</p>
                     </div>
                 </div>
-            {/each}
+            {/if}
 
-            {#each $selectedGroups as selectedGroup}
+            {#if selectedGroup}
                 <div class="group-info info-container">
-                    <p class="title">{selectedGroup.name}</p>
+                    <p class="title">{selected.name}</p>
                     <div class="info">
                         <p class="one">Member Count:</p>
-                        <p class="two">{selectedGroup.count}</p>
+                        <p class="two">{selected.detailValue}</p>
+                    </div>
+                    <div class="info">
+                        <p class="one">Members:</p>
+                    </div>
+                    <div class="list">
+                        <p class="item">Placeholder</p>
                     </div>
                 </div>
-            {/each}
+            {/if}
         </div>
     {/if}
 </div>
