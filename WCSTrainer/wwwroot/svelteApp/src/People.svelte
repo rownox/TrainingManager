@@ -3,15 +3,21 @@
     import { writable } from 'svelte/store';
 
     let people = [
-        { id: 1, name: 'John Doe', status: 'Trainer', groups: 'Sales', hours: 1 },
+        { id: 1, name: 'John Doe', status: 'Trainer', groups: 'Operations', hours: 1 },
         { id: 2, name: 'Jane Smith', status: 'Trainer', groups: 'HR', hours: 1 },
-        { id: 3, name: 'Heath Simmons', status: 'Trainer', groups: 'HR, Sales', hours: 1 },
-        { id: 4, name: 'Alex Johnson', status: 'Trainer', groups: 'HR', hours: 1 },
-        { id: 5, name: 'Jamie Lee', status: 'Trainer', groups: '', hours: 1 },
+        { id: 3, name: 'Heath Simmons', status: 'Trainer', groups: 'Engineering, Sales', hours: 1 },
+        { id: 4, name: 'Alex Johnson', status: 'Trainer', groups: 'Customer Support', hours: 1 },
+        { id: 5, name: 'Jamie Lee', status: 'Trainee', groups: '', hours: 1 },
         { id: 6, name: 'Taylor Morgan', status: 'Trainee', groups: '', hours: 1 },
         { id: 7, name: 'Casey Smith', status: 'Trainee', groups: '', hours: 1 },
-        { id: 8, name: 'Jordan Brown', status: 'Trainee', groups: '', hours: 1 }
+        { id: 8, name: 'Jordan Brown', status: 'Trainee', groups: '', hours: 1 },
+        { id: 9, name: 'Morgan Reed', status: 'Trainer', groups: 'Marketing', hours: 1 },
+        { id: 10, name: 'Pat Taylor', status: 'Trainer', groups: 'Finance', hours: 1 },
+        { id: 11, name: 'Chris Green', status: 'Trainee', groups: '', hours: 1 },
+        { id: 12, name: 'Alex Kim', status: 'Trainer', groups: 'IT', hours: 1 },
+        { id: 13, name: 'Riley Cooper', status: 'Trainee', groups: '', hours: 1 }
     ];
+
 
     let groups = [
         { id: 1, name: 'HR', count: 6 },
@@ -84,18 +90,18 @@
         }
     }
 
-    function setCurrent(item) {
-    }
-
     function toggleVisible(isVisible) {
         peopleShowing = isVisible;
     }
 
     function addTrainers() {
+
         let selectedNames = [];
+
         selectedPeople.subscribe(people => {
             selectedNames = people.map(person => person.name);
         });
+
         selectedGroups.subscribe(groups => {
             selectedNames = selectedNames.concat(groups.map(group => group.name));
         });
@@ -128,15 +134,23 @@
     {#if peopleShowing}
         <ul id="people">
             {#each people as person}
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <li 
                     on:click={() => selectPerson(person)}
                     class:selected={$selectedPeople.some(p => p.id === person.id)}>
+                    <div class="photo">
+                        
+                    </div>
                     <div class="info">
                         <p>{person.name}</p>
                         <p class="sub">Status: {person.status}</p>
                     </div>
                     <div class="selector">
-                        <input type="checkbox" on:click={() => toggleSelection(person, 'person')}>
+                        {#if $selectedPeople.some(p => p.id === person.id)}
+                            <img src="/images/minus-circle.svg" on:click={() => toggleSelection(person, 'person')} alt="Remove">
+                        {:else}
+                            <img src="/images/plus-circle.svg" on:click={() => toggleSelection(person, 'person')} alt="Add">
+                        {/if}
                     </div>
                 </li>
             {/each}
@@ -144,6 +158,7 @@
     {:else}
         <ul id="groups">
             {#each groups as group}
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <li 
                     on:click={() => selectGroup(group)}
                     class:selected={$selectedGroups.some(g => g.id === group.id)}>
@@ -152,7 +167,11 @@
                         <p class="sub">Member Count: {group.count}</p>
                     </div>
                     <div class="selector">
-                        <input type="checkbox" on:click={() => toggleSelection(group, 'group')}>
+                        {#if $selectedGroups.some(g => g.id === group.id)}
+                            <img src="/images/minus-circle.svg" on:click={() => toggleSelection(group, 'group')} alt="Remove">
+                        {:else}
+                            <img src="/images/plus-circle.svg" on:click={() => toggleSelection(group, 'group')} alt="Add">
+                        {/if}
                     </div>
                 </li>
             {/each}
