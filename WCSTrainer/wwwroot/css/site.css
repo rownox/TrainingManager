@@ -775,6 +775,34 @@ nav {
         
     }
 
+        .people-component .people-container .btn {
+            align-self: flex-end;
+            padding: 2px;
+            width: 100%;
+            font-size: 17px;
+            border: 1px solid var(--gray4);
+        }
+
+        .people-component .people-container .list-container {
+            display: flex;
+            height: 100px;
+            border: 1px solid var(--gray4);
+            overflow-y: scroll;
+            scrollbar-width: none;
+        }
+
+            .people-component .people-container .list-container .selected-list {
+                width: 100%;
+                height: fit-content;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: flex-start;
+                justify-content: flex-start;
+            }
+
+                .people-component .people-container .list-container .selected-list .selection {
+                }
+
         .people-component .people-container .search {
             display: flex;
         }
@@ -786,6 +814,7 @@ nav {
             }
 
         .people-component .people-container ul {
+            flex-grow: 1;
             height: 50%;
             display: flex;
             font-size: 15px;
@@ -876,19 +905,7 @@ nav {
                         padding: 2px 5px;
                     }
 
-        .people-component .details .bottom {
-            align-items: flex-end;
-            display: flex;
-            justify-content: flex-end;
-            flex-grow: 1;
-        }
-
-            .people-component .details .bottom .btn {
-                align-self: flex-end;
-                padding: 2px;
-                width: 150px;
-                font-size: 17px;
-            }
+        
 .drop-main {
     background-color: var(--gray3);
     color: var(--textMain);

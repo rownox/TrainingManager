@@ -39,3 +39,13 @@ button {
 .hidden {
     display: none;
 }
+
+.pill {
+    list-style: none;
+    background-color: var(--mainTheme);
+    cursor: pointer;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin: 2px;
+    height: fit-content;
+}
