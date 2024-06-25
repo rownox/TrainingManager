@@ -3,19 +3,19 @@
     import { writable } from 'svelte/store';
 
     let people = [
-        { id: 1, name: 'John Doe', status: 'Trainer', groups: 'Operations', hours: 1 },
-        { id: 2, name: 'Jane Smith', status: 'Trainer', groups: 'HR', hours: 1 },
-        { id: 3, name: 'Heath Simmons', status: 'Trainer', groups: 'Engineering, Sales', hours: 1 },
-        { id: 4, name: 'Alex Johnson', status: 'Trainer', groups: 'Customer Support', hours: 1 },
-        { id: 5, name: 'Jamie Lee', status: 'Trainee', groups: '', hours: 1 },
+        { id: 1, name: 'Heath Simmons', status: 'Trainer', groups: 'Engineering, Sales', hours: 1 },
+        { id: 2, name: 'Alex Johnson', status: 'Trainer', groups: 'Customer Support', hours: 1 },
+        { id: 3, name: 'Morgan Reed', status: 'Trainer', groups: 'Marketing', hours: 1 },
+        { id: 4, name: 'Pat Taylor', status: 'Trainer', groups: 'Finance', hours: 1 },
+        { id: 5, name: 'John Doe', status: 'Trainer', groups: 'Operations', hours: 1 },
         { id: 6, name: 'Taylor Morgan', status: 'Trainee', groups: '', hours: 1 },
-        { id: 7, name: 'Casey Smith', status: 'Trainee', groups: '', hours: 1 },
-        { id: 8, name: 'Jordan Brown', status: 'Trainee', groups: '', hours: 1 },
-        { id: 9, name: 'Morgan Reed', status: 'Trainer', groups: 'Marketing', hours: 1 },
-        { id: 10, name: 'Pat Taylor', status: 'Trainer', groups: 'Finance', hours: 1 },
-        { id: 11, name: 'Chris Green', status: 'Trainee', groups: '', hours: 1 },
-        { id: 12, name: 'Alex Kim', status: 'Trainer', groups: 'IT', hours: 1 },
-        { id: 13, name: 'Riley Cooper', status: 'Trainee', groups: '', hours: 1 }
+        { id: 7, name: 'Riley Cooper', status: 'Trainee', groups: '', hours: 1 },
+        { id: 8, name: 'Chris Green', status: 'Trainee', groups: '', hours: 1 },
+        { id: 9, name: 'Jordan Brown', status: 'Trainee', groups: '', hours: 1 },
+        { id: 10, name: 'Jane Smith', status: 'Trainer', groups: 'HR', hours: 1 },
+        { id: 11, name: 'Alex Kim', status: 'Trainer', groups: 'IT', hours: 1 },
+        { id: 12, name: 'Casey Smith', status: 'Trainee', groups: '', hours: 1 },
+        { id: 13, name: 'Jamie Lee', status: 'Trainee', groups: '', hours: 1 }
     ];
 
     let groups = [
@@ -118,6 +118,7 @@
             document.dispatchEvent(event);
         };
     });
+
 </script>
 
 <div class="people-container">
@@ -134,9 +135,7 @@
         <ul id="people">
             {#each people as person}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li 
-                    on:click={() => selectPerson(person)}
-                    class:selected={$selectedPeople.some(p => p.id === person.id)}>
+                <li on:click={() => selectPerson(person)} class:selected={$selectedPeople.some(p => p.id === person.id)}>
                     <div class="photo">
                         <div class="frame"></div>
                     </div>
@@ -144,13 +143,8 @@
                         <p>{person.name}</p>
                         <div class="sub">
                             <p>Status: </p>
-                            {#if person.status === "Trainer"}
-                                <p class="highlight">{person.status}</p>
-                            {:else}
-                                <p>{person.status}</p>
-                            {/if}
+                            <p class:highlight={person.status === "Trainer"}>{person.status}</p>
                         </div>
-                        
                     </div>
                     <div class="selector">
                         {#if $selectedPeople.some(p => p.id === person.id)}
@@ -166,9 +160,7 @@
         <ul id="groups">
             {#each groups as group}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li 
-                    on:click={() => selectGroup(group)}
-                    class:selected={$selectedGroups.some(g => g.id === group.id)}>
+                <li on:click={() => selectGroup(group)} class:selected={$selectedGroups.some(g => g.id === group.id)}>
                     <div class="info">
                         <p>{group.name}</p>
                         <p class="sub">Member Count: {group.count}</p>
