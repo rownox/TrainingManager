@@ -757,7 +757,9 @@ nav {
 }
 
 .people-component {
-    width: 50%;
+    width: 900px;
+    min-width: 200px;
+    max-width: 95%;
     bottom: 15%;
     top: 15%;
     position: fixed;
@@ -857,12 +859,22 @@ nav {
             }
 
                 .people-component .people-container ul li .photo {
-                    height: 30px;
-                    width: 30px;
-                    border-radius: 50%;
-                    border: 1px solid var(--gray3);
-                    background-color: var(--gray4);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100%;
+                    min-width: 40px;
                 }
+
+                    .people-component .people-container ul li .photo .frame {
+                        min-height: 30px;
+                        min-width: 30px;
+                        height: 30px;
+                        width: 30px;
+                        border-radius: 50%;
+                        border: 1px solid var(--gray3);
+                        background-color: var(--gray4);
+                    }
 
                 .people-component .people-container ul li .info {
                     padding: 5px 10px;
@@ -874,20 +886,26 @@ nav {
                 }
 
                 .people-component .people-container ul li .selector {
+                    height: 100%;
+                    min-width: 22px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    
                 }
 
                     .people-component .people-container ul li .selector img {
-                        height: 100%;
-                        width: 40px;
+                        height: 18px;
+                        width: 18px;
                         filter: invert(60%);
                     }
 
                         .people-component .people-container ul li .selector img:hover {
                             filter: invert(100%);
+                        }
+
+                        .people-component .people-container ul li .selector img:active {
+                            height: 20px;
+                            width: 20px;
                         }
 
                 .people-component .people-container ul li:hover {
@@ -898,6 +916,8 @@ nav {
 
                 .people-component .people-container ul li .sub {
                     color: var(--textSub1);
+                    display: flex;
+                    gap: 5px;
                 }
 
             .people-component .people-container ul .selected {

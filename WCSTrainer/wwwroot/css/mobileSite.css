@@ -590,4 +590,236 @@
             .main-banner .banner-container .left {
                 display: none;
             }
+
+
+    .people-component {
+        width: 95%;
+        min-width: 0;
+        max-width: 95%;
+        bottom: 100px;
+        top: 50px;
+        position: fixed;
+        background-color: var(--gray1);
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--gray4);
+        z-index: 2;
+        align-items: center;
+    }
+
+        .people-component .people-container {
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--gray4);
+            width: 95%;
+            height: 50%;
+            padding: 0;
+            gap: 10px;
+            order: 2;
+        }
+
+            .people-component .people-container .btn {
+                align-self: center;
+                padding: 2px;
+                width: 50%;
+                font-size: 17px;
+                border: 1px solid var(--gray4);
+            }
+
+            .people-component .people-container .list-container {
+                height: 100px;
+                display: flex;
+                overflow-y: scroll;
+                scrollbar-width: none;
+                border-bottom: 1px solid var(--gray4);
+                
+            }
+
+                .people-component .people-container .list-container .selected-list {
+                    width: 100%;
+                    display: flex;
+                    flex-wrap: wrap;
+                    height: fit-content;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+                }
+
+                    .people-component .people-container .list-container .selected-list .selection {
+                    }
+
+            .people-component .people-container .tabs {
+                display: flex;
+                width: 100%;
+                justify-content: space-around;
+            }
+
+                .people-component .people-container .tabs .tab {
+                    color: var(--textMain);
+                    display: flex;
+                    padding: 5px 10px;
+                    flex-grow: 1;
+                    text-align: center;
+                    justify-content: center;
+                }
+
+                .people-component .people-container .tabs .open-tab {
+                    background-color: var(--gray3);
+                    border-bottom: 1px solid var(--gray4);
+                }
+
+            .people-component .people-container .search {
+                display: flex;
+            }
+
+                .people-component .people-container .search input {
+                    height: 30px;
+                    font-size: 15px;
+                    width: 100%;
+                }
+
+            .people-component .people-container ul {
+                flex-grow: 1;
+                height: 50%;
+                display: flex;
+                font-size: 15px;
+                flex-direction: column;
+                overflow: scroll;
+                scrollbar-width: none;
+                border-bottom: 1px solid var(--gray4);
+            }
+
+                .people-component .people-container ul li {
+                    padding: 0 5px;
+                    border-bottom: 1px solid var(--gray3);
+                    font-size: 13px;
+                    user-select: none;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                    .people-component .people-container ul li .photo {
+                        display: none;
+                    }
+
+                        .people-component .people-container ul li .photo .frame {
+                            min-height: 30px;
+                            min-width: 30px;
+                            height: 30px;
+                            width: 30px;
+                            border-radius: 50%;
+                            border: 1px solid var(--gray3);
+                            background-color: var(--gray4);
+                        }
+
+                    .people-component .people-container ul li .info {
+                        padding: 5px 10px;
+                        flex-grow: 1;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                    }
+
+                    .people-component .people-container ul li .selector {
+                        height: 100%;
+                        min-width: 22px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                        .people-component .people-container ul li .selector img {
+                            height: 18px;
+                            width: 18px;
+                            filter: invert(60%);
+                        }
+
+                            .people-component .people-container ul li .selector img:hover {
+                                filter: invert(100%);
+                            }
+
+                            .people-component .people-container ul li .selector img:active {
+                                height: 20px;
+                                width: 20px;
+                            }
+
+                    .people-component .people-container ul li:hover {
+                        background-color: var(--gray3);
+                        border-bottom: 1px solid var(--gray4);
+                        cursor: pointer;
+                    }
+
+                    .people-component .people-container ul li .sub {
+                        color: var(--textSub1);
+                        display: flex;
+                        gap: 5px;
+                    }
+
+                .people-component .people-container ul .selected {
+                    background-color: var(--gray2);
+                    color: var(--green1);
+                    border-bottom: 1px solid var(--gray4);
+                }
+
+            .people-component .people-container .groups {
+                height: 50%;
+                font-size: 15px;
+            }
+
+        .people-component .details {
+            padding: 0;
+            flex-grow: 1;
+            width: 100%;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: scroll;
+            scrollbar-width: none;
+        }
+
+            .people-component .details .top {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+            }
+
+                .people-component .details .top .info-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    font-size: 18px;
+                    height: 100%;
+                }
+
+                    .people-component .details .top .info-container .title {
+                        font-size: 30px;
+                        padding-bottom: 10px;
+                    }
+
+                    .people-component .details .top .info-container .info {
+                        display: flex;
+                        gap: 6px;
+                    }
+
+                        .people-component .details .top .info-container .info .one {
+                            color: var(--textSub1);
+                        }
+
+                        .people-component .details .top .info-container .info .two {
+                            color: var(--textMain);
+                        }
+
+                    .people-component .details .top .info-container .list {
+                        padding: 0 10px;
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+                        .people-component .details .top .info-container .list .item {
+                            border-bottom: 1px solid var(--gray4);
+                            margin-top: 5px;
+                            font-size: 15px;
+                            border-radius: 3px;
+                            padding: 2px 5px;
+                        }
 }
