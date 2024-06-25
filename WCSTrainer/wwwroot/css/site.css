@@ -231,15 +231,6 @@ nav {
                             display: flex;
                         }
 
-                            .panel .body .properties .user-form .field-container .form-group .selections ul li {
-                                background-color: var(--mainTheme);
-                                border-radius: 20px;
-                                padding: 3px 10px;
-                                list-style: none;
-                                cursor: pointer;
-                                margin: 2px;
-                            }
-
                     .panel .body .properties .user-form .field-container .form-group .selectors {
                         justify-content: space-between;
                         flex-direction: row;
@@ -377,7 +368,7 @@ nav {
                         .panel .body .properties .tool-container .tools .search select {
                             height: 30px;
                             margin-top: 10px;
-                            width: 30%
+                            width: 30%;
                         }
 
                     .panel .body .properties .tool-container .tools .selections {

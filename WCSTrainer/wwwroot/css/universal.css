@@ -48,4 +48,5 @@ button {
     border-radius: 20px;
     margin: 2px;
     height: fit-content;
+    user-select: none;
 }

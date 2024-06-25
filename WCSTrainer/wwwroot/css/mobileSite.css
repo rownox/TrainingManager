@@ -172,8 +172,8 @@
 
                     .panel .body .properties .user-form .field-container .form-group {
                         display: flex;
-                        flex-direction: row;
-                        min-width: 350px;
+                        flex-direction: column;
+                        min-width: 0;
                         width: 100%;
                         gap: 20px;
                         margin-bottom: 20px;
@@ -596,43 +596,27 @@
         width: 95%;
         min-width: 0;
         max-width: 95%;
-        bottom: 100px;
-        top: 50px;
-        position: fixed;
-        background-color: var(--gray1);
-        display: flex;
         flex-direction: column;
-        border: 1px solid var(--gray4);
-        z-index: 2;
         align-items: center;
     }
 
         .people-component .people-container {
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid var(--gray4);
+            border: none;
             width: 95%;
             height: 50%;
             padding: 0;
-            gap: 10px;
             order: 2;
         }
 
             .people-component .people-container .btn {
+                padding: 5px 20px;
                 align-self: center;
-                padding: 2px;
-                width: 50%;
-                font-size: 17px;
-                border: 1px solid var(--gray4);
+                width: fit-content;
+                font-size: 15px;
             }
 
             .people-component .people-container .list-container {
-                height: 100px;
-                display: flex;
-                overflow-y: scroll;
-                scrollbar-width: none;
-                border-bottom: 1px solid var(--gray4);
-                
+                height: 50px;
             }
 
                 .people-component .people-container .list-container .selected-list {

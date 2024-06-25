@@ -31,7 +31,7 @@
                                     <div class="selections">
                                         <ul id="trainerList">
                                             @foreach (string trainerName in Model.trainersList) {
-                                                <li>@trainerName</li>
+                                                <li draggable="true" class="pill">@trainerName</li>
                                             }
                                         </ul>
                                     </div>
@@ -196,7 +196,7 @@
 
         items.forEach(item => {
             if (!Array.from(trainList.getElementsByTagName("li")).some(li => li.textContent.trim() === item)) {
-                trainList.innerHTML += `<li>${item}</li>`;
+                trainList.innerHTML += `<li draggable="true" class="pill">${item}</li>`;
             }
         });
 
