@@ -18,7 +18,6 @@
         { id: 13, name: 'Riley Cooper', status: 'Trainee', groups: '', hours: 1 }
     ];
 
-
     let groups = [
         { id: 1, name: 'HR', count: 6 },
         { id: 2, name: 'Sales', count: 12 },
@@ -139,17 +138,25 @@
                     on:click={() => selectPerson(person)}
                     class:selected={$selectedPeople.some(p => p.id === person.id)}>
                     <div class="photo">
-                        
+                        <div class="frame"></div>
                     </div>
                     <div class="info">
                         <p>{person.name}</p>
-                        <p class="sub">Status: {person.status}</p>
+                        <div class="sub">
+                            <p>Status: </p>
+                            {#if person.status === "Trainer"}
+                                <p class="highlight">{person.status}</p>
+                            {:else}
+                                <p>{person.status}</p>
+                            {/if}
+                        </div>
+                        
                     </div>
                     <div class="selector">
                         {#if $selectedPeople.some(p => p.id === person.id)}
-                            <img src="/images/minus-circle.svg" on:click={() => toggleSelection(person, 'person')} alt="Remove">
+                            <img class="red" src="/images/subtract.svg" on:click={() => toggleSelection(person, 'person')} alt="Remove">
                         {:else}
-                            <img src="/images/plus-circle.svg" on:click={() => toggleSelection(person, 'person')} alt="Add">
+                            <img src="/images/add.svg" on:click={() => toggleSelection(person, 'person')} alt="Add">
                         {/if}
                     </div>
                 </li>
@@ -168,9 +175,9 @@
                     </div>
                     <div class="selector">
                         {#if $selectedGroups.some(g => g.id === group.id)}
-                            <img src="/images/minus-circle.svg" on:click={() => toggleSelection(group, 'group')} alt="Remove">
+                            <img src="/images/subtract.svg" on:click={() => toggleSelection(group, 'group')} alt="Remove">
                         {:else}
-                            <img src="/images/plus-circle.svg" on:click={() => toggleSelection(group, 'group')} alt="Add">
+                            <img src="/images/add.svg" on:click={() => toggleSelection(group, 'group')} alt="Add">
                         {/if}
                     </div>
                 </li>

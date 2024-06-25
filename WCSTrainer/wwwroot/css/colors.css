@@ -131,3 +131,7 @@
 .verified {
     color: var(--red1);
 }
+
+.highlight {
+    color: var(--yellow1);
+}
