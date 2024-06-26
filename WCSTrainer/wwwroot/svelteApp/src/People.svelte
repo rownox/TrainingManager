@@ -125,7 +125,6 @@
     <div class="search">
         <input type="search" placeholder="Search By Name" />
     </div>
-
     <div class="tabs">
         <button class="tab" on:click={() => toggleVisible(true)} class:open-tab={peopleShowing}>People</button>
         <button class="tab" on:click={() => toggleVisible(false)} class:open-tab={!peopleShowing}>Groups</button>
