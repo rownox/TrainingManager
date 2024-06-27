@@ -56,7 +56,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employee");
+                    b.ToTable("Employee", (string)null);
                 });
 
             modelBuilder.Entity("WebApplication2.Models.TrainingOrder", b =>
@@ -112,7 +112,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TrainingOrder");
+                    b.ToTable("TrainingOrder", (string)null);
                 });
 #pragma warning restore 612, 618
         }

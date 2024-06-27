@@ -26,6 +26,10 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public IList<Employee> Employees { get; set; }
 
         public async Task<IActionResult> OnPostAsync() {
+            if (string.IsNullOrEmpty(TrainingOrder.description)) {
+                TrainingOrder.description = "None";
+            }
+
             if (!ModelState.IsValid) {
                 return Page();
             }

@@ -16,9 +16,9 @@
             <div class="info">
                 <p>Manage and Organize Work Training</p>
                 @if (SignInManager.IsSignedIn(User)) {
-                    <a asp-page="/TrainingOrders/Index" class="btn btnBlue">Start Here</a>
+                    <a asp-page="/TrainingOrders/Index" class="btn btnWhite bg-btn">Start Here</a>
                 } else {
-                    <a id="login" asp-area="Identity" asp-page="/Account/Login" class="btn btnBlue">Start Here</a>
+                    <a id="login" asp-area="Identity" asp-page="/Account/Login" class="btn btnWhite bg-btn">Start Here</a>
                 }
             </div>
         </div>
