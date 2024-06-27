@@ -29,6 +29,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
         }
 
         public async Task<IActionResult> OnPostAsync() {
+
             if (!ModelState.IsValid) {
                 return Page();
             }
@@ -38,7 +39,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 return NotFound();
             }
 
-            existingTrainingOrder.status = TrainingOrder.status;
             existingTrainingOrder.description = TrainingOrder.description;
             existingTrainingOrder.createDate = TrainingOrder.createDate;
             existingTrainingOrder.beginDate = TrainingOrder.beginDate;
@@ -47,6 +47,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
             existingTrainingOrder.trainee = TrainingOrder.trainee;
             existingTrainingOrder.endDate = TrainingOrder.endDate;
             existingTrainingOrder.medium = TrainingOrder.medium;
+            existingTrainingOrder.status = TrainingOrder.status;
+
             existingTrainingOrder.skill = TrainingOrder.skill;
 
             _context.Entry(existingTrainingOrder).State = EntityState.Modified;
@@ -62,6 +64,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
 
             return RedirectToPage("./Index");
+
         }
 
         private bool TrainingOrderExists(int id) {

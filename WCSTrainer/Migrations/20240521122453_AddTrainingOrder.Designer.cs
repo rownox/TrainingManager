@@ -58,7 +58,6 @@ namespace WCSTrainer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
                     b.ToTable("Employee");
                 });
 
@@ -114,7 +113,6 @@ namespace WCSTrainer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
                     b.ToTable("TrainingOrder");
                 });
 #pragma warning restore 612, 618

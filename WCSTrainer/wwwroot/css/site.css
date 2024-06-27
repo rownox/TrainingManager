@@ -36,6 +36,12 @@ nav {
                 height: 60px;
             }
 
+                nav .nav-container .nav-buttons ul .main-title {
+                    font-weight: 400;
+                    color: var(--textMain);
+                    margin-right: 50px;
+                }
+
                 nav .nav-container .nav-buttons ul li {
                     align-items: center;
                     list-style: none;
@@ -49,8 +55,8 @@ nav {
                         align-items: center;
                         text-align: center;
                         user-select: none;
-                        font-size: 20px;
-                        padding: 0 20px;
+                        font-size: 18px;
+                        margin-right: 20px;
                         display: flex;
                         height: 100%;
                         width: 100%;
@@ -480,6 +486,7 @@ nav {
                                 padding: 6px 10px;
                                 font-size: 15px;
                             }
+
 
             .panel .body .properties .order-list2 {
                 overflow-y: scroll;
@@ -1066,12 +1073,8 @@ nav {
                     font-weight: bold;
                     width: 200px;
                     padding: 10px;
-                    background-color: var(--blue2);
                 }
 
-                    .main-banner .banner-container .right .info .btn:hover {
-                        background-color: var(--blue1);
-                    }
 
         .main-banner .banner-container .left {
             width: 50%;

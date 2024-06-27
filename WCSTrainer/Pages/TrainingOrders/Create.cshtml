@@ -61,7 +61,7 @@
                             </div>
                             <div class="form">
                                 <div class="labels">
-                                    <p class="control-label">Medium*</p>
+                                    <p class="control-label">Learning Medium*</p>
                                     <span asp-validation-for="TrainingOrder.medium" class="text-danger"></span>
                                 </div>
                                 <input asp-for="TrainingOrder.medium" class="form-control" />
@@ -81,9 +81,9 @@
                                     <span asp-validation-for="TrainingOrder.priorityLevel" class="text-danger"></span>
                                 </div>
                                 <select asp-for="TrainingOrder.priorityLevel" class="form-drop2">
-                                    <option value="3">3 - High</option>
-                                    <option value="2">2 - Medium</option>
-                                    <option value="1">1 - Low</option>
+                                    <option value="High">High</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Low">Low</option>
                                 </select>
                             </div>
                         </div>
@@ -91,9 +91,8 @@
                             <div class="form">
                                 <div class="labels">
                                     <p class="control-label">Description</p>
-                                    <span asp-validation-for="TrainingOrder.description" class="text-danger"></span>
                                 </div>
-                                <textarea rows="5" asp-for="TrainingOrder.description"></textarea>
+                                <textarea rows="3" asp-for="TrainingOrder.description" placeholder="Describe what the trainee will be accomplishing."></textarea>
                             </div>
                         </div>
                         <div class="form-group">
