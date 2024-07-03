@@ -65,7 +65,7 @@
                             <p class="title">Skill</p>
                         </div>
                         <div class="info-content">
-                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.skill)</p>
+                            <pre class="info">@Html.DisplayFor(model => model.TrainingOrder.skill)</pre>
                         </div>
                     </div>
                     @if (!Model.TrainingOrder.status.Equals("Awaiting Approval")) {
@@ -115,7 +115,7 @@
                             <p class="title">Description</p>
                         </div>
                         <div class="info-content">
-                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.description)</p>
+                            <pre class="info">@Html.DisplayFor(model => model.TrainingOrder.description)</pre>
                             <p class="info" style="text-decoration: underline; color: lightblue;">Link to Training Resources</p>
                         </div>
                     </div>
