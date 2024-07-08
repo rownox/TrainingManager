@@ -54,14 +54,16 @@
                                         </div>
                                         <div class="sub">
                                             <p class="identifier">Status - </p>
-                                            @if (item.Status.Equals("Awaiting Approval")) {
-                                                <p class="awaiting">@Html.DisplayFor(modelItem => item.Status)</p>
-                                            } else if (item.Status.Equals("Active")) {
-                                                <p class="active">@Html.DisplayFor(modelItem => item.Status)</p>
-                                            } else if (item.Status.Equals("Verified")) {
-                                                <p class="verified">@Html.DisplayFor(modelItem => item.Status)</p>
-                                            } else {
-                                                <p class="completed">@Html.DisplayFor(modelItem => item.Status)</p>
+                                            @{
+                                                var type = "awaiting";
+                                                if (item.Status.Equals("Active")) {
+                                                    type = "active";
+                                                } else if (item.Status.Equals("Verified")) {
+                                                    type = "verified";
+                                                } else {
+                                                    type = "completed";
+                                                }
+                                                <p class="@type">@item.Status</p>
                                             }
                                         </div>
                                     </div>

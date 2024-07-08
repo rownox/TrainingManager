@@ -12,21 +12,24 @@
         <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
         <div class="properties">
             <div class="user-form">
-                <p class="title">Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
+                <p class="title">Training Order #@Model.TrainingOrder.Id</p>
                 <div class="field-container">
                     <div class="text-group">
                         <div class="identifier">
                             <p class="title">Status</p>
                         </div>
                         <div class="info-content">
-                            @if (Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
-                                <p class="info awaiting">@Html.DisplayFor(model => model.TrainingOrder.Status)</p>
-                            } else if (Model.TrainingOrder.Status.Equals("Active")) {
-                                <p class="info active">@Html.DisplayFor(model => model.TrainingOrder.Status)</p>
-                            } else if (Model.TrainingOrder.Status.Equals("Verified")) {
-                                <p class="info verified">@Html.DisplayFor(model => model.TrainingOrder.Status)</p>
-                            } else {
-                                <p class="info completed">@Html.DisplayFor(model => model.TrainingOrder.Status)</p>
+                            @{
+                                var type = "awaiting";
+                                if (Model.TrainingOrder.Status.Equals("Active")) {
+                                    type = "active";
+                                } else if (Model.TrainingOrder.Status.Equals("Verified")) {
+                                    type = "verified";
+                                } else {
+                                    type = "completed";
+                                }
+
+                                <p class="info @type">@Model.TrainingOrder.Status</p>
                             }
                         </div>
                     </div>

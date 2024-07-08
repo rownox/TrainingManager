@@ -15,25 +15,18 @@
                     <div class="btns">
                         <button onclick="sortTable(0)" class="btn bg-btn btnWhite">ID Number</button>
                         <button onclick="sortTable(4)" class="btn bg-btn btnWhite">Priority Level</button>
+                        
                     </div>
-                    <div class="options">
-                        <form method="post" id="maxCountForm">
-                            <select asp-for="maxCount" class="drop-main" onchange="submitForm()">
-                                <option value="15">15</option>
-                                <option value="50">50</option>
-                                <option value="@Model.TrainingOrder.Count()">Max</option>
-                            </select>
-                            
-                            <div class="selector">
-                                <p>From</p>
-                                <input type="date" asp-for="@Model.From" class="form-control" />
-                            </div>
-                            <div class="selector">
-                                <p>To</p>
-                                <input type="date" asp-for="@Model.To" class="form-control" />
-                            </div>
-                        </form>
-                    </div>
+                    <form method="post" id="maxCountForm">
+                        <div class="selector">
+                            <p>From</p>
+                            <input type="date" asp-for="@Model.From" class="form-control" />
+                        </div>
+                        <div class="selector">
+                            <p>To</p>
+                            <input type="date" asp-for="@Model.To" class="form-control" />
+                        </div>
+                    </form>
                 </div>
                 <table id="dataTable">
                     <tr>
