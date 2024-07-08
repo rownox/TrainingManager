@@ -2,32 +2,8 @@
     import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
 
-    let people = [
-        { id: 1, name: 'Heath Simmons', status: 'Trainer', groups: 'Engineering, Sales', hours: 1 },
-        { id: 2, name: 'Alex Johnson', status: 'Trainer', groups: 'Customer Support', hours: 1 },
-        { id: 3, name: 'Morgan Reed', status: 'Trainer', groups: 'Marketing', hours: 1 },
-        { id: 4, name: 'Pat Taylor', status: 'Trainer', groups: 'Finance', hours: 1 },
-        { id: 5, name: 'John Doe', status: 'Trainer', groups: 'Operations', hours: 1 },
-        { id: 6, name: 'Taylor Morgan', status: 'Trainee', groups: '', hours: 1 },
-        { id: 7, name: 'Riley Cooper', status: 'Trainee', groups: '', hours: 1 },
-        { id: 8, name: 'Chris Green', status: 'Trainee', groups: '', hours: 1 },
-        { id: 9, name: 'Jordan Brown', status: 'Trainee', groups: '', hours: 1 },
-        { id: 10, name: 'Jane Smith', status: 'Trainer', groups: 'HR', hours: 1 },
-        { id: 11, name: 'Alex Kim', status: 'Trainer', groups: 'IT', hours: 1 },
-        { id: 12, name: 'Casey Smith', status: 'Trainee', groups: '', hours: 1 },
-        { id: 13, name: 'Jamie Lee', status: 'Trainee', groups: '', hours: 1 }
-    ];
-
-    let groups = [
-        { id: 1, name: 'HR', count: 6 },
-        { id: 2, name: 'Sales', count: 12 },
-        { id: 3, name: 'Marketing', count: 8 },
-        { id: 4, name: 'Engineering', count: 15 },
-        { id: 5, name: 'Finance', count: 10 },
-        { id: 6, name: 'Customer Support', count: 7 },
-        { id: 7, name: 'IT', count: 5 },
-        { id: 8, name: 'Operations', count: 9 }
-    ];
+    let people = [];
+    let groups = [];
 
     const selectedPeople = writable([]);
     const selectedGroups = writable([]);
@@ -113,6 +89,24 @@
     }
 
     onMount(() => {
+        if (window.employeesData) {
+            people = window.employeesData.map(employee => ({
+                id: employee.Id,
+                name: `${employee.FirstName} ${employee.LastName}`,
+                status: employee.Status,
+                groups: employee.Skills,
+                hours: 1
+            }));
+        }
+
+        if (window.trainergroupsData) {
+            groups = window.trainergroupsData.map(group => ({
+                id: group.Id,
+                name: group.Name,
+                count: 1,
+            }));
+        }
+
         window.addTrainerEvent = function(selectedPerson) {
             const event = new CustomEvent('addTrainerEvent', { detail: selectedPerson });
             document.dispatchEvent(event);

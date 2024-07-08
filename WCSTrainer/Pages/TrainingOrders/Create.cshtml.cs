@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
 using WCSTrainer.Models;
-using WebApplication2.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
     public class CreateModel : PageModel {
@@ -26,8 +25,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public IList<Employee> Employees { get; set; }
 
         public async Task<IActionResult> OnPostAsync() {
-            if (string.IsNullOrEmpty(TrainingOrder.description)) {
-                TrainingOrder.description = "None";
+            if (string.IsNullOrEmpty(TrainingOrder.Description)) {
+                TrainingOrder.Description = "None";
             }
 
             if (!ModelState.IsValid) {
@@ -39,7 +38,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             Employees = await _context.Employee.ToListAsync();
 
             foreach (Employee employee in Employees) {
-                if (TrainingOrder.trainee.Contains(employee.FirstName) && TrainingOrder.trainee.Contains(employee.LastName)) {
+                if (TrainingOrder.Trainee.Contains(employee.FirstName) && TrainingOrder.Trainee.Contains(employee.LastName)) {
                     employee.TrainingOrders = employee.TrainingOrders + TrainingOrder.Id + " ";
                 }
             }

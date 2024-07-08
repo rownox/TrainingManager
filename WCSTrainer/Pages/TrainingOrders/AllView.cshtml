@@ -47,14 +47,14 @@
                         if (Model.listCount < Model.maxCount) {
                             <tr class="clickable">
                                 <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                                <td>@Html.DisplayFor(modelItem => item.status)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Status)</td>
                                 @foreach (var emp in Model.Employees) {
-                                    if (emp.Id.ToString() == item.trainee) {
+                                    if (emp.Id.ToString() == item.Trainee) {
                                         <td>@emp.FirstName @emp.LastName</td>
                                     }
                                 }
-                                <td>@Html.DisplayFor(modelItem => item.skill)</td>
-                                <td>@Html.DisplayFor(modelItem => item.priorityLevel)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Skill)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Priority)</td>
                             </tr>
                             Model.listCount++;
                         }

@@ -43,25 +43,25 @@
                     <ul>
                         @foreach (var item in Model.TrainingOrder.Reverse()) {
                             if (Model.listCount < Model.maxCount) {
-                                <li id="@item.Id.ToString() @Model.getEmployee(item.trainee)" class="@item.status.ToString() searchable">
+                                <li id="@item.Id.ToString() @Model.getEmployee(item.Trainee)" class="@item.Status.ToString() searchable">
                                     <div class="info">
                                         <div class="title">
                                             <p>Training Order ID: @Html.DisplayFor(modelItem => item.Id) </p>
                                         </div>
                                         <div class="sub">
                                             <p class="identifier">Trainee - </p>
-                                            @Model.getEmployee(item.trainee)
+                                            @Model.getEmployee(item.Trainee)
                                         </div>
                                         <div class="sub">
                                             <p class="identifier">Status - </p>
-                                            @if (item.status.Equals("Awaiting Approval")) {
-                                                <p class="awaiting">@Html.DisplayFor(modelItem => item.status)</p>
-                                            } else if (item.status.Equals("Active")) {
-                                                <p class="active">@Html.DisplayFor(modelItem => item.status)</p>
-                                            } else if (item.status.Equals("Verified")) {
-                                                <p class="verified">@Html.DisplayFor(modelItem => item.status)</p>
+                                            @if (item.Status.Equals("Awaiting Approval")) {
+                                                <p class="awaiting">@Html.DisplayFor(modelItem => item.Status)</p>
+                                            } else if (item.Status.Equals("Active")) {
+                                                <p class="active">@Html.DisplayFor(modelItem => item.Status)</p>
+                                            } else if (item.Status.Equals("Verified")) {
+                                                <p class="verified">@Html.DisplayFor(modelItem => item.Status)</p>
                                             } else {
-                                                <p class="completed">@Html.DisplayFor(modelItem => item.status)</p>
+                                                <p class="completed">@Html.DisplayFor(modelItem => item.Status)</p>
                                             }
                                         </div>
                                     </div>

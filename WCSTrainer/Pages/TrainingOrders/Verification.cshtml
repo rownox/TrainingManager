@@ -17,27 +17,27 @@
 
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id"/>
-                        <input asp-for="TrainingOrder.duration" type="hidden"/>
-                        <input asp-for="TrainingOrder.trainers" type="hidden"/>
-                        <input asp-for="TrainingOrder.trainee" type="hidden"/>
+                        <input asp-for="TrainingOrder.Duration" type="hidden"/>
+                        <input asp-for="TrainingOrder.Trainers" type="hidden"/>
+                        <input asp-for="TrainingOrder.Trainee" type="hidden"/>
 
-                        <input asp-for="TrainingOrder.description" type="hidden"/>
-                        <input asp-for="TrainingOrder.createDate" type="hidden"/>
-                        <input asp-for="TrainingOrder.beginDate" type="hidden"/>
-                        <input asp-for="TrainingOrder.location" type="hidden"/>
-                        <input asp-for="TrainingOrder.endDate" type="hidden"/>
-                        <input asp-for="TrainingOrder.medium" type="hidden"/>
-                        <input asp-for="TrainingOrder.skill" type="hidden"/>
+                        <input asp-for="TrainingOrder.Description" type="hidden"/>
+                        <input asp-for="TrainingOrder.CreateDate" type="hidden"/>
+                        <input asp-for="TrainingOrder.BeginDate" type="hidden"/>
+                        <input asp-for="TrainingOrder.Location" type="hidden"/>
+                        <input asp-for="TrainingOrder.EndDate" type="hidden"/>
+                        <input asp-for="TrainingOrder.Medium" type="hidden"/>
+                        <input asp-for="TrainingOrder.Skill" type="hidden"/>
 
-                        <input asp-for="TrainingOrder.status" type="hidden" value="Verified" />
+                        <input asp-for="TrainingOrder.Status" type="hidden" value="Verified" />
 
-                        @if (!Model.TrainingOrder.status.Equals("Awaiting Approval")) {
+                        @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
                             <div class="text-group">
                                 <div class="identifier">
                                     <p class="title">Trainers</p>
                                 </div>
                                 <div class="info-content">
-                                    <p class="info">@Model.TrainingOrder.trainers</p>
+                                    <p class="info">@Model.TrainingOrder.Trainers</p>
                                 </div>
                             </div>
                         }
@@ -46,7 +46,7 @@
                                 <p class="title">Trainee</p>
                             </div>
                             <div class="info-content">
-                                <p class="info">@Html.DisplayFor(model => model.TrainingOrder.trainee)</p>
+                                <p class="info">@Html.DisplayFor(model => model.TrainingOrder.Trainee)</p>
                             </div>
                         </div>
                         <div class="text-group">
@@ -54,16 +54,16 @@
                                 <p class="title">Skill</p>
                             </div>
                             <div class="info-content">
-                                <p class="info">@Html.DisplayFor(model => model.TrainingOrder.skill)</p>
+                                <p class="info">@Html.DisplayFor(model => model.TrainingOrder.Skill)</p>
                             </div>
                         </div>
-                        @if (!Model.TrainingOrder.status.Equals("Awaiting Approval")) {
+                        @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
                             <div class="text-group">
                                 <div class="identifier">
                                     <p class="title">Begin Date</p>
                                 </div>
                                 <div class="info-content">
-                                    <p class="info">@Html.DisplayFor(model => model.TrainingOrder.beginDate)</p>
+                                    <p class="info">@Html.DisplayFor(model => model.TrainingOrder.BeginDate)</p>
                                 </div>
                             </div>
                             <div class="text-group">
@@ -71,7 +71,7 @@
                                     <p class="title">End Date</p>
                                 </div>
                                 <div class="info-content">
-                                    <p class="info">@Html.DisplayFor(model => model.TrainingOrder.endDate)</p>
+                                    <p class="info">@Html.DisplayFor(model => model.TrainingOrder.EndDate)</p>
                                 </div>
                             </div>
                         }

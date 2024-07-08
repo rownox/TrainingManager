@@ -1,17 +1,17 @@
-﻿namespace WebApplication2.Models {
+﻿namespace WCSTrainer.Models {
     public class TrainingOrder {
         public int Id { get; set; }
-        public string skill { get; set; }
-        public string trainers { get; set; }
-        public string trainee { get; set; }
-        public DateOnly beginDate { get; set; }
-        public DateOnly endDate { get; set; }
-        public DateOnly createDate { get; set; }
-        public string location { get; set; }
-        public string medium { get; set; }
-        public string status { get; set; }
-        public int duration { get; set; }
-        public string description { get; set; }
-        public string priorityLevel { get; set; }
+        public string Skill { get; set; }
+        public string Trainers { get; set; }
+        public string Trainee { get; set; }
+        public DateOnly BeginDate { get; set; }
+        public DateOnly EndDate { get; set; }
+        public DateOnly CreateDate { get; set; }
+        public string Location { get; set; }
+        public string Medium { get; set; }
+        public string Status { get; set; }
+        public int Duration { get; set; }
+        public string Description { get; set; }
+        public string Priority { get; set; }
     }
 }

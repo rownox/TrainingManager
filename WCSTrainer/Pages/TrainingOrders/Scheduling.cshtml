@@ -29,13 +29,13 @@
                                     <p>Preview:</p>
                                     @if (Model.getFirstTrainingOrder(month, 0) != null) {
                                         var order = @Model.getFirstTrainingOrder(month, 0);
-                                        <div class="order live">Order #@order.Id - @order.beginDate</div>
+                                        <div class="order live">Order #@order.Id - @order.BeginDate</div>
                                     } else {
                                         <div class="order gray"></div>
                                     }
                                     @if (Model.getFirstTrainingOrder(month, 1) != null) {
                                         var order = @Model.getFirstTrainingOrder(month, 1);
-                                        <div class="order live">Order #@order.Id - @order.beginDate</div>
+                                        <div class="order live">Order #@order.Id - @order.BeginDate</div>
                                     } else {
                                         <div class="order gray"></div>
                                     }

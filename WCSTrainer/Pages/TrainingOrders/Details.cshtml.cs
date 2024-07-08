@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Models;
-using WebApplication2.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
     public class DetailsModel : PageModel {

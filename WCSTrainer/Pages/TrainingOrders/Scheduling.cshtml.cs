@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Models;
-using WebApplication2.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
     public class SchedulingModel : PageModel {
@@ -38,8 +37,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
             int count = 0;
 
             foreach (var order in TrainingOrders) {
-                DateOnly orderStart = order.beginDate;
-                DateOnly orderEnd = order.endDate;
+                DateOnly orderStart = order.BeginDate;
+                DateOnly orderEnd = order.EndDate;
                 DateOnly yearStart = new DateOnly(selectedYear, 1, 1);
                 DateOnly yearEnd = new DateOnly(selectedYear, 12, 31);
                 DateOnly effectiveStart = orderStart > yearStart ? orderStart : yearStart;
@@ -58,8 +57,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
             int count = 0;
 
             foreach (var order in TrainingOrders) {
-                DateOnly orderStart = order.beginDate;
-                DateOnly orderEnd = order.endDate;
+                DateOnly orderStart = order.BeginDate;
+                DateOnly orderEnd = order.EndDate;
                 DateOnly yearStart = new DateOnly(selectedYear, 1, 1);
                 DateOnly yearEnd = new DateOnly(selectedYear, 12, 31);
                 DateOnly effectiveStart = orderStart > yearStart ? orderStart : yearStart;
@@ -67,7 +66,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
                 if (effectiveStart <= effectiveEnd) {
                     if (employeeHasOrder(order.Id.ToString())) {
-                        count += order.duration;
+                        count += order.Duration;
                     }
                 }
             }
@@ -80,14 +79,14 @@ namespace WCSTrainer.Pages.TrainingOrders {
             int count = 0;
 
             foreach (TrainingOrder order in TrainingOrders) {
-                DateOnly orderStart = order.beginDate;
-                DateOnly orderEnd = order.endDate;
+                DateOnly orderStart = order.BeginDate;
+                DateOnly orderEnd = order.EndDate;
                 DateOnly effectiveStart = orderStart > monthStart ? orderStart : monthStart;
                 DateOnly effectiveEnd = orderEnd < monthEnd ? orderEnd : monthEnd;
 
                 if (effectiveStart <= effectiveEnd) {
                     if (employeeHasOrder(order.Id.ToString())) {
-                        count += order.duration;
+                        count += order.Duration;
                     }
                 }
             }
@@ -100,8 +99,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
             DateOnly monthEnd = monthStart.AddMonths(1).AddDays(-1);
 
             foreach (var order in TrainingOrders) {
-                DateOnly orderStart = order.beginDate;
-                DateOnly orderEnd = order.endDate;
+                DateOnly orderStart = order.BeginDate;
+                DateOnly orderEnd = order.EndDate;
 
                 if ((orderStart <= monthEnd) && (orderEnd >= monthStart)) {
                     if (employeeHasOrder(order.Id.ToString())) {
@@ -118,7 +117,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             int placeCount = 0;
 
             foreach (TrainingOrder order in TrainingOrders) {
-                if (order.beginDate >= monthStart && order.beginDate <= monthEnd) {
+                if (order.BeginDate >= monthStart && order.BeginDate <= monthEnd) {
                     if (employeeHasOrder(order.Id.ToString())) {
                         if (placeCount == place) {
                             return order;
