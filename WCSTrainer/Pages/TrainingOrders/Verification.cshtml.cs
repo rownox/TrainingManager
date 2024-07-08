@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using WebApplication2.Models;
+using WCSTrainer.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
     public class VerificationModel : PageModel {
@@ -38,16 +38,16 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 return NotFound();
             }
 
-            existingTrainingOrder.status = TrainingOrder.status;
-            existingTrainingOrder.description = TrainingOrder.description;
-            existingTrainingOrder.createDate = TrainingOrder.createDate;
-            existingTrainingOrder.beginDate = TrainingOrder.beginDate;
-            existingTrainingOrder.location = TrainingOrder.location;
-            existingTrainingOrder.duration = TrainingOrder.duration;
-            existingTrainingOrder.trainee = TrainingOrder.trainee;
-            existingTrainingOrder.endDate = TrainingOrder.endDate;
-            existingTrainingOrder.medium = TrainingOrder.medium;
-            existingTrainingOrder.skill = TrainingOrder.skill;
+            existingTrainingOrder.Status = TrainingOrder.Status;
+            existingTrainingOrder.Description = TrainingOrder.Description;
+            existingTrainingOrder.CreateDate = TrainingOrder.CreateDate;
+            existingTrainingOrder.BeginDate = TrainingOrder.BeginDate;
+            existingTrainingOrder.Location = TrainingOrder.Location;
+            existingTrainingOrder.Duration = TrainingOrder.Duration;
+            existingTrainingOrder.Trainee = TrainingOrder.Trainee;
+            existingTrainingOrder.EndDate = TrainingOrder.EndDate;
+            existingTrainingOrder.Medium = TrainingOrder.Medium;
+            existingTrainingOrder.Skill = TrainingOrder.Skill;
 
             _context.Entry(existingTrainingOrder).State = EntityState.Modified;
 

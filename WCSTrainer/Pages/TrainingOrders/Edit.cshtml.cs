@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Models;
-using WebApplication2.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
     public class EditModel : PageModel {
@@ -17,11 +16,17 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public TrainingOrder TrainingOrder { get; set; } = default!;
         [BindProperty]
         public IList<Employee> Employees { get; set; }
+        [BindProperty]
+        public IList<TrainerGroup> TrainerGroups { get; set; }
 
         public string[] trainersList;
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             Employees = await _context.Employee.ToListAsync();
+            ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees);
+
+            TrainerGroups = await _context.TrainerGroup.ToListAsync();
+            ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups);
 
             if (id == null) {
                 return NotFound();
@@ -33,7 +38,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
             TrainingOrder = trainingorder;
 
-            trainersList = TrainingOrder.trainers.Split(',');
+            trainersList = TrainingOrder.Trainers.Split(',');
             return Page();
         }
 

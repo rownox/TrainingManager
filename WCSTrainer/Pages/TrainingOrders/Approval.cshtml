@@ -17,14 +17,14 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id" />
 
-                        <input asp-for="TrainingOrder.status" type="hidden" value="Active"/>
-                        <input asp-for="TrainingOrder.description" type="hidden"/>
-                        <input asp-for="TrainingOrder.createDate" type="hidden"/>
-                        <input asp-for="TrainingOrder.location" type="hidden"/>
-                        <input asp-for="TrainingOrder.duration" type="hidden"/>
-                        <input asp-for="TrainingOrder.trainee" type="hidden"/>
-                        <input asp-for="TrainingOrder.medium" type="hidden"/>
-                        <input asp-for="TrainingOrder.skill" type="hidden"/>
+                        <input asp-for="TrainingOrder.Status" type="hidden" value="Active"/>
+                        <input asp-for="TrainingOrder.Description" type="hidden"/>
+                        <input asp-for="TrainingOrder.CreateDate" type="hidden"/>
+                        <input asp-for="TrainingOrder.Location" type="hidden"/>
+                        <input asp-for="TrainingOrder.Duration" type="hidden"/>
+                        <input asp-for="TrainingOrder.Trainee" type="hidden"/>
+                        <input asp-for="TrainingOrder.Medium" type="hidden"/>
+                        <input asp-for="TrainingOrder.Skill" type="hidden"/>
 
                         <div class="form-group">
                             <div class="form">
@@ -61,32 +61,32 @@
                                         </div>
                                     </div>
                                 </div>
-                                <input id="trainersInput" asp-for="TrainingOrder.trainers" type="hidden" />
+                                <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form">
                                 <div class="labels">
                                     <p class="control-label">Begin Date*</p>
-                                    <span asp-validation-for="TrainingOrder.beginDate" class="text-danger"></span>
+                                    <span asp-validation-for="TrainingOrder.BeginDate" class="text-danger"></span>
                                 </div>
-                                <input type="date" asp-for="TrainingOrder.beginDate" class="form-control" />
+                                <input type="date" asp-for="TrainingOrder.BeginDate" class="form-control" />
                             </div>
                             <div class="form">
                                 <div class="labels">
                                     <p class="control-label">End Date*</p>
-                                    <span asp-validation-for="TrainingOrder.endDate" class="text-danger"></span>
+                                    <span asp-validation-for="TrainingOrder.EndDate" class="text-danger"></span>
                                 </div>
-                                <input type="date" asp-for="TrainingOrder.endDate" class="form-control" />
+                                <input type="date" asp-for="TrainingOrder.EndDate" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form">
                                 <div class="labels">
                                     <p class="control-label">Priority Level*</p>
-                                    <span asp-validation-for="TrainingOrder.priorityLevel" class="text-danger"></span>
+                                    <span asp-validation-for="TrainingOrder.Priority" class="text-danger"></span>
                                 </div>
-                                <select asp-for="TrainingOrder.priorityLevel" class="form-drop2">
+                                <select asp-for="TrainingOrder.Priority" class="form-drop2">
                                     <option value="High">High</option>
                                     <option value="Medium">Medium</option>
                                     <option value="Low">Low</option>
