@@ -44,6 +44,27 @@
                                     </div>
                                     <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
                                 </div>
+                                <div class="form">
+                                    <div class="labels">
+                                        <p class="control-label">Trainee</p>
+                                        <span asp-validation-for="TrainingOrder.Trainee" class="text-danger"></span>
+                                    </div>
+                                    <div class="selections">
+                                        <ul id="trainee">
+                                            @foreach (Models.Employee employee in Model.Employees) {
+                                                if (employee.Status.Equals("Trainee")) {
+                                                    <li value="@employee.Id" class="pill">@employee.FirstName @employee.LastName</li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                    <div class="selectors">
+                                        <div class="selector">
+                                            <div class="btn bg-btn btnWhite" onclick="openComponent()"><p>Select Trainee</p></div>
+                                        </div>
+                                    </div>
+                                    <input id="traineeInput" asp-for="TrainingOrder.Trainee" type="hidden" />
+                                </div>
                             </div>
                         } else {
                             <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
@@ -54,20 +75,15 @@
                                     <p class="control-label">Skill</p>
                                     <span asp-validation-for="TrainingOrder.Skill" class="text-danger"></span>
                                 </div>
-                                <input asp-for="TrainingOrder.Skill" class="form-control" />
+                                <textarea rows="4" asp-for="TrainingOrder.Skill"></textarea>
                             </div>
+                        </div>
+                        <div class="form-group">
                             <div class="form">
                                 <div class="labels">
-                                    <p class="control-label">Trainee</p>
-                                    <span asp-validation-for="TrainingOrder.Trainee" class="text-danger"></span>
+                                    <p class="control-label">Description</p>
                                 </div>
-                                <select asp-for="TrainingOrder.Trainee" class="form-drop2">
-                                    @foreach (Models.Employee employee in Model.Employees) {
-                                        if (employee.Status.Equals("Trainee")) {
-                                            <option value="@employee.Id">@employee.FirstName @employee.LastName</option>
-                                        }
-                                    }
-                                </select>
+                                <textarea rows="4" asp-for="TrainingOrder.Description"></textarea>
                             </div>
                         </div>
                         @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
@@ -94,15 +110,10 @@
                         <div class="form-group">
                             <div class="form">
                                 <div class="labels">
-                                    <p class="control-label">Location</p>
-                                    <span asp-validation-for="TrainingOrder.Location" class="text-danger"></span>
+                                    <p class="control-label">Training Hours Needed</p>
+                                    <span asp-validation-for="TrainingOrder.Duration" class="text-danger"></span>
                                 </div>
-                                <select asp-for="TrainingOrder.Location" class="form-drop2">
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                    <option value="4">Four</option>
-                                </select>
+                                <input asp-for="TrainingOrder.Duration" class="form-control" />
                             </div>
                             <div class="form">
                                 <div class="labels">
@@ -115,13 +126,6 @@
                         <div class="form-group">
                             <div class="form">
                                 <div class="labels">
-                                    <p class="control-label">Training Hours Needed</p>
-                                    <span asp-validation-for="TrainingOrder.Duration" class="text-danger"></span>
-                                </div>
-                                <input asp-for="TrainingOrder.Duration" class="form-control" />
-                            </div>
-                            <div class="form">
-                                <div class="labels">
                                     <p class="control-label">Priority Level</p>
                                     <span asp-validation-for="TrainingOrder.Priority" class="text-danger"></span>
                                 </div>
@@ -131,13 +135,17 @@
                                     <option value="Low">Low</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-group">
                             <div class="form">
                                 <div class="labels">
-                                    <p class="control-label">Description</p>
+                                    <p class="control-label">Location</p>
+                                    <span asp-validation-for="TrainingOrder.Location" class="text-danger"></span>
                                 </div>
-                                <textarea rows="5" asp-for="TrainingOrder.Description"></textarea>
+                                <select asp-for="TrainingOrder.Location" class="form-drop2">
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                    <option value="4">Four</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
