@@ -89,7 +89,7 @@
     }
 
     onMount(() => {
-        if (window.employeesData) {
+        if (window.employeesData && Array.isArray(window.employeesData)) {
             people = window.employeesData.map(employee => ({
                 id: employee.Id,
                 name: `${employee.FirstName} ${employee.LastName}`,
@@ -99,7 +99,7 @@
             }));
         }
 
-        if (window.trainergroupsData) {
+        if (window.trainergroupsData && Array.isArray(window.trainergroupsData)) {
             groups = window.trainergroupsData.map(group => ({
                 id: group.Id,
                 name: group.Name,

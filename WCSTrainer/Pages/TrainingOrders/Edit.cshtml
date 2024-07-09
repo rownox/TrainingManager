@@ -27,48 +27,38 @@
                             <div class="form-group">
                                 <div class="form">
                                     <div class="labels">
-                                        <p class="control-label">Trainers</p>
-                                        <p id="trainerDanger" class="text-danger" style="display: none;">Please select at least one trainer.</p>
+                                        <span asp-validation-for="TrainingOrder.Trainers" class="text-danger"></span>
                                     </div>
                                     <div class="selections">
+                                        <div class="btn bg-btn btnWhite" onclick="openComponent()"><p>Select Trainers</p></div>
                                         <ul id="trainerList">
-                                            @foreach (string trainerName in Model.trainersList) {
+                                            @foreach (string trainerName in Model.TrainersList) {
                                                 <li draggable="true" class="pill">@trainerName</li>
                                             }
                                         </ul>
                                     </div>
-                                    <div class="selectors">
-                                        <div class="selector">
-                                            <div class="btn bg-btn btnWhite" onclick="openComponent()"><p>Select Trainers</p></div>
-                                        </div>
-                                    </div>
                                     <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
-                                </div>
-                                <div class="form">
-                                    <div class="labels">
-                                        <p class="control-label">Trainee</p>
-                                        <span asp-validation-for="TrainingOrder.Trainee" class="text-danger"></span>
-                                    </div>
-                                    <div class="selections">
-                                        <ul id="trainee">
-                                            @foreach (Models.Employee employee in Model.Employees) {
-                                                if (employee.Status.Equals("Trainee")) {
-                                                    <li value="@employee.Id" class="pill">@employee.FirstName @employee.LastName</li>
-                                                }
-                                            }
-                                        </ul>
-                                    </div>
-                                    <div class="selectors">
-                                        <div class="selector">
-                                            <div class="btn bg-btn btnWhite" onclick="openComponent()"><p>Select Trainee</p></div>
-                                        </div>
-                                    </div>
-                                    <input id="traineeInput" asp-for="TrainingOrder.Trainee" type="hidden" />
                                 </div>
                             </div>
                         } else {
                             <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
                         }
+                        <div class="form-group">
+                            <div class="form">
+                                <div class="labels">
+                                    <span asp-validation-for="TrainingOrder.Trainee" class="text-danger"></span>
+                                </div>
+                                <div class="selections">
+                                    <div class="btn bg-btn btnWhite" onclick="openComponent()"><p>Select Trainee</p></div>
+                                    <ul id="trainee">
+                                        @foreach (var employee in Model.Employees.Where(e => e.Status == "Trainee")) {
+                                            <li value="@employee.Id" class="pill">@employee.FirstName @employee.LastName</li>
+                                        }
+                                    </ul>
+                                </div>
+                                <input id="traineeInput" asp-for="TrainingOrder.Trainee" type="hidden" />
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="form">
                                 <div class="labels">
@@ -104,7 +94,7 @@
                                 </div>
                             </div>
                         } else {
-                            <input type="hidden" asp-for="TrainingOrder.EndDate"/>
+                            <input type="hidden" asp-for="TrainingOrder.EndDate" />
                             <input type="hidden" asp-for="TrainingOrder.BeginDate" />
                         }
                         <div class="form-group">
@@ -162,89 +152,70 @@
     </div>
 </div>
 
-<script>
-    window.employeesData = @Html.Raw(ViewData["EmployeesJson"]);
-    window.trainergroupsData = @Html.Raw(ViewData["TrainerGroupsJson"]);
+@section Scripts {
+    <script>
+        window.employeesData = JSON.parse(document.getElementById('employeesData').value);
+        window.trainergroupsData = JSON.parse(document.getElementById('trainergroupsData').value);
 
-    var trainersInput = document.getElementById("trainersInput");
-    var trainList = document.getElementById("trainerList");
-    var trainerDanger = document.getElementById("trainerDanger");
-    var peopleComponent = document.getElementById("sv-comp-people");
-    var person = document.getElementsByClassName("person");
-    const overlay = document.querySelector(".overlay");
+        var trainersInput = document.getElementById("trainersInput");
+        var trainList = document.getElementById("trainerList");
+        var peopleComponent = document.getElementById("sv-comp-people");
+        var person = document.getElementsByClassName("person");
+        const overlay = document.querySelector(".overlay");
 
-    const openComponent = function () {
-        peopleComponent.classList.remove("hidden");
-        overlay.classList.remove("hidden");
-    };
+        const openComponent = function () {
+            peopleComponent.classList.remove("hidden");
+            overlay.classList.remove("hidden");
+        };
 
-    const closeComponent = function () {
-        peopleComponent.classList.add("hidden");
-        overlay.classList.add("hidden");
-    };
+        const closeComponent = function () {
+            peopleComponent.classList.add("hidden");
+            overlay.classList.add("hidden");
+        };
 
-    overlay.addEventListener("click", closeComponent);
+        overlay.addEventListener("click", closeComponent);
 
-    document.addEventListener("addTrainerEvent", function (event) {
-        addTrainer(event.detail);
-        closeComponent();
-    });
-
-    trainList.addEventListener("click", function (event) {
-        if (event.target.tagName === "LI") {
-            event.target.remove();
-            updateTrainersInput();
-        }
-    });
-
-    person.forEach(item => {
-        item.addEventListener("click", event => {
-            addTrainer(event);
+        document.addEventListener("addTrainerEvent", function (event) {
+            addTrainer(event.detail);
+            closeComponent();
         });
-    });
 
-    function addTrainer(list) {
-        let items = list.split(',').map(item => item.trim());
-
-        items.forEach(item => {
-            if (!Array.from(trainList.getElementsByTagName("li")).some(li => li.textContent.trim() === item)) {
-                trainList.innerHTML += `<li draggable="true" class="pill">${item}</li>`;
+        trainList.addEventListener("click", function (event) {
+            if (event.target.tagName === "LI") {
+                event.target.remove();
+                updateTrainersInput();
             }
         });
 
-        updateTrainersInput();
-    }
-
-    function updateTrainersInput() {
-        var trainers = Array.from(trainList.getElementsByTagName("li")).map(function (item) {
-            return item.textContent;
+        Array.from(person).forEach(item => {
+            item.addEventListener("click", event => {
+                addTrainer(event);
+            });
         });
-        trainersInput.value = trainers.join(", ");
-    }
 
-    function toggleSubmitButton() {
-        var submitButton = document.querySelector('input[type="submit"]');
-        if (trainList.getElementsByTagName("li").length > 0) {
-            submitButton.disabled = false;
-        } else {
-            submitButton.disabled = true;
-            trainerDanger.style.display = "none";
+        function addTrainer(list) {
+            let items = list.split(',').map(item => item.trim());
+
+            items.forEach(item => {
+                if (!Array.from(trainList.getElementsByTagName("li")).some(li => li.textContent.trim() === item)) {
+                    trainList.innerHTML += `<li draggable="true" class="pill">${item}</li>`;
+                }
+            });
+
+            updateTrainersInput();
         }
-    }
 
-    function validateForm(event) {
-        if (trainList.getElementsByTagName("li").length === 0) {
-            event.preventDefault();
-            trainerDanger.style.display = "block";
+        function updateTrainersInput() {
+            var trainers = Array.from(trainList.getElementsByTagName("li")).map(function (item) {
+                return item.textContent;
+            });
+            trainersInput.value = trainers.join(", ");
         }
+
+        updateTrainersInput();
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
-    trainList.addEventListener("DOMNodeInserted", toggleSubmitButton);
-    trainList.addEventListener("DOMNodeRemoved", toggleSubmitButton);
-    document.querySelector('form').addEventListener("submit", validateForm);
-
-</script>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
