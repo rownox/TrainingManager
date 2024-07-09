@@ -55,26 +55,22 @@
 
     function addSelection() {
         let selectedNames = [];
-        let selectedIds = [];
         
         selectedPeople.subscribe(people => {
             selectedNames = [...selectedNames, ...people.map(person => person.name)];
-            selectedIds = [...selectedIds, ...people.map(person => person.id)];
         });
 
         if (displayMode !== 'trainees') {
             selectedGroups.subscribe(groups => {
                 selectedNames = [...selectedNames, ...groups.map(group => group.name)];
-                selectedIds = [...selectedIds, ...groups.map(group => group.id)];
             });
         }
 
         if (selectedNames.length) {
             const eventName = displayMode === 'trainers' ? 'addTrainerEvent' : 'addTraineeEvent';
-            const detail = {
-                names: selectedNames.join(', '),
-                ids: selectedIds.join(', ')
-            };
+            const detail = displayMode === 'trainees' 
+                ? { name: selectedNames[0], id: $selectedPeople[0].id }
+                : { names: selectedNames.join(', ') };
             const event = new CustomEvent(eventName, { detail });
             document.dispatchEvent(event);
         }
