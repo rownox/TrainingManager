@@ -54,8 +54,8 @@
                                         <div class="form-drop" id="groups">
                                             <ul id="groupList">
                                                 <li>HR</li>
-                                                <li>Shipping</li>
                                                 <li>Sales</li>
+                                                <li>Shipping</li>
                                                 <li>Engineering</li>
                                             </ul>
                                         </div>
@@ -86,7 +86,8 @@
                                     <p class="control-label">Priority Level*</p>
                                     <span asp-validation-for="TrainingOrder.Priority" class="text-danger"></span>
                                 </div>
-                                <select asp-for="TrainingOrder.Priority" class="form-drop2">
+                                <select 
+                                    asp-for="TrainingOrder.Priority" class="form-drop2">
                                     <option value="High">High</option>
                                     <option value="Medium">Medium</option>
                                     <option value="Low">Low</option>
@@ -113,7 +114,7 @@
     var groupList = document.getElementById("groupList");
     var indiList = document.getElementById("indiList");
     var trainerDanger = document.getElementById("trainerDanger");
-  
+ 
     indiButton.addEventListener("click", function () {
         toggleDisplay("individual", "groups");
     });

@@ -18,16 +18,18 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public IList<Employee> Employees { get; set; }
         [BindProperty]
         public IList<TrainerGroup> TrainerGroups { get; set; }
-
         [BindProperty]
         public List<string> TrainersList { get; set; }
+        [BindProperty]
+        public string Trainee { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             Employees = await _context.Employee.ToListAsync();
-            ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees);
+            ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
 
             TrainerGroups = await _context.TrainerGroup.ToListAsync();
-            ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups);
+            ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
+
 
             if (id == null) {
                 return NotFound();
@@ -37,14 +39,33 @@ namespace WCSTrainer.Pages.TrainingOrders {
             if (trainingorder == null) {
                 return NotFound();
             }
+
             TrainingOrder = trainingorder;
 
-            TrainersList = TrainingOrder.Trainers?.Split(',').Select(t => t.Trim()).ToList() ?? new List<string>();
+            TrainersList = string.IsNullOrWhiteSpace(TrainingOrder.Trainers)
+                ? new List<string>()
+                : TrainingOrder.Trainers.Split(',').Select(t => t.Trim()).ToList();
+
+            Trainee = TrainingOrder.Trainee;
+
+
             return Page();
         }
 
+
         public async Task<IActionResult> OnPostAsync() {
             if (!ModelState.IsValid) {
+                Employees = await _context.Employee.ToListAsync();
+                ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
+                TrainerGroups = await _context.TrainerGroup.ToListAsync();
+                ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
+
+                TrainersList = string.IsNullOrWhiteSpace(TrainingOrder.Trainers)
+                    ? new List<string>()
+                    : TrainingOrder.Trainers.Split(',').Select(t => t.Trim()).ToList();
+
+                Trainee = TrainingOrder.Trainee;
+
                 return Page();
             }
 
@@ -59,6 +80,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                     throw;
                 }
             }
+
             return RedirectToPage("./Index");
         }
 
