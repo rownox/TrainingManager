@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
 
+    let displayMode = 'both';
     let people = [];
     let groups = [];
 
@@ -9,81 +10,72 @@
     const selectedGroups = writable([]);
     let peopleShowing = true;
 
-    let selectedPerson = null;
-    let selectedGroup = null;
     let selected = null;
 
-    function selectPerson(person) {
-        selectedPerson = person;
-        selectedGroup = null;
+    function updateDisplayMode() {
+        const newMode = window.peopleComponentMode || 'both';
+        if (newMode !== displayMode) {
+            displayMode = newMode;
+            clearSelection();
+        }
     }
 
-    function selectGroup(group) {
-        selectedGroup = group;
-        selectedPerson = null;
+    function clearSelection() {
+        selectedPeople.set([]);
+        selectedGroups.set([]);
+        selected = null;
     }
 
-    $: if (selectedPerson) {
+    function selectItem(item, type) {
         selected = {
-            name: selectedPerson.name,
-            detailLabel: 'Status:',
-            detailValue: selectedPerson.status,
-            affGroup: selectedPerson.groups,
-            hours: selectedPerson.hours
+            name: item.name,
+            detailLabel: type === 'person' ? 'Status:' : 'Member Count:',
+            detailValue: type === 'person' ? item.status : item.count,
+            ...(type === 'person' && { affGroup: item.groups, hours: item.hours })
         };
-    }
 
-    $: if (selectedGroup) {
-        selected = {
-            name: selectedGroup.name,
-            detailLabel: 'Member Count:',
-            detailValue: selectedGroup.count
-        };
+        if (displayMode === 'trainees' && type === 'person') {
+            selectedPeople.set([item]);
+        }
     }
 
     function toggleSelection(item, type) {
-        if (type === 'person') {
-            selectedPeople.update(people => {
-                const index = people.findIndex(person => person.id === item.id);
-                if (index !== -1) {
-                    people.splice(index, 1);
-                } else {
-                    people.push(item);
-                }
-                return [...people];
-            });
+        if (displayMode === 'trainees' && type === 'person') {
+            selectedPeople.set([item]);
         } else {
-            selectedGroups.update(groups => {
-                const index = groups.findIndex(group => group.id === item.id);
-                if (index !== -1) {
-                    groups.splice(index, 1);
-                } else {
-                    groups.push(item);
-                }
-                return [...groups];
+            const store = type === 'person' ? selectedPeople : selectedGroups;
+            store.update(items => {
+                const index = items.findIndex(i => i.id === item.id);
+                return index !== -1
+                    ? items.filter(i => i.id !== item.id)
+                    : [...items, item];
             });
         }
     }
 
-    function toggleVisible(isVisible) {
-        peopleShowing = isVisible;
-    }
-
-    function addTrainers() {
-
+    function addSelection() {
         let selectedNames = [];
-
+        let selectedIds = [];
+        
         selectedPeople.subscribe(people => {
-            selectedNames = people.map(person => person.name);
+            selectedNames = [...selectedNames, ...people.map(person => person.name)];
+            selectedIds = [...selectedIds, ...people.map(person => person.id)];
         });
 
-        selectedGroups.subscribe(groups => {
-            selectedNames = selectedNames.concat(groups.map(group => group.name));
-        });
+        if (displayMode !== 'trainees') {
+            selectedGroups.subscribe(groups => {
+                selectedNames = [...selectedNames, ...groups.map(group => group.name)];
+                selectedIds = [...selectedIds, ...groups.map(group => group.id)];
+            });
+        }
 
-        const selectedData = selectedNames.join(', ');
-        if (selectedData) {
-            const event = new CustomEvent('addTrainerEvent', { detail: selectedData });
+        if (selectedNames.length) {
+            const eventName = displayMode === 'trainers' ? 'addTrainerEvent' : 'addTraineeEvent';
+            const detail = {
+                names: selectedNames.join(', '),
+                ids: selectedIds.join(', ')
+            };
+            const event = new CustomEvent(eventName, { detail });
             document.dispatchEvent(event);
         }
     }
@@ -107,96 +99,90 @@
             }));
         }
 
+        window.addEventListener('peopleComponentModeChange', updateDisplayMode);
+
+        updateDisplayMode();
+
         window.addTrainerEvent = function(selectedPerson) {
-            const event = new CustomEvent('addTrainerEvent', { detail: selectedPerson });
-            document.dispatchEvent(event);
+            document.dispatchEvent(new CustomEvent('addTrainerEvent', { detail: selectedPerson }));
+        };
+
+        window.addTraineeEvent = function(selectedPerson) {
+            document.dispatchEvent(new CustomEvent('addTraineeEvent', { detail: selectedPerson }));
+        };
+
+        return () => {
+            window.removeEventListener('peopleComponentModeChange', updateDisplayMode);
         };
     });
-
 </script>
 
 <div class="people-container">
     <div class="search">
         <input type="search" placeholder="Search By Name" />
     </div>
-    <div class="tabs">
-        <button class="tab" on:click={() => toggleVisible(true)} class:open-tab={peopleShowing}>People</button>
-        <button class="tab" on:click={() => toggleVisible(false)} class:open-tab={!peopleShowing}>Groups</button>
-    </div>
 
-    {#if peopleShowing}
-        <ul id="people">
-            {#each people as person}
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li on:click={() => selectPerson(person)} class:selected={$selectedPeople.some(p => p.id === person.id)}>
+    <ul id={peopleShowing ? 'people' : 'groups'}>
+        {#each peopleShowing ? people.filter(p => displayMode === 'both' || (displayMode === 'trainers' ? p.status === 'Trainer' : p.status !== 'Trainer')) : groups as item}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <li on:click={() => selectItem(item, peopleShowing ? 'person' : 'group')} 
+                class:selected={peopleShowing 
+                    ? $selectedPeople.some(p => p.id === item.id)
+                    : $selectedGroups.some(g => g.id === item.id)}>
+                {#if peopleShowing}
                     <div class="photo">
                         <div class="frame"></div>
                     </div>
-                    <div class="info">
-                        <p>{person.name}</p>
-                        <div class="sub">
-                            <p>Status: </p>
-                            <p class:highlight={person.status === "Trainer"}>{person.status}</p>
-                        </div>
+                {/if}
+                <div class="info">
+                    <p>{item.name}</p>
+                    <div class="sub">
+                        <p>{peopleShowing ? 'Status:' : 'Member Count:'} </p>
+                        <p class:highlight={peopleShowing && item.status === "Trainer"}>
+                            {peopleShowing ? item.status : item.count}
+                        </p>
                     </div>
-                    <div class="selector">
-                        {#if $selectedPeople.some(p => p.id === person.id)}
-                            <img class="red" src="/images/subtract.svg" on:click={() => toggleSelection(person, 'person')} alt="Remove">
-                        {:else}
-                            <img src="/images/add.svg" on:click={() => toggleSelection(person, 'person')} alt="Add">
-                        {/if}
-                    </div>
-                </li>
-            {/each}
-        </ul>
-    {:else}
-        <ul id="groups">
-            {#each groups as group}
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li on:click={() => selectGroup(group)} class:selected={$selectedGroups.some(g => g.id === group.id)}>
-                    <div class="info">
-                        <p>{group.name}</p>
-                        <p class="sub">Member Count: {group.count}</p>
-                    </div>
-                    <div class="selector">
-                        {#if $selectedGroups.some(g => g.id === group.id)}
-                            <img src="/images/subtract.svg" on:click={() => toggleSelection(group, 'group')} alt="Remove">
-                        {:else}
-                            <img src="/images/add.svg" on:click={() => toggleSelection(group, 'group')} alt="Add">
-                        {/if}
-                    </div>
-                </li>
-            {/each}
-        </ul>
-    {/if}
+                </div>
+                <div class="selector">
+                    <img src={`/images/${(peopleShowing ? $selectedPeople : $selectedGroups).some(i => i.id === item.id) ? 'subtract' : 'add'}.svg`}
+                         on:click={() => toggleSelection(item, peopleShowing ? 'person' : 'group')}
+                         alt={peopleShowing ? $selectedPeople.some(p => p.id === item.id) ? 'Remove' : 'Add' : $selectedGroups.some(g => g.id === item.id) ? 'Remove' : 'Add'}>
+                </div>
+            </li>
+        {/each}
+    </ul>
 
     <p>Selected:</p>
 
     <div class="list-container">
         <div class="selected-list">
-            {#each $selectedPeople as selectedPerson}
-                <div class="selection pill">{selectedPerson.name}</div>
-            {/each}
-
-            {#each $selectedGroups as selectedGroup}
-                <div class="selection pill">{selectedGroup.name}</div>
-            {/each}
+            {#if displayMode === 'trainees'}
+                {#each $selectedPeople as item}
+                    <div class="selection pill">{item.name}</div>
+                {/each}
+            {:else}
+                {#each [...$selectedPeople, ...$selectedGroups] as item}
+                    <div class="selection pill">{item.name}</div>
+                {/each}
+            {/if}
         </div>
     </div>
     
-    <button class="btn btnWhite nbg-btn" on:click={addTrainers}>Add Trainers</button>
+    <button class="btn btnWhite nbg-btn" on:click={addSelection}>
+        Add {displayMode === 'trainers' ? 'Trainers' : 'Trainee'}
+    </button>
 </div>
 
 <div class="details">
     {#if selected}
         <div class="top">
-            {#if selectedPerson}
-                <div class="person-info info-container">
-                    <p class="title">{selected.name}</p>
-                    <div class="info">
-                        <p class="one">Status:</p>
-                        <p class="two">{selected.detailValue}</p>
-                    </div>
+            <div class="{selected.affGroup ? 'person-info' : 'group-info'} info-container">
+                <p class="title">{selected.name}</p>
+                <div class="info">
+                    <p class="one">{selected.detailLabel}</p>
+                    <p class="two">{selected.detailValue}</p>
+                </div>
+                {#if selected.affGroup}
                     <div class="info">
                         <p class="one">Affiliated groups:</p>
                         <p class="two">{selected.affGroup}</p>
@@ -211,24 +197,15 @@
                         <p class="one">Total Assigned Hours:</p>
                         <p class="two">{selected.hours}</p>
                     </div>
-                </div>
-            {/if}
-
-            {#if selectedGroup}
-                <div class="group-info info-container">
-                    <p class="title">{selected.name}</p>
-                    <div class="info">
-                        <p class="one">Member Count:</p>
-                        <p class="two">{selected.detailValue}</p>
-                    </div>
+                {:else}
                     <div class="info">
                         <p class="one">Members:</p>
                     </div>
                     <div class="list">
                         <p class="item">Placeholder</p>
                     </div>
-                </div>
-            {/if}
+                {/if}
+            </div>
         </div>
     {/if}
 </div>

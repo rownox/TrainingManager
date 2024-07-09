@@ -30,14 +30,18 @@
                                         <span asp-validation-for="TrainingOrder.Trainers" class="text-danger"></span>
                                     </div>
                                     <div class="selections">
-                                        <div class="btn bg-btn btnWhite" onclick="openComponent()"><p>Select Trainers</p></div>
+                                        <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select Trainers</p></div>
                                         <ul id="trainerList">
-                                            @foreach (string trainerName in Model.TrainersList) {
-                                                <li draggable="true" class="pill">@trainerName</li>
+                                            @foreach (var employee in Model.Employees) {
+                                                foreach(string trainerID in Model.TrainersList) {
+                                                    if (trainerID == employee.Id.ToString()) {
+                                                        <li draggable="true" class="pill">@employee.FirstName @employee.LastName</li>
+                                                    }
+                                                }
                                             }
                                         </ul>
+                                        <input id="trainersInput" asp-for="TrainingOrder.Trainers" />
                                     </div>
-                                    <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
                                 </div>
                             </div>
                         } else {
@@ -49,14 +53,17 @@
                                     <span asp-validation-for="TrainingOrder.Trainee" class="text-danger"></span>
                                 </div>
                                 <div class="selections">
-                                    <div class="btn bg-btn btnWhite" onclick="openComponent()"><p>Select Trainee</p></div>
+                                    <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select Trainee</p></div>
                                     <ul id="trainee">
-                                        @foreach (var employee in Model.Employees.Where(e => e.Status == "Trainee")) {
-                                            <li value="@employee.Id" class="pill">@employee.FirstName @employee.LastName</li>
+                                        @if (!string.IsNullOrEmpty(Model.Trainee)) {
+                                            var trainee = Model.Employees.FirstOrDefault(e => e.Id.ToString() == Model.Trainee);
+                                            if (trainee != null) {
+                                                <li value="@trainee.Id" class="pill">@trainee.FirstName @trainee.LastName</li>
+                                            }
                                         }
                                     </ul>
+                                    <input id="traineeInput" asp-for="TrainingOrder.Trainee" />
                                 </div>
-                                <input id="traineeInput" asp-for="TrainingOrder.Trainee" type="hidden" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -152,70 +159,125 @@
     </div>
 </div>
 
-@section Scripts {
-    <script>
-        window.employeesData = JSON.parse(document.getElementById('employeesData').value);
-        window.trainergroupsData = JSON.parse(document.getElementById('trainergroupsData').value);
+<script>
+    var employeesDataElement = document.getElementById('employeesData');
+    var employeesData = employeesDataElement.value ? JSON.parse(employeesDataElement.value) : [];
+    window.employeesData = employeesData;
 
-        var trainersInput = document.getElementById("trainersInput");
-        var trainList = document.getElementById("trainerList");
+    var trainergroupsDataElement = document.getElementById('trainergroupsData');
+    var trainergroupsData = trainergroupsDataElement.value ? JSON.parse(trainergroupsDataElement.value) : [];
+    window.trainergroupsData = trainergroupsData;
+
+    var trainersInput = document.getElementById("trainersInput");
+    var trainList = document.getElementById("trainerList");
+    var trainee = document.getElementById("trainee");
+    var traineeInput = document.getElementById("traineeInput");
+    var peopleComponent = document.getElementById("sv-comp-people");
+    var person = document.getElementsByClassName("person");
+    const overlay = document.querySelector(".overlay");
+
+    function openComponent(mode) {
+        window.peopleComponentMode = mode;
+        window.dispatchEvent(new Event('peopleComponentModeChange'));
+    
         var peopleComponent = document.getElementById("sv-comp-people");
-        var person = document.getElementsByClassName("person");
-        const overlay = document.querySelector(".overlay");
+        var overlay = document.querySelector(".overlay");
+        peopleComponent.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+    }
 
-        const openComponent = function () {
-            peopleComponent.classList.remove("hidden");
-            overlay.classList.remove("hidden");
-        };
+    const closeComponent = function () {
+        peopleComponent.classList.add("hidden");
+        overlay.classList.add("hidden");
+    };
 
-        const closeComponent = function () {
-            peopleComponent.classList.add("hidden");
-            overlay.classList.add("hidden");
-        };
+    overlay.addEventListener("click", closeComponent);
 
-        overlay.addEventListener("click", closeComponent);
+    document.addEventListener("addTrainerEvent", function (event) {
+        addTrainer(event.detail.names, event.detail.ids);
+        closeComponent();
+    });
 
-        document.addEventListener("addTrainerEvent", function (event) {
-            addTrainer(event.detail);
-            closeComponent();
-        });
+    document.addEventListener("addTraineeEvent", function (event) {
+        addTrainee(event.detail.names, event.detail.ids);
+        closeComponent();
+    });
 
-        trainList.addEventListener("click", function (event) {
-            if (event.target.tagName === "LI") {
-                event.target.remove();
-                updateTrainersInput();
-            }
-        });
+    trainee.addEventListener("click", function (event) {
+        if (event.target.tagName === "LI") {
+            event.target.remove();
+            updateTraineeInput();
+        }
+    });
 
-        Array.from(person).forEach(item => {
-            item.addEventListener("click", event => {
-                addTrainer(event);
-            });
-        });
-
-        function addTrainer(list) {
-            let items = list.split(',').map(item => item.trim());
-
-            items.forEach(item => {
-                if (!Array.from(trainList.getElementsByTagName("li")).some(li => li.textContent.trim() === item)) {
-                    trainList.innerHTML += `<li draggable="true" class="pill">${item}</li>`;
-                }
-            });
-
+    trainList.addEventListener("click", function (event) {
+        if (event.target.tagName === "LI") {
+            event.target.remove();
             updateTrainersInput();
         }
+    });
 
-        function updateTrainersInput() {
-            var trainers = Array.from(trainList.getElementsByTagName("li")).map(function (item) {
-                return item.textContent;
-            });
-            trainersInput.value = trainers.join(", ");
+    Array.from(person).forEach(item => {
+        item.addEventListener("click", event => {
+            addTrainer(event);
+        });
+    });
+
+    function addTrainer(trainerNames, trainerIds) {
+        if (!trainerNames.trim() || !trainerIds.trim()) {
+            return;
+        }
+
+        var trainerList = document.getElementById("trainerList");
+        var names = trainerNames.split(',');
+        var ids = trainerIds.split(',');
+
+        for (var i = 0; i < names.length; i++) {
+            if (!Array.from(trainerList.getElementsByTagName("li")).some(li => li.textContent.trim() === names[i].trim())) {
+                trainerList.innerHTML += `<li draggable="true" class="pill" data-id="${ids[i].trim()}">${names[i].trim()}</li>`;
+            }
         }
 
         updateTrainersInput();
-    </script>
-
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    function addTrainee(traineeName, traineeId) {
+        if (!traineeName.trim() || !traineeId.trim()) {
+            return;
+        }
+
+        var traineeList = document.getElementById("trainee");
+        traineeList.innerHTML = `<li value="${traineeId}" class="pill">${traineeName}</li>`;
+
+        updateTraineeInput();
+    }
+
+    function updateTrainersInput() {
+        var trainerList = document.getElementById("trainerList");
+        var trainersInput = document.getElementById("trainersInput");
+        var trainerListItems = Array.from(trainerList.getElementsByTagName("li"));
+        trainersInput.value = trainerListItems.map(function (item) {
+            return item.getAttribute("data-id") || item.textContent.trim();
+        }).join(", ");
+    }
+
+    function updateTraineeInput() {
+        var traineeList = document.getElementById("trainee");
+        var traineeInput = document.getElementById("traineeInput");
+        var traineeListItems = Array.from(traineeList.getElementsByTagName("li"));
+        traineeInput.value = traineeListItems.map(function (item) {
+            return item.getAttribute("value");
+        }).join(", ");
+    }
+
+    trainList.addEventListener("DOMSubtreeModified", updateTrainersInput);
+    trainee.addEventListener("DOMSubtreeModified", updateTraineeInput);
+
+    updateTrainersInput();
+    updateTraineeInput();
+</script>
+
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
