@@ -19,7 +19,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
         [BindProperty]
         public IList<TrainerGroup> TrainerGroups { get; set; }
 
-        public string[] trainersList;
+        [BindProperty]
+        public List<string> TrainersList { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             Employees = await _context.Employee.ToListAsync();
@@ -38,7 +39,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
             TrainingOrder = trainingorder;
 
-            trainersList = TrainingOrder.Trainers.Split(',');
+            TrainersList = TrainingOrder.Trainers?.Split(',').Select(t => t.Trim()).ToList() ?? new List<string>();
             return Page();
         }
 

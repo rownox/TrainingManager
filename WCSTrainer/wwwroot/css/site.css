@@ -180,7 +180,7 @@ nav {
                     margin-bottom: 20px;
                     min-width: 350px;
                     display: flex;
-                    width: 45%;
+                    width: 550px;
                     gap: 20px;
                 }
 
@@ -235,59 +235,28 @@ nav {
                     }
 
                     .panel .body .properties .user-form .field-container .form-group .selections {
-                        border-bottom: 1px solid var(--gray4);
-                        margin-bottom: 10px;
-                        min-height: 30px;
                         display: flex;
-                        padding: 5px;
+                        gap: 10px;
                     }
 
                         .panel .body .properties .user-form .field-container .form-group .selections ul {
+                            border-bottom: 1px solid var(--gray4);
                             flex-direction: row;
                             flex-wrap: wrap;
                             display: flex;
+                            height: fit-content;
+                            flex-grow: 1;
                         }
 
-                    .panel .body .properties .user-form .field-container .form-group .selectors {
-                        justify-content: space-between;
-                        flex-direction: row;
-                        margin-bottom: 10px;
-                        display: flex;
-                        width: 100%;
-                    }
-
-                        .panel .body .properties .user-form .field-container .form-group .selectors .selector {
-                            flex-direction: column;
-                            display: flex;
-                            width: 48%;
+                        .panel .body .properties .user-form .field-container .form-group .selector {
                         }
 
-                            .panel .body .properties .user-form .field-container .form-group .selectors .selector .btn {
+                            .panel .body .properties .user-form .field-container .form-group .btn {
                                 font-size: 15px;
-                                padding: 6px 0;
+                                padding: 5px 10px;
+                                min-width: fit-content;
+                                height: fit-content;
                             }
-
-                            .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop {
-                                font-size: 15px;
-                                display: none;
-                                color: black;
-                                width: 100%;
-                            }
-
-                                .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul {
-                                    list-style: none;
-                                    width: 100%;
-                                }
-
-                                    .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul li {
-                                        background-color: white;
-                                        cursor: pointer;
-                                        padding: 5px;
-                                    }
-
-                                        .panel .body .properties .user-form .field-container .form-group .selectors .selector .form-drop ul li:hover {
-                                            background-color: #dbdbdb;
-                                        }
 
                 .panel .body .properties .user-form .field-container .text-group {
                     border-bottom: 1px solid var(--gray3);
