@@ -14,6 +14,10 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         public async Task<IActionResult> OnGetAsync() {
             Employees = await _context.Employee.ToListAsync();
+            ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
+
+            TrainerGroups = await _context.TrainerGroup.ToListAsync();
+            ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
             return Page();
         }
 
@@ -23,6 +27,12 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public DateOnly Day { get; } = DateOnly.FromDateTime(DateTime.Now);
 
         public IList<Employee> Employees { get; set; }
+
+        [BindProperty]
+        public IList<TrainerGroup> TrainerGroups { get; set; }
+
+        [BindProperty]
+        public string[] TrainersList { get; set; }
 
         public async Task<IActionResult> OnPostAsync() {
             if (string.IsNullOrEmpty(TrainingOrder.Description)) {

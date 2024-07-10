@@ -10,10 +10,12 @@ namespace WCSTrainer.Pages.Employees {
             _context = context;
         }
 
-        public IList<Employee> Employee { get; set; } = default!;
+        public IList<Employee> Employees { get; set; } = default!;
+        public IList<TrainerGroup> Groups { get; set; } = default!;
 
         public async Task OnGetAsync() {
-            Employee = await _context.Employee.ToListAsync();
+            Employees = await _context.Employee.ToListAsync();
+            Groups = await _context.TrainerGroup.ToListAsync();
         }
     }
 }

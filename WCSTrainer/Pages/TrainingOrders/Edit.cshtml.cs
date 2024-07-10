@@ -58,15 +58,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 return Page();
             }
 
-            var existingTrainingOrder = await _context.TrainingOrder.FindAsync(TrainingOrder.Id);
-            if (existingTrainingOrder == null) {
-                return NotFound();
-            }
-
-            existingTrainingOrder.Trainers = TrainingOrder.Trainers;
-            existingTrainingOrder.Trainee = TrainingOrder.Trainee;
-
-            _context.Entry(existingTrainingOrder).State = EntityState.Modified;
+            _context.Attach(TrainingOrder).State = EntityState.Modified;
 
             try {
                 await _context.SaveChangesAsync();
@@ -77,7 +69,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
                     throw;
                 }
             }
-
             return RedirectToPage("./Index");
         }
 

@@ -55,3 +55,10 @@ button {
 pre {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.flex-column {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}

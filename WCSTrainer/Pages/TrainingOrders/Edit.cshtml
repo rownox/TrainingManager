@@ -23,6 +23,7 @@
                         <input asp-for="TrainingOrder.Status" type="hidden" />
                         <input type="hidden" id="employeesData" value="@ViewData["EmployeesJson"]" />
                         <input type="hidden" id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
+                        <input asp-for="TrainingOrder.Description" type="hidden" value="None"></input>
                         @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
                             <div class="form-group">
                                 <div class="form">
@@ -68,15 +69,7 @@
                                     <p class="control-label">Skill</p>
                                     <span asp-validation-for="TrainingOrder.Skill" class="text-danger"></span>
                                 </div>
-                                <textarea rows="4" asp-for="TrainingOrder.Skill"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form">
-                                <div class="labels">
-                                    <p class="control-label">Description</p>
-                                </div>
-                                <textarea rows="4" asp-for="TrainingOrder.Description"></textarea>
+                                <textarea rows="4" asp-for="TrainingOrder.Skill" placeholder="Describe the skill being trained and the goal."></textarea>
                             </div>
                         </div>
                         @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
@@ -170,13 +163,14 @@
 
     var employeesDataElement = document.getElementById('employeesData');
     var trainergroupsDataElement = document.getElementById('trainergroupsData');
+
+    var peopleComponent = document.getElementById("sv-comp-people");
+    var overlay = document.querySelector(".overlay");
     var trainersInput = document.getElementById("trainersInput");
     var trainList = document.getElementById("trainerList");
     var trainee = document.getElementById("trainee");
     var traineeInput = document.getElementById("traineeInput");
-    var peopleComponent = document.getElementById("sv-comp-people");
     var person = document.getElementsByClassName("person");
-    var overlay = document.querySelector(".overlay");
 
     document.addEventListener('DOMContentLoaded', function () {
 
