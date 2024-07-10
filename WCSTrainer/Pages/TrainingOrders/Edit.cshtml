@@ -36,7 +36,7 @@
                                                 <li draggable="true" class="pill">@trainerName</li>
                                             }
                                         </ul>
-                                        <input id="trainersInput" asp-for="TrainingOrder.Trainers" />
+                                        <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
                                     </div>
                                 </div>
                             </div>
@@ -51,8 +51,8 @@
                                 <div class="selections">
                                     <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select Trainee</p></div>
                                     <ul id="trainee">
-                                        @if (!string.IsNullOrEmpty(Model.Trainee)) {
-                                            var trainee = Model.Employees.FirstOrDefault(e => e.Id.ToString() == Model.Trainee);
+                                        @{
+                                            var trainee = Model.Employees.FirstOrDefault(e => e.Id.ToString() == Model.TrainingOrder.Trainee);
                                             if (trainee != null) {
                                                 <li value="@trainee.Id" class="pill">@trainee.FirstName @trainee.LastName</li>
                                             }
@@ -155,6 +155,10 @@
     </div>
 </div>
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
 <script>
     var employeesDataElement = document.getElementById('employeesData');
     var employeesData = employeesDataElement.value ? JSON.parse(employeesDataElement.value) : [];
@@ -164,112 +168,132 @@
     var trainergroupsData = trainergroupsDataElement.value ? JSON.parse(trainergroupsDataElement.value) : [];
     window.trainergroupsData = trainergroupsData;
 
+    var employeesDataElement = document.getElementById('employeesData');
+    var trainergroupsDataElement = document.getElementById('trainergroupsData');
     var trainersInput = document.getElementById("trainersInput");
     var trainList = document.getElementById("trainerList");
     var trainee = document.getElementById("trainee");
     var traineeInput = document.getElementById("traineeInput");
     var peopleComponent = document.getElementById("sv-comp-people");
     var person = document.getElementsByClassName("person");
-    const overlay = document.querySelector(".overlay");
+    var overlay = document.querySelector(".overlay");
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        function safeAddEventListener(element, event, handler) {
+            if (element) {
+                element.addEventListener(event, handler);
+            }
+        }
+
+        safeAddEventListener(overlay, "click", closeComponent);
+
+        safeAddEventListener(trainee, "click", function (event) {
+            if (event.target.tagName === "LI") {
+                event.target.remove();
+                updateTraineeInput();
+            }
+        });
+
+        safeAddEventListener(trainList, "click", function (event) {
+            if (event.target.tagName === "LI") {
+                event.target.remove();
+                updateTrainersInput();
+            }
+        });
+
+        Array.from(person).forEach(item => {
+            safeAddEventListener(item, "click", addTrainer);
+        });
+
+        function addTrainer(trainerNames) {
+            if (!trainerNames || !trainerNames.trim()) return;
+
+            if (typeof trainerNames === 'string') {
+                var names = trainerNames.split(',');
+            } else if (trainerNames instanceof Event) {
+                names = [trainerNames.target.textContent.trim()];
+            } else {
+                return;
+            }
+
+            var trainerList = document.getElementById("trainerList");
+            if (!trainerList) return;
+
+            names.forEach(name => {
+                name = name.trim();
+                if (!Array.from(trainerList.getElementsByTagName("li")).some(li => li.textContent.trim() === name)) {
+                    trainerList.innerHTML += `<li draggable="true" class="pill">${name}</li>`;
+                }
+            });
+
+            updateTrainersInput();
+        }
+
+        function addTrainee(traineeName, traineeId) {
+            if (!traineeName || !traineeName.trim() || !traineeId) return;
+
+            var traineeList = document.getElementById("trainee");
+            if (!traineeList) return;
+
+            traineeList.innerHTML = `<li value="${traineeId}" class="pill">${traineeName.trim()}</li>`;
+            updateTraineeInput();
+        }
+
+        function updateTrainersInput() {
+            if (!trainList || !trainersInput) return;
+
+            var trainerListItems = Array.from(trainList.getElementsByTagName("li"));
+            trainersInput.value = trainerListItems.map(item => item.textContent.trim()).join(", ");
+        }
+
+        function updateTraineeInput() {
+            if (!trainee || !traineeInput) return;
+
+            var traineeListItems = Array.from(trainee.getElementsByTagName("li"));
+            traineeInput.value = traineeListItems.length > 0 ? traineeListItems[0].getAttribute("value") : "";
+        }
+
+        if (trainList) {
+            const trainerListObserver = new MutationObserver(updateTrainersInput);
+            trainerListObserver.observe(trainList, { childList: true, subtree: true });
+        }
+
+        if (trainee) {
+            const traineeObserver = new MutationObserver(updateTraineeInput);
+            traineeObserver.observe(trainee, { childList: true, subtree: true });
+        }
+
+        document.addEventListener("addTrainerEvent", function (event) {
+            addTrainer(event.detail.names);
+            closeComponent();
+        });
+
+        document.addEventListener("addTraineeEvent", function (event) {
+            addTrainee(event.detail.name, event.detail.id);
+            closeComponent();
+        });
+
+        updateTrainersInput();
+        updateTraineeInput();
+    });
 
     function openComponent(mode) {
         window.peopleComponentMode = mode;
         window.dispatchEvent(new Event('peopleComponentModeChange'));
-    
+
         var peopleComponent = document.getElementById("sv-comp-people");
         var overlay = document.querySelector(".overlay");
-        peopleComponent.classList.remove("hidden");
-        overlay.classList.remove("hidden");
+        if (peopleComponent) peopleComponent.classList.remove("hidden");
+        if (overlay) overlay.classList.remove("hidden");
     }
 
-    const closeComponent = function () {
-        peopleComponent.classList.add("hidden");
-        overlay.classList.add("hidden");
-    };
-
-    overlay.addEventListener("click", closeComponent);
-
-    document.addEventListener("addTrainerEvent", function (event) {
-        addTrainer(event.detail.names);
-        closeComponent();
-    });
-
-    document.addEventListener("addTraineeEvent", function (event) {
-        addTrainee(event.detail.name, event.detail.id);
-        closeComponent();
-    });
-
-    trainee.addEventListener("click", function (event) {
-        if (event.target.tagName === "LI") {
-            event.target.remove();
-            updateTraineeInput();
-        }
-    });
-
-    trainList.addEventListener("click", function (event) {
-        if (event.target.tagName === "LI") {
-            event.target.remove();
-            updateTrainersInput();
-        }
-    });
-
-    Array.from(person).forEach(item => {
-        item.addEventListener("click", event => {
-            addTrainer(event);
-        });
-    });
-
-    function addTrainer(trainerNames) {
-        if (!trainerNames.trim()) {
-            return;
-        }
-
-        var trainerList = document.getElementById("trainerList");
-        var names = trainerNames.split(',');
-
-        for (var i = 0; i < names.length; i++) {
-            if (!Array.from(trainerList.getElementsByTagName("li")).some(li => li.textContent.trim() === names[i].trim())) {
-                trainerList.innerHTML += `<li draggable="true" class="pill">${names[i].trim()}</li>`;
-            }
-        }
-
-        updateTrainersInput();
+    function closeComponent() {
+        var peopleComponent = document.getElementById("sv-comp-people");
+        var overlay = document.querySelector(".overlay");
+        if (peopleComponent) peopleComponent.classList.add("hidden");
+        if (overlay) overlay.classList.add("hidden");
     }
-
-    function addTrainee(traineeName, traineeId) {
-        if (!traineeName.trim() || !traineeId) {
-            return;
-        }
-
-        var traineeList = document.getElementById("trainee");
-        traineeList.innerHTML = `<li value="${traineeId}" class="pill">${traineeName}</li>`;
-
-        updateTraineeInput();
-    }
-
-    function updateTrainersInput() {
-        var trainerList = document.getElementById("trainerList");
-        var trainersInput = document.getElementById("trainersInput");
-        var trainerListItems = Array.from(trainerList.getElementsByTagName("li"));
-        trainersInput.value = trainerListItems.map(function (item) {
-            return item.textContent.trim();
-        }).join(", ");
-    }
-
-    function updateTraineeInput() {
-        var traineeList = document.getElementById("trainee");
-        var traineeInput = document.getElementById("traineeInput");
-        var traineeListItems = Array.from(traineeList.getElementsByTagName("li"));
-        traineeInput.value = traineeListItems.map(function (item) {
-            return item.getAttribute("value");
-        }).join(", ");
-    }
-
-    trainList.addEventListener("DOMSubtreeModified", updateTrainersInput);
-    trainee.addEventListener("DOMSubtreeModified", updateTraineeInput);
-
-    updateTrainersInput();
-    updateTraineeInput();
 </script>
 
 

@@ -19,9 +19,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
         [BindProperty]
         public IList<TrainerGroup> TrainerGroups { get; set; }
         [BindProperty]
-        public List<string> TrainersList { get; set; }
-        [BindProperty]
-        public string Trainee { get; set; }
+        public string[] TrainersList { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             Employees = await _context.Employee.ToListAsync();
@@ -42,12 +40,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             TrainingOrder = trainingorder;
 
-            TrainersList = string.IsNullOrWhiteSpace(TrainingOrder.Trainers)
-                ? new List<string>()
-                : TrainingOrder.Trainers.Split(',').Select(t => t.Trim()).ToList();
-
-            Trainee = TrainingOrder.Trainee;
-
+            TrainersList = TrainingOrder.Trainers.Split(',');
 
             return Page();
         }
@@ -60,16 +53,19 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 TrainerGroups = await _context.TrainerGroup.ToListAsync();
                 ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
 
-                TrainersList = string.IsNullOrWhiteSpace(TrainingOrder.Trainers)
-                    ? new List<string>()
-                    : TrainingOrder.Trainers.Split(',').Select(t => t.Trim()).ToList();
-
-                Trainee = TrainingOrder.Trainee;
+                TrainersList = TrainingOrder.Trainers.Split(',');
 
                 return Page();
             }
 
-            _context.Attach(TrainingOrder).State = EntityState.Modified;
+            var existingTrainingOrder = await _context.TrainingOrder.FindAsync(TrainingOrder.Id);
+            if (existingTrainingOrder == null) {
+                return NotFound();
+            }
+
+            existingTrainingOrder.Trainers = TrainingOrder.Trainers;
+
+            _context.Entry(existingTrainingOrder).State = EntityState.Modified;
 
             try {
                 await _context.SaveChangesAsync();
