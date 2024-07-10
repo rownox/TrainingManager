@@ -64,6 +64,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
 
             existingTrainingOrder.Trainers = TrainingOrder.Trainers;
+            existingTrainingOrder.Trainee = TrainingOrder.Trainee;
 
             _context.Entry(existingTrainingOrder).State = EntityState.Modified;
 

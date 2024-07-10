@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="selections">
                                         <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select Trainers</p></div>
-                                        <ul id="trainerList">
+                                        <ul id="trainerList" class="pill-container">
                                             @foreach (string trainerName in Model.TrainersList) {
                                                 <li draggable="true" class="pill">@trainerName</li>
                                             }
@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="selections">
                                     <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select Trainee</p></div>
-                                    <ul id="trainee">
+                                    <ul id="trainee" class="pill-container">
                                         @{
                                             var trainee = Model.Employees.FirstOrDefault(e => e.Id.ToString() == Model.TrainingOrder.Trainee);
                                             if (trainee != null) {
@@ -58,7 +58,7 @@
                                             }
                                         }
                                     </ul>
-                                    <input id="traineeInput" asp-for="TrainingOrder.Trainee" />
+                                    <input id="traineeInput" asp-for="TrainingOrder.Trainee" type="hidden"/>
                                 </div>
                             </div>
                         </div>
