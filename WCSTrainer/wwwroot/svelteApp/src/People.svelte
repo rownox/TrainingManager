@@ -12,6 +12,7 @@
 
     let selected = null;
 
+
     function updateDisplayMode() {
         const newMode = window.peopleComponentMode || 'both';
         if (newMode !== displayMode) {
