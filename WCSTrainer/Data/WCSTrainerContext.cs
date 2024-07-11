@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WCSTrainer.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Reflection.Emit;
 
 namespace WCSTrainer.Data {
     public class WCSTrainerContext : IdentityDbContext<UserAccount> {
@@ -24,11 +25,18 @@ namespace WCSTrainer.Data {
                 .WithOne(e => e.User)
                 .HasForeignKey<Employee>(e => e.UserId);
 
-            // Employee - TrainerGroup many-to-many relationship
-            builder.Entity<Employee>()
-                .HasMany(e => e.TrainerGroups)
-                .WithMany(g => g.Trainers)
-                .UsingEntity(j => j.ToTable("EmployeeTrainerGroups"));
+            builder.Entity<EmployeeSkill>()
+            .HasKey(es => new { es.EmployeeId, es.SkillId });
+
+            builder.Entity<EmployeeSkill>()
+                .HasOne(es => es.Employee)
+                .WithMany(e => e.EmployeeSkills)
+                .HasForeignKey(es => es.EmployeeId);
+
+            builder.Entity<EmployeeSkill>()
+                .HasOne(es => es.Skill)
+                .WithMany(s => s.EmployeeSkills)
+                .HasForeignKey(es => es.SkillId);
 
             // TrainingOrder - Employee (Trainee) relationship
             builder.Entity<TrainingOrder>()
@@ -62,7 +70,20 @@ namespace WCSTrainer.Data {
                 .WithMany()
                 .HasForeignKey(to => to.LocationId);
 
-            // Seed roles
+            builder.Entity<EmployeeTrainerGroup>()
+                .HasKey(etg => new { etg.EmployeeId, etg.TrainerGroupId });
+
+            builder.Entity<EmployeeTrainerGroup>()
+                .HasOne(etg => etg.Employee)
+                .WithMany(e => e.EmployeeTrainerGroups)
+                .HasForeignKey(etg => etg.EmployeeId);
+
+            builder.Entity<EmployeeTrainerGroup>()
+                .HasOne(etg => etg.TrainerGroup)
+                .WithMany(tg => tg.EmployeeTrainerGroups)
+                .HasForeignKey(etg => etg.TrainerGroupId);
+
+
             var adminRole = new IdentityRole("admin") { NormalizedName = "ADMIN" };
             var trainerRole = new IdentityRole("trainer") { NormalizedName = "TRAINER" };
             var traineeRole = new IdentityRole("trainee") { NormalizedName = "TRAINEE" };

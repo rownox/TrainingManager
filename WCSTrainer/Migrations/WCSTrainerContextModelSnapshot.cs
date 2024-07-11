@@ -38,13 +38,12 @@ namespace WCSTrainer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Skills")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TrainerGroupId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -52,25 +51,12 @@ namespace WCSTrainer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TrainerGroupId");
+
                     b.HasIndex("UserId")
                         .IsUnique();
 
                     b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("EmployeeTrainerGroup", b =>
-                {
-                    b.Property<int>("TrainerGroupsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TrainersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TrainerGroupsId", "TrainersId");
-
-                    b.HasIndex("TrainersId");
-
-                    b.ToTable("EmployeeTrainerGroups", (string)null);
                 });
 
             modelBuilder.Entity("EmployeeTrainingOrder", b =>
@@ -117,19 +103,19 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8a0acccf-cbae-4be8-93ff-4b557b933809",
+                            Id = "e5554ba7-8a13-46be-a65e-134629c210e1",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "56fa6437-b8c0-49bd-add2-50d3e5d8ffd0",
+                            Id = "56a912e9-6ade-4171-900d-91a02e35426e",
                             Name = "trainer",
                             NormalizedName = "TRAINER"
                         },
                         new
                         {
-                            Id = "34e0554f-2a5f-4e64-8775-2f06af95d851",
+                            Id = "cc99c049-5582-475c-a301-5c9e5af0916c",
                             Name = "trainee",
                             NormalizedName = "TRAINEE"
                         });
@@ -331,6 +317,36 @@ namespace WCSTrainer.Migrations
                     b.ToTable("Verifications");
                 });
 
+            modelBuilder.Entity("WCSTrainer.Models.EmployeeSkill", b =>
+                {
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SkillId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeeId", "SkillId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("EmployeeSkill");
+                });
+
+            modelBuilder.Entity("WCSTrainer.Models.EmployeeTrainerGroup", b =>
+                {
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrainerGroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeeId", "TrainerGroupId");
+
+                    b.HasIndex("TrainerGroupId");
+
+                    b.ToTable("EmployeeTrainerGroup");
+                });
+
             modelBuilder.Entity("WCSTrainer.Models.Location", b =>
                 {
                     b.Property<int>("Id")
@@ -346,6 +362,23 @@ namespace WCSTrainer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("WCSTrainer.Models.Skill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Skill");
                 });
 
             modelBuilder.Entity("WCSTrainer.Models.TrainerGroup", b =>
@@ -435,6 +468,10 @@ namespace WCSTrainer.Migrations
 
             modelBuilder.Entity("Employee", b =>
                 {
+                    b.HasOne("WCSTrainer.Models.TrainerGroup", null)
+                        .WithMany("Trainers")
+                        .HasForeignKey("TrainerGroupId");
+
                     b.HasOne("WCSTrainer.Models.UserAccount", "User")
                         .WithOne("Employee")
                         .HasForeignKey("Employee", "UserId")
@@ -442,21 +479,6 @@ namespace WCSTrainer.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("EmployeeTrainerGroup", b =>
-                {
-                    b.HasOne("WCSTrainer.Models.TrainerGroup", null)
-                        .WithMany()
-                        .HasForeignKey("TrainerGroupsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Employee", null)
-                        .WithMany()
-                        .HasForeignKey("TrainersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("EmployeeTrainingOrder", b =>
@@ -563,8 +585,50 @@ namespace WCSTrainer.Migrations
                     b.Navigation("Verifier");
                 });
 
+            modelBuilder.Entity("WCSTrainer.Models.EmployeeSkill", b =>
+                {
+                    b.HasOne("Employee", "Employee")
+                        .WithMany("EmployeeSkills")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WCSTrainer.Models.Skill", "Skill")
+                        .WithMany("EmployeeSkills")
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Skill");
+                });
+
+            modelBuilder.Entity("WCSTrainer.Models.EmployeeTrainerGroup", b =>
+                {
+                    b.HasOne("Employee", "Employee")
+                        .WithMany("EmployeeTrainerGroups")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WCSTrainer.Models.TrainerGroup", "TrainerGroup")
+                        .WithMany("EmployeeTrainerGroups")
+                        .HasForeignKey("TrainerGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("TrainerGroup");
+                });
+
             modelBuilder.Entity("Employee", b =>
                 {
+                    b.Navigation("EmployeeSkills");
+
+                    b.Navigation("EmployeeTrainerGroups");
+
                     b.Navigation("TrainingOrders");
                 });
 
@@ -572,6 +636,18 @@ namespace WCSTrainer.Migrations
                 {
                     b.Navigation("Verification")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WCSTrainer.Models.Skill", b =>
+                {
+                    b.Navigation("EmployeeSkills");
+                });
+
+            modelBuilder.Entity("WCSTrainer.Models.TrainerGroup", b =>
+                {
+                    b.Navigation("EmployeeTrainerGroups");
+
+                    b.Navigation("Trainers");
                 });
 
             modelBuilder.Entity("WCSTrainer.Models.UserAccount", b =>
