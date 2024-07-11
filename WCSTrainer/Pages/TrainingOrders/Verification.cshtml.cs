@@ -41,7 +41,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             existingTrainingOrder.Status = TrainingOrder.Status;
             existingTrainingOrder.CreateDate = TrainingOrder.CreateDate;
             existingTrainingOrder.BeginDate = TrainingOrder.BeginDate;
-            existingTrainingOrder.Location = TrainingOrder.Location;
+            existingTrainingOrder.LocationObject = TrainingOrder.LocationObject;
             existingTrainingOrder.Duration = TrainingOrder.Duration;
             existingTrainingOrder.Trainee = TrainingOrder.Trainee;
             existingTrainingOrder.EndDate = TrainingOrder.EndDate;

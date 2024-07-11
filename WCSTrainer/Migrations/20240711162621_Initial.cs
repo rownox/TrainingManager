@@ -54,41 +54,29 @@ namespace WCSTrainer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TrainerGroups",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Trainers = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TrainerGroups", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TrainingOrders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Skill = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Trainers = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Trainee = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BeginDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    EndDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    CreateDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Medium = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Duration = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Priority = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TrainingOrders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,9 +194,7 @@ namespace WCSTrainer.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Availability = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Skills = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TrainingOrders = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -222,14 +208,125 @@ namespace WCSTrainer.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "EmployeeTrainerGroups",
+                columns: table => new
+                {
+                    TrainerGroupsId = table.Column<int>(type: "int", nullable: false),
+                    TrainersId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeTrainerGroups", x => new { x.TrainerGroupsId, x.TrainersId });
+                    table.ForeignKey(
+                        name: "FK_EmployeeTrainerGroups_Employees_TrainersId",
+                        column: x => x.TrainersId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeTrainerGroups_TrainerGroups_TrainerGroupsId",
+                        column: x => x.TrainerGroupsId,
+                        principalTable: "TrainerGroups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TrainingOrders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Skill = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BeginDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    EndDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    CreateDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false),
+                    Medium = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Duration = table.Column<int>(type: "int", nullable: false),
+                    Priority = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TraineeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TrainingOrders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TrainingOrders_Employees_TraineeId",
+                        column: x => x.TraineeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TrainingOrders_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Locations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TrainingOrderTrainers",
+                columns: table => new
+                {
+                    TrainersId = table.Column<int>(type: "int", nullable: false),
+                    TrainingOrderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TrainingOrderTrainers", x => new { x.TrainersId, x.TrainingOrderId });
+                    table.ForeignKey(
+                        name: "FK_TrainingOrderTrainers_Employees_TrainersId",
+                        column: x => x.TrainersId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TrainingOrderTrainers_TrainingOrders_TrainingOrderId",
+                        column: x => x.TrainingOrderId,
+                        principalTable: "TrainingOrders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Verifications",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VerifyDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    CompleteNotes = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VerifyNotes = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VerifierId = table.Column<int>(type: "int", nullable: false),
+                    TrainingOrderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Verifications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Verifications_Employees_VerifierId",
+                        column: x => x.VerifierId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Verifications_TrainingOrders_TrainingOrderId",
+                        column: x => x.TrainingOrderId,
+                        principalTable: "TrainingOrders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1d2cd150-0813-4c5c-ab79-221f272d872f", null, "trainee", "TRAINEE" },
-                    { "65189210-e64c-47cf-85a3-8ba36c3f8abd", null, "admin", "ADMIN" },
-                    { "bc3a4e01-db95-45e5-ae6f-5e43aacce2ce", null, "trainer", "TRAINER" }
+                    { "34e0554f-2a5f-4e64-8775-2f06af95d851", null, "trainee", "TRAINEE" },
+                    { "56fa6437-b8c0-49bd-add2-50d3e5d8ffd0", null, "trainer", "TRAINER" },
+                    { "8a0acccf-cbae-4be8-93ff-4b557b933809", null, "admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -276,6 +373,37 @@ namespace WCSTrainer.Migrations
                 table: "Employees",
                 column: "UserId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeTrainerGroups_TrainersId",
+                table: "EmployeeTrainerGroups",
+                column: "TrainersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TrainingOrders_LocationId",
+                table: "TrainingOrders",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TrainingOrders_TraineeId",
+                table: "TrainingOrders",
+                column: "TraineeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TrainingOrderTrainers_TrainingOrderId",
+                table: "TrainingOrderTrainers",
+                column: "TrainingOrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Verifications_TrainingOrderId",
+                table: "Verifications",
+                column: "TrainingOrderId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Verifications_VerifierId",
+                table: "Verifications",
+                column: "VerifierId");
         }
 
         /// <inheritdoc />
@@ -297,7 +425,16 @@ namespace WCSTrainer.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Employees");
+                name: "EmployeeTrainerGroups");
+
+            migrationBuilder.DropTable(
+                name: "TrainingOrderTrainers");
+
+            migrationBuilder.DropTable(
+                name: "Verifications");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "TrainerGroups");
@@ -306,7 +443,10 @@ namespace WCSTrainer.Migrations
                 name: "TrainingOrders");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
