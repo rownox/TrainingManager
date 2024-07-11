@@ -17,13 +17,13 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public IList<Employee> Employees { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
-            Employees = await _context.Employee.ToListAsync();
+            Employees = await _context.Employees.ToListAsync();
 
             if (id == null) {
                 return NotFound();
             }
 
-            var trainingorder = await _context.TrainingOrder.FirstOrDefaultAsync(m => m.Id == id);
+            var trainingorder = await _context.TrainingOrders.FirstOrDefaultAsync(m => m.Id == id);
             if (trainingorder == null) {
                 return NotFound();
             }
@@ -53,7 +53,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
         }
 
         private bool TrainingOrderExists(int id) {
-            return _context.TrainingOrder.Any(e => e.Id == id);
+            return _context.TrainingOrders.Any(e => e.Id == id);
         }
     }
 }

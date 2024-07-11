@@ -12,12 +12,12 @@ namespace WCSTrainer.Areas.Identity.Pages.Account.Manage {
     public class IndexModel : PageModel {
         private readonly UserManager<UserAccount> _userManager;
         private readonly SignInManager<UserAccount> _signInManager;
-        private readonly WCSTrainer.Data.IdentityContext _context;
+        private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
         public IndexModel(
             UserManager<UserAccount> userManager,
             SignInManager<UserAccount> signInManager,
-            WCSTrainer.Data.IdentityContext context) {
+            WCSTrainer.Data.WCSTrainerContext context) {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;

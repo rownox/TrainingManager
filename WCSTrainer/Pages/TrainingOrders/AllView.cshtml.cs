@@ -22,13 +22,13 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public DateOnly To { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
         public async Task OnGetAsync() {
-            TrainingOrder = await _context.TrainingOrder.ToListAsync();
-            Employees = await _context.Employee.ToListAsync();
+            TrainingOrder = await _context.TrainingOrders.ToListAsync();
+            Employees = await _context.Employees.ToListAsync();
         }
 
         public async Task<IActionResult> OnPostAsync() {
-            TrainingOrder = await _context.TrainingOrder.ToListAsync();
-            Employees = await _context.Employee.ToListAsync();
+            TrainingOrder = await _context.TrainingOrders.ToListAsync();
+            Employees = await _context.Employees.ToListAsync();
             return Page();
         }
     }

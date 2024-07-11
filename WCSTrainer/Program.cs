@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
 using WCSTrainer.Models;
@@ -7,8 +8,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<WCSTrainerContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection") ?? throw new InvalidOperationException("Connection string 'WCSTrainerContext' not found.")));
 
-builder.Services.AddDefaultIdentity<UserAccount>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<IdentityContext>();
-builder.Services.AddDbContext<IdentityContext>(options =>
+builder.Services.AddDefaultIdentity<UserAccount>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<WCSTrainerContext>();
+builder.Services.AddDbContext<WCSTrainerContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection") ?? throw new InvalidOperationException("Connection string 'WCSTrainerContext' not found.")));
 
 builder.Services.AddRazorComponents()
@@ -23,14 +26,17 @@ if (!app.Environment.IsDevelopment()) {
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapRazorPages();
 
-//app.MapRazorComponents<>()
-//    .AddInteractiveServerRenderMode();
+
+using (var scope = app.Services.CreateScope()) {
+    var services = scope.ServiceProvider;
+    var userManager = services.GetRequiredService<UserManager<UserAccount>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    await SeedData.AssignRoles(userManager, roleManager);
+}
 
 app.Run();

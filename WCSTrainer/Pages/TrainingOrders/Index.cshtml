@@ -43,14 +43,14 @@
                     <ul>
                         @foreach (var item in Model.TrainingOrder.Reverse()) {
                             if (Model.listCount < Model.maxCount) {
-                                <li id="@item.Id.ToString() @Model.getEmployee(item.Trainee)" class="@item.Status.ToString() searchable">
+                                <li id="@item.Id.ToString() @item.Trainee.Id.ToString()" class="@item.Status.ToString() searchable">
                                     <div class="info">
                                         <div class="title">
                                             <p>Training Order ID: @Html.DisplayFor(modelItem => item.Id) </p>
                                         </div>
                                         <div class="sub">
                                             <p class="identifier">Trainee - </p>
-                                            @Model.getEmployee(item.Trainee)
+                                            @item.Trainee.Id
                                         </div>
                                         <div class="sub">
                                             <p class="identifier">Status - </p>

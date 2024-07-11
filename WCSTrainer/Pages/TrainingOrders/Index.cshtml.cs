@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
+    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "trainer")]
     public class IndexModel : PageModel {
         private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
@@ -18,35 +21,26 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public int maxCount { get; set; } = 10;
 
         public async Task OnGetAsync() {
-            Employees = await _context.Employee.ToListAsync();
-            TrainingOrder = await _context.TrainingOrder.ToListAsync();
+            Employees = await _context.Employees.ToListAsync();
+            TrainingOrder = await _context.TrainingOrders.ToListAsync();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id) {
             if (id != null) {
-                var trainingOrder = await _context.TrainingOrder.FindAsync(id);
+                var trainingOrder = await _context.TrainingOrders.FindAsync(id);
 
                 if (trainingOrder == null) {
                     return NotFound();
                 }
 
-                _context.TrainingOrder.Remove(trainingOrder);
+                _context.TrainingOrders.Remove(trainingOrder);
                 await _context.SaveChangesAsync();
             }
 
-            Employees = await _context.Employee.ToListAsync();
-            TrainingOrder = await _context.TrainingOrder.ToListAsync();
+            Employees = await _context.Employees.ToListAsync();
+            TrainingOrder = await _context.TrainingOrders.ToListAsync();
 
             return Page();
-        }
-
-        public string getEmployee(string traineeID) {
-            foreach (Employee employee in Employees) {
-                if (employee.Id.ToString().Equals(traineeID)) {
-                    return employee.FirstName + " " + employee.LastName;
-                }
-            }
-            return traineeID;
         }
     }
 }

@@ -18,14 +18,12 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public IList<Employee> Employees { get; set; }
         [BindProperty]
         public IList<TrainerGroup> TrainerGroups { get; set; }
-        [BindProperty]
-        public string[] TrainersList { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
-            Employees = await _context.Employee.ToListAsync();
+            Employees = await _context.Employees.ToListAsync();
             ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
 
-            TrainerGroups = await _context.TrainerGroup.ToListAsync();
+            TrainerGroups = await _context.TrainerGroups.ToListAsync();
             ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
 
 
@@ -33,14 +31,12 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 return NotFound();
             }
 
-            var trainingorder = await _context.TrainingOrder.FirstOrDefaultAsync(m => m.Id == id);
+            var trainingorder = await _context.TrainingOrders.FirstOrDefaultAsync(m => m.Id == id);
             if (trainingorder == null) {
                 return NotFound();
             }
 
             TrainingOrder = trainingorder;
-
-            TrainersList = TrainingOrder.Trainers.Split(',');
 
             return Page();
         }
@@ -48,12 +44,10 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         public async Task<IActionResult> OnPostAsync() {
             if (!ModelState.IsValid) {
-                Employees = await _context.Employee.ToListAsync();
+                Employees = await _context.Employees.ToListAsync();
                 ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
-                TrainerGroups = await _context.TrainerGroup.ToListAsync();
+                TrainerGroups = await _context.TrainerGroups.ToListAsync();
                 ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
-
-                TrainersList = TrainingOrder.Trainers.Split(',');
 
                 return Page();
             }
@@ -73,7 +67,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
         }
 
         private bool TrainingOrderExists(int id) {
-            return _context.TrainingOrder.Any(e => e.Id == id);
+            return _context.TrainingOrders.Any(e => e.Id == id);
         }
     }
 }

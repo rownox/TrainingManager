@@ -1,7 +1,7 @@
 ﻿namespace WCSTrainer.Models {
-    public class TrainerGroup {
+    public class Location {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Employee> Trainers { get; set; }
+
     }
 }

@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace WCSTrainer.Models {
-    [Keyless]
+﻿namespace WCSTrainer.Models {
     public class Verification {
-        public int TrainingOrderID { get; set; }
-        public string Completed { get; set; }
-        public int VerifierID { get; set; }
-        public DateOnly VerificationDate { get; set; }
-        public string Notes { get; set; }
+        public int Id { get; set; }
+        public DateOnly VerifyDate { get; set; }
+        public string CompleteNotes { get; set; }
+        public string VerifyNotes { get; set; }
+
+        public Employee Verifier { get; set; }
+        public TrainingOrder TrainingOrder { get; set; }
+        public int TrainingOrderId { get; set; }
     }
 }

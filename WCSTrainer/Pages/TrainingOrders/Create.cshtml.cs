@@ -13,10 +13,10 @@ namespace WCSTrainer.Pages.TrainingOrders {
         }
 
         public async Task<IActionResult> OnGetAsync() {
-            Employees = await _context.Employee.ToListAsync();
+            Employees = await _context.Employees.ToListAsync();
             ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
 
-            TrainerGroups = await _context.TrainerGroup.ToListAsync();
+            TrainerGroups = await _context.TrainerGroups.ToListAsync();
             ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
             return Page();
         }
@@ -35,21 +35,18 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public string[] TrainersList { get; set; }
 
         public async Task<IActionResult> OnPostAsync() {
-            if (string.IsNullOrEmpty(TrainingOrder.Description)) {
-                TrainingOrder.Description = "None";
-            }
 
             if (!ModelState.IsValid) {
                 return Page();
             }
 
-            _context.TrainingOrder.Add(TrainingOrder);
+            _context.TrainingOrders.Add(TrainingOrder);
 
-            Employees = await _context.Employee.ToListAsync();
+            Employees = await _context.Employees.ToListAsync();
 
             foreach (Employee employee in Employees) {
-                if (TrainingOrder.Trainee.Contains(employee.FirstName) && TrainingOrder.Trainee.Contains(employee.LastName)) {
-                    employee.TrainingOrders = employee.TrainingOrders + TrainingOrder.Id + " ";
+                if (TrainingOrder.Trainee == employee) {
+                    employee.TrainingOrders.Add(TrainingOrder);
                 }
             }
 

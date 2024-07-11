@@ -9,10 +9,10 @@ using WCSTrainer.Data;
 
 #nullable disable
 
-namespace WCSTrainer.Migrations.Identity
+namespace WCSTrainer.Migrations
 {
-    [DbContext(typeof(IdentityContext))]
-    [Migration("20240603154336_Initial")]
+    [DbContext(typeof(WCSTrainerContext))]
+    [Migration("20240711125127_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -54,21 +54,21 @@ namespace WCSTrainer.Migrations.Identity
                     b.HasData(
                         new
                         {
-                            Id = "f433d4f7-7b2e-4bbe-bbe8-8fdfbb112c30",
+                            Id = "65189210-e64c-47cf-85a3-8ba36c3f8abd",
                             Name = "admin",
-                            NormalizedName = "admin"
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "604948dd-d061-4109-a1b0-5a8778436108",
-                            Name = "trainee",
-                            NormalizedName = "trainee"
-                        },
-                        new
-                        {
-                            Id = "679c32db-7acb-48fa-9b35-9a49964d43d0",
+                            Id = "bc3a4e01-db95-45e5-ae6f-5e43aacce2ce",
                             Name = "trainer",
-                            NormalizedName = "trainer"
+                            NormalizedName = "TRAINER"
+                        },
+                        new
+                        {
+                            Id = "1d2cd150-0813-4c5c-ab79-221f272d872f",
+                            Name = "trainee",
+                            NormalizedName = "TRAINEE"
                         });
                 });
 
@@ -182,6 +182,128 @@ namespace WCSTrainer.Migrations.Identity
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("WCSTrainer.Models.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Availability")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Skills")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrainingOrders")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("WCSTrainer.Models.TrainerGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Trainers")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TrainerGroups");
+                });
+
+            modelBuilder.Entity("WCSTrainer.Models.TrainingOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("BeginDate")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly>("CreateDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Medium")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Skill")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Trainee")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Trainers")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TrainingOrders");
+                });
+
             modelBuilder.Entity("WCSTrainer.Models.UserAccount", b =>
                 {
                     b.Property<string>("Id")
@@ -202,13 +324,6 @@ namespace WCSTrainer.Migrations.Identity
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("EmployeeID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("LightMode")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -305,6 +420,23 @@ namespace WCSTrainer.Migrations.Identity
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WCSTrainer.Models.Employee", b =>
+                {
+                    b.HasOne("WCSTrainer.Models.UserAccount", "User")
+                        .WithOne("Employee")
+                        .HasForeignKey("WCSTrainer.Models.Employee", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WCSTrainer.Models.UserAccount", b =>
+                {
+                    b.Navigation("Employee")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

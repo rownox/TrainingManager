@@ -23,7 +23,7 @@ namespace WCSTrainer.Pages.Employees {
                 return Page();
             }
 
-            _context.Employee.Add(Employee);
+            _context.Employees.Add(Employee);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
