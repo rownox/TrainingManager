@@ -4,5 +4,7 @@
         public string Name { get; set; }
         public ICollection<Employee> Trainers { get; set; }
 
+        public ICollection<EmployeeTrainerGroup> EmployeeTrainerGroups { get; set; }
+
     }
 }
