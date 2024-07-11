@@ -23,7 +23,6 @@
                         <input asp-for="TrainingOrder.Status" type="hidden" />
                         <input type="hidden" id="employeesData" value="@ViewData["EmployeesJson"]" />
                         <input type="hidden" id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
-                        <input asp-for="TrainingOrder.Description" type="hidden" value="None"></input>
                         @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
                             <div class="form-group">
                                 <div class="form">
@@ -33,8 +32,8 @@
                                     <div class="selections">
                                         <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select Trainers</p></div>
                                         <ul id="trainerList" class="pill-container">
-                                            @foreach (string trainerName in Model.TrainersList) {
-                                                <li draggable="true" class="pill">@trainerName</li>
+                                            @foreach (var trainer in Model.TrainingOrder.Trainers) {
+                                                <li draggable="true" class="pill">@trainer.FirstName @trainer.LastName</li>
                                             }
                                         </ul>
                                         <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
@@ -53,7 +52,7 @@
                                     <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select Trainee</p></div>
                                     <ul id="trainee" class="pill-container">
                                         @{
-                                            var trainee = Model.Employees.FirstOrDefault(e => e.Id.ToString() == Model.TrainingOrder.Trainee);
+                                            var trainee = Model.TrainingOrder.Trainee;
                                             if (trainee != null) {
                                                 <li value="@trainee.Id" class="pill">@trainee.FirstName @trainee.LastName</li>
                                             }

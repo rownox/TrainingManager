@@ -19,7 +19,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 return NotFound();
             }
 
-            var trainingorder = await _context.TrainingOrder.FirstOrDefaultAsync(m => m.Id == id);
+            var trainingorder = await _context.TrainingOrders.FirstOrDefaultAsync(m => m.Id == id);
             if (trainingorder == null) {
                 return NotFound();
             }
@@ -33,13 +33,12 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 return Page();
             }
 
-            var existingTrainingOrder = await _context.TrainingOrder.FindAsync(TrainingOrder.Id);
+            var existingTrainingOrder = await _context.TrainingOrders.FindAsync(TrainingOrder.Id);
             if (existingTrainingOrder == null) {
                 return NotFound();
             }
 
             existingTrainingOrder.Status = TrainingOrder.Status;
-            existingTrainingOrder.Description = TrainingOrder.Description;
             existingTrainingOrder.CreateDate = TrainingOrder.CreateDate;
             existingTrainingOrder.BeginDate = TrainingOrder.BeginDate;
             existingTrainingOrder.Location = TrainingOrder.Location;
@@ -65,7 +64,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
         }
 
         private bool TrainingOrderExists(int id) {
-            return _context.TrainingOrder.Any(e => e.Id == id);
+            return _context.TrainingOrders.Any(e => e.Id == id);
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using WCSTrainer.Models
 
-@inject SignInManager<UserAccount> SignInManager
-@inject UserManager<UserAccount> UserManager
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -26,9 +23,7 @@
                 <ul>
                     <li><a class="main-title">WCS Trainer</a></li>
                     <li><a asp-page="/Index" class="clickable">Home</a></li>
-                    @if (SignInManager.IsSignedIn(User)) {
-                        <li><a asp-page="/TrainingOrders/Index" class="clickable">My Panel</a></li>
-                    }
+                    <li><a asp-page="/TrainingOrders/Index" class="clickable">My Panel</a></li>
                 </ul>
             </div>
             <div class="nav-options">

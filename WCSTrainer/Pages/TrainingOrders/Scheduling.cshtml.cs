@@ -23,13 +23,13 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public string searchFor { get; set; } = "All";
 
         public async Task OnGetAsync() {
-            Employees = await _context.Employee.ToListAsync();
-            TrainingOrders = await _context.TrainingOrder.ToListAsync();
+            Employees = await _context.Employees.ToListAsync();
+            TrainingOrders = await _context.TrainingOrders.ToListAsync();
         }
 
         public async Task<IActionResult> OnPostAsync() {
-            Employees = await _context.Employee.ToListAsync();
-            TrainingOrders = await _context.TrainingOrder.ToListAsync();
+            Employees = await _context.Employees.ToListAsync();
+            TrainingOrders = await _context.TrainingOrders.ToListAsync();
             return Page();
         }
 
@@ -45,7 +45,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 DateOnly effectiveEnd = orderEnd < yearEnd ? orderEnd : yearEnd;
 
                 if (effectiveStart <= effectiveEnd) {
-                    if (employeeHasOrder(order.Id.ToString())) {
+                    if (employeeHasOrder(order)) {
                         count++;
                     }
                 }
@@ -65,7 +65,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 DateOnly effectiveEnd = orderEnd < yearEnd ? orderEnd : yearEnd;
 
                 if (effectiveStart <= effectiveEnd) {
-                    if (employeeHasOrder(order.Id.ToString())) {
+                    if (employeeHasOrder(order)) {
                         count += order.Duration;
                     }
                 }
@@ -85,7 +85,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 DateOnly effectiveEnd = orderEnd < monthEnd ? orderEnd : monthEnd;
 
                 if (effectiveStart <= effectiveEnd) {
-                    if (employeeHasOrder(order.Id.ToString())) {
+                    if (employeeHasOrder(order)) {
                         count += order.Duration;
                     }
                 }
@@ -103,7 +103,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 DateOnly orderEnd = order.EndDate;
 
                 if ((orderStart <= monthEnd) && (orderEnd >= monthStart)) {
-                    if (employeeHasOrder(order.Id.ToString())) {
+                    if (employeeHasOrder(order)) {
                         count++;
                     }
                 }
@@ -118,7 +118,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             foreach (TrainingOrder order in TrainingOrders) {
                 if (order.BeginDate >= monthStart && order.BeginDate <= monthEnd) {
-                    if (employeeHasOrder(order.Id.ToString())) {
+                    if (employeeHasOrder(order)) {
                         if (placeCount == place) {
                             return order;
                         } else {
@@ -130,14 +130,14 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return null;
         }
 
-        public bool employeeHasOrder(string orderID) {
+        public bool employeeHasOrder(TrainingOrder order) {
             fixSearch();
             if (searchFor.Equals("All")) {
                 return true;
             } else {
                 foreach (Employee employee in Employees) {
                     if (searchFor.Contains(employee.FirstName) && searchFor.Contains(employee.LastName)) {
-                        if (employee.TrainingOrders.Contains(orderID)) {
+                        if (employee.TrainingOrders.Contains(order)) {
                             return true;
                         }
                     }

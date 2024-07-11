@@ -14,8 +14,8 @@ namespace WCSTrainer.Pages.Employees {
         public IList<TrainerGroup> Groups { get; set; } = default!;
 
         public async Task OnGetAsync() {
-            Employees = await _context.Employee.ToListAsync();
-            Groups = await _context.TrainerGroup.ToListAsync();
+            Employees = await _context.Employees.ToListAsync();
+            Groups = await _context.TrainerGroups.ToListAsync();
         }
     }
 }
