@@ -22,6 +22,72 @@ namespace WCSTrainer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Skills")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("EmployeeTrainerGroup", b =>
+                {
+                    b.Property<int>("TrainerGroupsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrainersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TrainerGroupsId", "TrainersId");
+
+                    b.HasIndex("TrainersId");
+
+                    b.ToTable("EmployeeTrainerGroups", (string)null);
+                });
+
+            modelBuilder.Entity("EmployeeTrainingOrder", b =>
+                {
+                    b.Property<int>("TrainersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrainingOrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TrainersId", "TrainingOrderId");
+
+                    b.HasIndex("TrainingOrderId");
+
+                    b.ToTable("TrainingOrderTrainers", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -51,19 +117,19 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "65189210-e64c-47cf-85a3-8ba36c3f8abd",
+                            Id = "8a0acccf-cbae-4be8-93ff-4b557b933809",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "bc3a4e01-db95-45e5-ae6f-5e43aacce2ce",
+                            Id = "56fa6437-b8c0-49bd-add2-50d3e5d8ffd0",
                             Name = "trainer",
                             NormalizedName = "TRAINER"
                         },
                         new
                         {
-                            Id = "1d2cd150-0813-4c5c-ab79-221f272d872f",
+                            Id = "34e0554f-2a5f-4e64-8775-2f06af95d851",
                             Name = "trainee",
                             NormalizedName = "TRAINEE"
                         });
@@ -179,72 +245,7 @@ namespace WCSTrainer.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WCSTrainer.Models.Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Availability")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Skills")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrainingOrders")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("WCSTrainer.Models.TrainerGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trainers")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TrainerGroups");
-                });
-
-            modelBuilder.Entity("WCSTrainer.Models.TrainingOrder", b =>
+            modelBuilder.Entity("TrainingOrder", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -258,19 +259,14 @@ namespace WCSTrainer.Migrations
                     b.Property<DateOnly>("CreateDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
                     b.Property<DateOnly>("EndDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Medium")
                         .IsRequired()
@@ -288,17 +284,85 @@ namespace WCSTrainer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Trainee")
+                    b.Property<int>("TraineeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("TraineeId");
+
+                    b.ToTable("TrainingOrders");
+                });
+
+            modelBuilder.Entity("Verification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CompleteNotes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Trainers")
+                    b.Property<int>("TrainingOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VerifierId")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("VerifyDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("VerifyNotes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TrainingOrders");
+                    b.HasIndex("TrainingOrderId")
+                        .IsUnique();
+
+                    b.HasIndex("VerifierId");
+
+                    b.ToTable("Verifications");
+                });
+
+            modelBuilder.Entity("WCSTrainer.Models.Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("WCSTrainer.Models.TrainerGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TrainerGroups");
                 });
 
             modelBuilder.Entity("WCSTrainer.Models.UserAccount", b =>
@@ -369,6 +433,47 @@ namespace WCSTrainer.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Employee", b =>
+                {
+                    b.HasOne("WCSTrainer.Models.UserAccount", "User")
+                        .WithOne("Employee")
+                        .HasForeignKey("Employee", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EmployeeTrainerGroup", b =>
+                {
+                    b.HasOne("WCSTrainer.Models.TrainerGroup", null)
+                        .WithMany()
+                        .HasForeignKey("TrainerGroupsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Employee", null)
+                        .WithMany()
+                        .HasForeignKey("TrainersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EmployeeTrainingOrder", b =>
+                {
+                    b.HasOne("Employee", null)
+                        .WithMany()
+                        .HasForeignKey("TrainersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TrainingOrder", null)
+                        .WithMany()
+                        .HasForeignKey("TrainingOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -420,15 +525,53 @@ namespace WCSTrainer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WCSTrainer.Models.Employee", b =>
+            modelBuilder.Entity("TrainingOrder", b =>
                 {
-                    b.HasOne("WCSTrainer.Models.UserAccount", "User")
-                        .WithOne("Employee")
-                        .HasForeignKey("WCSTrainer.Models.Employee", "UserId")
+                    b.HasOne("WCSTrainer.Models.Location", "LocationObject")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.HasOne("Employee", "Trainee")
+                        .WithMany("TrainingOrders")
+                        .HasForeignKey("TraineeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("LocationObject");
+
+                    b.Navigation("Trainee");
+                });
+
+            modelBuilder.Entity("Verification", b =>
+                {
+                    b.HasOne("TrainingOrder", "TrainingOrder")
+                        .WithOne("Verification")
+                        .HasForeignKey("Verification", "TrainingOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Employee", "Verifier")
+                        .WithMany()
+                        .HasForeignKey("VerifierId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TrainingOrder");
+
+                    b.Navigation("Verifier");
+                });
+
+            modelBuilder.Entity("Employee", b =>
+                {
+                    b.Navigation("TrainingOrders");
+                });
+
+            modelBuilder.Entity("TrainingOrder", b =>
+                {
+                    b.Navigation("Verification")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WCSTrainer.Models.UserAccount", b =>

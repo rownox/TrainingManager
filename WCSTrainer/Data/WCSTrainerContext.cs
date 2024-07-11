@@ -18,39 +18,54 @@ namespace WCSTrainer.Data {
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
 
-            // UserAccount and Employee relationship
-            builder.Entity<Employee>()
-                .HasOne(e => e.User)
-                .WithOne(u => u.Employee)
+            // UserAccount - Employee relationship
+            builder.Entity<UserAccount>()
+                .HasOne(u => u.Employee)
+                .WithOne(e => e.User)
                 .HasForeignKey<Employee>(e => e.UserId);
 
-            // TrainerGroup and Employee relationship (many-to-many)
+            // Employee - TrainerGroup many-to-many relationship
             builder.Entity<Employee>()
                 .HasMany(e => e.TrainerGroups)
-                .WithMany(tg => tg.Trainers)
+                .WithMany(g => g.Trainers)
                 .UsingEntity(j => j.ToTable("EmployeeTrainerGroups"));
 
-            // TrainingOrder and Employee relationships (many-to-many)
-            builder.Entity<TrainingOrder>()
-                .HasMany(to => to.Trainers)
-                .WithMany(e => e.TrainingOrders)
-                .UsingEntity(j => j.ToTable("TrainingOrderTrainers"));
-
+            // TrainingOrder - Employee (Trainee) relationship
             builder.Entity<TrainingOrder>()
                 .HasOne(to => to.Trainee)
-                .WithMany()
-                .HasForeignKey(to => to.TraineeId);
+                .WithMany(e => e.TrainingOrders)
+                .HasForeignKey(to => to.TraineeId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // Verification and TrainingOrder relationship (one-to-one)
-            builder.Entity<Verification>()
-                .HasOne(v => v.TrainingOrder)
-                .WithOne(to => to.Verification)
+            // TrainingOrder - Employee (Trainers) many-to-many relationship
+            builder.Entity<TrainingOrder>()
+                .HasMany(to => to.Trainers)
+                .WithMany()
+                .UsingEntity(j => j.ToTable("TrainingOrderTrainers"));
+
+            // TrainingOrder - Verification one-to-one relationship
+            builder.Entity<TrainingOrder>()
+                .HasOne(to => to.Verification)
+                .WithOne(v => v.TrainingOrder)
                 .HasForeignKey<Verification>(v => v.TrainingOrderId);
 
+            // Verification - Employee (Verifier) relationship
+            builder.Entity<Verification>()
+                .HasOne(v => v.Verifier)
+                .WithMany()
+                .HasForeignKey(v => v.VerifierId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // TrainingOrder - Location relationship
+            builder.Entity<TrainingOrder>()
+                .HasOne(to => to.LocationObject)
+                .WithMany()
+                .HasForeignKey(to => to.LocationId);
+
+            // Seed roles
             var adminRole = new IdentityRole("admin") { NormalizedName = "ADMIN" };
             var trainerRole = new IdentityRole("trainer") { NormalizedName = "TRAINER" };
             var traineeRole = new IdentityRole("trainee") { NormalizedName = "TRAINEE" };
-
             builder.Entity<IdentityRole>().HasData(adminRole, trainerRole, traineeRole);
         }
     }
