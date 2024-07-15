@@ -17,7 +17,7 @@
                 <div class="field-container">
                     <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input asp-for="Employee.TrainingOrders" type="hidden" value="1" />
+                        <input asp-for="Employee.TrainingOrderIds" type="hidden" value="1" />
                         <div class="form-group">
                             <div class="form">
                                 <div class="labels">
@@ -49,9 +49,9 @@
                             <div class="form">
                                 <div class="labels">
                                     <p class="control-label">Skills*</p>
-                                    <span asp-validation-for="Employee.EmployeeSkills" class="text-danger"></span>
+                                    <span asp-validation-for="Employee.SkillIds" class="text-danger"></span>
                                 </div>
-                                <input asp-for="Employee.EmployeeSkills" class="form-control" />
+                                <input asp-for="Employee.SkillIds" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group">

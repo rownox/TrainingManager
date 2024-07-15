@@ -94,10 +94,9 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
                         FirstName = Input.FirstName,
                         LastName = Input.LastName,
                         Status = "Trainee",
-                        EmployeeSkills = new HashSet<EmployeeSkill>(),
-                        TrainingOrders = new HashSet<TrainingOrder>(),
-                        UserId = user.Id,
-                        EmployeeTrainerGroups = new HashSet<EmployeeTrainerGroup>()
+                        SkillIds = new List<int>(),
+                        TrainingOrderIds = new List<int>(),
+                        UserId = user.Id
                     };
 
                     _context.Employees.Add(employee);

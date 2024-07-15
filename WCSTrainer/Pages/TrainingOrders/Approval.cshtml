@@ -19,9 +19,9 @@
                         <input asp-for="TrainingOrder.Status" type="hidden" value="Active"/>
 
                         <input asp-for="TrainingOrder.CreateDate" type="hidden"/>
-                        <input asp-for="TrainingOrder.LocationObject" type="hidden"/>
+                        <input asp-for="TrainingOrder.LocationId" type="hidden"/>
                         <input asp-for="TrainingOrder.Duration" type="hidden"/>
-                        <input asp-for="TrainingOrder.Trainee" type="hidden"/>
+                        <input asp-for="TrainingOrder.TraineeId" type="hidden"/>
                         <input asp-for="TrainingOrder.Medium" type="hidden"/>
                         <input asp-for="TrainingOrder.Skill" type="hidden"/>
 
@@ -60,7 +60,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
+                                <input id="trainersInput" asp-for="TrainingOrder.TrainerIds" type="hidden" />
                             </div>
                         </div>
                         <div class="form-group">

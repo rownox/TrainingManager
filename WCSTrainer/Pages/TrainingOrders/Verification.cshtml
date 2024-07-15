@@ -18,12 +18,12 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id"/>
                         <input asp-for="TrainingOrder.Duration" type="hidden"/>
-                        <input asp-for="TrainingOrder.Trainers" type="hidden"/>
-                        <input asp-for="TrainingOrder.Trainee" type="hidden"/>
+                        <input asp-for="TrainingOrder.TrainerIds" type="hidden"/>
+                        <input asp-for="TrainingOrder.TraineeId" type="hidden"/>
 
                         <input asp-for="TrainingOrder.CreateDate" type="hidden"/>
                         <input asp-for="TrainingOrder.BeginDate" type="hidden"/>
-                        <input asp-for="TrainingOrder.LocationObject" type="hidden" />
+                        <input asp-for="TrainingOrder.LocationId" type="hidden" />
                         <input asp-for="TrainingOrder.EndDate" type="hidden"/>
                         <input asp-for="TrainingOrder.Medium" type="hidden"/>
                         <input asp-for="TrainingOrder.Skill" type="hidden"/>
@@ -36,7 +36,7 @@
                                     <p class="title">Trainers</p>
                                 </div>
                                 <div class="info-content">
-                                    <p class="info">@Model.TrainingOrder.Trainers</p>
+                                    <p class="info">@Model.TrainingOrder.TrainerIds</p>
                                 </div>
                             </div>
                         }
@@ -45,7 +45,7 @@
                                 <p class="title">Trainee</p>
                             </div>
                             <div class="info-content">
-                                <p class="info">@Html.DisplayFor(model => model.TrainingOrder.Trainee)</p>
+                                <p class="info">@Model.TrainingOrder.TraineeId</p>
                             </div>
                         </div>
                         <div class="text-group">

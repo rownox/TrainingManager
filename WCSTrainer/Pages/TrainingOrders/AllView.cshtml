@@ -42,7 +42,7 @@
                                 <td>@Html.DisplayFor(modelItem => item.Id)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Status)</td>
                                 @foreach (var employee in Model.Employees) {
-                                    if (employee == item.Trainee) {
+                                    if (employee.Id == item.TraineeId) {
                                         <td>@employee.FirstName @employee.LastName</td>
                                     }
                                 }

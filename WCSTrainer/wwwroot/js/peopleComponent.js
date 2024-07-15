@@ -1,134 +1,64 @@
-﻿
-export function initializePeopleComponent() {
-    var employeesDataElement = document.getElementById('employeesData');
-    var employeesData = employeesDataElement.value ? JSON.parse(employeesDataElement.value) : [];
-    window.employeesData = employeesData;
+﻿function initPeopleComponent() {
+    const searchInput = document.getElementById('searchInput');
+    const itemList = document.getElementById('itemList');
+    const selectedList = document.getElementById('selectedList');
+    const addSelectionBtn = document.getElementById('addSelectionBtn');
+    const details = document.getElementById('details');
 
-    var trainergroupsDataElement = document.getElementById('trainergroupsData');
-    var trainergroupsData = trainergroupsDataElement.value ? JSON.parse(trainergroupsDataElement.value) : [];
-    window.trainergroupsData = trainergroupsData;
+    let selectedItems = [];
 
-    var peopleComponent = document.getElementById("sv-comp-people");
-    var overlay = document.querySelector(".overlay");
-    var trainersInput = document.getElementById("trainersInput");
-    var trainList = document.getElementById("trainerList");
-    var trainee = document.getElementById("trainee");
-    var traineeInput = document.getElementById("traineeInput");
-    var person = document.getElementsByClassName("person");
-
-    function safeAddEventListener(element, event, handler) {
-        if (element) {
-            element.addEventListener(event, handler);
-        }
-    }
-
-    safeAddEventListener(overlay, "click", closeComponent);
-
-    safeAddEventListener(trainee, "click", function (event) {
-        if (event.target.tagName === "LI") {
-            event.target.remove();
-            updateTraineeInput();
-        }
-    });
-
-    safeAddEventListener(trainList, "click", function (event) {
-        if (event.target.tagName === "LI") {
-            event.target.remove();
-            updateTrainersInput();
-        }
-    });
-
-    Array.from(person).forEach(item => {
-        safeAddEventListener(item, "click", addTrainer);
-    });
-
-    function addTrainer(trainerNames) {
-        if (!trainerNames || !trainerNames.trim()) return;
-
-        if (typeof trainerNames === 'string') {
-            var names = trainerNames.split(',');
-        } else if (trainerNames instanceof Event) {
-            names = [trainerNames.target.textContent.trim()];
-        } else {
-            return;
-        }
-
-        var trainerList = document.getElementById("trainerList");
-        if (!trainerList) return;
-
-        names.forEach(name => {
-            name = name.trim();
-            if (!Array.from(trainerList.getElementsByTagName("li")).some(li => li.textContent.trim() === name)) {
-                trainerList.innerHTML += `<li draggable="true" class="pill">${name}</li>`;
-            }
+    searchInput.addEventListener('input', function () {
+        const searchTerm = this.value.toLowerCase();
+        Array.from(itemList.children).forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(searchTerm) ? '' : 'none';
         });
-
-        updateTrainersInput();
-    }
-
-    function addTrainee(traineeName, traineeId) {
-        if (!traineeName || !traineeName.trim() || !traineeId) return;
-
-        var traineeList = document.getElementById("trainee");
-        if (!traineeList) return;
-
-        traineeList.innerHTML = `<li value="${traineeId}" class="pill">${traineeName.trim()}</li>`;
-        updateTraineeInput();
-    }
-
-    function updateTrainersInput() {
-        if (!trainList || !trainersInput) return;
-
-        var trainerListItems = Array.from(trainList.getElementsByTagName("li"));
-        trainersInput.value = trainerListItems.map(item => item.textContent.trim()).join(", ");
-    }
-
-    function updateTraineeInput() {
-        if (!trainee || !traineeInput) return;
-
-        var traineeListItems = Array.from(trainee.getElementsByTagName("li"));
-        traineeInput.value = traineeListItems.length > 0 ? traineeListItems[0].getAttribute("value") : "";
-    }
-
-    if (trainList) {
-        const trainerListObserver = new MutationObserver(updateTrainersInput);
-        trainerListObserver.observe(trainList, { childList: true, subtree: true });
-    }
-
-    if (trainee) {
-        const traineeObserver = new MutationObserver(updateTraineeInput);
-        traineeObserver.observe(trainee, { childList: true, subtree: true });
-    }
-
-    document.addEventListener("addTrainerEvent", function (event) {
-        addTrainer(event.detail.names);
-        closeComponent();
     });
 
-    document.addEventListener("addTraineeEvent", function (event) {
-        addTrainee(event.detail.name, event.detail.id);
-        closeComponent();
+    itemList.addEventListener('click', function (e) {
+        const li = e.target.closest('li');
+        if (li) {
+            const id = li.dataset.id;
+            const type = li.dataset.type;
+            toggleSelection(id, type);
+            updateSelectedList();
+            updateDetails(li);
+        }
     });
 
-    updateTrainersInput();
-    updateTraineeInput();
+    addSelectionBtn.addEventListener('click', function () {
+        // Implement add selection logic
+        console.log('Add selection:', selectedItems);
+    });
+
+    function toggleSelection(id, type) {
+        const index = selectedItems.findIndex(item => item.id === id);
+        if (index > -1) {
+            selectedItems.splice(index, 1);
+        } else {
+            selectedItems.push({ id, type });
+        }
+    }
+
+    function updateSelectedList() {
+        selectedList.innerHTML = selectedItems.map(item =>
+            `<div class="selection pill">${getItemName(item.id)}</div>`
+        ).join('');
+    }
+
+    function updateDetails(li) {
+        // Implement details update logic
+        details.innerHTML = `<p>Selected: ${li.querySelector('.info p').textContent}</p>`;
+    }
+
+    function getItemName(id) {
+        const li = itemList.querySelector(`li[data-id="${id}"]`);
+        return li ? li.querySelector('.info p').textContent : '';
+    }
 }
 
-export function openComponent(mode) {
-    window.peopleComponentMode = mode;
-    window.dispatchEvent(new Event('peopleComponentModeChange'));
+// Call this when the DOM is ready
+document.addEventListener('DOMContentLoaded', initPeopleComponent);
 
-    var peopleComponent = document.getElementById("sv-comp-people");
-    var overlay = document.querySelector(".overlay");
-    if (peopleComponent) peopleComponent.classList.remove("hidden");
-    if (overlay) overlay.classList.remove("hidden");
-}
-
-export function closeComponent() {
-    var peopleComponent = document.getElementById("sv-comp-people");
-    var overlay = document.querySelector(".overlay");
-    if (peopleComponent) peopleComponent.classList.add("hidden");
-    if (overlay) overlay.classList.add("hidden");
-}
-
-window.openComponent = openComponent;
+// Also expose it globally in case you need to reinitialize after dynamic loading
+window.initPeopleComponent = initPeopleComponent;
