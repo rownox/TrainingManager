@@ -5,10 +5,17 @@ using WCSTrainer.Models;
 
 namespace WCSTrainer.Data {
     public class DataUtils {
-        private readonly DbContext _context;
+        private readonly WCSTrainerContext _context;
 
-        public DataUtils(DbContext context) {
+        private List<Location> Locations;
+
+        public DataUtils(WCSTrainerContext context) {
             _context = context;
+            initVars();
+        }
+
+        public async void initVars() {
+            Locations = await _context.Locations.ToListAsync();
         }
 
         public async Task<Employee?> GetEmployeeById(int id) {
@@ -33,6 +40,15 @@ namespace WCSTrainer.Data {
 
         public async Task<Verification?> GetVerificationById(int id) {
             return await _context.Set<Verification>().FindAsync(id);
+        }
+
+        public Location? GetLocationFromId(int id) {
+            foreach (var loc in Locations) {
+                if (loc.Id == id) {
+                    return loc;
+                }
+            }
+            return null;
         }
     }
 }
