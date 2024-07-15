@@ -15,7 +15,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
         }
 
         public TrainingOrder TrainingOrder { get; set; } = default!;
-
         public IList<Employee> Employees { get; set; }
         public Location Location { get; set; }
 
@@ -33,7 +32,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 TrainingOrder = trainingorder;
             }
 
-            var location = await _dataUtils.GetLocationById(TrainingOrder.LocationId);
+            var location = _dataUtils.GetLocationFromId(TrainingOrder.LocationId);
             if (location != null) {
                 Location = location;
             }
