@@ -6,6 +6,7 @@
 }
 
 @using WCSTrainer.Components
+@using WCSTrainer.Data;
 
 <div class="panel">
     <div class="body">
@@ -39,7 +40,7 @@
                                 <p class="title">Trainers</p>
                             </div>
                             <div class="info-content">
-                                <p class="info">@Model.TrainingOrder.Trainers</p>
+                                <p class="info">@Model.TrainingOrder.TrainerIds</p>
                             </div>
                         </div>
                     }
@@ -49,7 +50,7 @@
                         </div>
                         <div class="info-content">
                             @foreach (var employee in Model.Employees) {
-                                if (employee.Id.ToString().Equals(Model.TrainingOrder.Trainee)) {
+                                if (employee.Id == Model.TrainingOrder.TraineeId) {
                                     <p class="info">@employee.FirstName @employee.LastName</p>
                                 }
                             }
@@ -94,7 +95,7 @@
                             <p class="title">Location</p>
                         </div>
                         <div class="info-content">
-                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.LocationObject)</p>
+                            <p class="info">@Model.Location.Name</p>
                         </div>
                     </div>
                     <div class="text-group">

@@ -10,6 +10,8 @@
 <div id="sv-comp-people" class="people-component hidden"></div>
 <div class="overlay hidden"></div>
 
+@await Component.InvokeAsync("People", new { displayMode = "both" })
+
 <div class="panel">
     <div class="body">
         <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
@@ -27,38 +29,38 @@
                             <div class="form-group">
                                 <div class="form">
                                     <div class="labels">
-                                        <span asp-validation-for="TrainingOrder.Trainers" class="text-danger"></span>
+                                        <span asp-validation-for="TrainingOrder.TrainerIds" class="text-danger"></span>
                                     </div>
                                     <div class="selections">
                                         <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select Trainers</p></div>
                                         <ul id="trainerList" class="pill-container">
-                                            @foreach (var trainer in Model.TrainingOrder.Trainers) {
+                                            @foreach (var trainer in Model.TrainerList) {
                                                 <li draggable="true" class="pill">@trainer.FirstName @trainer.LastName</li>
                                             }
                                         </ul>
-                                        <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
+                                        <input id="trainersInput" asp-for="TrainingOrder.TrainerIds" type="hidden" />
                                     </div>
                                 </div>
                             </div>
                         } else {
-                            <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
+                            <input id="trainersInput" asp-for="TrainingOrder.TrainerIds" type="hidden" />
                         }
                         <div class="form-group">
                             <div class="form">
                                 <div class="labels">
-                                    <span asp-validation-for="TrainingOrder.Trainee" class="text-danger"></span>
+                                    <span asp-validation-for="TrainingOrder.TraineeId" class="text-danger"></span>
                                 </div>
                                 <div class="selections">
                                     <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select Trainee</p></div>
                                     <ul id="trainee" class="pill-container">
                                         @{
-                                            var trainee = Model.TrainingOrder.Trainee;
+                                            var trainee = Model.Trainee;
                                             if (trainee != null) {
                                                 <li value="@trainee.Id" class="pill">@trainee.FirstName @trainee.LastName</li>
                                             }
                                         }
                                     </ul>
-                                    <input id="traineeInput" asp-for="TrainingOrder.Trainee" type="hidden"/>
+                                    <input id="traineeInput" asp-for="TrainingOrder.TraineeId" type="hidden"/>
                                 </div>
                             </div>
                         </div>
@@ -123,13 +125,9 @@
                             <div class="form">
                                 <div class="labels">
                                     <p class="control-label">Location</p>
-                                    <span asp-validation-for="TrainingOrder.LocationObject" class="text-danger"></span>
+                                    <span asp-validation-for="TrainingOrder.LocationId" class="text-danger"></span>
                                 </div>
-                                <select asp-for="TrainingOrder.LocationObject" class="form-drop2">
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                    <option value="4">Four</option>
+                                <select asp-for="TrainingOrder.LocationId" class="form-drop2" asp-items="@Model.Locations">
                                 </select>
                             </div>
                         </div>
@@ -146,25 +144,6 @@
         </div>
     </div>
 </div>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
-<script>
-    var employeesData = @Json.Serialize(Model.Employees);
-    var trainergroupsData = @Json.Serialize(Model.TrainerGroups);
-</script>
-
-<script type="module">
-    import { initializePeopleComponent, openComponent } from '/js/peopleComponent.js';
-
-    document.addEventListener('DOMContentLoaded', function () {
-        initializePeopleComponent();
-    });
-
-</script>
-
 
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");

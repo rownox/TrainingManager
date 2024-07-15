@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WCSTrainer.Data;
 
@@ -11,9 +12,11 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Migrations
 {
     [DbContext(typeof(WCSTrainerContext))]
-    partial class WCSTrainerContextModelSnapshot : ModelSnapshot
+    [Migration("20240715192451_9")]
+    partial class _9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,19 +94,19 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ac4e7409-d44b-4524-9b67-acbfc2ac654d",
+                            Id = "02457c7e-166d-49b9-8de5-b114ac994d97",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d2ce2e80-6990-4c6f-8810-2fdc85a1bfcc",
+                            Id = "eb74c87c-e2d9-4e01-8317-e3c640c7d1ee",
                             Name = "trainer",
                             NormalizedName = "TRAINER"
                         },
                         new
                         {
-                            Id = "ec4fa17c-e609-4636-9d3f-cf1f810e00b9",
+                            Id = "c294e7a3-1c42-46c2-bfbd-6cf8646b3531",
                             Name = "trainee",
                             NormalizedName = "TRAINEE"
                         });
@@ -262,6 +265,7 @@ namespace WCSTrainer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TrainerIds")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("VerificationId")
