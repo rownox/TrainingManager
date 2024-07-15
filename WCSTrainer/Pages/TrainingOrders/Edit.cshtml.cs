@@ -23,7 +23,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
         [BindProperty]
         public IList<TrainerGroup> TrainerGroups { get; set; }
 
-        public IList<Employee> TrainerList { get; set; }
+        public IList<Employee> TrainerList { get; set; } = new List<Employee>();
         public Employee Trainee { get; set; }
         public SelectList Locations { get; set; }
 
@@ -46,12 +46,15 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             TrainingOrder = trainingorder;
 
-            foreach (int trainerId in TrainingOrder.TrainerIds) {
-                var trainer = await _dataUtils.GetEmployeeById(trainerId);
-                if (trainer != null) {
-                    TrainerList.Add(trainer);
+            if (TrainingOrder.TrainerIds != null) {
+                foreach (int trainerId in TrainingOrder.TrainerIds) {
+                    var trainer = await _dataUtils.GetEmployeeById(trainerId);
+                    if (trainer != null) {
+                        TrainerList.Add(trainer);
+                    }
                 }
             }
+
 
             var trainee = await _dataUtils.GetEmployeeById(TrainingOrder.TraineeId);
             if (trainee != null) {
