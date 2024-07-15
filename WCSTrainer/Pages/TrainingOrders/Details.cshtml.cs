@@ -32,7 +32,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 TrainingOrder = trainingorder;
             }
 
-            var location = _dataUtils.GetLocationFromId(TrainingOrder.LocationId);
+            var location = await _dataUtils.GetLocationById(TrainingOrder.LocationId);
             if (location != null) {
                 Location = location;
             }
