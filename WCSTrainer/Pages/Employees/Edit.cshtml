@@ -29,14 +29,19 @@
                     <span asp-validation-for="Employee.Status" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Employee.TrainingOrderIds" class="control-label"></label>
-                    <input asp-for="Employee.TrainingOrderIds" class="form-control" />
-                    <span asp-validation-for="Employee.TrainingOrderIds" class="text-danger"></span>
+                    <label asp-for="Employee.TrainingOrdersAsTrainee" class="control-label"></label>
+                    <input asp-for="Employee.TrainingOrdersAsTrainee" class="form-control" />
+                    <span asp-validation-for="Employee.TrainingOrdersAsTrainee" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Employee.SkillIds" class="control-label"></label>
-                    <input asp-for="Employee.SkillIds" class="form-control" />
-                    <span asp-validation-for="Employee.SkillIds" class="text-danger"></span>
+                    <label asp-for="Employee.TrainingOrdersAsTrainer" class="control-label"></label>
+                    <input asp-for="Employee.TrainingOrdersAsTrainer" class="form-control" />
+                    <span asp-validation-for="Employee.TrainingOrdersAsTrainer" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Employee.Skills" class="control-label"></label>
+                    <input asp-for="Employee.Skills" class="form-control" />
+                    <span asp-validation-for="Employee.Skills" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />

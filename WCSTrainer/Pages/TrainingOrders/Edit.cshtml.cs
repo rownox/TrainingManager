@@ -9,11 +9,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
     public class EditModel : PageModel {
 
         private readonly WCSTrainer.Data.WCSTrainerContext _context;
-        private readonly DataUtils _dataUtils;
 
-        public EditModel(WCSTrainer.Data.WCSTrainerContext context, DataUtils dataUtils) {
+        public EditModel(WCSTrainer.Data.WCSTrainerContext context) {
             _context = context;
-            _dataUtils = dataUtils;
         }
 
         [BindProperty]
@@ -46,19 +44,12 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             TrainingOrder = trainingorder;
 
-            if (TrainingOrder.TrainerIds != null) {
-                foreach (int trainerId in TrainingOrder.TrainerIds) {
-                    var trainer = await _dataUtils.GetEmployeeById(trainerId);
+            if (TrainingOrder.Trainers != null) {
+                foreach (var trainer in TrainingOrder.Trainers) {
                     if (trainer != null) {
                         TrainerList.Add(trainer);
                     }
                 }
-            }
-
-
-            var trainee = await _dataUtils.GetEmployeeById(TrainingOrder.TraineeId);
-            if (trainee != null) {
-                Trainee = trainee;
             }
 
             var locations = await _context.Locations.ToListAsync();

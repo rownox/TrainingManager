@@ -137,7 +137,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             } else {
                 foreach (Employee employee in Employees) {
                     if (searchFor.Contains(employee.FirstName) && searchFor.Contains(employee.LastName)) {
-                        if (employee.TrainingOrderIds.Contains(order.Id)) {
+                        if (employee.TrainingOrdersAsTrainee.Contains(order)) {
                             return true;
                         }
                     }

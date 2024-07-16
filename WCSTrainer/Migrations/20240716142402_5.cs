@@ -7,7 +7,7 @@
 namespace WCSTrainer.Migrations
 {
     /// <inheritdoc />
-    public partial class _10 : Migration
+    public partial class _5 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,34 +15,30 @@ namespace WCSTrainer.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "02457c7e-166d-49b9-8de5-b114ac994d97");
+                keyValue: "4ca30a03-9265-40be-bc12-602684d4d000");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "c294e7a3-1c42-46c2-bfbd-6cf8646b3531");
+                keyValue: "5383132b-ad80-4b51-9f10-a3dbd9283fda");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "eb74c87c-e2d9-4e01-8317-e3c640c7d1ee");
+                keyValue: "8678b72c-6502-434f-bca6-1843b4b10079");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "TrainerIds",
-                table: "TrainingOrders",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+            migrationBuilder.DropColumn(
+                name: "SkillName",
+                table: "TrainingOrders");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ac4e7409-d44b-4524-9b67-acbfc2ac654d", null, "admin", "ADMIN" },
-                    { "d2ce2e80-6990-4c6f-8810-2fdc85a1bfcc", null, "trainer", "TRAINER" },
-                    { "ec4fa17c-e609-4636-9d3f-cf1f810e00b9", null, "trainee", "TRAINEE" }
+                    { "0c69eb24-b1e2-401f-8dac-2259a653be06", null, "trainer", "TRAINER" },
+                    { "3a256f1d-a537-4a69-88ee-ee64f744a120", null, "trainee", "TRAINEE" },
+                    { "c925ed9a-0ce4-4b38-8b55-2270e8155be3", null, "admin", "ADMIN" }
                 });
         }
 
@@ -52,36 +48,33 @@ namespace WCSTrainer.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "ac4e7409-d44b-4524-9b67-acbfc2ac654d");
+                keyValue: "0c69eb24-b1e2-401f-8dac-2259a653be06");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "d2ce2e80-6990-4c6f-8810-2fdc85a1bfcc");
+                keyValue: "3a256f1d-a537-4a69-88ee-ee64f744a120");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "ec4fa17c-e609-4636-9d3f-cf1f810e00b9");
+                keyValue: "c925ed9a-0ce4-4b38-8b55-2270e8155be3");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "TrainerIds",
+            migrationBuilder.AddColumn<string>(
+                name: "SkillName",
                 table: "TrainingOrders",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
+                defaultValue: "");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "02457c7e-166d-49b9-8de5-b114ac994d97", null, "admin", "ADMIN" },
-                    { "c294e7a3-1c42-46c2-bfbd-6cf8646b3531", null, "trainee", "TRAINEE" },
-                    { "eb74c87c-e2d9-4e01-8317-e3c640c7d1ee", null, "trainer", "TRAINER" }
+                    { "4ca30a03-9265-40be-bc12-602684d4d000", null, "admin", "ADMIN" },
+                    { "5383132b-ad80-4b51-9f10-a3dbd9283fda", null, "trainee", "TRAINEE" },
+                    { "8678b72c-6502-434f-bca6-1843b4b10079", null, "trainer", "TRAINER" }
                 });
         }
     }

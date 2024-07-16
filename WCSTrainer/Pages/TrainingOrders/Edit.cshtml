@@ -29,7 +29,7 @@
                             <div class="form-group">
                                 <div class="form">
                                     <div class="labels">
-                                        <span asp-validation-for="TrainingOrder.TrainerIds" class="text-danger"></span>
+                                        <span asp-validation-for="TrainingOrder.Trainers" class="text-danger"></span>
                                     </div>
                                     <div class="selections">
                                         <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select Trainers</p></div>
@@ -38,12 +38,12 @@
                                                 <li draggable="true" class="pill">@trainer.FirstName @trainer.LastName</li>
                                             }
                                         </ul>
-                                        <input id="trainersInput" asp-for="TrainingOrder.TrainerIds" type="hidden" />
+                                        <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
                                     </div>
                                 </div>
                             </div>
                         } else {
-                            <input id="trainersInput" asp-for="TrainingOrder.TrainerIds" type="hidden" />
+                            <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
                         }
                         <div class="form-group">
                             <div class="form">
@@ -68,9 +68,9 @@
                             <div class="form">
                                 <div class="labels">
                                     <p class="control-label">Skill</p>
-                                    <span asp-validation-for="TrainingOrder.Skill" class="text-danger"></span>
+                                    <span asp-validation-for="TrainingOrder.Skills" class="text-danger"></span>
                                 </div>
-                                <textarea rows="4" asp-for="TrainingOrder.Skill" placeholder="Describe the skill being trained and the goal."></textarea>
+                                <textarea rows="4" asp-for="TrainingOrder.Skills" placeholder="Describe the skill being trained and the goal."></textarea>
                             </div>
                         </div>
                         @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {

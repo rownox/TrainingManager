@@ -7,11 +7,9 @@ using WCSTrainer.Models;
 namespace WCSTrainer.Pages.TrainingOrders {
     public class DetailsModel : PageModel {
         private readonly WCSTrainerContext _context;
-        private readonly DataUtils _dataUtils;
 
-        public DetailsModel(WCSTrainerContext context, DataUtils dataUtils) {
+        public DetailsModel(WCSTrainerContext context) {
             _context = context;
-            _dataUtils = dataUtils;
         }
 
         public TrainingOrder TrainingOrder { get; set; } = default!;
@@ -30,11 +28,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 return NotFound();
             } else {
                 TrainingOrder = trainingorder;
-            }
-
-            var location = await _dataUtils.GetLocationById(TrainingOrder.LocationId);
-            if (location != null) {
-                Location = location;
             }
 
             return Page();
