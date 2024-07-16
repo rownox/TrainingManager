@@ -49,11 +49,11 @@ button {
     margin: 2px;
     height: fit-content;
     user-select: none;
-    
 }
 
 pre {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    white-space: pre-wrap;
 }
 
 .flex-column {

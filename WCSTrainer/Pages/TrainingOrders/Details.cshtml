@@ -16,145 +16,81 @@
                 <p class="title">Training Order #@Model.TrainingOrder.Id</p>
                 <div class="field-container">
                     <div class="text-group">
-                        <div class="identifier">
-                            <p class="title">Status</p>
-                        </div>
-                        <div class="info-content">
-                            @{
-                                var type = "awaiting";
-                                if (Model.TrainingOrder.Status.Equals("Active")) {
-                                    type = "active";
-                                } else if (Model.TrainingOrder.Status.Equals("Verified")) {
-                                    type = "verified";
-                                } else {
-                                    type = "completed";
-                                }
-                                <p class="info @type">@Model.TrainingOrder.Status</p>
+                        <p class="title">Status</p>
+                        @{
+                            var type = "awaiting";
+                            if (Model.TrainingOrder.Status.Equals("Active")) {
+                                type = "active";
+                            } else if (Model.TrainingOrder.Status.Equals("Verified")) {
+                                type = "verified";
+                            } else {
+                                type = "completed";
                             }
-                        </div>
+                            <p class="info @type">@Model.TrainingOrder.Status</p>
+                        }
                     </div>
                     @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
                         <div class="text-group">
-                            <div class="identifier">
-                                <p class="title">Trainers</p>
-                            </div>
-                            <div class="info-content">
-                                <p class="info">@Model.TrainingOrder.Trainers</p>
-                            </div>
+                            <p class="title">Trainers</p>
+                            <p class="info">@Model.TrainingOrder.Trainers</p>
                         </div>
                     }
                     <div class="text-group">
-                        <div class="identifier">
-                            <p class="title">Trainee</p>
-                        </div>
-                        <div class="info-content">
-                            @foreach (var employee in Model.Employees) {
-                                if (employee.Id == Model.TrainingOrder.TraineeId) {
-                                    <p class="info">@employee.FirstName @employee.LastName</p>
-                                }
-                            }
-                        </div>
+                        <p class="title">Trainee</p>
+                        <p class="info">@Model.TrainingOrder.Trainee.FirstName @Model.TrainingOrder.Trainee.LastName</p>
                     </div>
                     <div class="text-group">
-                        <div class="identifier">
-                            <p class="title">Priority Level</p>
-                        </div>
-                        <div class="info-content">
-                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.Priority)</p>
-                        </div>
+                        <p class="title">Priority Level</p>
+                        <p class="info">@Model.TrainingOrder.Priority</p>
                     </div>
                     <div class="text-group">
-                        <div class="identifier">
-                            <p class="title">Description</p>
-                        </div>
-                        <div class="info-content">
-                            <pre class="info">@Html.DisplayFor(model => model.TrainingOrder.Description)</pre>
-                        </div>
+                        <p class="title">Description</p>
+                        <pre class="info">@Model.TrainingOrder.Description</pre>
                     </div>
                     @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
                         <div class="text-group">
-                            <div class="identifier">
-                                <p class="title">Begin Date</p>
-                            </div>
-                            <div class="info-content">
-                                <p class="info">@Html.DisplayFor(model => model.TrainingOrder.BeginDate)</p>
-                            </div>
+                            <p class="title">Begin Date</p>
+                            <p class="info">@Model.TrainingOrder.BeginDate</p>
                         </div>
                         <div class="text-group">
-                            <div class="identifier">
-                                <p class="title">End Date</p>
-                            </div>
-                            <div class="info-content">
-                                <p class="info">@Html.DisplayFor(model => model.TrainingOrder.EndDate)</p>
-                            </div>
+                            <p class="title">End Date</p>
+                            <p class="info">@Model.TrainingOrder.EndDate</p>
                         </div>
                     }
                     <div class="text-group">
-                        <div class="identifier">
-                            <p class="title">Location</p>
-                        </div>
-                        <div class="info-content">
-                            <p class="info">@Model.Location.Name</p>
-                        </div>
+                        <p class="title">Location</p>
+                        <p class="info">@Model.Location.Name</p>
                     </div>
                     <div class="text-group">
-                        <div class="identifier">
-                            <p class="title">Learning Medium</p>
-                        </div>
-                        <div class="info-content">
-                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.Medium)</p>
-                        </div>
+                        <p class="title">Learning Medium</p>
+                        <p class="info">@Model.TrainingOrder.Medium</p>
                     </div>
                     <div class="text-group">
-                        <div class="identifier">
-                            <p class="title">Training Hours Needed</p>
-                        </div>
-                        <div class="info-content">
-                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.Duration) Hours</p>
-                        </div>
+                        <p class="title">Training Hours Needed</p>
+                        <p class="info">@Model.TrainingOrder.Duration Hours</p>
                     </div>
                     <div class="text-group">
-                        <div class="identifier">
-                            <p class="title">Order Creation Date</p>
-                        </div>
-                        <div class="info-content">
-                            <p class="info">@Html.DisplayFor(model => model.TrainingOrder.CreateDate)</p>
-                        </div>
+                        <p class="title">Order Creation Date</p>
+                        <p class="info">@Model.TrainingOrder.CreateDate</p>
                     </div>
                     @if (Model.TrainingOrder.Status.Equals("Verified")) {
                         <br></br>
                         <p style="font-size: 20px;">Verification</p>
                         <div class="text-group">
-                            <div class="identifier">
-                                <p class="title">Signed By</p>
-                            </div>
-                            <div class="info-content">
-                                <p class="info">Aadam Husain</p>
-                            </div>
+                            <p class="title">Signed By</p>
+                            <p class="info">Aadam Husain</p>
                         </div>
                         <div class="text-group">
-                            <div class="identifier">
-                                <p class="title">Date Signed</p>
-                            </div>
-                            <div class="info-content">
-                                <p class="info">5/14/2024</p>
-                            </div>
+                            <p class="title">Date Signed</p>
+                            <p class="info">5/14/2024</p>
                         </div>
                         <div class="text-group">
-                            <div class="identifier">
-                                <p class="title">Notes</p>
-                            </div>
-                            <div class="info-content">
-                                <p class="info">No Data</p>
-                            </div>
+                            <p class="title">Notes</p>
+                            <p class="info">No Data</p>
                         </div>
                         <div class="text-group">
-                            <div class="identifier">
-                                <p class="title">Effectiveness</p>
-                            </div>
-                            <div class="info-content">
-                                <p class="info">No Data</p>
-                            </div>
+                            <p class="title">Effectiveness</p>
+                            <p class="info">No Data</p>
                         </div>
                     }
                 </div>

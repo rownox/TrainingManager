@@ -37,7 +37,7 @@
                                     <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select Trainee</p></div>
                                     <ul id="trainee" class="pill-container">
                                     </ul>
-                                    <input id="traineeInput" asp-for="TrainingOrder.TraineeId" />
+                                    <input id="traineeInput" asp-for="TrainingOrder.TraineeId" type="hidden" />
                                 </div>
                             </div>
                         </div>
@@ -56,12 +56,11 @@
                                     <p class="control-label">Location*</p>
                                     <span asp-validation-for="TrainingOrder.LocationId" class="text-danger"></span>
                                 </div>
-@*                                 <select asp-for="TrainingOrder.LocationId" class="form-control">
+                                <select asp-for="TrainingOrder.LocationId" class="form-control">
                                     @foreach(var loc in Model.Locations) {
                                         <option value="@loc.Id">@loc.Name</option>
                                     }
-                                </select> *@
-                                <input asp-for="TrainingOrder.LocationId" class="form-control"/>
+                                </select>
                             </div>
                             <div class="form">
                                 <div class="labels">

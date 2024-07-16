@@ -10,8 +10,6 @@
 <div id="sv-comp-people" class="people-component hidden"></div>
 <div class="overlay hidden"></div>
 
-@await Component.InvokeAsync("People", new { displayMode = "both" })
-
 <div class="panel">
     <div class="body">
         <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
@@ -53,12 +51,7 @@
                                 <div class="selections">
                                     <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select Trainee</p></div>
                                     <ul id="trainee" class="pill-container">
-                                        @{
-                                            var trainee = Model.Trainee;
-                                            if (trainee != null) {
-                                                <li value="@trainee.Id" class="pill">@trainee.FirstName @trainee.LastName</li>
-                                            }
-                                        }
+                                        <li value="@Model.TrainingOrder.TraineeId" class="pill">@Model.Trainee.FirstName @Model.Trainee.LastName</li>
                                     </ul>
                                     <input id="traineeInput" asp-for="TrainingOrder.TraineeId" type="hidden"/>
                                 </div>
@@ -68,9 +61,9 @@
                             <div class="form">
                                 <div class="labels">
                                     <p class="control-label">Skill</p>
-                                    <span asp-validation-for="TrainingOrder.Skills" class="text-danger"></span>
+                                    <span asp-validation-for="TrainingOrder.Description" class="text-danger"></span>
                                 </div>
-                                <textarea rows="4" asp-for="TrainingOrder.Skills" placeholder="Describe the skill being trained and the goal."></textarea>
+                                <textarea rows="4" asp-for="TrainingOrder.Description" placeholder="Describe the skill being trained and the goal."></textarea>
                             </div>
                         </div>
                         @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
@@ -144,6 +137,149 @@
         </div>
     </div>
 </div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    var employeesDataElement = document.getElementById('employeesData');
+    var employeesData = employeesDataElement.value ? JSON.parse(employeesDataElement.value) : [];
+    window.employeesData = employeesData;
+
+    var trainergroupsDataElement = document.getElementById('trainergroupsData');
+    var trainergroupsData = trainergroupsDataElement.value ? JSON.parse(trainergroupsDataElement.value) : [];
+    window.trainergroupsData = trainergroupsData;
+
+    var employeesDataElement = document.getElementById('employeesData');
+    var trainergroupsDataElement = document.getElementById('trainergroupsData');
+
+    var peopleComponent = document.getElementById("sv-comp-people");
+    var overlay = document.querySelector(".overlay");
+    var trainersInput = document.getElementById("trainersInput");
+    var trainList = document.getElementById("trainerList");
+    var trainee = document.getElementById("trainee");
+    var traineeInput = document.getElementById("traineeInput");
+    var person = document.getElementsByClassName("person");
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        function safeAddEventListener(element, event, handler) {
+            if (element) {
+                element.addEventListener(event, handler);
+            }
+        }
+
+        safeAddEventListener(overlay, "click", closeComponent);
+
+        safeAddEventListener(trainee, "click", function (event) {
+            if (event.target.tagName === "LI") {
+                event.target.remove();
+                updateTraineeInput();
+            }
+        });
+
+        safeAddEventListener(trainList, "click", function (event) {
+            if (event.target.tagName === "LI") {
+                event.target.remove();
+                updateTrainersInput();
+            }
+        });
+
+        Array.from(person).forEach(item => {
+            safeAddEventListener(item, "click", addTrainer);
+        });
+
+        function addTrainer(trainerNames) {
+            if (!trainerNames || !trainerNames.trim()) return;
+
+            if (typeof trainerNames === 'string') {
+                var names = trainerNames.split(',');
+            } else if (trainerNames instanceof Event) {
+                names = [trainerNames.target.textContent.trim()];
+            } else {
+                return;
+            }
+
+            var trainerList = document.getElementById("trainerList");
+            if (!trainerList) return;
+
+            names.forEach(name => {
+                name = name.trim();
+                if (!Array.from(trainerList.getElementsByTagName("li")).some(li => li.textContent.trim() === name)) {
+                    trainerList.innerHTML += `<li draggable="true" class="pill">${name}</li>`;
+                }
+            });
+
+            updateTrainersInput();
+        }
+
+        function addTrainee(traineeName, traineeId) {
+            if (!traineeName || !traineeName.trim() || !traineeId) return;
+
+            var traineeList = document.getElementById("trainee");
+            if (!traineeList) return;
+
+            traineeList.innerHTML = `<li value="${traineeId}" class="pill">${traineeName.trim()}</li>`;
+            updateTraineeInput();
+        }
+
+        function updateTrainersInput() {
+            if (!trainList || !trainersInput) return;
+
+            var trainerListItems = Array.from(trainList.getElementsByTagName("li"));
+            trainersInput.value = trainerListItems.map(item => item.textContent.trim()).join(", ");
+        }
+
+        function updateTraineeInput() {
+            if (!trainee || !traineeInput) return;
+
+            var traineeListItems = Array.from(trainee.getElementsByTagName("li"));
+            traineeInput.value = traineeListItems.length > 0 ? traineeListItems[0].getAttribute("value") : "";
+        }
+
+        if (trainList) {
+            const trainerListObserver = new MutationObserver(updateTrainersInput);
+            trainerListObserver.observe(trainList, { childList: true, subtree: true });
+        }
+
+        if (trainee) {
+            const traineeObserver = new MutationObserver(updateTraineeInput);
+            traineeObserver.observe(trainee, { childList: true, subtree: true });
+        }
+
+        document.addEventListener("addTrainerEvent", function (event) {
+            addTrainer(event.detail.names);
+            closeComponent();
+        });
+
+        document.addEventListener("addTraineeEvent", function (event) {
+            addTrainee(event.detail.name, event.detail.id);
+            closeComponent();
+        });
+
+        updateTrainersInput();
+        updateTraineeInput();
+    });
+
+    function openComponent(mode) {
+        window.peopleComponentMode = mode;
+        window.dispatchEvent(new Event('peopleComponentModeChange'));
+
+        var peopleComponent = document.getElementById("sv-comp-people");
+        var overlay = document.querySelector(".overlay");
+        if (peopleComponent) peopleComponent.classList.remove("hidden");
+        if (overlay) overlay.classList.remove("hidden");
+    }
+
+    function closeComponent() {
+        var peopleComponent = document.getElementById("sv-comp-people");
+        var overlay = document.querySelector(".overlay");
+        if (peopleComponent) peopleComponent.classList.add("hidden");
+        if (overlay) overlay.classList.add("hidden");
+    }
+</script>
+
 
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
