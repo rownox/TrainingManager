@@ -14,10 +14,19 @@ namespace WCSTrainer.Pages.TrainingOrders {
         [BindProperty]
         public TrainingOrder TrainingOrder { get; set; } = default!;
 
+        [BindProperty]
         public IList<Employee> Employees { get; set; }
+        [BindProperty]
+        public IList<TrainerGroup> TrainerGroups { get; set; }
+
+        public IList<Employee> TrainerList { get; set; } = new List<Employee>();
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             Employees = await _context.Employees.ToListAsync();
+            ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
+
+            TrainerGroups = await _context.TrainerGroups.ToListAsync();
+            ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
 
             if (id == null) {
                 return NotFound();
@@ -28,12 +37,26 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 return NotFound();
             }
             TrainingOrder = trainingorder;
+
+            if (TrainingOrder.Trainers != null) {
+                foreach (var trainer in TrainingOrder.Trainers) {
+                    if (trainer != null) {
+                        TrainerList.Add(trainer);
+                    }
+                }
+            }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync() {
 
             if (!ModelState.IsValid) {
+                Employees = await _context.Employees.ToListAsync();
+                ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
+
+                TrainerGroups = await _context.TrainerGroups.ToListAsync();
+                ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
+
                 return Page();
             }
 

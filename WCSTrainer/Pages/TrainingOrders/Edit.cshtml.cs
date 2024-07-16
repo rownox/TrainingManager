@@ -9,9 +9,11 @@ namespace WCSTrainer.Pages.TrainingOrders {
     public class EditModel : PageModel {
 
         private readonly WCSTrainer.Data.WCSTrainerContext _context;
+        private readonly DataUtils _dataUtils;
 
-        public EditModel(WCSTrainer.Data.WCSTrainerContext context) {
+        public EditModel(WCSTrainer.Data.WCSTrainerContext context, DataUtils dataUtils) {
             _context = context;
+            _dataUtils = dataUtils;
         }
 
         [BindProperty]
@@ -32,7 +34,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
             TrainerGroups = await _context.TrainerGroups.ToListAsync();
             ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
 
-
             if (id == null) {
                 return NotFound();
             }
@@ -43,6 +44,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
 
             TrainingOrder = trainingorder;
+
+            Trainee = await _dataUtils.GetEmployeeById(TrainingOrder.TraineeId);
 
             if (TrainingOrder.Trainers != null) {
                 foreach (var trainer in TrainingOrder.Trainers) {
@@ -57,7 +60,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             return Page();
         }
-
 
         public async Task<IActionResult> OnPostAsync() {
             if (!ModelState.IsValid) {

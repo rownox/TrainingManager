@@ -6,6 +6,9 @@
 
 @using WCSTrainer.Components
 
+<div id="sv-comp-people" class="people-component hidden"></div>
+<div class="overlay hidden"></div>
+
 <div class="panel">
     <div class="body">
         <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
@@ -25,42 +28,23 @@
                         <input asp-for="TrainingOrder.Medium" type="hidden"/>
                         <input asp-for="TrainingOrder.Skills" type="hidden"/>
 
+                        <input type="hidden" id="employeesData" value="@ViewData["EmployeesJson"]" />
+                        <input type="hidden" id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
+
                         <div class="form-group">
                             <div class="form">
                                 <div class="labels">
-                                    <p class="control-label">Trainers</p>
-                                    <p id="trainerDanger" class="text-danger" style="display: none;">Please select at least one trainer.</p>
+                                    <span asp-validation-for="TrainingOrder.Trainers" class="text-danger"></span>
                                 </div>
                                 <div class="selections">
-                                    <ul id="trainerList">
+                                    <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select Trainers</p></div>
+                                    <ul id="trainerList" class="pill-container">
+                                        @foreach (var trainer in Model.TrainerList) {
+                                            <li draggable="true" class="pill">@trainer.FirstName @trainer.LastName</li>
+                                        }
                                     </ul>
+                                    <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
                                 </div>
-                                <div class="selectors">
-                                    <div class="selector">
-                                        <div class="btn bg-btn btnWhite" id="indiButton"><p>Individual</p></div>
-                                        <div class="form-drop" id="individual">
-                                            <ul id="indiList">
-                                                @foreach (var employee in Model.Employees) {
-                                                    if (employee.Status.Equals("Trainer")) {
-                                                        <li>@employee.FirstName @employee.LastName</li>
-                                                    }
-                                                }
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="selector">
-                                        <div class="btn bg-btn btnWhite" id="groupButton"><p>Groups</p></div>
-                                        <div class="form-drop" id="groups">
-                                            <ul id="groupList">
-                                                <li>HR</li>
-                                                <li>Sales</li>
-                                                <li>Shipping</li>
-                                                <li>Engineering</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -105,101 +89,148 @@
     </div>
 </div>
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
 <script>
+    var employeesDataElement = document.getElementById('employeesData');
+    var employeesData = employeesDataElement.value ? JSON.parse(employeesDataElement.value) : [];
+    window.employeesData = employeesData;
+
+    var trainergroupsDataElement = document.getElementById('trainergroupsData');
+    var trainergroupsData = trainergroupsDataElement.value ? JSON.parse(trainergroupsDataElement.value) : [];
+    window.trainergroupsData = trainergroupsData;
+
+    var employeesDataElement = document.getElementById('employeesData');
+    var trainergroupsDataElement = document.getElementById('trainergroupsData');
+
+    var peopleComponent = document.getElementById("sv-comp-people");
+    var overlay = document.querySelector(".overlay");
     var trainersInput = document.getElementById("trainersInput");
-    var groupButton = document.getElementById("groupButton");
-    var indiButton = document.getElementById("indiButton");
     var trainList = document.getElementById("trainerList");
-    var groupList = document.getElementById("groupList");
-    var indiList = document.getElementById("indiList");
-    var trainerDanger = document.getElementById("trainerDanger");
- 
-    indiButton.addEventListener("click", function () {
-        toggleDisplay("individual", "groups");
-    });
+    var trainee = document.getElementById("trainee");
+    var traineeInput = document.getElementById("traineeInput");
+    var person = document.getElementsByClassName("person");
 
-    groupButton.addEventListener("click", function () {
-        toggleDisplay("groups", "individual");
-    });
+    document.addEventListener('DOMContentLoaded', function () {
 
-    function toggleDisplay(dropdown, other) {
-        var dropdownElement = document.getElementById(dropdown);
-        var hideElement = document.getElementById(other);
-        if (dropdownElement.style.display == "flex") {
-            dropdownElement.style.display = "none";
-        } else {
-            dropdownElement.style.display = "flex";
+        function safeAddEventListener(element, event, handler) {
+            if (element) {
+                element.addEventListener(event, handler);
+            }
         }
-        hideElement.style.display = "none";
-    }
 
-    trainList.addEventListener("click", function (event) {
-        if (event.target.tagName === "LI") {
-            event.target.remove();
-            updateTrainersInput();
-        }
-    });
+        safeAddEventListener(overlay, "click", closeComponent);
 
-    indiList.addEventListener("click", function (event) {
-        if (event.target.tagName === "LI") {
-            trainer1(event.target.textContent);
-        }
-    });
-
-    groupList.addEventListener("click", function (event) {
-        if (event.target.tagName === "LI") {
-            trainer2(event.target.textContent);
-        }
-    });
-
-    function trainer1(name) {
-        if (!trainList.innerHTML.includes(name)) {
-            trainList.innerHTML += "<li>" + name + "</li>";
-            updateTrainersInput();
-        }
-        groups.selectedIndex = -1;
-        individual.selectedIndex = -1;
-    }
-
-    function trainer2(name) {
-        if (!trainList.innerHTML.includes(name)) {
-            trainList.innerHTML += "<li>" + name + "</li>";
-            updateTrainersInput();
-        }
-        individual.selectedIndex = -1;
-        groups.selectedIndex = -1;
-    }
-
-    function updateTrainersInput() {
-        var trainers = Array.from(trainList.getElementsByTagName("li")).map(function (item) {
-            return item.textContent;
+        safeAddEventListener(trainee, "click", function (event) {
+            if (event.target.tagName === "LI") {
+                event.target.remove();
+                updateTraineeInput();
+            }
         });
-        trainersInput.value = trainers.join(", ");
-    }
 
-    function toggleSubmitButton() {
-        var submitButton = document.querySelector('input[type="submit"]');
-        if (trainList.getElementsByTagName("li").length > 0) {
-            submitButton.disabled = false;
-        } else {
-            submitButton.disabled = true;
-            trainerDanger.style.display = "none";
+        safeAddEventListener(trainList, "click", function (event) {
+            if (event.target.tagName === "LI") {
+                event.target.remove();
+                updateTrainersInput();
+            }
+        });
+
+        Array.from(person).forEach(item => {
+            safeAddEventListener(item, "click", addTrainer);
+        });
+
+        function addTrainer(trainerNames) {
+            if (!trainerNames || !trainerNames.trim()) return;
+
+            if (typeof trainerNames === 'string') {
+                var names = trainerNames.split(',');
+            } else if (trainerNames instanceof Event) {
+                names = [trainerNames.target.textContent.trim()];
+            } else {
+                return;
+            }
+
+            var trainerList = document.getElementById("trainerList");
+            if (!trainerList) return;
+
+            names.forEach(name => {
+                name = name.trim();
+                if (!Array.from(trainerList.getElementsByTagName("li")).some(li => li.textContent.trim() === name)) {
+                    trainerList.innerHTML += `<li draggable="true" class="pill">${name}</li>`;
+                }
+            });
+
+            updateTrainersInput();
         }
-    }
 
-    trainList.addEventListener("DOMNodeInserted", toggleSubmitButton);
-    trainList.addEventListener("DOMNodeRemoved", toggleSubmitButton);
+        function addTrainee(traineeName, traineeId) {
+            if (!traineeName || !traineeName.trim() || !traineeId) return;
 
-    function validateForm(event) {
-        if (trainList.getElementsByTagName("li").length === 0) {
-            event.preventDefault();
-            trainerDanger.style.display = "block";
+            var traineeList = document.getElementById("trainee");
+            if (!traineeList) return;
+
+            traineeList.innerHTML = `<li value="${traineeId}" class="pill">${traineeName.trim()}</li>`;
+            updateTraineeInput();
         }
+
+        function updateTrainersInput() {
+            if (!trainList || !trainersInput) return;
+
+            var trainerListItems = Array.from(trainList.getElementsByTagName("li"));
+            trainersInput.value = trainerListItems.map(item => item.textContent.trim()).join(", ");
+        }
+
+        function updateTraineeInput() {
+            if (!trainee || !traineeInput) return;
+
+            var traineeListItems = Array.from(trainee.getElementsByTagName("li"));
+            traineeInput.value = traineeListItems.length > 0 ? traineeListItems[0].getAttribute("value") : "";
+        }
+
+        if (trainList) {
+            const trainerListObserver = new MutationObserver(updateTrainersInput);
+            trainerListObserver.observe(trainList, { childList: true, subtree: true });
+        }
+
+        if (trainee) {
+            const traineeObserver = new MutationObserver(updateTraineeInput);
+            traineeObserver.observe(trainee, { childList: true, subtree: true });
+        }
+
+        document.addEventListener("addTrainerEvent", function (event) {
+            addTrainer(event.detail.names);
+            closeComponent();
+        });
+
+        document.addEventListener("addTraineeEvent", function (event) {
+            addTrainee(event.detail.name, event.detail.id);
+            closeComponent();
+        });
+
+        updateTrainersInput();
+        updateTraineeInput();
+    });
+
+    function openComponent(mode) {
+        window.peopleComponentMode = mode;
+        window.dispatchEvent(new Event('peopleComponentModeChange'));
+
+        var peopleComponent = document.getElementById("sv-comp-people");
+        var overlay = document.querySelector(".overlay");
+        if (peopleComponent) peopleComponent.classList.remove("hidden");
+        if (overlay) overlay.classList.remove("hidden");
     }
 
-    document.querySelector('form').addEventListener("submit", validateForm);
-
+    function closeComponent() {
+        var peopleComponent = document.getElementById("sv-comp-people");
+        var overlay = document.querySelector(".overlay");
+        if (peopleComponent) peopleComponent.classList.add("hidden");
+        if (overlay) overlay.classList.add("hidden");
+    }
 </script>
+
 
 @section Scripts {
     @{

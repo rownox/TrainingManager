@@ -3,21 +3,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
-using WCSTrainer.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
     public class CreateModel : PageModel {
         private readonly WCSTrainerContext _context;
+        private readonly DataUtils _dataUtils;
 
-        public CreateModel(WCSTrainerContext context) {
+        public CreateModel(WCSTrainerContext context, DataUtils dataUtils) {
             _context = context;
+            _dataUtils = dataUtils;
         }
 
         [BindProperty]
         public TrainingOrder TrainingOrder { get; set; } = new TrainingOrder();
-
         public DateOnly Day { get; } = DateOnly.FromDateTime(DateTime.Now);
+        [BindProperty]
         public IList<Location> Locations { get; set; }
+        [BindProperty]
         public IList<Employee> Employees { get; set; }
         public IList<TrainerGroup> TrainerGroups { get; set; }
 
@@ -34,8 +36,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         public async Task<IActionResult> OnPostAsync() {
 
-            TrainingOrder.Trainee = await _context.Employees.FindAsync(1);
-            TrainingOrder.Location = await _context.Locations.FindAsync(1);
+            TrainingOrder.Trainee = await _dataUtils.GetEmployeeById(TrainingOrder.TraineeId);
+            TrainingOrder.Location = await _dataUtils.GetLocationById(TrainingOrder.LocationId);
 
             if (!ModelState.IsValid) {
                 Locations = await _context.Locations.ToListAsync();
