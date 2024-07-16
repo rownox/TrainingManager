@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using WCSTrainer.Models;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using System.Reflection.Emit;
+using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Data {
     public class WCSTrainerContext : IdentityDbContext<UserAccount> {
@@ -20,65 +18,57 @@ namespace WCSTrainer.Data {
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
 
-            // Employee
             builder.Entity<Employee>()
-                .HasOne<UserAccount>()
+                .HasOne(e => e.UserAccount)
                 .WithOne(u => u.Employee)
-                .HasForeignKey<Employee>(e => e.UserId);
+                .HasForeignKey<Employee>(e => e.UserAccountId);
 
             builder.Entity<Employee>()
-                .Property(e => e.SkillIds)
-                .HasConversion(
-                    v => string.Join(',', v),
-                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList());
-
-            builder.Entity<Employee>()
-                .Property(e => e.TrainingOrderIds)
-                .HasConversion(
-                    v => string.Join(',', v),
-                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList());
-
-            // TrainerGroup
-            builder.Entity<TrainerGroup>()
-                .Property(tg => tg.TrainerIds)
-                .HasConversion(
-                    v => string.Join(',', v),
-                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList());
-
-            // TrainingOrder
-            builder.Entity<TrainingOrder>()
-                .HasOne<Employee>()
-                .WithMany()
-                .HasForeignKey(to => to.TraineeId);
+                .HasMany(e => e.Skills)
+                .WithMany(s => s.Employees);
 
             builder.Entity<TrainingOrder>()
-                .HasOne<Location>()
-                .WithMany()
+                .HasOne(to => to.Trainee)
+                .WithMany(e => e.TrainingOrdersAsTrainee)
+                .HasForeignKey(to => to.TraineeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<TrainingOrder>()
+                .HasMany(to => to.Trainers)
+                .WithMany(e => e.TrainingOrdersAsTrainer)
+                .UsingEntity(j => j.ToTable("TrainerTrainingOrders"));
+
+            builder.Entity<TrainingOrder>()
+                .HasOne(to => to.Location)
+                .WithMany(l => l.TrainingOrders)
                 .HasForeignKey(to => to.LocationId);
 
             builder.Entity<TrainingOrder>()
-                .HasOne<Verification>()
-                .WithOne()
-                .HasForeignKey<TrainingOrder>(to => to.VerificationId);
+                .HasOne(to => to.Verification)
+                .WithOne(v => v.TrainingOrder)
+                .HasForeignKey<Verification>(v => v.TrainingOrderId);
 
             builder.Entity<TrainingOrder>()
-                .Property(to => to.TrainerIds)
-                .HasConversion(
-                    v => string.Join(',', v),
-                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList());
+                .HasMany(to => to.Skills)
+                .WithMany(s => s.TrainingOrders)
+                .UsingEntity<Dictionary<string, object>>(
+                    "TrainingOrderSkill",
+                    j => j
+                        .HasOne<Skill>()
+                        .WithMany()
+                        .HasForeignKey("SkillId"),
+                    j => j
+                        .HasOne<TrainingOrder>()
+                        .WithMany()
+                        .HasForeignKey("TrainingOrderId")
+                );
 
-            // Verification
             builder.Entity<Verification>()
-                .HasOne<Employee>()
+                .HasOne(v => v.Verifier)
                 .WithMany()
                 .HasForeignKey(v => v.VerifierId);
 
-            builder.Entity<Verification>()
-                .HasOne<TrainingOrder>()
-                .WithOne()
-                .HasForeignKey<Verification>(v => v.TrainingOrderId);
-
-
+            // Roles setup
             var adminRole = new IdentityRole("admin") { NormalizedName = "ADMIN" };
             var trainerRole = new IdentityRole("trainer") { NormalizedName = "TRAINER" };
             var traineeRole = new IdentityRole("trainee") { NormalizedName = "TRAINEE" };

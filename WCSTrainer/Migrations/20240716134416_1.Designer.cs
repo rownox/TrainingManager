@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WCSTrainer.Data;
 
@@ -11,9 +12,11 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Migrations
 {
     [DbContext(typeof(WCSTrainerContext))]
-    partial class WCSTrainerContextModelSnapshot : ModelSnapshot
+    [Migration("20240716134416_1")]
+    partial class _1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,19 +138,19 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ba6baa2a-63c3-4f6e-862c-688323964391",
+                            Id = "95a9b3b2-d72d-45b2-aecf-aadeb0ac146e",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a54bb44f-1c60-46e6-9b1e-9e926a92791e",
+                            Id = "48708268-7ddd-4186-bf9e-3228fe49b358",
                             Name = "trainer",
                             NormalizedName = "TRAINER"
                         },
                         new
                         {
-                            Id = "f64c5de4-3afa-4f7e-8a0b-81905c011766",
+                            Id = "b318f1b8-4ca8-47be-a721-1388221dbed8",
                             Name = "trainee",
                             NormalizedName = "TRAINEE"
                         });
@@ -271,10 +274,6 @@ namespace WCSTrainer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -315,10 +314,6 @@ namespace WCSTrainer.Migrations
                     b.Property<DateOnly>("CreateDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
@@ -336,6 +331,13 @@ namespace WCSTrainer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SkillId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SkillName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -350,24 +352,11 @@ namespace WCSTrainer.Migrations
 
                     b.HasIndex("LocationId");
 
+                    b.HasIndex("SkillId");
+
                     b.HasIndex("TraineeId");
 
                     b.ToTable("TrainingOrders");
-                });
-
-            modelBuilder.Entity("TrainingOrderSkill", b =>
-                {
-                    b.Property<int>("SkillId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TrainingOrderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SkillId", "TrainingOrderId");
-
-                    b.HasIndex("TrainingOrderId");
-
-                    b.ToTable("TrainingOrderSkill");
                 });
 
             modelBuilder.Entity("UserAccount", b =>
@@ -580,6 +569,12 @@ namespace WCSTrainer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Skill", "Skill")
+                        .WithMany("TrainingOrders")
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Employee", "Trainee")
                         .WithMany("TrainingOrdersAsTrainee")
                         .HasForeignKey("TraineeId")
@@ -588,22 +583,9 @@ namespace WCSTrainer.Migrations
 
                     b.Navigation("Location");
 
+                    b.Navigation("Skill");
+
                     b.Navigation("Trainee");
-                });
-
-            modelBuilder.Entity("TrainingOrderSkill", b =>
-                {
-                    b.HasOne("Skill", null)
-                        .WithMany()
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrainingOrder", null)
-                        .WithMany()
-                        .HasForeignKey("TrainingOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Verification", b =>
@@ -633,6 +615,11 @@ namespace WCSTrainer.Migrations
                     b.Navigation("TrainingOrders");
                 });
 
+            modelBuilder.Entity("Skill", b =>
+                {
+                    b.Navigation("TrainingOrders");
+                });
+
             modelBuilder.Entity("TrainerGroup", b =>
                 {
                     b.Navigation("Trainers");
@@ -640,7 +627,8 @@ namespace WCSTrainer.Migrations
 
             modelBuilder.Entity("TrainingOrder", b =>
                 {
-                    b.Navigation("Verification");
+                    b.Navigation("Verification")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("UserAccount", b =>

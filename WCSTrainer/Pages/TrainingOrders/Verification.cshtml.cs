@@ -46,7 +46,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             existingTrainingOrder.TraineeId = TrainingOrder.TraineeId;
             existingTrainingOrder.EndDate = TrainingOrder.EndDate;
             existingTrainingOrder.Medium = TrainingOrder.Medium;
-            existingTrainingOrder.Skill = TrainingOrder.Skill;
+            existingTrainingOrder.Skills = TrainingOrder.Skills;
 
             _context.Entry(existingTrainingOrder).State = EntityState.Modified;
 

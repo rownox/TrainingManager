@@ -20,11 +20,11 @@
                         <input asp-for="TrainingOrder.BeginDate" type="hidden" />
                         <input asp-for="TrainingOrder.LocationId" type="hidden" />
                         <input asp-for="TrainingOrder.Duration" type="hidden" />
-                        <input asp-for="TrainingOrder.TrainerIds" type="hidden" />
+                        <input asp-for="TrainingOrder.Trainers" type="hidden" />
                         <input asp-for="TrainingOrder.TraineeId" type="hidden" />
                         <input asp-for="TrainingOrder.EndDate" type="hidden" />
                         <input asp-for="TrainingOrder.Medium" type="hidden" />
-                        <input asp-for="TrainingOrder.Skill" type="hidden" />
+                        <input asp-for="TrainingOrder.Skills" type="hidden" />
                         <input asp-for="TrainingOrder.Status" type="hidden" value="Completed" />
 
                         @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
@@ -33,7 +33,7 @@
                                     <p class="title">Trainers</p>
                                 </div>
                                 <div class="info-content">
-                                    <p class="info">@Model.TrainingOrder.TrainerIds</p>
+                                    <p class="info">@Model.TrainingOrder.Trainers</p>
                                 </div>
                             </div>
                         }
@@ -50,7 +50,7 @@
                                 <p class="title">Skill</p>
                             </div>
                             <div class="info-content">
-                                <p class="info">@Html.DisplayFor(model => model.TrainingOrder.Skill)</p>
+                                <p class="info">@Html.DisplayFor(model => model.TrainingOrder.Skills)</p>
                             </div>
                         </div>
                         @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {

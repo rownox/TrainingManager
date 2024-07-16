@@ -39,7 +39,7 @@
                                 <p class="title">Trainers</p>
                             </div>
                             <div class="info-content">
-                                <p class="info">@Model.TrainingOrder.TrainerIds</p>
+                                <p class="info">@Model.TrainingOrder.Trainers</p>
                             </div>
                         </div>
                     }
@@ -65,10 +65,10 @@
                     </div>
                     <div class="text-group">
                         <div class="identifier">
-                            <p class="title">Skill</p>
+                            <p class="title">Description</p>
                         </div>
                         <div class="info-content">
-                            <pre class="info">@Html.DisplayFor(model => model.TrainingOrder.Skill)</pre>
+                            <pre class="info">@Html.DisplayFor(model => model.TrainingOrder.Description)</pre>
                         </div>
                     </div>
                     @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
