@@ -50,6 +50,12 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 TrainingOrder = trainingorder;
             }
 
+            foreach (var trainer in TrainingOrder.Trainers) {
+                SelectedTrainerIds.Add(trainer.Id);
+            }
+
+            SelectedTrainerIds = TrainingOrder.Trainers.Select(t => t.Id).ToList();
+            SelectedTrainerString = string.Join(", ", SelectedTrainerIds);
             Locations = new SelectList(await _context.Locations.ToListAsync(), "Id", "Name");
 
             return Page();
@@ -116,7 +122,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 }
             }
 
-            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
