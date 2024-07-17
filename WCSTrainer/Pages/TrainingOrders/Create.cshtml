@@ -19,7 +19,7 @@
                 <p class="description">Fill out each required field.</p>
                 <div class="field-container">
                     <form method="post">
-                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                         <input asp-for="TrainingOrder.Status" type="hidden" value="Awaiting Approval" />
                         <input asp-for="TrainingOrder.CreateDate" type="hidden" value="@Model.Day" />
@@ -37,7 +37,7 @@
                                     <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select Trainee</p></div>
                                     <ul id="trainee" class="pill-container">
                                     </ul>
-                                    <input id="traineeInput" asp-for="TrainingOrder.TraineeId" />
+                                    <input id="traineeInput" asp-for="TrainingOrder.TraineeId" hidden/>
                                 </div>
                             </div>
                         </div>
