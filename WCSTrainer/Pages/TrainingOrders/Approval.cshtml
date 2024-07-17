@@ -17,7 +17,7 @@
                 <p class="title">Approve Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
                 <div class="field-container">
                     <form method="post">
-                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id" />
                         <input asp-for="TrainingOrder.Status" type="hidden" value="Active"/>
                         <input asp-for="TrainingOrder.CreateDate" type="hidden"/>
@@ -38,7 +38,7 @@
                                 <div class="selections">
                                     <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select Trainers</p></div>
                                     <ul id="trainerList" class="pill-container"></ul>
-                                    <input id="trainersInput" asp-for="@Model.SelectedTrainerString" />
+                                    <input id="trainersInput" asp-for="@Model.SelectedTrainerString" hidden/>
                                 </div>
                             </div>
                         </div>
