@@ -13,6 +13,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         [BindProperty]
         public TrainingOrder TrainingOrder { get; set; } = default!;
+        public string TrainerList;
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             if (id == null) {
@@ -20,12 +21,21 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
 
             var trainingorder = await _context.TrainingOrders
+                .Include(tr => tr.Trainee)
                 .Include(tr => tr.Trainers)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (trainingorder == null) {
                 return NotFound();
             }
             TrainingOrder = trainingorder;
+
+            List<string> trainerNames = new List<string>();
+
+            foreach (var trainer in TrainingOrder.Trainers) {
+                trainerNames.Add(trainer.FirstName + " " + trainer.LastName);
+            }
+
+            TrainerList = string.Join(", ", trainerNames);
 
             return Page();
         }
@@ -49,8 +59,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             existingTrainingOrder.EndDate = TrainingOrder.EndDate;
             existingTrainingOrder.Medium = TrainingOrder.Medium;
             existingTrainingOrder.Status = TrainingOrder.Status;
-
-            existingTrainingOrder.Skills = TrainingOrder.Skills;
+            existingTrainingOrder.ClosingNotes = TrainingOrder.ClosingNotes;
 
             _context.Entry(existingTrainingOrder).State = EntityState.Modified;
 
