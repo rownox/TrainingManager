@@ -14,36 +14,31 @@
                 <p class="title">Conclude Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
                 <div class="field-container">
                     <form method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div asp-validation-summary="All" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id"/>
                         <input asp-for="TrainingOrder.CreateDate" type="hidden" />
                         <input asp-for="TrainingOrder.BeginDate" type="hidden" />
                         <input asp-for="TrainingOrder.LocationId" type="hidden" />
                         <input asp-for="TrainingOrder.Duration" type="hidden" />
-                        <input asp-for="TrainingOrder.Trainers" type="hidden" />
                         <input asp-for="TrainingOrder.TraineeId" type="hidden" />
                         <input asp-for="TrainingOrder.EndDate" type="hidden" />
                         <input asp-for="TrainingOrder.Medium" type="hidden" />
                         <input asp-for="TrainingOrder.Skills" type="hidden" />
                         <input asp-for="TrainingOrder.Status" type="hidden" value="Completed" />
 
-                        @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
-                            <div class="text-group">
-                                <div class="identifier">
-                                    <p class="title">Trainers</p>
-                                </div>
-                                <div class="info-content">
-                                    <p class="info">@Model.TrainingOrder.Trainers</p>
-                                </div>
-                            </div>
-                        }
-
+                        <div class="text-group">
+                            <p class="title">Trainers</p>
+                            <p class="info">@Model.TrainerList</p>
+                        </div>
                         <div class="text-group">
                             <div class="identifier">
                                 <p class="title">Trainee</p>
                             </div>
                             <div class="info-content">
-                                <p class="info">@Html.DisplayFor(model => model.TrainingOrder.TraineeId)</p>
+                                <p class="info">
+                                    @Model.TrainingOrder.Trainee.FirstName
+                                    @Model.TrainingOrder.Trainee.LastName
+                                </p>
                             </div>
                         </div>
                         <div class="text-group">
@@ -51,7 +46,7 @@
                                 <p class="title">Skill</p>
                             </div>
                             <div class="info-content">
-                                <p class="info">@Html.DisplayFor(model => model.TrainingOrder.Skills)</p>
+                                <p class="info">@Model.TrainingOrder.Description</p>
                             </div>
                         </div>
                         @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
@@ -60,7 +55,7 @@
                                     <p class="title">Begin Date</p>
                                 </div>
                                 <div class="info-content">
-                                    <p class="info">@Html.DisplayFor(model => model.TrainingOrder.BeginDate)</p>
+                                    <p class="info">@Model.TrainingOrder.BeginDate</p>
                                 </div>
                             </div>
                             <div class="text-group">
@@ -68,7 +63,7 @@
                                     <p class="title">End Date</p>
                                 </div>
                                 <div class="info-content">
-                                    <p class="info">@Html.DisplayFor(model => model.TrainingOrder.EndDate)</p>
+                                    <p class="info">@Model.TrainingOrder.EndDate</p>
                                 </div>
                             </div>
                         }
@@ -78,7 +73,7 @@
                                 <div class="labels">
                                     <p class="control-label">Closing Notes</p>
                                 </div>
-                                <textarea rows="5" /></textarea>
+                                <textarea asp-for="TrainingOrder.ClosingNotes" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="form-group">

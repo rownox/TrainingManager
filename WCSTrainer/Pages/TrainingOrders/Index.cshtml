@@ -60,7 +60,7 @@
                                                     type = "active";
                                                 } else if (item.Status.Equals("Verified")) {
                                                     type = "verified";
-                                                } else {
+                                                } else if (item.Status.Equals("Completed")) {
                                                     type = "completed";
                                                 }
                                                 <p class="@type">@item.Status</p>

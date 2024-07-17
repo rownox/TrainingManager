@@ -73,6 +73,12 @@
                         <p class="title">Order Creation Date</p>
                         <p class="info">@Model.TrainingOrder.CreateDate</p>
                     </div>
+                    @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval") && !Model.TrainingOrder.Status.Equals("Active")) {
+                        <div class="text-group">
+                            <p class="title">Closing Notes</p>
+                            <pre class="info">@Model.TrainingOrder.ClosingNotes</pre>
+                        </div>
+                    }
                     @if (Model.TrainingOrder.Status.Equals("Verified")) {
                         <br></br>
                         <p style="font-size: 20px;">Verification</p>
