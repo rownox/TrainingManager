@@ -19,7 +19,10 @@ namespace WCSTrainer.Pages.Employees {
                 return NotFound();
             }
 
-            var employee = await _context.Employees.FirstOrDefaultAsync(m => m.Id == id);
+            var employee = await _context.Employees
+                .Include(ua => ua.UserAccount)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (employee == null) {
                 return NotFound();
             }
@@ -27,8 +30,6 @@ namespace WCSTrainer.Pages.Employees {
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync() {
             if (!ModelState.IsValid) {
                 return Page();

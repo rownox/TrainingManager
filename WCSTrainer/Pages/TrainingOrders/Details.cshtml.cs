@@ -13,6 +13,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
         }
 
         public TrainingOrder TrainingOrder { get; set; } = default!;
+        public string TrainerList;
 
         public async Task<IActionResult> OnGetAsync(int? id) {
 
@@ -23,6 +24,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             var trainingorder = await _context.TrainingOrders
                 .Include(t => t.Trainee)
                 .Include(l => l.Location)
+                .Include(tr => tr.Trainers)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (trainingorder == null) {

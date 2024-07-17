@@ -55,27 +55,29 @@
     }
 
     function addSelection() {
-        let selectedNames = [];
-        
+        let selectedItems = [];
+
         selectedPeople.subscribe(people => {
-            selectedNames = [...selectedNames, ...people.map(person => person.name)];
+            selectedItems = [...selectedItems, ...people.map(person => ({ name: person.name, id: person.id }))];
         });
 
         if (displayMode !== 'trainees') {
             selectedGroups.subscribe(groups => {
-                selectedNames = [...selectedNames, ...groups.map(group => group.name)];
+                selectedItems = [...selectedItems, ...groups.map(group => ({ name: group.name, id: group.id }))];
             });
         }
 
-        if (selectedNames.length) {
+        if (selectedItems.length) {
             const eventName = displayMode === 'trainers' ? 'addTrainerEvent' : 'addTraineeEvent';
-            const detail = displayMode === 'trainees' 
-                ? { name: selectedNames[0], id: $selectedPeople[0].id }
-                : { names: selectedNames.join(', ') };
+            const detail = displayMode === 'trainees'
+                ? selectedItems[0]
+                : { items: selectedItems };
             const event = new CustomEvent(eventName, { detail });
             document.dispatchEvent(event);
         }
     }
+
+
 
     onMount(() => {
         if (window.employeesData && Array.isArray(window.employeesData)) {

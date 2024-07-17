@@ -17,16 +17,15 @@
                 <p class="title">Approve Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
                 <div class="field-container">
                     <form method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div asp-validation-summary="All" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id" />
                         <input asp-for="TrainingOrder.Status" type="hidden" value="Active"/>
-
                         <input asp-for="TrainingOrder.CreateDate" type="hidden"/>
                         <input asp-for="TrainingOrder.LocationId" type="hidden"/>
                         <input asp-for="TrainingOrder.Duration" type="hidden"/>
                         <input asp-for="TrainingOrder.TraineeId" type="hidden"/>
                         <input asp-for="TrainingOrder.Medium" type="hidden"/>
-                        <input asp-for="TrainingOrder.Skills" type="hidden"/>
+                        <input asp-for="TrainingOrder.Description" type="hidden"/>
 
                         <input type="hidden" id="employeesData" value="@ViewData["EmployeesJson"]" />
                         <input type="hidden" id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
@@ -34,16 +33,12 @@
                         <div class="form-group">
                             <div class="form">
                                 <div class="labels">
-                                    <span asp-validation-for="TrainingOrder.Trainers" class="text-danger"></span>
+                                    <span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
                                 </div>
                                 <div class="selections">
                                     <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select Trainers</p></div>
-                                    <ul id="trainerList" class="pill-container">
-                                        @foreach (var trainer in Model.TrainerList) {
-                                            <li draggable="true" class="pill">@trainer.FirstName @trainer.LastName</li>
-                                        }
-                                    </ul>
-                                    <input id="trainersInput" asp-for="TrainingOrder.Trainers" type="hidden" />
+                                    <ul id="trainerList" class="pill-container"></ul>
+                                    <input id="trainersInput" asp-for="@Model.SelectedTrainerString" />
                                 </div>
                             </div>
                         </div>
@@ -141,24 +136,15 @@
             safeAddEventListener(item, "click", addTrainer);
         });
 
-        function addTrainer(trainerNames) {
-            if (!trainerNames || !trainerNames.trim()) return;
-
-            if (typeof trainerNames === 'string') {
-                var names = trainerNames.split(',');
-            } else if (trainerNames instanceof Event) {
-                names = [trainerNames.target.textContent.trim()];
-            } else {
-                return;
-            }
+        function addTrainer(trainerItems) {
+            if (!trainerItems || trainerItems.length === 0) return;
 
             var trainerList = document.getElementById("trainerList");
             if (!trainerList) return;
 
-            names.forEach(name => {
-                name = name.trim();
-                if (!Array.from(trainerList.getElementsByTagName("li")).some(li => li.textContent.trim() === name)) {
-                    trainerList.innerHTML += `<li draggable="true" class="pill">${name}</li>`;
+            trainerItems.forEach(item => {
+                if (!Array.from(trainerList.getElementsByTagName("li")).some(li => li.getAttribute("value").trim() === item.id)) {
+                    trainerList.innerHTML += `<li value="${item.id}" class="pill">${item.name}</li>`;
                 }
             });
 
@@ -179,7 +165,7 @@
             if (!trainList || !trainersInput) return;
 
             var trainerListItems = Array.from(trainList.getElementsByTagName("li"));
-            trainersInput.value = trainerListItems.map(item => item.textContent.trim()).join(", ");
+            trainersInput.value = trainerListItems.map(item => `${item.getAttribute("value")}`).join(", ");
         }
 
         function updateTraineeInput() {
@@ -200,7 +186,7 @@
         }
 
         document.addEventListener("addTrainerEvent", function (event) {
-            addTrainer(event.detail.names);
+            addTrainer(event.detail.items);
             closeComponent();
         });
 

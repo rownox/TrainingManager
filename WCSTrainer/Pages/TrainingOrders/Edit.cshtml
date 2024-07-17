@@ -51,7 +51,9 @@
                                 <div class="selections">
                                     <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select Trainee</p></div>
                                     <ul id="trainee" class="pill-container">
-                                        <li value="@Model.TrainingOrder.TraineeId" class="pill">@Model.Trainee.FirstName @Model.Trainee.LastName</li>
+                                        <li value="@Model.TrainingOrder.TraineeId" class="pill">
+                                            @Model.TrainingOrder.Trainee.FirstName @Model.TrainingOrder.Trainee.LastName
+                                        </li>
                                     </ul>
                                     <input id="traineeInput" asp-for="TrainingOrder.TraineeId" type="hidden"/>
                                 </div>
@@ -63,7 +65,11 @@
                                     <p class="control-label">Skill</p>
                                     <span asp-validation-for="TrainingOrder.Description" class="text-danger"></span>
                                 </div>
-                                <textarea rows="4" asp-for="TrainingOrder.Description" placeholder="Describe the skill being trained and the goal."></textarea>
+                                <textarea 
+                                    rows="4" 
+                                    asp-for="TrainingOrder.Description" 
+                                    placeholder="Describe the skill being trained and the goal.">
+                                </textarea>
                             </div>
                         </div>
                         @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
