@@ -19,8 +19,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
         [BindProperty]
         public IList<TrainerGroup> TrainerGroups { get; set; }
 
-        public IList<Employee> TrainerList { get; set; } = new List<Employee>();
-
         [BindProperty]
         public string SelectedTrainerString { get; set; }
         public List<int> SelectedTrainerIds { get; set; }
@@ -44,13 +42,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
             TrainingOrder = trainingorder;
 
-            if (TrainingOrder.Trainers != null) {
-                foreach (var trainer in TrainingOrder.Trainers) {
-                    if (trainer != null) {
-                        TrainerList.Add(trainer);
-                    }
-                }
-            }
             return Page();
         }
 
