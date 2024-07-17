@@ -33,7 +33,7 @@
                                         <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select Trainers</p></div>
                                         <ul id="trainerList" class="pill-container">
                                             @foreach (var trainer in Model.TrainingOrder.Trainers) {
-                                                <li draggable="true" class="pill">@trainer.FirstName @trainer.LastName</li>
+                                                <li draggable="true" class="pill" value="@trainer.Id">@trainer.FirstName @trainer.LastName</li>
                                             }
                                         </ul>
                                     </div>
