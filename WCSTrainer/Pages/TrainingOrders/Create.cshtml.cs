@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
 
@@ -17,40 +18,32 @@ namespace WCSTrainer.Pages.TrainingOrders {
         [BindProperty]
         public TrainingOrder TrainingOrder { get; set; } = new TrainingOrder();
         public DateOnly Day { get; } = DateOnly.FromDateTime(DateTime.Now);
-        [BindProperty]
-        public IList<Location> Locations { get; set; }
+        
         [BindProperty]
         public IList<Employee> Employees { get; set; }
         public IList<TrainerGroup> TrainerGroups { get; set; }
+        public SelectList Locations { get; set; }
 
         public async Task<IActionResult> OnGetAsync() {
-            Locations = await _context.Locations.ToListAsync();
             Employees = await _context.Employees.ToListAsync();
             TrainerGroups = await _context.TrainerGroups.ToListAsync();
 
             ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
             ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
 
+            Locations = new SelectList(await _context.Locations.ToListAsync(), "Id", "Name");
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync() {
 
-            TrainingOrder.Trainee = await _dataUtils.GetEmployeeById(TrainingOrder.TraineeId);
-            TrainingOrder.Location = await _dataUtils.GetLocationById(TrainingOrder.LocationId);
-
             if (!ModelState.IsValid) {
-                Locations = await _context.Locations.ToListAsync();
-                Employees = await _context.Employees.ToListAsync();
-                TrainerGroups = await _context.TrainerGroups.ToListAsync();
-
-                ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
-                ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
-
+                await OnGetAsync();
                 return Page();
             }
 
-            _context.TrainingOrders.Update(TrainingOrder);
+            _context.TrainingOrders.Add(TrainingOrder);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
