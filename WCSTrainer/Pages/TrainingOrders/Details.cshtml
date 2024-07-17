@@ -32,7 +32,9 @@
                     @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
                         <div class="text-group">
                             <p class="title">Trainers</p>
-                            <p class="info">@Model.TrainingOrder.Trainers</p>
+                            @foreach (var trainer in Model.TrainingOrder.Trainers) {
+                                <p class="info">@trainer.FirstName @trainer.LastName, </p>
+                            }
                         </div>
                     }
                     <div class="text-group">

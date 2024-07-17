@@ -22,7 +22,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public IList<TrainerGroup> TrainerGroups { get; set; }
 
         public IList<Employee> TrainerList { get; set; } = new List<Employee>();
-        public Employee Trainee { get; set; }
         public SelectList Locations { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
@@ -43,9 +42,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             if (trainingorder == null) {
                 return NotFound();
+            } else {
+                TrainingOrder = trainingorder;
             }
-
-            TrainingOrder = trainingorder;
 
             if (TrainingOrder.Trainers != null) {
                 foreach (var trainer in TrainingOrder.Trainers) {
@@ -55,8 +54,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 }
             }
 
-            var locations = await _context.Locations.ToListAsync();
-            Locations = new SelectList(locations, "Id", "Name");
+            Locations = new SelectList(await _context.Locations.ToListAsync(), "Id", "Name");
 
             return Page();
         }

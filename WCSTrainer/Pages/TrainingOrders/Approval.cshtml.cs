@@ -21,12 +21,18 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
         public IList<Employee> TrainerList { get; set; } = new List<Employee>();
 
+        [BindProperty]
+        public string SelectedTrainerString { get; set; }
+        public List<int> SelectedTrainerIds { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id) {
             Employees = await _context.Employees.ToListAsync();
-            ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
+            ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer
+                .Serialize(Employees ?? new List<Employee>());
 
             TrainerGroups = await _context.TrainerGroups.ToListAsync();
-            ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
+            ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer
+                .Serialize(TrainerGroups ?? new List<TrainerGroup>());
 
             if (id == null) {
                 return NotFound();
@@ -52,10 +58,12 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             if (!ModelState.IsValid) {
                 Employees = await _context.Employees.ToListAsync();
-                ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
+                ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer
+                    .Serialize(Employees ?? new List<Employee>());
 
                 TrainerGroups = await _context.TrainerGroups.ToListAsync();
-                ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
+                ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer
+                    .Serialize(TrainerGroups ?? new List<TrainerGroup>());
 
                 return Page();
             }
@@ -71,6 +79,15 @@ namespace WCSTrainer.Pages.TrainingOrders {
                     throw;
                 }
             }
+
+            SelectedTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
+
+            TrainingOrder.Trainers = await _context.Employees
+                    .Where(e => SelectedTrainerIds.Contains(e.Id))
+                    .ToListAsync();
+
+            _context.TrainingOrders.Update(TrainingOrder);
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
