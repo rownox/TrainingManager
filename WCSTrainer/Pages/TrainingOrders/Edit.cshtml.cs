@@ -9,11 +9,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
     public class EditModel : PageModel {
 
         private readonly WCSTrainer.Data.WCSTrainerContext _context;
-        private readonly DataUtils _dataUtils;
 
-        public EditModel(WCSTrainer.Data.WCSTrainerContext context, DataUtils dataUtils) {
+        public EditModel(WCSTrainer.Data.WCSTrainerContext context) {
             _context = context;
-            _dataUtils = dataUtils;
         }
 
         [BindProperty]
@@ -38,14 +36,16 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 return NotFound();
             }
 
-            var trainingorder = await _context.TrainingOrders.FirstOrDefaultAsync(m => m.Id == id);
+            var trainingorder = await _context.TrainingOrders
+                .Include(t => t.Trainee)
+                .Include(l => l.Location)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (trainingorder == null) {
                 return NotFound();
             }
 
             TrainingOrder = trainingorder;
-
-            Trainee = await _dataUtils.GetEmployeeById(TrainingOrder.TraineeId);
 
             if (TrainingOrder.Trainers != null) {
                 foreach (var trainer in TrainingOrder.Trainers) {

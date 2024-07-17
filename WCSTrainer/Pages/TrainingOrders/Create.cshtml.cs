@@ -8,21 +8,19 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Pages.TrainingOrders {
     public class CreateModel : PageModel {
         private readonly WCSTrainerContext _context;
-        private readonly DataUtils _dataUtils;
 
-        public CreateModel(WCSTrainerContext context, DataUtils dataUtils) {
+        public CreateModel(WCSTrainerContext context) {
             _context = context;
-            _dataUtils = dataUtils;
         }
 
         [BindProperty]
         public TrainingOrder TrainingOrder { get; set; } = new TrainingOrder();
-        public DateOnly Day { get; } = DateOnly.FromDateTime(DateTime.Now);
-        
         [BindProperty]
         public IList<Employee> Employees { get; set; }
         public IList<TrainerGroup> TrainerGroups { get; set; }
         public SelectList Locations { get; set; }
+        public DateOnly Day { get; } = DateOnly.FromDateTime(DateTime.Now);
+
 
         public async Task<IActionResult> OnGetAsync() {
             Employees = await _context.Employees.ToListAsync();

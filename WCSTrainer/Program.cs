@@ -17,8 +17,6 @@ builder.Services.AddDbContext<WCSTrainerContext>(options =>
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddScoped<DataUtils>();
-
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment()) {
