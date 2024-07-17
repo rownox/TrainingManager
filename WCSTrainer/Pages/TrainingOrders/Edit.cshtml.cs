@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
-using WCSTrainer.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
     public class EditModel : PageModel {
 
-        private readonly WCSTrainer.Data.WCSTrainerContext _context;
+        private readonly WCSTrainerContext _context;
 
-        public EditModel(WCSTrainer.Data.WCSTrainerContext context) {
+        public EditModel(WCSTrainerContext context) {
             _context = context;
         }
 
@@ -20,38 +19,35 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public IList<Employee> Employees { get; set; }
         [BindProperty]
         public IList<TrainerGroup> TrainerGroups { get; set; }
-
-        public IList<Employee> TrainerList { get; set; } = new List<Employee>();
         public SelectList Locations { get; set; }
+        [BindProperty]
+        public string SelectedTrainerString { get; set; }
+        public List<int> SelectedTrainerIds { get; set; } = new List<int>();
 
         public async Task<IActionResult> OnGetAsync(int? id) {
-            Employees = await _context.Employees.ToListAsync();
-            ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
-
-            TrainerGroups = await _context.TrainerGroups.ToListAsync();
-            ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
 
             if (id == null) {
                 return NotFound();
             }
 
+            Employees = await _context.Employees.ToListAsync();
+            ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer
+                .Serialize(Employees ?? new List<Employee>());
+
+            TrainerGroups = await _context.TrainerGroups.ToListAsync();
+            ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer
+                .Serialize(TrainerGroups ?? new List<TrainerGroup>());
+
             var trainingorder = await _context.TrainingOrders
                 .Include(t => t.Trainee)
                 .Include(l => l.Location)
+                .Include(tr => tr.Trainers)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (trainingorder == null) {
                 return NotFound();
             } else {
                 TrainingOrder = trainingorder;
-            }
-
-            if (TrainingOrder.Trainers != null) {
-                foreach (var trainer in TrainingOrder.Trainers) {
-                    if (trainer != null) {
-                        TrainerList.Add(trainer);
-                    }
-                }
             }
 
             Locations = new SelectList(await _context.Locations.ToListAsync(), "Id", "Name");
@@ -62,9 +58,11 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public async Task<IActionResult> OnPostAsync() {
             if (!ModelState.IsValid) {
                 Employees = await _context.Employees.ToListAsync();
-                ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
+                ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer
+                    .Serialize(Employees ?? new List<Employee>());
                 TrainerGroups = await _context.TrainerGroups.ToListAsync();
-                ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
+                ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer
+                    .Serialize(TrainerGroups ?? new List<TrainerGroup>());
 
                 return Page();
             }
@@ -74,17 +72,53 @@ namespace WCSTrainer.Pages.TrainingOrders {
             try {
                 await _context.SaveChangesAsync();
             } catch (DbUpdateConcurrencyException) {
-                if (!TrainingOrderExists(TrainingOrder.Id)) {
+                if (!_context.TrainingOrders.Any(e => e.Id == TrainingOrder.Id)) {
                     return NotFound();
                 } else {
                     throw;
                 }
             }
-            return RedirectToPage("./Index");
-        }
 
-        private bool TrainingOrderExists(int id) {
-            return _context.TrainingOrders.Any(e => e.Id == id);
+            var trainingOrderToUpdate = await _context.TrainingOrders
+                .Include(t => t.Trainers)
+                .FirstOrDefaultAsync(t => t.Id == TrainingOrder.Id);
+
+            if (trainingOrderToUpdate == null) {
+                return NotFound();
+            }
+
+            _context.Entry(trainingOrderToUpdate).CurrentValues.SetValues(TrainingOrder);
+
+            List<int> newTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
+            var newTrainers = await _context.Employees
+                .Where(e => newTrainerIds.Contains(e.Id))
+                .ToListAsync();
+
+            foreach (var trainer in trainingOrderToUpdate.Trainers.ToList()) {
+                if (!newTrainerIds.Contains(trainer.Id)) {
+                    trainingOrderToUpdate.Trainers.Remove(trainer);
+                }
+            }
+
+            foreach (var trainer in newTrainers) {
+                if (!trainingOrderToUpdate.Trainers.Any(t => t.Id == trainer.Id)) {
+                    trainingOrderToUpdate.Trainers.Add(trainer);
+                }
+            }
+
+            try {
+                await _context.SaveChangesAsync();
+            } catch (DbUpdateConcurrencyException) {
+                if (!_context.TrainingOrders.Any(e => e.Id == TrainingOrder.Id)) {
+                    return NotFound();
+                } else {
+                    throw;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }

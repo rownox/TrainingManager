@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AngleSharp.Dom;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
@@ -32,6 +33,14 @@ namespace WCSTrainer.Pages.TrainingOrders {
             } else {
                 TrainingOrder = trainingorder;
             }
+
+            List<string> trainerNames = new List<string>();
+
+            foreach(var trainer in TrainingOrder.Trainers) {
+                trainerNames.Add(trainer.FirstName + " " + trainer.LastName);
+            }
+
+            TrainerList = string.Join(", ", trainerNames);
 
             return Page();
         }
