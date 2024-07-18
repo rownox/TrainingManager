@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
+    [Authorize(Roles = "admin, trainer, trainee")]
     public class SchedulingModel : PageModel {
         private readonly WCSTrainer.Data.WCSTrainerContext _context;
 

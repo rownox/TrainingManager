@@ -19,12 +19,19 @@
     @if (!TrainingOrder.Status.Equals("Awaiting Approval")) {
         <div class="text-group">
             <p class="title">Trainers</p>
-            <p class="info">@TrainerList</p>
+            <div class="info">
+                @foreach (var trainer in TrainingOrder.Trainers) {
+                    <div class="pill">@trainer.FirstName @trainer.LastName</div>
+                }
+            </div>
         </div>
     }
     <div class="text-group">
         <p class="title">Trainee</p>
-        <p class="info">@TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName</p>
+        <div class="info">
+            <div class="pill">@TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName</div>
+        </div>
+        
     </div>
     <div class="text-group">
         <p class="title">Priority Level</p>
@@ -95,7 +102,6 @@
     public int OrderId { get; set; }
 
     private TrainingOrder? TrainingOrder;
-    private string TrainerList;
 
     protected override async Task OnInitializedAsync() {
         await LoadTrainingOrderAsync();
@@ -111,13 +117,5 @@
             .Include(l => l.Location)
             .Include(tr => tr.Trainers)
             .FirstOrDefaultAsync(m => m.Id == OrderId);
-
-        List<string> trainerNames = new List<string>();
-
-        foreach (var trainer in TrainingOrder.Trainers) {
-            trainerNames.Add(trainer.FirstName + " " + trainer.LastName);
-        }
-
-        TrainerList = string.Join(", ", trainerNames);
     }
 }

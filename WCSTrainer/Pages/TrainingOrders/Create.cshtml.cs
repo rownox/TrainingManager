@@ -1,4 +1,5 @@
 ﻿using AngleSharp.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.TrainingOrders {
+    [Authorize(Roles = "admin, trainer")]
     public class CreateModel : PageModel {
         private readonly WCSTrainerContext _context;
 

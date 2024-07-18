@@ -43,10 +43,10 @@ button {
 .pill {
     list-style: none;
     background-color: var(--mainTheme);
+    text-align: center;
     cursor: pointer;
-    padding: 3px 10px;
-    border-radius: 20px;
-    margin: 2px;
+    padding: 2px 7px;
+    border-radius: 3px;
     height: fit-content;
     user-select: none;
 }
