@@ -28,50 +28,10 @@
 
                         <input asp-for="TrainingOrder.Status" type="hidden" value="Verified" />
 
-                        @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
-                            <div class="text-group">
-                                <div class="identifier">
-                                    <p class="title">Trainers</p>
-                                </div>
-                                <div class="info-content">
-                                    <p class="info">@Model.TrainingOrder.Trainers</p>
-                                </div>
-                            </div>
-                        }
-                        <div class="text-group">
-                            <div class="identifier">
-                                <p class="title">Trainee</p>
-                            </div>
-                            <div class="info-content">
-                                <p class="info">@Model.TrainingOrder.TraineeId</p>
-                            </div>
-                        </div>
-                        <div class="text-group">
-                            <div class="identifier">
-                                <p class="title">Skill</p>
-                            </div>
-                            <div class="info-content">
-                                <p class="info">@Html.DisplayFor(model => model.TrainingOrder.Skills)</p>
-                            </div>
-                        </div>
-                        @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
-                            <div class="text-group">
-                                <div class="identifier">
-                                    <p class="title">Begin Date</p>
-                                </div>
-                                <div class="info-content">
-                                    <p class="info">@Html.DisplayFor(model => model.TrainingOrder.BeginDate)</p>
-                                </div>
-                            </div>
-                            <div class="text-group">
-                                <div class="identifier">
-                                    <p class="title">End Date</p>
-                                </div>
-                                <div class="info-content">
-                                    <p class="info">@Html.DisplayFor(model => model.TrainingOrder.EndDate)</p>
-                                </div>
-                            </div>
-                        }
+                        <component type="typeof(TrainingDetails)"
+                                   render-mode="WebAssemblyPrerendered"
+                                   param-OrderId="@Model.TrainingOrder.Id" />
+
                         <br />
                         <div class="form-group">
                             <div class="form">
