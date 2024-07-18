@@ -2,25 +2,23 @@
 
 <div class="side-bar">
     <div class="link-list">
-        @if (Navigation.Uri.Contains("TrainingOrders")) {
-            <a href="/TrainingOrders" class="selected">Training Orders</a>
-        } else {
-            <a href="/TrainingOrders">Training Orders</a>
-        }
-        @if (Navigation.Uri.Contains("Employees")) {
-            <a href="/Employees" class="selected">Employees</a>
-        } else {
-            <a href="/Employees">Employees</a>
-        }
-        @if (Navigation.Uri.Contains("Skills")) {
-            <a href="/Skills" class="selected">Skills</a>
-        } else {
-            <a href="/Skills">Skills</a>
-        }
-        @if (Navigation.Uri.Contains("Account/Manage")) {
-            <a href="/Identity/Account/Manage" class="selected">Account Settings</a>
-        } else {
-            <a href="/Identity/Account/Manage">Account Settings</a>
+        @{
+            List<(string, string)> links = new List<(string, string)> {
+                ("TrainingOrders", "Training Orders"),
+                ("Employees", "Employees"),
+                ("Skills", "Skills"),
+                ("Locations", "Locations"),
+                ("Accounts", "Account Manager"),
+                ("Identity/Account/Manage", "Account Settings")
+            };
+
+            foreach (var link in links) {
+                if (Navigation.Uri.Contains(link.Item1)) {
+                    <a href="/@link.Item1" class="selected">@link.Item2</a>
+                } else {
+                    <a href="/@link.Item1">@link.Item2</a>
+                }
+            }
         }
     </div>
 </div>
