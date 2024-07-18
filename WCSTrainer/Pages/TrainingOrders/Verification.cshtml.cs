@@ -19,7 +19,11 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 return NotFound();
             }
 
-            var trainingorder = await _context.TrainingOrders.FirstOrDefaultAsync(m => m.Id == id);
+            var trainingorder = await _context.TrainingOrders
+                .Include(t => t.Trainers)
+                .Include(t => t.Location)
+                .Include(t => t.Trainee)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (trainingorder == null) {
                 return NotFound();
             }
@@ -46,7 +50,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             existingTrainingOrder.TraineeId = TrainingOrder.TraineeId;
             existingTrainingOrder.EndDate = TrainingOrder.EndDate;
             existingTrainingOrder.Medium = TrainingOrder.Medium;
-            existingTrainingOrder.Skills = TrainingOrder.Skills;
+            existingTrainingOrder.Description = TrainingOrder.Description;
 
             _context.Entry(existingTrainingOrder).State = EntityState.Modified;
 
