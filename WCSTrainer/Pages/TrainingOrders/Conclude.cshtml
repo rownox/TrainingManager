@@ -3,8 +3,6 @@
 @{
 }
 
-@using WCSTrainer.Components
-
 <div class="panel">
     <div class="body">
         <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
@@ -31,42 +29,16 @@
                             <p class="info">@Model.TrainerList</p>
                         </div>
                         <div class="text-group">
-                            <div class="identifier">
-                                <p class="title">Trainee</p>
-                            </div>
-                            <div class="info-content">
-                                <p class="info">
-                                    @Model.TrainingOrder.Trainee.FirstName
-                                    @Model.TrainingOrder.Trainee.LastName
-                                </p>
-                            </div>
+                            <p class="title">Trainee</p>
+                            <p class="info">
+                                @Model.TrainingOrder.Trainee.FirstName
+                                @Model.TrainingOrder.Trainee.LastName
+                            </p>
                         </div>
                         <div class="text-group">
-                            <div class="identifier">
-                                <p class="title">Skill</p>
-                            </div>
-                            <div class="info-content">
-                                <p class="info">@Model.TrainingOrder.Description</p>
-                            </div>
+                            <p class="title">Description</p>
+                            <p class="info">@Model.TrainingOrder.Description</p>
                         </div>
-                        @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
-                            <div class="text-group">
-                                <div class="identifier">
-                                    <p class="title">Begin Date</p>
-                                </div>
-                                <div class="info-content">
-                                    <p class="info">@Model.TrainingOrder.BeginDate</p>
-                                </div>
-                            </div>
-                            <div class="text-group">
-                                <div class="identifier">
-                                    <p class="title">End Date</p>
-                                </div>
-                                <div class="info-content">
-                                    <p class="info">@Model.TrainingOrder.EndDate</p>
-                                </div>
-                            </div>
-                        }
                         <br />
                         <div class="form-group">
                             <div class="form">
