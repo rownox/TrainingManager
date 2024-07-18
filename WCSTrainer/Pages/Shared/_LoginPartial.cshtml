@@ -6,7 +6,8 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    
+    var user = await UserManager.GetUserAsync(User);
+    <p class="login-email">@user.Email</p>
     <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
         <button id="logout" type="submit" class="btn bg-btn btnWhite">Logout</button>
     </form>
