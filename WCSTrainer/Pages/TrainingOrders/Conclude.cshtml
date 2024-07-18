@@ -24,21 +24,10 @@
                         <input asp-for="TrainingOrder.Skills" type="hidden" />
                         <input asp-for="TrainingOrder.Status" type="hidden" value="Completed" />
 
-                        <div class="text-group">
-                            <p class="title">Trainers</p>
-                            <p class="info">@Model.TrainerList</p>
-                        </div>
-                        <div class="text-group">
-                            <p class="title">Trainee</p>
-                            <p class="info">
-                                @Model.TrainingOrder.Trainee.FirstName
-                                @Model.TrainingOrder.Trainee.LastName
-                            </p>
-                        </div>
-                        <div class="text-group">
-                            <p class="title">Description</p>
-                            <p class="info">@Model.TrainingOrder.Description</p>
-                        </div>
+                        <component type="typeof(TrainingDetails)"
+                                   render-mode="WebAssemblyPrerendered"
+                                   param-OrderId="@Model.TrainingOrder.Id" />
+
                         <br />
                         <div class="form-group">
                             <div class="form">

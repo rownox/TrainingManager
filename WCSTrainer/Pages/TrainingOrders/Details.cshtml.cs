@@ -14,7 +14,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
         }
 
         public TrainingOrder TrainingOrder { get; set; } = default!;
-        public string TrainerList;
 
         public async Task<IActionResult> OnGetAsync(int? id) {
 
@@ -22,25 +21,12 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 return NotFound();
             }
 
-            var trainingorder = await _context.TrainingOrders
-                .Include(t => t.Trainee)
-                .Include(l => l.Location)
-                .Include(tr => tr.Trainers)
-                .FirstOrDefaultAsync(m => m.Id == id);
-
+            var trainingorder = await _context.TrainingOrders.FirstOrDefaultAsync(m => m.Id == id);
             if (trainingorder == null) {
                 return NotFound();
             } else {
                 TrainingOrder = trainingorder;
             }
-
-            List<string> trainerNames = new List<string>();
-
-            foreach(var trainer in TrainingOrder.Trainers) {
-                trainerNames.Add(trainer.FirstName + " " + trainer.LastName);
-            }
-
-            TrainerList = string.Join(", ", trainerNames);
 
             return Page();
         }

@@ -12,90 +12,11 @@
             <div class="user-form">
                 <p class="title">Training Order #@Model.TrainingOrder.Id</p>
                 <div class="field-container">
-                    <div class="text-group">
-                        <p class="title">Status</p>
-                        @{
-                            var type = "awaiting";
-                            if (Model.TrainingOrder.Status.Equals("Active")) {
-                                type = "active";
-                            } else if (Model.TrainingOrder.Status.Equals("Verified")) {
-                                type = "verified";
-                            } else {
-                                type = "completed";
-                            }
-                            <p class="info @type">@Model.TrainingOrder.Status</p>
-                        }
-                    </div>
-                    @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
-                        <div class="text-group">
-                            <p class="title">Trainers</p>
-                            <p class="info">@Model.TrainerList</p>
-                        </div>
-                    }
-                    <div class="text-group">
-                        <p class="title">Trainee</p>
-                        <p class="info">@Model.TrainingOrder.Trainee.FirstName @Model.TrainingOrder.Trainee.LastName</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Priority Level</p>
-                        <p class="info">@Model.TrainingOrder.Priority</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Description</p>
-                        <pre class="info">@Model.TrainingOrder.Description</pre>
-                    </div>
-                    @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
-                        <div class="text-group">
-                            <p class="title">Begin Date</p>
-                            <p class="info">@Model.TrainingOrder.BeginDate</p>
-                        </div>
-                        <div class="text-group">
-                            <p class="title">End Date</p>
-                            <p class="info">@Model.TrainingOrder.EndDate</p>
-                        </div>
-                    }
-                    <div class="text-group">
-                        <p class="title">Location</p>
-                        <p class="info">@Model.TrainingOrder.Location.Name</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Learning Medium</p>
-                        <p class="info">@Model.TrainingOrder.Medium</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Training Hours Needed</p>
-                        <p class="info">@Model.TrainingOrder.Duration Hours</p>
-                    </div>
-                    <div class="text-group">
-                        <p class="title">Order Creation Date</p>
-                        <p class="info">@Model.TrainingOrder.CreateDate</p>
-                    </div>
-                    @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval") && !Model.TrainingOrder.Status.Equals("Active")) {
-                        <div class="text-group">
-                            <p class="title">Closing Notes</p>
-                            <pre class="info">@Model.TrainingOrder.ClosingNotes</pre>
-                        </div>
-                    }
-                    @if (Model.TrainingOrder.Status.Equals("Verified")) {
-                        <br></br>
-                        <p style="font-size: 20px;">Verification</p>
-                        <div class="text-group">
-                            <p class="title">Signed By</p>
-                            <p class="info">Aadam Husain</p>
-                        </div>
-                        <div class="text-group">
-                            <p class="title">Date Signed</p>
-                            <p class="info">5/14/2024</p>
-                        </div>
-                        <div class="text-group">
-                            <p class="title">Notes</p>
-                            <p class="info">No Data</p>
-                        </div>
-                        <div class="text-group">
-                            <p class="title">Effectiveness</p>
-                            <p class="info">No Data</p>
-                        </div>
-                    }
+                    <component 
+                        type="typeof(TrainingDetails)" 
+                        render-mode="WebAssemblyPrerendered" 
+                        param-OrderId="@Model.TrainingOrder.Id" 
+                    />
                 </div>
                 <br />
                 <div class="btn-container">
