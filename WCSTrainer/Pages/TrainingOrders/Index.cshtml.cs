@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
-    [Authorize(Roles = "admin")]
-    [Authorize(Roles = "trainer")]
+    [Authorize(Roles = "admin, trainer, trainee")]
+
     public class IndexModel : PageModel {
         private readonly WCSTrainer.Data.WCSTrainerContext _context;
 

@@ -7,16 +7,16 @@ namespace WCSTrainer.Data {
             var user = await userManager.FindByEmailAsync("ahusain@wolverinecoilspring.com");
             var user2 = await userManager.FindByEmailAsync("AadamH35@gmail.com");
 
+            foreach (var account in userManager.Users.ToList()) {
+                await userManager.AddToRoleAsync(account, "trainee");
+            }
+
             if (user != null) {
                 await userManager.AddToRoleAsync(user, "admin");
-                await userManager.AddToRoleAsync(user, "trainer");
-                await userManager.AddToRoleAsync(user, "trainee");
             }
 
             if (user2 != null) {
-                await userManager.AddToRoleAsync(user2, "admin");
                 await userManager.AddToRoleAsync(user2, "trainer");
-                await userManager.AddToRoleAsync(user2, "trainee");
             }
         }
     }

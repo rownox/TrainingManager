@@ -220,7 +220,7 @@ nav {
                         border: none;
                         height: 30px;
                         width: 100%;
-                        background: var(--gray1);
+                        background: var(--black);
                         color: var(--textMain);
                         border: 1px solid var(--gray4);
                     }
@@ -231,7 +231,7 @@ nav {
                         border: none;
                         padding: 5px;
                         resize: vertical;
-                        background-color: var(--gray1);
+                        background: var(--black);
                         color: var(--textMain);
                         border: 1px solid var(--gray4);
                     }
@@ -241,7 +241,7 @@ nav {
                         border: none;
                         height: 30px;
                         width: 100%;
-                        background-color: var(--gray1);
+                        background: var(--black);
                         color: var(--textMain);
                         border: 1px solid var(--gray4);
                     }
@@ -249,6 +249,7 @@ nav {
                     .panel .body .properties .user-form .field-container .form-group .selections {
                         display: flex;
                         gap: 10px;
+                        min-height: fit-content;
                     }
 
                         .panel .body .properties .user-form .field-container .form-group .selections .pill-container {
@@ -256,8 +257,10 @@ nav {
                             flex-direction: row;
                             flex-wrap: wrap;
                             display: flex;
+                            min-height: 100%;
                             height: fit-content;
                             flex-grow: 1;
+                            gap: 5px;
                         }
 
                     .panel .body .properties .user-form .field-container .form-group .selector {
@@ -281,7 +284,7 @@ nav {
 
                     .panel .body .properties .user-form .field-container .text-group .title {
                         color: var(--textSub1);
-                        font-size: 18px;
+                        font-size: 16px;
                         min-width: 200px;
                         height: 100%;
                     }
@@ -289,8 +292,9 @@ nav {
                     .panel .body .properties .user-form .field-container .text-group .info {
                         display: flex;
                         flex-wrap: wrap;
-                        font-size: 18px;
+                        font-size: 16px;
                         width: 100%;
+                        gap: 5px;
                     }
 
             .panel .body .properties .tool-container {

@@ -7,7 +7,8 @@
     --textMain: white;
     --textSub1: #a0a9b4;
     --textSub2: #787f87;
-    --mainTheme: #4631ae;
+    --mainTheme: #4e3bb0;
+    --white2: #3b4042;
     --red1: #ff4d4d;
     --red2: #d81d1d;
     --blue1: #00abf5;
@@ -19,23 +20,24 @@
 }
 
 .light-mode {
-    --black: #dcd7c7;
-    --gray1: #c8c4b6;
-    --gray2: #b5b09d;
-    --gray3: #e9e5d6;
-    --gray4: black;
-    --textMain: black;
-    --textSub1: black;
-    --textSub2: black;
-    --mainTheme: #e45d5d;
-    --red1: #e00606;
-    --red2: #d81d1d;
-    --blue1: black;
-    --blue2: black;
-    --green1: black;
-    --green2: black;
-    --yellow1: black;
-    --yellow2: black;
+    --black: #ffffff;
+    --gray1: #dddddd;
+    --gray2: #aaaaaa;
+    --gray3: #999999;
+    --gray4: #555555;
+    --textMain: #000000;
+    --textSub1: #000000;
+    --textSub2: #000000;
+    --mainTheme: #c8c8c8;
+    --white2: #999999;
+    --red1: #000000;
+    --red2: #999999;
+    --blue1: #000000;
+    --blue2: #999999;
+    --green1: #000000;
+    --green2: #999999;
+    --yellow1: #000000;
+    --yellow2: #999999;
 }
 
 /*-------------------------------------------------------*/
@@ -70,7 +72,8 @@
 }
 
     .btnWhite:hover {
-        background-color: var(--gray4);
+        background-color: var(--white2);
+        border-color: black;
     }
 
 .btnGray {
@@ -88,7 +91,7 @@
     .btnBlue:hover {
         border-color: black;
         background-color: var(--blue1);
-        color: white;
+        color: var(--textMain);
     }
 
 .btnRed {
@@ -98,7 +101,7 @@
     .btnRed:hover {
         border-color: black;
         background-color: var(--red2);
-        color: white;
+        color: var(--textMain);
     }
 
 .btnGreen {
@@ -108,7 +111,7 @@
     .btnGreen:hover {
         border-color: black;
         background-color: var(--green2);
-        color: white;
+        color: var(--textMain);
     }
 
 
