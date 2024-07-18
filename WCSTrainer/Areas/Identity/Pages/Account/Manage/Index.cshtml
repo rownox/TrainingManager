@@ -19,7 +19,37 @@
         <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
     </div>
     <button id="update-profile-button" type="submit" class="btn bg-btn btnWhite">Save</button>
+    <button class="btn bg-btn btnWhite" onclick="toggleLightMode()">Toggle Theme</button>
 </form>
+
+<script>
+    function enableLightMode() {
+        document.documentElement.classList.add('light-mode');
+    }
+
+    function disableLightMode() {
+        document.documentElement.classList.remove('light-mode');
+    }
+
+    function toggleLightMode() {
+        const isLightMode = localStorage.getItem('lightMode') === 'true';
+
+        if (isLightMode) {
+            localStorage.setItem('lightMode', 'false');
+            disableLightMode();
+        } else {
+            localStorage.setItem('lightMode', 'true');
+            enableLightMode();
+        }
+    }
+
+    const isLightMode = localStorage.getItem('lightMode') === 'true';
+
+    if (isLightMode) {
+        enableLightMode();
+    }
+
+</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

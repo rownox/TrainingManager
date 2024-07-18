@@ -1,7 +1,7 @@
 ﻿@inject NavigationManager Navigation
 
 <div class="side-bar">
-    <ul>
+    <div class="link-list">
         @if (Navigation.Uri.Contains("TrainingOrders")) {
             <a href="/TrainingOrders" class="selected">Training Orders</a>
         } else {
@@ -12,12 +12,17 @@
         } else {
             <a href="/Employees">Employees</a>
         }
+        @if (Navigation.Uri.Contains("Skills")) {
+            <a href="/Skills" class="selected">Skills</a>
+        } else {
+            <a href="/Skills">Skills</a>
+        }
         @if (Navigation.Uri.Contains("Account/Manage")) {
             <a href="/Identity/Account/Manage" class="selected">Account Settings</a>
         } else {
             <a href="/Identity/Account/Manage">Account Settings</a>
         }
-    </ul>
+    </div>
 </div>
 
 @code {

@@ -18,7 +18,10 @@
                     <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id" />
+
+                        <input asp-for="TrainingOrder.CreateDate" type="hidden" />
                         <input asp-for="TrainingOrder.Status" type="hidden" />
+
                         <input type="hidden" id="employeesData" value="@ViewData["EmployeesJson"]" />
                         <input type="hidden" id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
                         @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {

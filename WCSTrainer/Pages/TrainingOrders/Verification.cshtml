@@ -13,20 +13,23 @@
                 <div class="field-container">
                     <form method="post">
 
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div asp-validation-summary="All" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id"/>
-                        <input asp-for="TrainingOrder.Duration" type="hidden"/>
-                        <input asp-for="TrainingOrder.Trainers" type="hidden"/>
-                        <input asp-for="TrainingOrder.TraineeId" type="hidden"/>
+                        <input asp-for="TrainingOrder.BeginDate" type="hidden" />
+                        <input asp-for="TrainingOrder.EndDate" type="hidden" />
+                        <input asp-for="TrainingOrder.CreateDate" type="hidden" />
 
-                        <input asp-for="TrainingOrder.CreateDate" type="hidden"/>
-                        <input asp-for="TrainingOrder.BeginDate" type="hidden"/>
-                        <input asp-for="TrainingOrder.LocationId" type="hidden" />
-                        <input asp-for="TrainingOrder.EndDate" type="hidden"/>
-                        <input asp-for="TrainingOrder.Medium" type="hidden"/>
-                        <input asp-for="TrainingOrder.Skills" type="hidden"/>
-
+                        <input asp-for="TrainingOrder.Medium" type="hidden" />
                         <input asp-for="TrainingOrder.Status" type="hidden" value="Verified" />
+                        <input asp-for="TrainingOrder.Duration" type="hidden" />
+                        <input asp-for="TrainingOrder.Priority" type="hidden" />
+                        <input asp-for="TrainingOrder.Description" type="hidden" />
+                        <input asp-for="TrainingOrder.ClosingNotes" type="hidden" />
+
+                        <input asp-for="TrainingOrder.TraineeId" type="hidden" />
+                        <input asp-for="TrainingOrder.LocationId" type="hidden" />
+                        <input asp-for="TrainingOrder.VerificationId" type="hidden" />
+
 
                         <component type="typeof(TrainingDetails)"
                                    render-mode="WebAssemblyPrerendered"

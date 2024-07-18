@@ -37,22 +37,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 return Page();
             }
 
-            var existingTrainingOrder = await _context.TrainingOrders.FindAsync(TrainingOrder.Id);
-            if (existingTrainingOrder == null) {
-                return NotFound();
-            }
-
-            existingTrainingOrder.Status = TrainingOrder.Status;
-            existingTrainingOrder.CreateDate = TrainingOrder.CreateDate;
-            existingTrainingOrder.BeginDate = TrainingOrder.BeginDate;
-            existingTrainingOrder.LocationId = TrainingOrder.LocationId;
-            existingTrainingOrder.Duration = TrainingOrder.Duration;
-            existingTrainingOrder.TraineeId = TrainingOrder.TraineeId;
-            existingTrainingOrder.EndDate = TrainingOrder.EndDate;
-            existingTrainingOrder.Medium = TrainingOrder.Medium;
-            existingTrainingOrder.Description = TrainingOrder.Description;
-
-            _context.Entry(existingTrainingOrder).State = EntityState.Modified;
+            _context.TrainingOrders.Update(TrainingOrder);
 
             try {
                 await _context.SaveChangesAsync();
