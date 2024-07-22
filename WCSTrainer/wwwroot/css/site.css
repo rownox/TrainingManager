@@ -781,6 +781,7 @@ nav {
                 flex-wrap: wrap;
                 display: flex;
                 width: 100%;
+                gap: 5px;
             }
 
                 .people-component .people-container .list-container .selected-list .selection {

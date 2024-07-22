@@ -25,6 +25,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
         [BindProperty]
         public string SelectedTrainerString { get; set; }
         public List<int> SelectedTrainerIds { get; set; } = new List<int>();
+        [BindProperty]
         public string SelectedTrainerGroupString { get; set; }
         public List<int> SelectedTrainerGroupIds { get; set; } = new List<int>();
 
@@ -58,9 +59,15 @@ namespace WCSTrainer.Pages.TrainingOrders {
             foreach (var trainer in TrainingOrder.Trainers) {
                 SelectedTrainerIds.Add(trainer.Id);
             }
-
             SelectedTrainerIds = TrainingOrder.Trainers.Select(t => t.Id).ToList();
             SelectedTrainerString = string.Join(", ", SelectedTrainerIds);
+
+            foreach (var trainerGroup in TrainingOrder.TrainerGroups) {
+                SelectedTrainerGroupIds.Add(trainerGroup.Id);
+            }
+            SelectedTrainerGroupIds = TrainingOrder.TrainerGroups.Select(tg => tg.Id).ToList();
+            SelectedTrainerGroupString = string.Join(", ", SelectedTrainerGroupIds);
+
             Locations = new SelectList(await _context.Locations.ToListAsync(), "Id", "Name");
 
             return Page();
@@ -92,6 +99,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             var trainingOrderToUpdate = await _context.TrainingOrders
                 .Include(t => t.Trainers)
+                .Include(t => t.TrainerGroups)
                 .FirstOrDefaultAsync(t => t.Id == TrainingOrder.Id);
 
             if (trainingOrderToUpdate == null) {
@@ -114,6 +122,23 @@ namespace WCSTrainer.Pages.TrainingOrders {
             foreach (var trainer in newTrainers) {
                 if (!trainingOrderToUpdate.Trainers.Any(t => t.Id == trainer.Id)) {
                     trainingOrderToUpdate.Trainers.Add(trainer);
+                }
+            }
+
+            List<int> newTrainerGroupIds = SelectedTrainerGroupString.Split(", ").Select(int.Parse).ToList();
+            var newTrainerGroups = await _context.TrainerGroups
+                .Where(tg => newTrainerGroupIds.Contains(tg.Id))
+                .ToListAsync();
+
+            foreach (var trainerGroup in trainingOrderToUpdate.TrainerGroups.ToList()) {
+                if (!newTrainerGroupIds.Contains(trainerGroup.Id)) {
+                    trainingOrderToUpdate.TrainerGroups.Remove(trainerGroup);
+                }
+            }
+
+            foreach (var trainerGroup in newTrainerGroups) {
+                if (!trainingOrderToUpdate.TrainerGroups.Any(tg => tg.Id == trainerGroup.Id)) {
+                    trainingOrderToUpdate.TrainerGroups.Add(trainerGroup);
                 }
             }
 

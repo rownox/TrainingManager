@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="selections">
                                     <ul id="trainee" class="pill-container">
-                                        <li value="@Model.TrainingOrder.TraineeId" class="pill person">
+                                        <li value="@Model.TrainingOrder.TraineeId" class="pill person trainee">
                                             @Model.TrainingOrder.Trainee.FirstName @Model.TrainingOrder.Trainee.LastName
                                         </li>
                                     </ul>
@@ -186,6 +186,10 @@
     var person = document.getElementsByClassName("person");
     var group = document.getElementsByClassName("group");
 
+    var trainerClasses = "pill person"
+    var traineeClasses = "pill person trainee"
+    var groupClasses = "pill group"
+
     document.addEventListener('DOMContentLoaded', function () {
 
         function safeAddEventListener(element, event, handler) {
@@ -233,7 +237,7 @@
 
             trainerItems.forEach(item => {
                 if (!Array.from(trainerList.getElementsByTagName("li")).some(li => li.getAttribute("value") == item.id)) {
-                    trainerList.innerHTML += `<li value="${item.id}" class="pill">${item.name}</li>`;
+                    trainerList.innerHTML += `<li value="${item.id}" class="${trainerClasses}">${item.name}</li>`;
                 }
             });
 
@@ -246,7 +250,7 @@
             var traineeList = document.getElementById("trainee");
             if (!traineeList) return;
 
-            traineeList.innerHTML = `<li value="${traineeId}" class="pill">${traineeName.trim()}</li>`;
+            traineeList.innerHTML = `<li value="${traineeId}" class="${traineeClasses}">${traineeName.trim()}</li>`;
             updateTraineeInput();
         }
 
@@ -258,7 +262,7 @@
 
             groupItems.forEach(item => {
                 if (!Array.from(groupList.getElementsByTagName("li")).some(li => li.getAttribute("value") == item.id)) {
-                    groupList.innerHTML += `<li value="${item.id}" class="pill">${item.name}</li>`;
+                    groupList.innerHTML += `<li value="${item.id}" class="${groupClasses}">${item.name}</li>`;
                 }
             });
 

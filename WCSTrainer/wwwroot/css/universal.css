@@ -42,7 +42,6 @@ button {
 
 .pill {
     list-style: none;
-    background-color: var(--mainTheme);
     text-align: center;
     cursor: pointer;
     padding: 2px 7px;
