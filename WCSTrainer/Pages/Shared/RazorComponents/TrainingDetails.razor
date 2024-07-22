@@ -23,13 +23,16 @@
                 @foreach (var trainer in TrainingOrder.Trainers) {
                     <div class="pill">@trainer.FirstName @trainer.LastName</div>
                 }
+                @foreach (var trainer in TrainingOrder.TrainerGroups) {
+                    <div class="pill group">@trainer.Name</div>
+                }
             </div>
         </div>
     }
     <div class="text-group">
         <p class="title">Trainee</p>
         <div class="info">
-            <div class="pill">@TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName</div>
+            <div class="pill trainee">@TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName</div>
         </div>
         
     </div>
@@ -115,6 +118,7 @@
             .Include(t => t.Location)
             .Include(t => t.Trainers)
             .Include(t => t.Verification)
+            .Include(t => t.TrainerGroups)
             .FirstOrDefaultAsync(m => m.Id == OrderId);
     }
 }

@@ -24,6 +24,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
         [BindProperty]
         public string SelectedTrainerString { get; set; }
         public List<int> SelectedTrainerIds { get; set; }
+        [BindProperty]
+        public string SelectedTrainerGroupString { get; set; }
+        public List<int> SelectedTrainerGroupIds { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             Employees = await _context.Employees.ToListAsync();
@@ -74,9 +77,14 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
 
             SelectedTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
+            SelectedTrainerGroupIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
 
             TrainingOrder.Trainers = await _context.Employees
                     .Where(e => SelectedTrainerIds.Contains(e.Id))
+                    .ToListAsync();
+
+            TrainingOrder.TrainerGroups = await _context.TrainerGroups
+                    .Where(e => SelectedTrainerGroupIds.Contains(e.Id))
                     .ToListAsync();
 
             _context.TrainingOrders.Update(TrainingOrder);
