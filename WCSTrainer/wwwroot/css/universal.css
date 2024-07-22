@@ -70,3 +70,61 @@ pre {
     align-items: center;
 }
 
+@media print {
+    body * {
+        visibility: hidden;
+        margin: 0 !important;
+    }
+
+    #contentToPrint, #contentToPrint * {
+        visibility: visible;
+    }
+
+    #contentToPrint {
+        gap: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .text-group {
+        border-bottom: 1px solid !important;
+        border-color: lightgray !important;
+        max-width: 80% !important;
+        align-self: center;
+    }
+
+    .title {
+        color: black !important;
+    }
+
+    .info {
+        color: black !important;
+        font-weight: normal !important;
+    }
+
+    .pill {
+        padding: 0 !important;
+        font-weight: normal !important;
+    }
+
+    .pill:after {
+        content: ", ";
+    }
+
+    .print-block {
+        width: 100%;
+        height: 100%;
+    }
+
+    .print-block .title {
+        font-weight: 500 !important;
+    }
+
+    header, footer {
+        display: none !important;
+    }
+}

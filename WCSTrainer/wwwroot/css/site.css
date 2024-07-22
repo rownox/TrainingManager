@@ -187,6 +187,10 @@ nav {
                             display: block;
                         }
 
+                .panel .body .properties .user-form img {
+                    height: 20px;
+                }
+
                 .panel .body .properties .user-form .field-container .form-group {
                     flex-direction: row;
                     margin-bottom: 20px;

@@ -1,0 +1,22 @@
+﻿@page
+@model WCSTrainer.Pages.TrainingOrders.AssignModel
+@{
+    ViewData["Title"] = "Assign";
+}
+
+<div class="panel">
+    <div class="body">
+        <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
+        <div class="properties">
+            <div class="user-form">
+                <p class="title">Assign Training</p>
+                <p class="sub">Assign sets of training orders which teach a certain skill to employees.</p>
+                <div class="field-container">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
