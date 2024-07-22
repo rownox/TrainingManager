@@ -28,7 +28,6 @@
 
                         <input asp-for="TrainingOrder.TraineeId" type="hidden" />
                         <input asp-for="TrainingOrder.LocationId" type="hidden" />
-                        <input asp-for="TrainingOrder.VerificationId" type="hidden" />
 
 
                         <component type="typeof(TrainingDetails)"
@@ -41,7 +40,7 @@
                                 <div class="labels">
                                     <p class="control-label">How effective was the training?</p>
                                 </div>
-                                <textarea rows="5" /></textarea>
+                                <textarea asp-for="VerifyNotes" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -49,7 +48,7 @@
                                 <div class="labels">
                                     <p class="control-label">Signature</p>
                                 </div>
-                                <input class="form-control" />
+                                <input asp-for="Signature" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group">

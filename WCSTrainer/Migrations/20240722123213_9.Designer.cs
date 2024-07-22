@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WCSTrainer.Data;
 
@@ -11,9 +12,11 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Migrations
 {
     [DbContext(typeof(WCSTrainerContext))]
-    partial class WCSTrainerContextModelSnapshot : ModelSnapshot
+    [Migration("20240722123213_9")]
+    partial class _9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,19 +138,19 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5b9b2202-ff17-4870-9842-d61a32a3db58",
+                            Id = "d1279bb5-a328-4821-ae00-4d7401034460",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "09e92e70-3ce3-4dae-aa54-2ce355b8b3ad",
+                            Id = "53ee72dc-53b4-4934-ab19-61839130150c",
                             Name = "trainer",
                             NormalizedName = "TRAINER"
                         },
                         new
                         {
-                            Id = "6db0fd16-de04-46a0-8d02-8c5d6d7f8c51",
+                            Id = "756bc9a0-52cc-4f1d-83ec-712ca4a39f70",
                             Name = "trainee",
                             NormalizedName = "TRAINEE"
                         });
@@ -460,8 +463,8 @@ namespace WCSTrainer.Migrations
                     b.Property<int>("TrainingOrderId")
                         .HasColumnType("int");
 
-                    b.Property<string>("VerifierId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("VerifierId")
+                        .HasColumnType("int");
 
                     b.Property<DateOnly?>("VerifyDate")
                         .HasColumnType("date");
@@ -618,7 +621,7 @@ namespace WCSTrainer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UserAccount", "Verifier")
+                    b.HasOne("Employee", "Verifier")
                         .WithMany()
                         .HasForeignKey("VerifierId");
 
