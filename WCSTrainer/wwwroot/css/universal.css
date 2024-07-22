@@ -74,6 +74,7 @@ pre {
     body * {
         visibility: hidden;
         margin: 0 !important;
+        color: black !important;
     }
 
     #contentToPrint, #contentToPrint * {
@@ -88,21 +89,20 @@ pre {
         position: absolute;
         left: 0;
         top: 0;
+        align-self: center;
+        justify-self: center;
     }
 
     .text-group {
         border-bottom: 1px solid !important;
         border-color: lightgray !important;
-        max-width: 80% !important;
         align-self: center;
     }
 
     .title {
-        color: black !important;
     }
 
     .info {
-        color: black !important;
         font-weight: normal !important;
     }
 

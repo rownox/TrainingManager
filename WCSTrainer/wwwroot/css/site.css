@@ -122,15 +122,17 @@ nav {
             }
 
             .panel .body .side-bar a {
-                border-bottom: 1px solid var(--gray4);
+                border-bottom: 1px solid var(--gray3);
                 color: var(--textSub1);
                 text-decoration: none;
                 padding: 10px 5px;
+                transition: background-color 0.1s ease-out;
             }
 
                 .panel .body .side-bar a:hover {
                     background-color: var(--gray3);
                     color: var(--textMain);
+                    transition: background-color 0s;
                 }
 
             .panel .body .side-bar .selected {
@@ -336,7 +338,7 @@ nav {
                             text-align: center;
                             text-decoration: none;
                             padding: 7px 5px;
-                            border-bottom: 1px solid var(--gray4);
+                            border-bottom: 1px solid var(--gray3);
                             text-align: left;
                             color: var(--textMain);
                         }
@@ -434,10 +436,12 @@ nav {
                         align-items: center;
                         width: 100%;
                         padding: 8px 0;
+                        transition: background-color 0.1s ease-out;
                     }
 
                         .panel .body .properties .list-container .order-list li:hover {
                             background-color: var(--gray3);
+                            transition: background-color 0s;
                         }
 
                         .panel .body .properties .list-container .order-list li .info {
