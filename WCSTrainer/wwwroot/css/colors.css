@@ -2,7 +2,7 @@
     --black: black;
     --gray1: #141516;
     --gray2: #1b2124;
-    --gray3: #22272a;
+    --gray3: #252a2e;
     --gray4: #45494e;
     --textMain: white;
     --textSub1: #a0a9b4;
@@ -49,6 +49,7 @@
     text-decoration: none;
     cursor: pointer;
     user-select: none;
+    transition: background-color 0.1s ease-out;
 }
 
 .nbg-btn {
@@ -74,6 +75,7 @@
     .btnWhite:hover {
         background-color: var(--white2);
         border-color: black;
+        transition: background-color 0s;
     }
 
 .btnGray {
@@ -82,6 +84,7 @@
 
     .btnGray:hover {
         background-color: var(--gray3);
+        transition: background-color 0s;
     }
 
 .btnBlue {
@@ -92,6 +95,7 @@
         border-color: black;
         background-color: var(--blue1);
         color: var(--textMain);
+        transition: background-color 0s;
     }
 
 .btnRed {
@@ -102,6 +106,7 @@
         border-color: black;
         background-color: var(--red2);
         color: var(--textMain);
+        transition: background-color 0s;
     }
 
 .btnGreen {
@@ -112,8 +117,8 @@
         border-color: black;
         background-color: var(--green2);
         color: var(--textMain);
+        transition: background-color 0s;
     }
-
 
 /*--------------------------------------------------------
                      COMPLETION STAGES                    
