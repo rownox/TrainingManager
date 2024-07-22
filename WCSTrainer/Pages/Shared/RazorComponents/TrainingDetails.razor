@@ -74,24 +74,22 @@
         </div>
     }
     @if (TrainingOrder.Status.Equals("Verified")) {
-        <br>
-        <p style="font-size: 20px;">Verification</p>
-        <div class="text-group">
-            <p class="title">Signed By</p>
-            <p class="info">Aadam Husain</p>
-        </div>
-        <div class="text-group">
-            <p class="title">Date Signed</p>
-            <p class="info">5/14/2024</p>
-        </div>
-        <div class="text-group">
-            <p class="title">Notes</p>
-            <p class="info">No Data</p>
-        </div>
-        <div class="text-group">
-            <p class="title">Effectiveness</p>
-            <p class="info">No Data</p>
-        </div>
+        if (TrainingOrder.Verification != null) {
+            <br>
+            <p style="font-size: 20px;">Verification</p>
+            <div class="text-group">
+                <p class="title">Signed By</p>
+                <p class="info">@TrainingOrder.Verification.Signature</p>
+            </div>
+            <div class="text-group">
+                <p class="title">Date Signed</p>
+                <p class="info">@TrainingOrder.Verification.VerifyDate</p>
+            </div>
+            <div class="text-group">
+                <p class="title">Effectiveness</p>
+                <pre class="info">@TrainingOrder.Verification.VerifyNotes</pre>
+            </div>
+        }
     }
 } else {
     <p>Loading...</p>
@@ -114,8 +112,9 @@
     private async Task LoadTrainingOrderAsync() {
         TrainingOrder = await _context.TrainingOrders
             .Include(t => t.Trainee)
-            .Include(l => l.Location)
-            .Include(tr => tr.Trainers)
+            .Include(t => t.Location)
+            .Include(t => t.Trainers)
+            .Include(t => t.Verification)
             .FirstOrDefaultAsync(m => m.Id == OrderId);
     }
 }
