@@ -63,12 +63,21 @@ namespace WCSTrainer.Data {
                         .HasForeignKey("TrainingOrderId")
                 );
 
+            builder.Entity<TrainingOrder>()
+                .HasMany(to => to.TrainerGroups)
+                .WithMany(tg => tg.TrainingOrders)
+                .UsingEntity(j => j.ToTable("TrainingOrderTrainerGroups"));
+
+            builder.Entity<TrainerGroup>()
+                .HasMany(tg => tg.Trainers)
+                .WithMany()
+                .UsingEntity(j => j.ToTable("TrainerGroupEmployees"));
+
             builder.Entity<Verification>()
                 .HasOne(v => v.Verifier)
                 .WithMany()
                 .HasForeignKey(v => v.VerifierId);
 
-            // Roles setup
             var adminRole = new IdentityRole("admin") { NormalizedName = "ADMIN" };
             var trainerRole = new IdentityRole("trainer") { NormalizedName = "TRAINER" };
             var traineeRole = new IdentityRole("trainee") { NormalizedName = "TRAINEE" };

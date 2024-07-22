@@ -29,7 +29,6 @@
                         <input asp-for="TrainingOrder.TraineeId" type="hidden" />
                         <input asp-for="TrainingOrder.LocationId" type="hidden" />
 
-
                         <component type="typeof(TrainingDetails)"
                                    render-mode="WebAssemblyPrerendered"
                                    param-OrderId="@Model.TrainingOrder.Id" />

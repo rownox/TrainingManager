@@ -25,6 +25,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
         [BindProperty]
         public string SelectedTrainerString { get; set; }
         public List<int> SelectedTrainerIds { get; set; } = new List<int>();
+        public string SelectedTrainerGroupString { get; set; }
+        public List<int> SelectedTrainerGroupIds { get; set; } = new List<int>();
 
         public async Task<IActionResult> OnGetAsync(int? id) {
 
@@ -42,8 +44,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             var trainingorder = await _context.TrainingOrders
                 .Include(t => t.Trainee)
-                .Include(l => l.Location)
-                .Include(tr => tr.Trainers)
+                .Include(t => t.Location)
+                .Include(t => t.Trainers)
+                .Include(t => t.TrainerGroups)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (trainingorder == null) {

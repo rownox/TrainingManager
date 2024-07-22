@@ -16,5 +16,6 @@
     public int? VerificationId { get; set; }
     public Verification? Verification { get; set; }
     public ICollection<Employee> Trainers { get; set; } = new List<Employee>();
+    public ICollection<TrainerGroup> TrainerGroups { get; set; } = new List<TrainerGroup>();
     public ICollection<Skill> Skills { get; set; } = new List<Skill>();
 }

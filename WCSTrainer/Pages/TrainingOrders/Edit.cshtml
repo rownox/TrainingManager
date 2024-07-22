@@ -28,32 +28,51 @@
                             <div class="form-group">
                                 <div class="form">
                                     <div class="labels">
+                                        <p class="control-label">Trainers</p>
                                         <span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
                                     </div>
                                     <div class="selections">
-                                        <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select Trainers</p></div>
                                         <ul id="trainerList" class="pill-container">
                                             @foreach (var trainer in Model.TrainingOrder.Trainers) {
-                                                <li draggable="true" class="pill" value="@trainer.Id">@trainer.FirstName @trainer.LastName</li>
+                                                <li draggable="true" class="pill person" value="@trainer.Id">@trainer.FirstName @trainer.LastName</li>
                                             }
                                         </ul>
+                                        <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form">
+                                    <div class="labels">
+                                        <p class="control-label">Trainer Groups</p>
+                                        <span asp-validation-for="@Model.SelectedTrainerGroupString" class="text-danger"></span>
+                                    </div>
+                                    <div class="selections">
+                                        <ul id="groupList" class="pill-container">
+                                            @foreach (var trainerGroup in Model.TrainingOrder.TrainerGroups) {
+                                                <li draggable="true" class="pill group" value="@trainerGroup.Id">@trainerGroup.Name</li>
+                                            }
+                                        </ul>
+                                        <div class="btn bg-btn btnWhite" onclick="openComponent('groups')">Select</div>
                                     </div>
                                 </div>
                             </div>
                         }
                         <input id="trainersInput" asp-for="@Model.SelectedTrainerString" hidden />
+                        <input id="groupsInput" asp-for="@Model.SelectedTrainerGroupString" hidden />
                         <div class="form-group">
                             <div class="form">
                                 <div class="labels">
+                                    <p class="control-label">Trainee</p>
                                     <span asp-validation-for="TrainingOrder.TraineeId" class="text-danger"></span>
                                 </div>
                                 <div class="selections">
-                                    <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select Trainee</p></div>
                                     <ul id="trainee" class="pill-container">
-                                        <li value="@Model.TrainingOrder.TraineeId" class="pill">
+                                        <li value="@Model.TrainingOrder.TraineeId" class="pill person">
                                             @Model.TrainingOrder.Trainee.FirstName @Model.TrainingOrder.Trainee.LastName
                                         </li>
                                     </ul>
+                                    <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select</p></div>
                                     <input id="traineeInput" asp-for="TrainingOrder.TraineeId" type="hidden"/>
                                 </div>
                             </div>
@@ -156,16 +175,16 @@
     var trainergroupsData = trainergroupsDataElement.value ? JSON.parse(trainergroupsDataElement.value) : [];
     window.trainergroupsData = trainergroupsData;
 
-    var employeesDataElement = document.getElementById('employeesData');
-    var trainergroupsDataElement = document.getElementById('trainergroupsData');
-
     var peopleComponent = document.getElementById("sv-comp-people");
     var overlay = document.querySelector(".overlay");
     var trainersInput = document.getElementById("trainersInput");
     var trainList = document.getElementById("trainerList");
     var trainee = document.getElementById("trainee");
     var traineeInput = document.getElementById("traineeInput");
+    var groupsInput = document.getElementById("groupsInput");
+    var groupList = document.getElementById("groupList");
     var person = document.getElementsByClassName("person");
+    var group = document.getElementsByClassName("group");
 
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -191,8 +210,19 @@
             }
         });
 
+        safeAddEventListener(groupList, "click", function (event) {
+            if (event.target.tagName === "LI") {
+                event.target.remove();
+                updateGroupsInput();
+            }
+        });
+
         Array.from(person).forEach(item => {
             safeAddEventListener(item, "click", addTrainer);
+        });
+
+        Array.from(group).forEach(item => {
+            safeAddEventListener(item, "click", addGroup);
         });
 
         function addTrainer(trainerItems) {
@@ -220,6 +250,21 @@
             updateTraineeInput();
         }
 
+        function addGroup(groupItems) {
+            if (!groupItems || groupItems.length === 0) return;
+
+            var groupList = document.getElementById("groupList");
+            if (!groupList) return;
+
+            groupItems.forEach(item => {
+                if (!Array.from(groupList.getElementsByTagName("li")).some(li => li.getAttribute("value") == item.id)) {
+                    groupList.innerHTML += `<li value="${item.id}" class="pill">${item.name}</li>`;
+                }
+            });
+
+            updateGroupsInput();
+        }
+
         function updateTrainersInput() {
             if (!trainList || !trainersInput) return;
 
@@ -234,6 +279,13 @@
             traineeInput.value = traineeListItems.length > 0 ? traineeListItems[0].getAttribute("value") : "";
         }
 
+        function updateGroupsInput() {
+            if (!groupList || !groupsInput) return;
+
+            var groupListItems = Array.from(groupList.getElementsByTagName("li"));
+            groupsInput.value = groupListItems.map(item => `${item.getAttribute("value")}`).join(", ");
+        }
+
         if (trainList) {
             const trainerListObserver = new MutationObserver(updateTrainersInput);
             trainerListObserver.observe(trainList, { childList: true, subtree: true });
@@ -242,6 +294,11 @@
         if (trainee) {
             const traineeObserver = new MutationObserver(updateTraineeInput);
             traineeObserver.observe(trainee, { childList: true, subtree: true });
+        }
+
+        if (groupList) {
+            const groupListObserver = new MutationObserver(updateGroupsInput);
+            groupListObserver.observe(groupList, { childList: true, subtree: true });
         }
 
         document.addEventListener("addTrainerEvent", function (event) {
@@ -254,8 +311,14 @@
             closeComponent();
         });
 
+        document.addEventListener("addGroupEvent", function (event) {
+            addGroup(event.detail.items);
+            closeComponent();
+        });
+
         updateTrainersInput();
         updateTraineeInput();
+        updateGroupsInput();
     });
 
     function openComponent(mode) {
