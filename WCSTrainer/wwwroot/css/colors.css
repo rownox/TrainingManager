@@ -16,7 +16,7 @@
     --green1: #81ff8f;
     --green2: #0fb021;
     --yellow1: #fff764;
-    --yellow2: #d8aa13;
+    --yellow2: #98780c;
 }
 
 .light-mode {
@@ -143,10 +143,10 @@
     background-color: var(--mainTheme);
 }
 
-.pill.group {
-    background-color: var(--blue2);
-}
+    .pill.group {
+        background-color: var(--blue2);
+    }
 
     .pill.trainee {
-        background-color: var(--yellow2);
+        background-color: var(--red2);
     }
