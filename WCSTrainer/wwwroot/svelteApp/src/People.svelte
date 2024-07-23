@@ -106,6 +106,7 @@
     <ul>
         {#if displayMode === 'groups'}
             {#each groups as item}
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <li on:click={() => selectItem(item)}
                     class:selected={$selectedItems.some(i => i.id === item.id)}>
                     <div class="info">
@@ -123,6 +124,7 @@
             {/each}
         {:else}
             {#each people.filter(p => displayMode === 'trainers' ? p.status === 'Trainer' : p.status !== 'Trainer') as item}
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <li on:click={() => selectItem(item)}
                     class:selected={$selectedItems.some(i => i.id === item.id)}>
                     <div class="photo">

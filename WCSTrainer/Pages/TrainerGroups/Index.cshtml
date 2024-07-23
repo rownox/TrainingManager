@@ -1,11 +1,9 @@
 ﻿@page
-@model WCSTrainer.Pages.Employees.IndexModel
+@model WCSTrainer.Pages.TrainerGroups.IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
-
-@using WCSTrainer.Components
 
 <div class="panel">
     <div class="body">
@@ -15,26 +13,29 @@
                 <div class="order-list2">
                     <table id="dataTable">
                         <tr>
-                            <th>Employee ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Status</th>
+                            <th>Group ID</th>
+                            <th>Name</th>
+                            <th>Members</th>
                             <th></th>
                             <th></th>
                             <th></th>
                         </tr>
-                        @foreach (var item in Model.Employees) {
+                        @foreach (var item in Model.TrainerGroup) {
                             <tr class="clickable">
                                 <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                                <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
-                                <td>@Html.DisplayFor(modelItem => item.LastName)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Trainers)</td>
                                 <td><a asp-page="./Edit" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Edit</a></td>
                                 <td><a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Details</a></td>
                                 <td><a asp-page="./Delete" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Delete</a></td>
                             </tr>
                         }
                     </table>
+                    <div class="sorters">
+                        <div class="btns">
+                            <a asp-page="Create" class="btn bg-btn btnWhite">Create Group</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
