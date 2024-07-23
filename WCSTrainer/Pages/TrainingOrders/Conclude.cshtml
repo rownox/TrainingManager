@@ -16,7 +16,10 @@
                         <input type="hidden" asp-for="TrainingOrder.Id"/>
 
                         <input asp-for="TrainingOrder.BeginDate" type="hidden" />
-                        <input asp-for="TrainingOrder.EndDate" type="hidden" />
+                        @{
+                            var date = DateOnly.FromDateTime(DateTime.Now);
+                            <input asp-for="TrainingOrder.CompletionDate" hidden value="@date" />
+                        }
                         <input asp-for="TrainingOrder.CreateDate" type="hidden" />
 
                         <input asp-for="TrainingOrder.Medium" type="hidden" />

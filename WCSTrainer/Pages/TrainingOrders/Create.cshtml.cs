@@ -21,8 +21,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public IList<Employee> Employees { get; set; }
         public IList<TrainerGroup> TrainerGroups { get; set; }
         public SelectList Locations { get; set; }
-        public DateOnly Day { get; } = DateOnly.FromDateTime(DateTime.Now);
-
 
         public async Task<IActionResult> OnGetAsync() {
             Employees = await _context.Employees.ToListAsync();

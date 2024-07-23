@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WCSTrainer.Data;
 
@@ -11,9 +12,11 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Migrations
 {
     [DbContext(typeof(WCSTrainerContext))]
-    partial class WCSTrainerContextModelSnapshot : ModelSnapshot
+    [Migration("20240723164927_12")]
+    partial class _12
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,19 +148,19 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3eb9b095-6da9-45ac-b396-03d852b4e186",
+                            Id = "87d0517b-c6c7-44d4-8819-800edcb7b658",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "7ca9869d-957b-40a9-bf18-80383dc4b3a1",
+                            Id = "81fbc576-ecca-4d1f-9f6a-4d5ad0459aa8",
                             Name = "trainer",
                             NormalizedName = "TRAINER"
                         },
                         new
                         {
-                            Id = "76f9b484-7081-4df3-9d55-648655f2b809",
+                            Id = "57f903e1-2105-4825-80a4-d08572c1ee6a",
                             Name = "trainee",
                             NormalizedName = "TRAINEE"
                         });
@@ -334,14 +337,14 @@ namespace WCSTrainer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly?>("BeginDate")
+                    b.Property<DateOnly>("BeginDate")
                         .HasColumnType("date");
 
                     b.Property<string>("ClosingNotes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly?>("CompletionDate")
+                    b.Property<DateOnly>("CompletionDate")
                         .HasColumnType("date");
 
                     b.Property<DateOnly>("CreateDate")
@@ -362,6 +365,7 @@ namespace WCSTrainer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Priority")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")

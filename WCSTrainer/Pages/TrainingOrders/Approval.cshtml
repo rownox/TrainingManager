@@ -18,11 +18,14 @@
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id" />
                         
+                        @{
+                            var date = DateOnly.FromDateTime(DateTime.Now);
+                            <input asp-for="TrainingOrder.BeginDate" hidden value="@date" />
+                        }
                         <input asp-for="TrainingOrder.CreateDate" type="hidden" />
 
                         <input asp-for="TrainingOrder.Medium" type="hidden" />
                         <input asp-for="TrainingOrder.Status" type="hidden" value="Active" />
-                        <input asp-for="TrainingOrder.Duration" type="hidden" />
                         <input asp-for="TrainingOrder.Priority" type="hidden" />
                         <input asp-for="TrainingOrder.Description" type="hidden" />
 
@@ -62,20 +65,11 @@
                         <div class="form-group">
                             <div class="form">
                                 <div class="labels">
-                                    <p class="control-label">Begin Date</p>
-                                    <span asp-validation-for="TrainingOrder.BeginDate" class="text-danger"></span>
+                                    <p class="control-label">Training Hours Needed</p>
+                                    <span asp-validation-for="TrainingOrder.Duration" class="text-danger"></span>
                                 </div>
-                                <input type="date" asp-for="TrainingOrder.BeginDate" class="form-control" />
+                                <input type="text" asp-for="TrainingOrder.Duration" class="form-control" />
                             </div>
-                            <div class="form">
-                                <div class="labels">
-                                    <p class="control-label">End Date</p>
-                                    <span asp-validation-for="TrainingOrder.EndDate" class="text-danger"></span>
-                                </div>
-                                <input type="date" asp-for="TrainingOrder.EndDate" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <div class="form">
                                 <div class="labels">
                                     <p class="control-label">Priority Level</p>
