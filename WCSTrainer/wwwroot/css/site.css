@@ -191,6 +191,7 @@ nav {
 
                 .panel .body .properties .user-form img {
                     height: 20px;
+                    max-width: 20px;
                 }
 
                 .panel .body .properties .user-form .field-container .form-group {
@@ -525,12 +526,10 @@ nav {
 
 
                 .panel .body .properties .order-list2 table {
-                    padding-right: 20px;
-                    width: 100%;
+                    display: flex;
                 }
 
                     .panel .body .properties .order-list2 table tr {
-                        font-size: 18px;
                     }
 
                     .panel .body .properties .order-list2 table .clickable {
@@ -554,6 +553,7 @@ nav {
                         border-bottom: 1px solid var(--textMain);
                         text-align: start;
                         color: var(--textMain);
+                        padding-right: 30px;
                     }
 
             .panel .body .properties .scheduling {
