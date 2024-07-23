@@ -22,10 +22,10 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public IList<TrainerGroup> TrainerGroups { get; set; }
 
         [BindProperty]
-        public string SelectedTrainerString { get; set; }
+        public string? SelectedTrainerString { get; set; }
         public List<int> SelectedTrainerIds { get; set; }
         [BindProperty]
-        public string SelectedTrainerGroupString { get; set; }
+        public string? SelectedTrainerGroupString { get; set; }
         public List<int> SelectedTrainerGroupIds { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
@@ -76,16 +76,21 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 }
             }
 
-            SelectedTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
-            SelectedTrainerGroupIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
+            if (SelectedTrainerGroupString != null) {
+                SelectedTrainerGroupIds = SelectedTrainerGroupString.Split(", ").Select(int.Parse).ToList();
 
-            TrainingOrder.Trainers = await _context.Employees
+                TrainingOrder.TrainerGroups = await _context.TrainerGroups
+                        .Where(e => SelectedTrainerGroupIds.Contains(e.Id))
+                        .ToListAsync();
+            }
+
+            if (SelectedTrainerString != null) {
+                SelectedTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
+
+                TrainingOrder.Trainers = await _context.Employees
                     .Where(e => SelectedTrainerIds.Contains(e.Id))
                     .ToListAsync();
-
-            TrainingOrder.TrainerGroups = await _context.TrainerGroups
-                    .Where(e => SelectedTrainerGroupIds.Contains(e.Id))
-                    .ToListAsync();
+            }
 
             _context.TrainingOrders.Update(TrainingOrder);
             await _context.SaveChangesAsync();
