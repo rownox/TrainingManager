@@ -27,13 +27,18 @@
         };
     }
 
-    function toggleItem(item) {
-        selectedItems.update(items => {
-            const index = items.findIndex(i => i.id === item.id);
-            return index !== -1
-                ? items.filter(i => i.id !== item.id)
-                : [...items, item];
-        });
+    function toggleItem(item, event) {
+        event.stopPropagation();
+        if (displayMode === 'trainees') {
+            selectedItems.set([item]);
+        } else {
+            selectedItems.update(items => {
+                const index = items.findIndex(i => i.id === item.id);
+                return index !== -1
+                    ? items.filter(i => i.id !== item.id)
+                    : [...items, item];
+            });
+        }
     }
 
     function addSelection() {
@@ -101,7 +106,7 @@
     <ul>
         {#if displayMode === 'groups'}
             {#each groups as item}
-                <li on:click={() => selectItem(item)} 
+                <li on:click={() => selectItem(item)}
                     class:selected={$selectedItems.some(i => i.id === item.id)}>
                     <div class="info">
                         <p>{item.name}</p>
@@ -112,13 +117,13 @@
                     <div class="selector">
                         <img src={`/images/${$selectedItems.some(i => i.id === item.id) ? 'subtract' : 'add'}.svg`}
                              alt={$selectedItems.some(i => i.id === item.id) ? 'Remove' : 'Add'}
-                             on:click|stopPropagation={() => toggleItem(item)}>
+                             on:click={(event) => toggleItem(item, event)}>
                     </div>
                 </li>
             {/each}
         {:else}
             {#each people.filter(p => displayMode === 'trainers' ? p.status === 'Trainer' : p.status !== 'Trainer') as item}
-                <li on:click={() => selectItem(item)} 
+                <li on:click={() => selectItem(item)}
                     class:selected={$selectedItems.some(i => i.id === item.id)}>
                     <div class="photo">
                         <div class="frame"></div>
@@ -133,7 +138,7 @@
                     <div class="selector">
                         <img src={`/images/${$selectedItems.some(i => i.id === item.id) ? 'subtract' : 'add'}.svg`}
                              alt={$selectedItems.some(i => i.id === item.id) ? 'Remove' : 'Add'}
-                             on:click|stopPropagation={() => toggleItem(item)}>
+                             on:click={(event) => toggleItem(item, event)}>
                     </div>
                 </li>
             {/each}
