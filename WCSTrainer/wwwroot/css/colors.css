@@ -148,10 +148,10 @@
     background-color: var(--mainTheme);
 }
 
-    .pill.group {
+    .pill.group, .pill.groups {
         background-color: var(--blue2);
     }
 
-    .pill.trainee {
+    .pill.trainee, .pill.trainees {
         background-color: var(--red2);
     }

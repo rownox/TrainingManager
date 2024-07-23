@@ -10,6 +10,11 @@
 
     let selected = null;
 
+    function clearSelection() {
+        selectedItems.set([]);
+        selected = null;
+    }
+
     function updateDisplayMode() {
         const newMode = window.peopleComponentMode;
         if (newMode !== displayMode) {
@@ -152,7 +157,7 @@
     <div class="list-container">
         <div class="selected-list">
             {#each $selectedItems as item}
-                <div class="selection pill">{item.name}</div>
+                <div class="selection pill {displayMode}">{item.name}</div>
             {/each}
         </div>
     </div>
