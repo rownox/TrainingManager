@@ -25,17 +25,15 @@
             detailValue: displayMode === 'groups' ? item.count : item.status,
             ...(displayMode !== 'groups' && { affGroup: item.groups, hours: item.hours })
         };
+    }
 
-        if (displayMode === 'trainees') {
-            selectedItems.set([item]);
-        } else {
-            selectedItems.update(items => {
-                const index = items.findIndex(i => i.id === item.id);
-                return index !== -1
-                    ? items.filter(i => i.id !== item.id)
-                    : [...items, item];
-            });
-        }
+    function toggleItem(item) {
+        selectedItems.update(items => {
+            const index = items.findIndex(i => i.id === item.id);
+            return index !== -1
+                ? items.filter(i => i.id !== item.id)
+                : [...items, item];
+        });
     }
 
     function addSelection() {
@@ -113,7 +111,8 @@
                     </div>
                     <div class="selector">
                         <img src={`/images/${$selectedItems.some(i => i.id === item.id) ? 'subtract' : 'add'}.svg`}
-                             alt={$selectedItems.some(i => i.id === item.id) ? 'Remove' : 'Add'}>
+                             alt={$selectedItems.some(i => i.id === item.id) ? 'Remove' : 'Add'}
+                             on:click|stopPropagation={() => toggleItem(item)}>
                     </div>
                 </li>
             {/each}
@@ -133,7 +132,8 @@
                     </div>
                     <div class="selector">
                         <img src={`/images/${$selectedItems.some(i => i.id === item.id) ? 'subtract' : 'add'}.svg`}
-                             alt={$selectedItems.some(i => i.id === item.id) ? 'Remove' : 'Add'}>
+                             alt={$selectedItems.some(i => i.id === item.id) ? 'Remove' : 'Add'}
+                             on:click|stopPropagation={() => toggleItem(item)}>
                     </div>
                 </li>
             {/each}
