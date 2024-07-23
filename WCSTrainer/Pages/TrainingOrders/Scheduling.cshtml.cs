@@ -39,12 +39,12 @@ namespace WCSTrainer.Pages.TrainingOrders {
             int count = 0;
 
             foreach (var order in TrainingOrders) {
-                DateOnly orderStart = order.BeginDate;
-                DateOnly orderEnd = order.EndDate;
+                DateOnly? orderStart = order.BeginDate;
+                DateOnly? orderEnd = order.CompletionDate;
                 DateOnly yearStart = new DateOnly(selectedYear, 1, 1);
                 DateOnly yearEnd = new DateOnly(selectedYear, 12, 31);
-                DateOnly effectiveStart = orderStart > yearStart ? orderStart : yearStart;
-                DateOnly effectiveEnd = orderEnd < yearEnd ? orderEnd : yearEnd;
+                DateOnly? effectiveStart = orderStart > yearStart ? orderStart : yearStart;
+                DateOnly? effectiveEnd = orderEnd < yearEnd ? orderEnd : yearEnd;
 
                 if (effectiveStart <= effectiveEnd) {
                     if (employeeHasOrder(order)) {
@@ -59,12 +59,12 @@ namespace WCSTrainer.Pages.TrainingOrders {
             int count = 0;
 
             foreach (var order in TrainingOrders) {
-                DateOnly orderStart = order.BeginDate;
-                DateOnly orderEnd = order.EndDate;
+                DateOnly? orderStart = order.BeginDate;
+                DateOnly? orderEnd = order.CompletionDate;
                 DateOnly yearStart = new DateOnly(selectedYear, 1, 1);
                 DateOnly yearEnd = new DateOnly(selectedYear, 12, 31);
-                DateOnly effectiveStart = orderStart > yearStart ? orderStart : yearStart;
-                DateOnly effectiveEnd = orderEnd < yearEnd ? orderEnd : yearEnd;
+                DateOnly? effectiveStart = orderStart > yearStart ? orderStart : yearStart;
+                DateOnly? effectiveEnd = orderEnd < yearEnd ? orderEnd : yearEnd;
 
                 if (effectiveStart <= effectiveEnd) {
                     if (employeeHasOrder(order)) {
@@ -81,10 +81,10 @@ namespace WCSTrainer.Pages.TrainingOrders {
             int count = 0;
 
             foreach (TrainingOrder order in TrainingOrders) {
-                DateOnly orderStart = order.BeginDate;
-                DateOnly orderEnd = order.EndDate;
-                DateOnly effectiveStart = orderStart > monthStart ? orderStart : monthStart;
-                DateOnly effectiveEnd = orderEnd < monthEnd ? orderEnd : monthEnd;
+                DateOnly? orderStart = order.BeginDate;
+                DateOnly? orderEnd = order.CompletionDate;
+                DateOnly? effectiveStart = orderStart > monthStart ? orderStart : monthStart;
+                DateOnly? effectiveEnd = orderEnd < monthEnd ? orderEnd : monthEnd;
 
                 if (effectiveStart <= effectiveEnd) {
                     if (employeeHasOrder(order)) {
@@ -101,8 +101,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
             DateOnly monthEnd = monthStart.AddMonths(1).AddDays(-1);
 
             foreach (var order in TrainingOrders) {
-                DateOnly orderStart = order.BeginDate;
-                DateOnly orderEnd = order.EndDate;
+                DateOnly? orderStart = order.BeginDate;
+                DateOnly? orderEnd = order.CompletionDate;
 
                 if ((orderStart <= monthEnd) && (orderEnd >= monthStart)) {
                     if (employeeHasOrder(order)) {

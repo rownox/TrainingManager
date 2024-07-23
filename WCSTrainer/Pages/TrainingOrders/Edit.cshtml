@@ -19,6 +19,8 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="TrainingOrder.Id" />
 
+                        <input asp-for="TrainingOrder.BeginDate" type="hidden" />
+                        <input asp-for="TrainingOrder.CompletionDate" type="hidden" />
                         <input asp-for="TrainingOrder.CreateDate" type="hidden" />
                         <input asp-for="TrainingOrder.Status" type="hidden" />
 
@@ -90,27 +92,6 @@
                                 </textarea>
                             </div>
                         </div>
-                        @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
-                            <div class="form-group">
-                                <div class="form">
-                                    <div class="labels">
-                                        <p class="control-label">Begin Date</p>
-                                        <span asp-validation-for="TrainingOrder.BeginDate" class="text-danger"></span>
-                                    </div>
-                                    <input type="date" asp-for="TrainingOrder.BeginDate" class="form-control" />
-                                </div>
-                                <div class="form">
-                                    <div class="labels">
-                                        <p class="control-label">End Date</p>
-                                        <span asp-validation-for="TrainingOrder.EndDate" class="text-danger"></span>
-                                    </div>
-                                    <input type="date" asp-for="TrainingOrder.EndDate" class="form-control" />
-                                </div>
-                            </div>
-                        } else {
-                            <input type="hidden" asp-for="TrainingOrder.EndDate" />
-                            <input type="hidden" asp-for="TrainingOrder.BeginDate" />
-                        }
                         <div class="form-group">
                             <div class="form">
                                 <div class="labels">

@@ -1,12 +1,12 @@
 ﻿public class TrainingOrder {
     public int Id { get; set; }
-    public DateOnly BeginDate { get; set; }
-    public DateOnly EndDate { get; set; }
+    public DateOnly? BeginDate { get; set; }
+    public DateOnly? CompletionDate { get; set; }
     public DateOnly CreateDate { get; set; }
     public string Medium { get; set; }
     public string Status { get; set; }
     public int Duration { get; set; }
-    public string Priority { get; set; }
+    public string? Priority { get; set; }
     public string Description { get; set; }
     public string ClosingNotes { get; set; } = string.Empty;
     public int TraineeId { get; set; }

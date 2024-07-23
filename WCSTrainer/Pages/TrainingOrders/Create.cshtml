@@ -17,14 +17,16 @@
                 <p class="description">Fill out each required field.</p>
                 <div class="field-container">
                     <form method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div asp-validation-summary="All" class="text-danger"></div>
 
                         <input asp-for="TrainingOrder.Status" type="hidden" value="Awaiting Approval" />
-                        <input asp-for="TrainingOrder.CreateDate" type="hidden" value="@Model.Day" />
-                        <input asp-for="TrainingOrder.BeginDate" type="hidden" value="@Model.Day" />
-                        <input asp-for="TrainingOrder.EndDate" type="hidden" value="@Model.Day" />
-                        <input type="hidden" id="employeesData" value="@ViewData["EmployeesJson"]" />
-                        <input type="hidden" id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
+                        @{
+                            var date = DateOnly.FromDateTime(DateTime.Now);
+                            <input asp-for="TrainingOrder.CreateDate" type="hidden" value="@date" />
+                        }
+                        
+                        <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
+                        <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
 
                         <div class="form-group">
                             <div class="form">
@@ -32,9 +34,9 @@
                                     <span asp-validation-for="TrainingOrder.TraineeId" class="text-danger"></span>
                                 </div>
                                  <div class="selections">
-                                    <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select Trainee</p></div>
                                     <ul id="trainee" class="pill-container">
                                     </ul>
+                                    <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select Trainee</p></div>
                                     <input id="traineeInput" asp-for="TrainingOrder.TraineeId" hidden/>
                                 </div>
                             </div>
@@ -62,26 +64,6 @@
                                     <span asp-validation-for="TrainingOrder.Medium" class="text-danger"></span>
                                 </div>
                                 <input asp-for="TrainingOrder.Medium" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form">
-                                <div class="labels">
-                                    <p class="control-label">Training Hours Needed</p>
-                                    <span asp-validation-for="TrainingOrder.Duration" class="text-danger"></span>
-                                </div>
-                                <input type="text" asp-for="TrainingOrder.Duration" class="form-control" />
-                            </div>
-                            <div class="form">
-                                <div class="labels">
-                                    <p class="control-label">Priority Level</p>
-                                    <span asp-validation-for="TrainingOrder.Priority" class="text-danger"></span>
-                                </div>
-                                <select asp-for="TrainingOrder.Priority" class="form-drop2">
-                                    <option value="High">High</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="Low">Low</option>
-                                </select>
                             </div>
                         </div>
                         <div class="form-group">

@@ -2,21 +2,31 @@
 @inject WCSTrainer.Data.WCSTrainerContext _context
 
 @if (TrainingOrder != null) {
+    <div class="title-row">
+        <p class="title">Created - @TrainingOrder.CreateDate</p>
+    </div>
     <div class="text-group">
-        <p class="title">Status</p>
-        @{
-            var type = "awaiting";
-            if (TrainingOrder.Status.Equals("Active")) {
-                type = "active";
-            } else if (TrainingOrder.Status.Equals("Verified")) {
-                type = "verified";
-            } else if (TrainingOrder.Status.Equals("Completed")) {
-                type = "completed";
-            }
-            <p class="info @type">@TrainingOrder.Status</p>
-        }
+        <p class="title">Trainee</p>
+        <div class="info">
+            <div class="pill trainee">@TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName</div>
+        </div>
+    </div>
+    <div class="text-group">
+        <p class="title">Description</p>
+        <pre class="info">@TrainingOrder.Description</pre>
+    </div>
+    <div class="text-group">
+        <p class="title">Location</p>
+        <p class="info">@TrainingOrder.Location.Name</p>
+    </div>
+    <div class="text-group">
+        <p class="title">Learning Medium</p>
+        <p class="info">@TrainingOrder.Medium</p>
     </div>
     @if (!TrainingOrder.Status.Equals("Awaiting Approval")) {
+        <div class="title-row">
+            <p class="title">Approved - @TrainingOrder.BeginDate</p>
+        </div>
         <div class="text-group">
             <p class="title">Trainers</p>
             <div class="info">
@@ -28,49 +38,19 @@
                 }
             </div>
         </div>
-    }
-    <div class="text-group">
-        <p class="title">Trainee</p>
-        <div class="info">
-            <div class="pill trainee">@TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName</div>
-        </div>
-        
-    </div>
-    <div class="text-group">
-        <p class="title">Priority Level</p>
-        <p class="info">@TrainingOrder.Priority</p>
-    </div>
-    <div class="text-group">
-        <p class="title">Description</p>
-        <pre class="info">@TrainingOrder.Description</pre>
-    </div>
-    @if (!TrainingOrder.Status.Equals("Awaiting Approval")) {
         <div class="text-group">
-            <p class="title">Begin Date</p>
-            <p class="info">@TrainingOrder.BeginDate</p>
+            <p class="title">Priority Level</p>
+            <p class="info">@TrainingOrder.Priority</p>
         </div>
         <div class="text-group">
-            <p class="title">End Date</p>
-            <p class="info">@TrainingOrder.EndDate</p>
+            <p class="title">Training Hours Needed</p>
+            <p class="info">@TrainingOrder.Duration Hours</p>
         </div>
     }
-    <div class="text-group">
-        <p class="title">Location</p>
-        <p class="info">@TrainingOrder.Location.Name</p>
-    </div>
-    <div class="text-group">
-        <p class="title">Learning Medium</p>
-        <p class="info">@TrainingOrder.Medium</p>
-    </div>
-    <div class="text-group">
-        <p class="title">Training Hours Needed</p>
-        <p class="info">@TrainingOrder.Duration Hours</p>
-    </div>
-    <div class="text-group">
-        <p class="title">Order Creation Date</p>
-        <p class="info">@TrainingOrder.CreateDate</p>
-    </div>
     @if (!TrainingOrder.Status.Equals("Awaiting Approval") && !TrainingOrder.Status.Equals("Active")) {
+        <div class="title-row">
+            <p class="title">Completed - @TrainingOrder.CompletionDate</p>
+        </div>
         <div class="text-group">
             <p class="title">Closing Notes</p>
             <pre class="info">@TrainingOrder.ClosingNotes</pre>
@@ -78,15 +58,12 @@
     }
     @if (TrainingOrder.Status.Equals("Verified")) {
         if (TrainingOrder.Verification != null) {
-            <br>
-            <p style="font-size: 20px;">Verification</p>
+            <div class="title-row">
+                <p class="title">Verified - @TrainingOrder.Verification.VerifyDate</p>
+            </div>
             <div class="text-group">
                 <p class="title">Signed By</p>
                 <p class="info">@TrainingOrder.Verification.Signature</p>
-            </div>
-            <div class="text-group">
-                <p class="title">Date Signed</p>
-                <p class="info">@TrainingOrder.Verification.VerifyDate</p>
             </div>
             <div class="text-group">
                 <p class="title">Effectiveness</p>

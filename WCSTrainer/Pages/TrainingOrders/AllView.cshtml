@@ -14,16 +14,6 @@
                         <button onclick="sortTable(0)" class="btn bg-btn btnWhite">ID Number</button>
                         <button onclick="sortTable(3)" class="btn bg-btn btnWhite">Priority Level</button>
                     </div>
-                    <form method="post" id="maxCountForm">
-                        <div class="selector">
-                            <p>From</p>
-                            <input type="date" asp-for="@Model.From" class="form-control" />
-                        </div>
-                        <div class="selector">
-                            <p>To</p>
-                            <input type="date" asp-for="@Model.To" class="form-control" />
-                        </div>
-                    </form>
                 </div>
                 <table id="dataTable">
                     <tr>
