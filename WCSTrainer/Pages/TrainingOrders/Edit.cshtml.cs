@@ -23,10 +23,10 @@ namespace WCSTrainer.Pages.TrainingOrders {
         public IList<TrainerGroup> TrainerGroups { get; set; }
         public SelectList Locations { get; set; }
         [BindProperty]
-        public string SelectedTrainerString { get; set; }
+        public string? SelectedTrainerString { get; set; }
         public List<int> SelectedTrainerIds { get; set; } = new List<int>();
         [BindProperty]
-        public string SelectedTrainerGroupString { get; set; }
+        public string? SelectedTrainerGroupString { get; set; }
         public List<int> SelectedTrainerGroupIds { get; set; } = new List<int>();
 
         public async Task<IActionResult> OnGetAsync(int? id) {
@@ -108,39 +108,43 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             _context.Entry(trainingOrderToUpdate).CurrentValues.SetValues(TrainingOrder);
 
-            List<int> newTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
-            var newTrainers = await _context.Employees
-                .Where(e => newTrainerIds.Contains(e.Id))
-                .ToListAsync();
+            if (SelectedTrainerGroupString != null && SelectedTrainerString != null) {
+                List<int> newTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
+                var newTrainers = await _context.Employees
+                    .Where(e => newTrainerIds.Contains(e.Id))
+                    .ToListAsync();
 
-            foreach (var trainer in trainingOrderToUpdate.Trainers.ToList()) {
-                if (!newTrainerIds.Contains(trainer.Id)) {
-                    trainingOrderToUpdate.Trainers.Remove(trainer);
+                foreach (var trainer in trainingOrderToUpdate.Trainers.ToList()) {
+                    if (!newTrainerIds.Contains(trainer.Id)) {
+                        trainingOrderToUpdate.Trainers.Remove(trainer);
+                    }
+                }
+
+                foreach (var trainer in newTrainers) {
+                    if (!trainingOrderToUpdate.Trainers.Any(t => t.Id == trainer.Id)) {
+                        trainingOrderToUpdate.Trainers.Add(trainer);
+                    }
+                }
+
+                List<int> newTrainerGroupIds = SelectedTrainerGroupString.Split(", ").Select(int.Parse).ToList();
+                var newTrainerGroups = await _context.TrainerGroups
+                    .Where(tg => newTrainerGroupIds.Contains(tg.Id))
+                    .ToListAsync();
+
+                foreach (var trainerGroup in trainingOrderToUpdate.TrainerGroups.ToList()) {
+                    if (!newTrainerGroupIds.Contains(trainerGroup.Id)) {
+                        trainingOrderToUpdate.TrainerGroups.Remove(trainerGroup);
+                    }
+                }
+
+                foreach (var trainerGroup in newTrainerGroups) {
+                    if (!trainingOrderToUpdate.TrainerGroups.Any(tg => tg.Id == trainerGroup.Id)) {
+                        trainingOrderToUpdate.TrainerGroups.Add(trainerGroup);
+                    }
                 }
             }
 
-            foreach (var trainer in newTrainers) {
-                if (!trainingOrderToUpdate.Trainers.Any(t => t.Id == trainer.Id)) {
-                    trainingOrderToUpdate.Trainers.Add(trainer);
-                }
-            }
-
-            List<int> newTrainerGroupIds = SelectedTrainerGroupString.Split(", ").Select(int.Parse).ToList();
-            var newTrainerGroups = await _context.TrainerGroups
-                .Where(tg => newTrainerGroupIds.Contains(tg.Id))
-                .ToListAsync();
-
-            foreach (var trainerGroup in trainingOrderToUpdate.TrainerGroups.ToList()) {
-                if (!newTrainerGroupIds.Contains(trainerGroup.Id)) {
-                    trainingOrderToUpdate.TrainerGroups.Remove(trainerGroup);
-                }
-            }
-
-            foreach (var trainerGroup in newTrainerGroups) {
-                if (!trainingOrderToUpdate.TrainerGroups.Any(tg => tg.Id == trainerGroup.Id)) {
-                    trainingOrderToUpdate.TrainerGroups.Add(trainerGroup);
-                }
-            }
+            
 
             try {
                 await _context.SaveChangesAsync();
