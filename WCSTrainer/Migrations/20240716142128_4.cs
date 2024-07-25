@@ -4,14 +4,11 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace WCSTrainer.Migrations
-{
+namespace WCSTrainer.Migrations {
     /// <inheritdoc />
-    public partial class _4 : Migration
-    {
+    public partial class _4 : Migration {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropForeignKey(
                 name: "FK_TrainingOrders_Skills_SkillId",
                 table: "TrainingOrders");
@@ -41,13 +38,11 @@ namespace WCSTrainer.Migrations
 
             migrationBuilder.CreateTable(
                 name: "TrainingOrderSkill",
-                columns: table => new
-                {
+                columns: table => new {
                     SkillId = table.Column<int>(type: "int", nullable: false),
                     TrainingOrderId = table.Column<int>(type: "int", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_TrainingOrderSkill", x => new { x.SkillId, x.TrainingOrderId });
                     table.ForeignKey(
                         name: "FK_TrainingOrderSkill_Skills_SkillId",
@@ -80,8 +75,7 @@ namespace WCSTrainer.Migrations
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropTable(
                 name: "TrainingOrderSkill");
 

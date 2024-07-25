@@ -144,7 +144,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 }
             }
 
-            
+
 
             try {
                 await _context.SaveChangesAsync();

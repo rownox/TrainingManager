@@ -4,14 +4,11 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace WCSTrainer.Migrations
-{
+namespace WCSTrainer.Migrations {
     /// <inheritdoc />
-    public partial class _11 : Migration
-    {
+    public partial class _11 : Migration {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropForeignKey(
                 name: "FK_Employees_TrainerGroups_TrainerGroupId",
                 table: "Employees");
@@ -41,13 +38,11 @@ namespace WCSTrainer.Migrations
 
             migrationBuilder.CreateTable(
                 name: "TrainerGroupEmployees",
-                columns: table => new
-                {
+                columns: table => new {
                     TrainerGroupId = table.Column<int>(type: "int", nullable: false),
                     TrainersId = table.Column<int>(type: "int", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_TrainerGroupEmployees", x => new { x.TrainerGroupId, x.TrainersId });
                     table.ForeignKey(
                         name: "FK_TrainerGroupEmployees_Employees_TrainersId",
@@ -65,13 +60,11 @@ namespace WCSTrainer.Migrations
 
             migrationBuilder.CreateTable(
                 name: "TrainingOrderTrainerGroups",
-                columns: table => new
-                {
+                columns: table => new {
                     TrainerGroupsId = table.Column<int>(type: "int", nullable: false),
                     TrainingOrdersId = table.Column<int>(type: "int", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_TrainingOrderTrainerGroups", x => new { x.TrainerGroupsId, x.TrainingOrdersId });
                     table.ForeignKey(
                         name: "FK_TrainingOrderTrainerGroups_TrainerGroups_TrainerGroupsId",
@@ -109,8 +102,7 @@ namespace WCSTrainer.Migrations
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropTable(
                 name: "TrainerGroupEmployees");
 

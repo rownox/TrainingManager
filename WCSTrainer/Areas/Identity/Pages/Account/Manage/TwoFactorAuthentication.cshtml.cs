@@ -5,7 +5,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WCSTrainer.Models;
 
 namespace WCSTrainer.Areas.Identity.Pages.Account.Manage {
     public class TwoFactorAuthenticationModel : PageModel {

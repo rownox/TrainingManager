@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Data {
@@ -83,5 +83,6 @@ namespace WCSTrainer.Data {
             var traineeRole = new IdentityRole("trainee") { NormalizedName = "TRAINEE" };
             builder.Entity<IdentityRole>().HasData(adminRole, trainerRole, traineeRole);
         }
+        public DbSet<WCSTrainer.Models.Person> Person { get; set; } = default!;
     }
 }

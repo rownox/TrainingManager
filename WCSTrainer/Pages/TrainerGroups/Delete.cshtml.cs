@@ -1,56 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using WCSTrainer.Data;
 
-namespace WCSTrainer.Pages.TrainerGroups
-{
-    public class DeleteModel : PageModel
-    {
+namespace WCSTrainer.Pages.TrainerGroups {
+    public class DeleteModel : PageModel {
         private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
-        public DeleteModel(WCSTrainer.Data.WCSTrainerContext context)
-        {
+        public DeleteModel(WCSTrainer.Data.WCSTrainerContext context) {
             _context = context;
         }
 
         [BindProperty]
         public TrainerGroup TrainerGroup { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> OnGetAsync(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
             var trainergroup = await _context.TrainerGroups.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (trainergroup == null)
-            {
+            if (trainergroup == null) {
                 return NotFound();
-            }
-            else
-            {
+            } else {
                 TrainerGroup = trainergroup;
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> OnPostAsync(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
             var trainergroup = await _context.TrainerGroups.FindAsync(id);
-            if (trainergroup != null)
-            {
+            if (trainergroup != null) {
                 TrainerGroup = trainergroup;
                 _context.TrainerGroups.Remove(TrainerGroup);
                 await _context.SaveChangesAsync();
