@@ -42,6 +42,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Pages\Accounts\" />
   </ItemGroup>
 
 </Project>

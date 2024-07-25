@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using WCSTrainer.Models;
 
 namespace WCSTrainer.Data {
     public static class SeedData {

@@ -2,9 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Net.NetworkInformation;
 using System.Security.Claims;
-using WCSTrainer.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
     [Authorize(Roles = "admin, trainer")]

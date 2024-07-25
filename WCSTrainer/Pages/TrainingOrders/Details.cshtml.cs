@@ -1,10 +1,8 @@
-﻿using AngleSharp.Dom;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
-using WCSTrainer.Models;
 
 namespace WCSTrainer.Pages.TrainingOrders {
     [Authorize(Roles = "admin, trainer, trainee")]

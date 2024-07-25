@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Text;
 using System.Text.Encodings.Web;
-using WCSTrainer.Models;
 
 namespace WCSTrainer.Areas.Identity.Pages.Account.Manage {
     public class EnableAuthenticatorModel : PageModel {
