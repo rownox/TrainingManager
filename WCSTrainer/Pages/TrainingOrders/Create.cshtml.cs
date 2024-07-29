@@ -45,7 +45,5 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             return RedirectToPage("./Index");
         }
-
-
     }
 }
