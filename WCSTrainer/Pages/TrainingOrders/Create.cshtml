@@ -24,7 +24,7 @@
                             var date = DateOnly.FromDateTime(DateTime.Now);
                             <input asp-for="TrainingOrder.CreateDate" type="hidden" value="@date" />
                         }
-                        
+
                         <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
                         <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
 
