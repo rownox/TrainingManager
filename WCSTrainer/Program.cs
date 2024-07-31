@@ -10,6 +10,7 @@ builder.Services.AddDbContext<WCSTrainerContext>(options =>
 builder.Services.AddDefaultIdentity<UserAccount>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<WCSTrainerContext>();
+
 builder.Services.AddDbContext<WCSTrainerContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection") ?? throw new InvalidOperationException("Connection string 'WCSTrainerContext' not found.")));
 
@@ -18,7 +19,9 @@ builder.Services.AddRazorComponents()
 
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment()) {
+if (app.Environment.IsDevelopment()) {
+    app.UseDeveloperExceptionPage();
+} else {
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
@@ -29,7 +32,6 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
-
 
 using (var scope = app.Services.CreateScope()) {
     var services = scope.ServiceProvider;

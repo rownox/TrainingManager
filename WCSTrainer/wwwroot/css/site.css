@@ -538,7 +538,6 @@ nav {
 
 
                 .panel .body .properties .order-list2 table {
-                    width: 100%;
                 }
 
                     .panel .body .properties .order-list2 table tr {
@@ -559,12 +558,14 @@ nav {
 
                     .panel .body .properties .order-list2 table tr td {
                         color: var(--textSub1);
+                        padding-right: 20px;
                     }
 
                     .panel .body .properties .order-list2 table tr th {
                         border-bottom: 1px solid var(--textMain);
                         text-align: start;
                         color: var(--textMain);
+                        padding-right: 20px;
                     }
 
             .panel .body .properties .scheduling {
