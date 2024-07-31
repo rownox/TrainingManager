@@ -23,8 +23,8 @@
     --black: #ffffff;
     --gray1: #dddddd;
     --gray2: #b2b2b2;
-    --gray3: #c6c6c6;
-    --gray4: #555555;
+    --gray3: #b2b2b2;
+    --gray4: #000000;
     --textMain: #000000;
     --textSub1: #000000;
     --textSub2: #000000;
@@ -39,10 +39,6 @@
     --yellow1: #000000;
     --yellow2: #999999;
 }
-
-/*-------------------------------------------------------*/
-/*                   UNIVERSAL BUTTONS                   */
-/*-------------------------------------------------------*/
 
 .btn {
     text-align: center;
@@ -119,10 +115,6 @@
         color: var(--textMain);
         transition: background-color 0s;
     }
-
-/*--------------------------------------------------------
-                     COMPLETION STAGES                    
---------------------------------------------------------*/
 
 .active {
     color: var(--green1);
