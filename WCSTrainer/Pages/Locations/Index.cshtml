@@ -1,5 +1,5 @@
 ﻿@page
-@model WCSTrainer.Pages.Skills.IndexModel
+@model WCSTrainer.Pages.Locations.IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -13,18 +13,16 @@
                 <div class="order-list2">
                     <table id="dataTable">
                         <tr>
-                            <th>Skill ID</th>
+                            <th>Location ID</th>
                             <th>Name</th>
-                            <th>Description</th>
                             <th></th>
                             <th></th>
                             <th></th>
                         </tr>
-                        @foreach (var item in Model.Skill) {
+                        @foreach (var item in Model.Location) {
                             <tr class="clickable">
                                 <td>@Html.DisplayFor(modelItem => item.Id)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
                                 <td><a asp-page="./Edit" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Edit</a></td>
                                 <td><a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Details</a></td>
                                 <td><a asp-page="./Delete" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Delete</a></td>
@@ -36,4 +34,3 @@
         </div>
     </div>
 </div>
-

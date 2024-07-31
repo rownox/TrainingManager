@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Accounts\Edit.cshtml" />
     <Content Remove="wwwroot\svelteapp\src\People.svelte" />
   </ItemGroup>
 
@@ -28,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\Accounts\Edit.cshtml" />
     <None Include="wwwroot\images\1N.png" />
     <None Include="wwwroot\svelteApp\.gitignore" />
     <None Include="wwwroot\svelteApp\public\build\bundle.css" />

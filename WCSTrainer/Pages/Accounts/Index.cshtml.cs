@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.AccountManager
 {
-    public class ManageUsersModel : PageModel
+    public class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<UserAccount> _userManager;
 
-        public ManageUsersModel(UserManager<IdentityUser> userManager) {
+        public IndexModel(UserManager<UserAccount> userManager) {
             _userManager = userManager;
         }
 
-        public List<IdentityUser> Users { get; set; }
+        public List<UserAccount> Users { get; set; }
 
         public async Task OnGetAsync() {
             Users = await _userManager.Users.ToListAsync();
