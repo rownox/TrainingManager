@@ -2,10 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace WCSTrainer.Pages.AccountManager
-{
-    public class IndexModel : PageModel
-    {
+namespace WCSTrainer.Pages.AccountManager {
+    public class IndexModel : PageModel {
         private readonly UserManager<UserAccount> _userManager;
 
         public IndexModel(UserManager<UserAccount> userManager) {

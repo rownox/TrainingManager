@@ -2,10 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WCSTrainer.Pages.AccountManager
-{
-    public class EditModel : PageModel
-    {
+namespace WCSTrainer.Pages.AccountManager {
+    public class EditModel : PageModel {
         private readonly UserManager<UserAccount> _userManager;
 
         public EditModel(UserManager<UserAccount> userManager) {
