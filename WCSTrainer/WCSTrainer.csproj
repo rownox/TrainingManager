@@ -37,13 +37,13 @@
     <None Include="wwwroot\svelteApp\public\build\bundle.js.map" />
     <None Include="wwwroot\svelteApp\public\global.css" />
     <None Include="wwwroot\svelteApp\rollup.config.js" />
-    <None Include="wwwroot\svelteApp\scripts\setupTypeScript.js" />
     <None Include="wwwroot\svelteApp\src\main.js" />
     <None Include="wwwroot\svelteapp\src\People.svelte" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\svelteApp\scripts\" />
   </ItemGroup>
 
 </Project>

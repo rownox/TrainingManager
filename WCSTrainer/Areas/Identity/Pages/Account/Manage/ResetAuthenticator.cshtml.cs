@@ -7,51 +7,51 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WCSTrainer.Areas.Identity.Pages.Account.Manage {
-  public class ResetAuthenticatorModel : PageModel {
-    private readonly UserManager<UserAccount> _userManager;
-    private readonly SignInManager<UserAccount> _signInManager;
-    private readonly ILogger<ResetAuthenticatorModel> _logger;
+   public class ResetAuthenticatorModel : PageModel {
+      private readonly UserManager<UserAccount> _userManager;
+      private readonly SignInManager<UserAccount> _signInManager;
+      private readonly ILogger<ResetAuthenticatorModel> _logger;
 
-    public ResetAuthenticatorModel(
-        UserManager<UserAccount> userManager,
-        SignInManager<UserAccount> signInManager,
-        ILogger<ResetAuthenticatorModel> logger) {
-      _userManager = userManager;
-      _signInManager = signInManager;
-      _logger = logger;
-    }
-
-    /// <summary>
-    ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-    ///     directly from your code. This API may change or be removed in future releases.
-    /// </summary>
-    [TempData]
-    public string StatusMessage { get; set; }
-
-    public async Task<IActionResult> OnGet() {
-      var user = await _userManager.GetUserAsync(User);
-      if (user == null) {
-        return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+      public ResetAuthenticatorModel(
+          UserManager<UserAccount> userManager,
+          SignInManager<UserAccount> signInManager,
+          ILogger<ResetAuthenticatorModel> logger) {
+         _userManager = userManager;
+         _signInManager = signInManager;
+         _logger = logger;
       }
 
-      return Page();
-    }
+      /// <summary>
+      ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+      ///     directly from your code. This API may change or be removed in future releases.
+      /// </summary>
+      [TempData]
+      public string StatusMessage { get; set; }
 
-    public async Task<IActionResult> OnPostAsync() {
-      var user = await _userManager.GetUserAsync(User);
-      if (user == null) {
-        return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+      public async Task<IActionResult> OnGet() {
+         var user = await _userManager.GetUserAsync(User);
+         if (user == null) {
+            return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+         }
+
+         return Page();
       }
 
-      await _userManager.SetTwoFactorEnabledAsync(user, false);
-      await _userManager.ResetAuthenticatorKeyAsync(user);
-      var userId = await _userManager.GetUserIdAsync(user);
-      _logger.LogInformation("User with ID '{UserId}' has reset their authentication app key.", user.Id);
+      public async Task<IActionResult> OnPostAsync() {
+         var user = await _userManager.GetUserAsync(User);
+         if (user == null) {
+            return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+         }
 
-      await _signInManager.RefreshSignInAsync(user);
-      StatusMessage = "Your authenticator app key has been reset, you will need to configure your authenticator app using the new key.";
+         await _userManager.SetTwoFactorEnabledAsync(user, false);
+         await _userManager.ResetAuthenticatorKeyAsync(user);
+         var userId = await _userManager.GetUserIdAsync(user);
+         _logger.LogInformation("User with ID '{UserId}' has reset their authentication app key.", user.Id);
 
-      return RedirectToPage("./EnableAuthenticator");
-    }
-  }
+         await _signInManager.RefreshSignInAsync(user);
+         StatusMessage = "Your authenticator app key has been reset, you will need to configure your authenticator app using the new key.";
+
+         return RedirectToPage("./EnableAuthenticator");
+      }
+   }
 }
