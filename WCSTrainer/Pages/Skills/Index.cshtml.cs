@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Skills {
@@ -9,10 +10,14 @@ namespace WCSTrainer.Pages.Skills {
             _context = context;
         }
 
-        public IList<Skill> Skill { get; set; } = default!;
+        public IList<Skill> Skills { get; set; } = default!;
+
+        public int listCount = 0;
+        [BindProperty]
+        public int maxCount { get; set; } = 10;
 
         public async Task OnGetAsync() {
-            Skill = await _context.Skills.ToListAsync();
+            Skills = await _context.Skills.ToListAsync();
         }
     }
 }

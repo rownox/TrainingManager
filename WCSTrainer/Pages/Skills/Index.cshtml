@@ -9,31 +9,94 @@
     <div class="body">
         <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
         <div class="properties">
-            <div class="flex-column">
-                <div class="order-list2">
-                    <table id="dataTable">
-                        <tr>
-                            <th>Skill ID</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        @foreach (var item in Model.Skill) {
-                            <tr class="clickable">
-                                <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                <td><a asp-page="./Edit" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Edit</a></td>
-                                <td><a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Details</a></td>
-                                <td><a asp-page="./Delete" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Delete</a></td>
-                            </tr>
+            <div class="list-container">
+                <div class="top">
+                    <form method="post" id="maxCountForm">
+                        <select asp-for="maxCount" class="drop-main" onchange="submitForm()">
+                            <option value="10">10</option>
+                            <option value="50">50</option>
+                            <option value="@Model.Skills.Count()">Max</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="order-list">
+                    <ul>
+                        @foreach (var item in Model.Skills.Reverse()) {
+                            if (Model.listCount < Model.maxCount) {
+                                <li id="@item.Id @item.Name" class="searchable">
+                                    <div class="info">
+                                        <div class="title">
+                                            <p>Skill #@item.Id </p>
+                                        </div>
+                                        <div class="sub">
+                                            <p class="identifier">Name - @item.Name</p>
+                                        </div>
+                                    </div>
+                                    <div class="btns">
+                                        <a class="btn bg-btn btnWhite" asp-page="./Assign" asp-route-id="@item.Id">Assign</a>
+                                        <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
+                                        <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
+                                    </div>
+                                </li>
+                                Model.listCount++;
+                            }
                         }
-                    </table>
+                    </ul>
+                </div>
+            </div>
+            <div class="tool-container">
+                <div class="tools">
+                    <p class="title">Options:</p>
+                    <div class="search">
+                        <input placeholder="Search Training Orders" type="search" onchange="update(this)" />
+                    </div>
+                    <div class="btns">
+                        <a asp-page="Create" class="btn btnWhite">Create New Skill</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    const closeModalBtn = document.querySelector(".btn-close");
+    const deleteText = document.getElementById("deleteText");
+    const deleteBtn = document.querySelector("#deleteBtn");
+
+    function toggleDisplay(className, show) {
+        var elements = document.getElementsByClassName(className);
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].style.display = show ? "flex" : "none";
+        }
+    }
+
+    function checkedBox(checkboxElem) {
+        toggleDisplay(checkboxElem.id, checkboxElem.checked);
+    }
+
+    function update(searchElement) {
+        var value = searchElement.value.toLowerCase();
+        var elements = document.getElementsByClassName("searchable");
+
+        if (value == "") {
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].style.display = "flex";
+            }
+        } else {
+            for (var i = 0; i < elements.length; i++) {
+                var id = elements[i].id.toLowerCase();
+                if (id.indexOf(value) === -1) {
+                    elements[i].style.display = "none";
+                } else {
+                    elements[i].style.display = "flex";
+                }
+            }
+        }
+    }
+
+    function submitForm() {
+        document.getElementById('maxCountForm').submit();
+    }
+</script>
 
