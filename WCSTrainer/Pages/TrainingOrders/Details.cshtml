@@ -2,58 +2,58 @@
 @model WCSTrainer.Pages.TrainingOrders.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+   ViewData["Title"] = "Details";
 }
 
 <div class="panel">
-    <div class="body">
-        <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
-        <div class="properties">
-            <div class="user-form">
-                <div id="contentToPrint" class="print-block">
-                    <p class="title">Training Order #@Model.TrainingOrder.Id</p>
-                    <div class="field-container">
-                        <component type="typeof(TrainingDetails)"
-                                   render-mode="WebAssemblyPrerendered"
-                                   param-OrderId="@Model.TrainingOrder.Id" />
-                    </div>
-                </div>
-                <br />
-                <div class="btn-container">
-                    @if (!Model.TrainingOrder.Status.Equals("Completed") && !Model.TrainingOrder.Status.Equals("Verified")) {
-                        <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
-                            Edit Order
-                        </a>
-                    }
-                    @if (Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
-                        <a class="btn bg-btn btnRed" asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">
-                            Approve Order
-                        </a>
-                    } else if (Model.TrainingOrder.Status.Equals("Active")) {
-                        <a class="btn bg-btn btnRed" asp-page="./Conclude" asp-route-id="@Model.TrainingOrder.Id">
-                            Conclude Order
-                        </a>
-                    } else if (Model.TrainingOrder.Status.Equals("Completed")) {
-                        <a class="btn bg-btn btnRed" asp-page="./Verification" asp-route-id="@Model.TrainingOrder.Id">
-                            Verify Order
-                        </a>
-                    }
-                    <img id="printButton" class="btn bg-btn btnWhite" src="/images/print.png">
-                </div>
+   <div class="body">
+      <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
+      <div class="properties">
+         <div class="user-form">
+            <div id="contentToPrint" class="print-block">
+               <p class="title">Training Order #@Model.TrainingOrder.Id</p>
+               <div class="field-container">
+                  <component type="typeof(TrainingDetails)"
+                             render-mode="WebAssemblyPrerendered"
+                             param-OrderId="@Model.TrainingOrder.Id" />
+               </div>
             </div>
-        </div>
-    </div>
+            <br />
+            <div class="btn-container">
+               @if (!Model.TrainingOrder.Status.Equals("Completed") && !Model.TrainingOrder.Status.Equals("Verified")) {
+                  <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
+                     Edit Order
+                  </a>
+               }
+               @if (Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
+                  <a class="btn bg-btn btnRed" asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">
+                     Approve Order
+                  </a>
+               } else if (Model.TrainingOrder.Status.Equals("Active")) {
+                  <a class="btn bg-btn btnRed" asp-page="./Conclude" asp-route-id="@Model.TrainingOrder.Id">
+                     Conclude Order
+                  </a>
+               } else if (Model.TrainingOrder.Status.Equals("Completed")) {
+                  <a class="btn bg-btn btnRed" asp-page="./Verification" asp-route-id="@Model.TrainingOrder.Id">
+                     Verify Order
+                  </a>
+               }
+               <img id="printButton" class="btn bg-btn btnWhite" src="/images/print.png">
+            </div>
+         </div>
+      </div>
+   </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var printButton = document.getElementById('printButton');
-        if (printButton) {
-            printButton.addEventListener('click', function() {
-                window.print();
-            });
-        } else {
-            console.error('Print button not found');
-        }
-    });
+   document.addEventListener('DOMContentLoaded', function () {
+      var printButton = document.getElementById('printButton');
+      if (printButton) {
+         printButton.addEventListener('click', function () {
+            window.print();
+         });
+      } else {
+         console.error('Print button not found');
+      }
+   });
 </script>

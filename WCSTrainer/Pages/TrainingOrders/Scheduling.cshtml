@@ -4,116 +4,116 @@
 }
 
 <div class="panel">
-    <div class="body">
-        <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
-        <div class="properties">
-            <div class="scheduling">
-                <div class="schedule">
-                    <div class="months" id="months">
-                        @for (int month = 1; month <= 12; month++) {
-                            DateTime date = new DateTime(Model.selectedYear, month, 1);
-                            string monthName = date.ToString("MMMM");
-                            string type = "month-inactive";
+   <div class="body">
+      <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
+      <div class="properties">
+         <div class="scheduling">
+            <div class="schedule">
+               <div class="months" id="months">
+                  @for (int month = 1; month <= 12; month++) {
+                     DateTime date = new DateTime(Model.selectedYear, month, 1);
+                     string monthName = date.ToString("MMMM");
+                     string type = "month-inactive";
 
-                            if (DateTime.Now.Month == month && DateTime.Now.Year == Model.selectedYear) {
-                                type = "month-active";
-                            }
+                     if (DateTime.Now.Month == month && DateTime.Now.Year == Model.selectedYear) {
+                        type = "month-active";
+                     }
 
-                            <div class="month @type">
-                                <div class="title">
-                                    <p>@monthName</p>
-                                </div>
-                                <div class="info">
-                                    <p>Preview:</p>
-                                    @if (Model.getFirstTrainingOrder(month, 0) != null) {
-                                        var order = @Model.getFirstTrainingOrder(month, 0);
-                                        <div class="order live">Order #@order.Id - @order.BeginDate</div>
-                                    } else {
-                                        <div class="order gray"></div>
-                                    }
-                                    @if (Model.getFirstTrainingOrder(month, 1) != null) {
-                                        var order = @Model.getFirstTrainingOrder(month, 1);
-                                        <div class="order live">Order #@order.Id - @order.BeginDate</div>
-                                    } else {
-                                        <div class="order gray"></div>
-                                    }
-                                </div>
-                                <div class="stats">
-                                    <p>Training Orders: @Model.countMonthOrders(month)</p>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                    
-                    <div class="days" id="days" style="display: none;">
-                        @for (int day = 0; day < 30; day++) {
-                            <div class="day">@day</div>
-                        }
-                    </div>
-                    
-                </div>
+                     <div class="month @type">
+                        <div class="title">
+                           <p>@monthName</p>
+                        </div>
+                        <div class="info">
+                           <p>Preview:</p>
+                           @if (Model.getFirstTrainingOrder(month, 0) != null) {
+                              var order = @Model.getFirstTrainingOrder(month, 0);
+                              <div class="order live">Order #@order.Id - @order.BeginDate</div>
+                           } else {
+                              <div class="order gray"></div>
+                           }
+                           @if (Model.getFirstTrainingOrder(month, 1) != null) {
+                              var order = @Model.getFirstTrainingOrder(month, 1);
+                              <div class="order live">Order #@order.Id - @order.BeginDate</div>
+                           } else {
+                              <div class="order gray"></div>
+                           }
+                        </div>
+                        <div class="stats">
+                           <p>Training Orders: @Model.countMonthOrders(month)</p>
+                        </div>
+                     </div>
+                  }
+               </div>
+
+               <div class="days" id="days" style="display: none;">
+                  @for (int day = 0; day < 30; day++) {
+                     <div class="day">@day</div>
+                  }
+               </div>
+
             </div>
-            <div class="tool-container">
-                <div class="tools">
-                    <p class="title">Options: </p>
-                    <form method="post">
-                        <div class="search">
-                            <p class="section-title">Search By Trainer:</p>
-                            <input asp-for="searchFor" type="search" />
-                        </div>
-                        <div class="search">
-                            <p>Year:</p>
-                            <div class="side">
-                                <select asp-for="selectedYear" class="form-drop2">
-                                    @for (int i = 0; i <= 10; i++) {
-                                        int newYear = (DateTime.Now.Year - 5) + i;
-                                        <option value="@newYear">@newYear</option>
-                                    }
-                                </select>
-                                <input type="submit" value="Search" class="btn bg-btn btnGreen" />
-                            </div>
-                        </div>
-                    </form>
-                    <div class="info">
-                        <div class="info-section">
-                            <p>Training Orders For:</p>
-                            <p>@Model.searchFor</p>
-                        </div>
-                        <div class="info-section">
-                            <p>Year:</p>
-                            <p>@Model.selectedYear</p>
-                        </div>
-                        <div class="info-section">
-                            <p>Total Training Orders:</p>
-                            <p>@Model.countOrders()</p>
-                        </div>
-                        <div class="info-section">
-                            <p>Total Training Hours: </p>
-                            <p>@Model.countTotalOrderHours()</p>
-                        </div>
-                    </div>
-                </div>
+         </div>
+         <div class="tool-container">
+            <div class="tools">
+               <p class="title">Options: </p>
+               <form method="post">
+                  <div class="search">
+                     <p class="section-title">Search By Trainer:</p>
+                     <input asp-for="searchFor" type="search" />
+                  </div>
+                  <div class="search">
+                     <p>Year:</p>
+                     <div class="side">
+                        <select asp-for="selectedYear" class="form-drop2">
+                           @for (int i = 0; i <= 10; i++) {
+                              int newYear = (DateTime.Now.Year - 5) + i;
+                              <option value="@newYear">@newYear</option>
+                           }
+                        </select>
+                        <input type="submit" value="Search" class="btn bg-btn btnGreen" />
+                     </div>
+                  </div>
+               </form>
+               <div class="info">
+                  <div class="info-section">
+                     <p>Training Orders For:</p>
+                     <p>@Model.searchFor</p>
+                  </div>
+                  <div class="info-section">
+                     <p>Year:</p>
+                     <p>@Model.selectedYear</p>
+                  </div>
+                  <div class="info-section">
+                     <p>Total Training Orders:</p>
+                     <p>@Model.countOrders()</p>
+                  </div>
+                  <div class="info-section">
+                     <p>Total Training Hours: </p>
+                     <p>@Model.countTotalOrderHours()</p>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var monthElements = document.getElementsByClassName("month");
-        var months = document.getElementById("months");
-        var days = document.getElementById("days");
+   document.addEventListener("DOMContentLoaded", function () {
+      var monthElements = document.getElementsByClassName("month");
+      var months = document.getElementById("months");
+      var days = document.getElementById("days");
 
-        Array.prototype.slice.call(monthElements).forEach(item => {
-            item.addEventListener("click", event => {
-                clickMonth(event);
-            });
-        });
+      Array.prototype.slice.call(monthElements).forEach(item => {
+         item.addEventListener("click", event => {
+            clickMonth(event);
+         });
+      });
 
-        function clickMonth(event) {
-            months.style.display = "none";
-            days.style.display = "flex";
-        }
-    });
+      function clickMonth(event) {
+         months.style.display = "none";
+         days.style.display = "flex";
+      }
+   });
 
 </script>
