@@ -1,27 +1,27 @@
 ﻿@inject NavigationManager Navigation
 
 <div class="side-bar">
-    <div class="link-list">
-        @{
-            List<(string, string)> links = new List<(string, string)> {
-                ("TrainingOrders", "Training Orders"),
-                ("Employees", "Employees"),
-                ("TrainerGroups", "Trainer Groups"),
-                ("Skills", "Skills"),
-                ("Locations", "Locations"),
-                ("Accounts", "Account Manager"),
-                ("Identity/Account/Manage", "Account Settings")
-            };
+   <div class="link-list">
+      @{
+         List<(string, string)> links = new List<(string, string)> {
+      ("TrainingOrders", "Training Orders"),
+      ("Employees", "Employees"),
+      ("TrainerGroups", "Trainer Groups"),
+      ("Skills", "Skills"),
+      ("Locations", "Locations"),
+      ("Accounts", "Account Manager"),
+      ("Identity/Account/Manage", "Account Settings")
+      };
 
-            foreach (var link in links) {
-                if (Navigation.Uri.Contains(link.Item1)) {
-                    <a href="/@link.Item1" class="selected">@link.Item2</a>
-                } else {
-                    <a href="/@link.Item1">@link.Item2</a>
-                }
+         foreach (var link in links) {
+            if (Navigation.Uri.Contains(link.Item1)) {
+               <a href="/@link.Item1" class="selected">@link.Item2</a>
+            } else {
+               <a href="/@link.Item1">@link.Item2</a>
             }
-        }
-    </div>
+         }
+      }
+   </div>
 </div>
 
 @code {

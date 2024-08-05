@@ -3,27 +3,27 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Employees {
-  public class DetailsModel : PageModel {
-    private readonly WCSTrainer.Data.WCSTrainerContext _context;
+   public class DetailsModel : PageModel {
+      private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
-    public DetailsModel(WCSTrainer.Data.WCSTrainerContext context) {
-      _context = context;
-    }
-
-    public Employee Employee { get; set; } = default!;
-
-    public async Task<IActionResult> OnGetAsync(int? id) {
-      if (id == null) {
-        return NotFound();
+      public DetailsModel(WCSTrainer.Data.WCSTrainerContext context) {
+         _context = context;
       }
 
-      var employee = await _context.Employees.FirstOrDefaultAsync(m => m.Id == id);
-      if (employee == null) {
-        return NotFound();
-      } else {
-        Employee = employee;
+      public Employee Employee { get; set; } = default!;
+
+      public async Task<IActionResult> OnGetAsync(int? id) {
+         if (id == null) {
+            return NotFound();
+         }
+
+         var employee = await _context.Employees.FirstOrDefaultAsync(m => m.Id == id);
+         if (employee == null) {
+            return NotFound();
+         } else {
+            Employee = employee;
+         }
+         return Page();
       }
-      return Page();
-    }
-  }
+   }
 }
