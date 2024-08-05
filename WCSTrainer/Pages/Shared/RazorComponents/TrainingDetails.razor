@@ -2,100 +2,100 @@
 @inject WCSTrainer.Data.WCSTrainerContext _context
 
 @if (TrainingOrder != null) {
-    <div class="title-row">
-        <p class="title">Created - @TrainingOrder.CreateDate</p>
-    </div>
-    <div class="text-group">
-        <p class="title">Trainee</p>
-        <div class="info">
-            <div class="pill trainee">@TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName</div>
-        </div>
-    </div>
-    <div class="text-group">
-        <p class="title">Description</p>
-        <pre class="info">@TrainingOrder.Description</pre>
-    </div>
-    <div class="text-group">
-        <p class="title">Location</p>
-        <p class="info">@TrainingOrder.Location.Name</p>
-    </div>
-    <div class="text-group">
-        <p class="title">Learning Medium</p>
-        <p class="info">@TrainingOrder.Medium</p>
-    </div>
-    @if (!TrainingOrder.Status.Equals("Awaiting Approval")) {
-        <div class="title-row">
-            <p class="title">Approved - @TrainingOrder.BeginDate</p>
-        </div>
-        <div class="text-group">
-            <p class="title">Trainers</p>
-            <div class="info">
-                @foreach (var trainer in TrainingOrder.Trainers) {
-                    <div class="pill">@trainer.FirstName @trainer.LastName</div>
-                }
-                @foreach (var trainer in TrainingOrder.TrainerGroups) {
-                    <div class="pill group">@trainer.Name</div>
-                }
-            </div>
-        </div>
-        <div class="text-group">
-            <p class="title">Priority Level</p>
-            <p class="info">@TrainingOrder.Priority</p>
-        </div>
-        <div class="text-group">
-            <p class="title">Training Hours Needed</p>
-            <p class="info">@TrainingOrder.Duration Hours</p>
-        </div>
-    }
-    @if (!TrainingOrder.Status.Equals("Awaiting Approval") && !TrainingOrder.Status.Equals("Active")) {
-        <div class="title-row">
-            <p class="title">Completed - @TrainingOrder.CompletionDate</p>
-        </div>
-        <div class="text-group">
-            <p class="title">Closing Notes</p>
-            <pre class="info">@TrainingOrder.ClosingNotes</pre>
-        </div>
-    }
-    @if (TrainingOrder.Status.Equals("Verified")) {
-        if (TrainingOrder.Verification != null) {
-            <div class="title-row">
-                <p class="title">Verified - @TrainingOrder.Verification.VerifyDate</p>
-            </div>
-            <div class="text-group">
-                <p class="title">Signed By</p>
-                <p class="info">@TrainingOrder.Verification.Signature</p>
-            </div>
-            <div class="text-group">
-                <p class="title">Effectiveness</p>
-                <pre class="info">@TrainingOrder.Verification.VerifyNotes</pre>
-            </div>
-        }
-    }
+   <div class="title-row">
+      <p class="title">Created - @TrainingOrder.CreateDate</p>
+   </div>
+   <div class="text-group">
+      <p class="title">Trainee</p>
+      <div class="info">
+         <div class="pill trainee">@TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName</div>
+      </div>
+   </div>
+   <div class="text-group">
+      <p class="title">Description</p>
+      <pre class="info">@TrainingOrder.Description</pre>
+   </div>
+   <div class="text-group">
+      <p class="title">Location</p>
+      <p class="info">@TrainingOrder.Location.Name</p>
+   </div>
+   <div class="text-group">
+      <p class="title">Learning Medium</p>
+      <p class="info">@TrainingOrder.Medium</p>
+   </div>
+   @if (!TrainingOrder.Status.Equals("Awaiting Approval")) {
+      <div class="title-row">
+         <p class="title">Approved - @TrainingOrder.BeginDate</p>
+      </div>
+      <div class="text-group">
+         <p class="title">Trainers</p>
+         <div class="info">
+            @foreach (var trainer in TrainingOrder.Trainers) {
+               <div class="pill">@trainer.FirstName @trainer.LastName</div>
+            }
+            @foreach (var trainer in TrainingOrder.TrainerGroups) {
+               <div class="pill group">@trainer.Name</div>
+            }
+         </div>
+      </div>
+      <div class="text-group">
+         <p class="title">Priority Level</p>
+         <p class="info">@TrainingOrder.Priority</p>
+      </div>
+      <div class="text-group">
+         <p class="title">Training Hours Needed</p>
+         <p class="info">@TrainingOrder.Duration Hours</p>
+      </div>
+   }
+   @if (!TrainingOrder.Status.Equals("Awaiting Approval") && !TrainingOrder.Status.Equals("Active")) {
+      <div class="title-row">
+         <p class="title">Completed - @TrainingOrder.CompletionDate</p>
+      </div>
+      <div class="text-group">
+         <p class="title">Closing Notes</p>
+         <pre class="info">@TrainingOrder.ClosingNotes</pre>
+      </div>
+   }
+   @if (TrainingOrder.Status.Equals("Verified")) {
+      if (TrainingOrder.Verification != null) {
+         <div class="title-row">
+            <p class="title">Verified - @TrainingOrder.Verification.VerifyDate</p>
+         </div>
+         <div class="text-group">
+            <p class="title">Signed By</p>
+            <p class="info">@TrainingOrder.Verification.Signature</p>
+         </div>
+         <div class="text-group">
+            <p class="title">Effectiveness</p>
+            <pre class="info">@TrainingOrder.Verification.VerifyNotes</pre>
+         </div>
+      }
+   }
 } else {
-    <p>Loading...</p>
+   <p>Loading...</p>
 }
 
 @code {
-    [Parameter]
-    public int OrderId { get; set; }
+   [Parameter]
+   public int OrderId { get; set; }
 
-    private TrainingOrder? TrainingOrder;
+   private TrainingOrder? TrainingOrder;
 
-    protected override async Task OnInitializedAsync() {
-        await LoadTrainingOrderAsync();
-    }
+   protected override async Task OnInitializedAsync() {
+      await LoadTrainingOrderAsync();
+   }
 
-    protected override async Task OnParametersSetAsync() {
-        await LoadTrainingOrderAsync();
-    }
+   protected override async Task OnParametersSetAsync() {
+      await LoadTrainingOrderAsync();
+   }
 
-    private async Task LoadTrainingOrderAsync() {
-        TrainingOrder = await _context.TrainingOrders
-            .Include(t => t.Trainee)
-            .Include(t => t.Location)
-            .Include(t => t.Trainers)
-            .Include(t => t.Verification)
-            .Include(t => t.TrainerGroups)
-            .FirstOrDefaultAsync(m => m.Id == OrderId);
-    }
+   private async Task LoadTrainingOrderAsync() {
+      TrainingOrder = await _context.TrainingOrders
+          .Include(t => t.Trainee)
+          .Include(t => t.Location)
+          .Include(t => t.Trainers)
+          .Include(t => t.Verification)
+          .Include(t => t.TrainerGroups)
+          .FirstOrDefaultAsync(m => m.Id == OrderId);
+   }
 }

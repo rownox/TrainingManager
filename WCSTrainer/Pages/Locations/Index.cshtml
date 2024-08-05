@@ -2,40 +2,40 @@
 @model WCSTrainer.Pages.Locations.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+   ViewData["Title"] = "Index";
 }
 
 <div class="panel">
-    <div class="body">
-        <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
-        <div class="properties">
-            <div class="flex-column">
-                <div class="order-list2">
-                    <table id="dataTable">
-                        <tr>
-                            <th>Location ID</th>
-                            <th>Name</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        @foreach (var item in Model.Location) {
-                            <tr class="clickable">
-                                <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                <td><a asp-page="./Edit" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Edit</a></td>
-                                <td><a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Details</a></td>
-                                <td><a asp-page="./Delete" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Delete</a></td>
-                            </tr>
-                        }
-                    </table>
-                    <div class="sorters">
-                        <div class="btns">
-                            <a asp-page="Create" class="btn bg-btn btnWhite">Create Group</a>
-                        </div>
-                    </div>
-                </div>
+   <div class="body">
+      <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
+      <div class="properties">
+         <div class="flex-column">
+            <div class="order-list2">
+               <table id="dataTable">
+                  <tr>
+                     <th>Location ID</th>
+                     <th>Name</th>
+                     <th></th>
+                     <th></th>
+                     <th></th>
+                  </tr>
+                  @foreach (var item in Model.Location) {
+                     <tr class="clickable">
+                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td><a asp-page="./Edit" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Edit</a></td>
+                        <td><a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Details</a></td>
+                        <td><a asp-page="./Delete" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Delete</a></td>
+                     </tr>
+                  }
+               </table>
+               <div class="sorters">
+                  <div class="btns">
+                     <a asp-page="Create" class="btn bg-btn btnWhite">Create Group</a>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 </div>

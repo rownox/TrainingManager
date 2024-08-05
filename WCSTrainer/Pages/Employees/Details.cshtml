@@ -2,43 +2,43 @@
 @model WCSTrainer.Pages.Employees.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+   ViewData["Title"] = "Details";
 }
 @using WCSTrainer.Components
 
 <div class="panel">
-    <div class="body">
-        <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
-        <div class="properties">
-            <div class="user-form">
-                <p class="title">Employee #@Html.DisplayFor(model => model.Employee.Id)</p>
-                <div class="field-container">
-                    <div class="text-group">
-                        <div class="identifier">
-                            <p class="title">First Name</p>
-                        </div>
-                        <div class="info-content">
-                            <p class="info">@Html.DisplayFor(model => model.Employee.FirstName)</p>
-                        </div>
-                    </div>
-                    <div class="text-group">
-                        <div class="identifier">
-                            <p class="title">Last Name</p>
-                        </div>
-                        <div class="info-content">
-                            <p class="info">@Html.DisplayFor(model => model.Employee.LastName)</p>
-                        </div>
-                    </div>
-                    <div class="text-group">
-                        <div class="identifier">
-                            <p class="title">Status</p>
-                        </div>
-                        <div class="info-content">
-                            <p class="info">@Html.DisplayFor(model => model.Employee.Status)</p>
-                        </div>
-                    </div>
-                </div>
+   <div class="body">
+      <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
+      <div class="properties">
+         <div class="user-form">
+            <p class="title">Employee #@Html.DisplayFor(model => model.Employee.Id)</p>
+            <div class="field-container">
+               <div class="text-group">
+                  <div class="identifier">
+                     <p class="title">First Name</p>
+                  </div>
+                  <div class="info-content">
+                     <p class="info">@Html.DisplayFor(model => model.Employee.FirstName)</p>
+                  </div>
+               </div>
+               <div class="text-group">
+                  <div class="identifier">
+                     <p class="title">Last Name</p>
+                  </div>
+                  <div class="info-content">
+                     <p class="info">@Html.DisplayFor(model => model.Employee.LastName)</p>
+                  </div>
+               </div>
+               <div class="text-group">
+                  <div class="identifier">
+                     <p class="title">Status</p>
+                  </div>
+                  <div class="info-content">
+                     <p class="info">@Html.DisplayFor(model => model.Employee.Status)</p>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 </div>
