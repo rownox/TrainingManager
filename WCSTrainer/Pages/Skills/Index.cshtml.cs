@@ -3,21 +3,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Skills {
-    public class IndexModel : PageModel {
-        private readonly WCSTrainer.Data.WCSTrainerContext _context;
+   public class IndexModel : PageModel {
+      private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
-        public IndexModel(WCSTrainer.Data.WCSTrainerContext context) {
-            _context = context;
-        }
+      public IndexModel(WCSTrainer.Data.WCSTrainerContext context) {
+         _context = context;
+      }
 
-        public IList<Skill> Skills { get; set; } = default!;
+      public IList<Skill> Skills { get; set; } = default!;
 
-        public int listCount = 0;
-        [BindProperty]
-        public int maxCount { get; set; } = 10;
+      public int listCount = 0;
+      [BindProperty]
+      public int maxCount { get; set; } = 10;
 
-        public async Task OnGetAsync() {
-            Skills = await _context.Skills.ToListAsync();
-        }
-    }
+      public async Task OnGetAsync() {
+         Skills = await _context.Skills.ToListAsync();
+      }
+   }
 }

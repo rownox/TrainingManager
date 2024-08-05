@@ -4,60 +4,60 @@
 }
 
 <div class="panel">
-    <div class="body">
-        <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
+   <div class="body">
+      <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
 
-        <div class="properties">
-            <div class="user-form">
-                <p class="title">Verify Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
-                <div class="field-container">
-                    <form method="post">
+      <div class="properties">
+         <div class="user-form">
+            <p class="title">Verify Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
+            <div class="field-container">
+               <form method="post">
 
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <input type="hidden" asp-for="TrainingOrder.Id"/>
-                        <input asp-for="TrainingOrder.BeginDate" type="hidden" />
-                        <input asp-for="TrainingOrder.CompletionDate" type="hidden" />
-                        <input asp-for="TrainingOrder.CreateDate" type="hidden" />
+                  <div asp-validation-summary="All" class="text-danger"></div>
+                  <input type="hidden" asp-for="TrainingOrder.Id" />
+                  <input asp-for="TrainingOrder.BeginDate" type="hidden" />
+                  <input asp-for="TrainingOrder.CompletionDate" type="hidden" />
+                  <input asp-for="TrainingOrder.CreateDate" type="hidden" />
 
-                        <input asp-for="TrainingOrder.Medium" type="hidden" />
-                        <input asp-for="TrainingOrder.Status" type="hidden" value="Verified" />
-                        <input asp-for="TrainingOrder.Duration" type="hidden" />
-                        <input asp-for="TrainingOrder.Priority" type="hidden" />
-                        <input asp-for="TrainingOrder.Description" type="hidden" />
-                        <input asp-for="TrainingOrder.ClosingNotes" type="hidden" />
+                  <input asp-for="TrainingOrder.Medium" type="hidden" />
+                  <input asp-for="TrainingOrder.Status" type="hidden" value="Verified" />
+                  <input asp-for="TrainingOrder.Duration" type="hidden" />
+                  <input asp-for="TrainingOrder.Priority" type="hidden" />
+                  <input asp-for="TrainingOrder.Description" type="hidden" />
+                  <input asp-for="TrainingOrder.ClosingNotes" type="hidden" />
 
-                        <input asp-for="TrainingOrder.TraineeId" type="hidden" />
-                        <input asp-for="TrainingOrder.LocationId" type="hidden" />
+                  <input asp-for="TrainingOrder.TraineeId" type="hidden" />
+                  <input asp-for="TrainingOrder.LocationId" type="hidden" />
 
-                        <component type="typeof(TrainingDetails)"
-                                   render-mode="WebAssemblyPrerendered"
-                                   param-OrderId="@Model.TrainingOrder.Id" />
+                  <component type="typeof(TrainingDetails)"
+                             render-mode="WebAssemblyPrerendered"
+                             param-OrderId="@Model.TrainingOrder.Id" />
 
-                        <br />
-                        <div class="form-group">
-                            <div class="form">
-                                <div class="labels">
-                                    <p class="control-label">Has the individual grasped the training?</p>
-                                </div>
-                                <textarea asp-for="VerifyNotes" rows="5"></textarea>
-                            </div>
+                  <br />
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Has the individual grasped the training?</p>
                         </div>
-                        <div class="form-group">
-                            <div class="form">
-                                <div class="labels">
-                                    <p class="control-label">Signature</p>
-                                </div>
-                                <input asp-for="Signature" class="form-control" />
-                            </div>
+                        <textarea asp-for="VerifyNotes" rows="5"></textarea>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Signature</p>
                         </div>
-                        <div class="form-group">
-                            <div class="btn-container">
-                                <input type="submit" value="Submit" class="btn bg-btn btnGreen" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        <input asp-for="Signature" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="btn-container">
+                        <input type="submit" value="Submit" class="btn bg-btn btnGreen" />
+                     </div>
+                  </div>
+               </form>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 </div>

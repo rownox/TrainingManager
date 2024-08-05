@@ -1,97 +1,96 @@
 ﻿@page
 @model WCSTrainer.Pages.TrainingOrders.ApprovalModel
 @{
-    ViewData["Title"] = "Approval";
+   ViewData["Title"] = "Approval";
 }
 
 <div id="sv-comp-people" class="people-component hidden"></div>
 <div class="overlay hidden"></div>
 
 <div class="panel">
-    <div class="body">
-        <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
-        <div class="properties">
-            <div class="user-form">
-                <p class="title">Approve Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
-                <div class="field-container">
-                    <form method="post">
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <input type="hidden" asp-for="TrainingOrder.Id" />
-                        
-                        @{
-                            var date = DateOnly.FromDateTime(DateTime.Now);
-                            <input asp-for="TrainingOrder.BeginDate" hidden value="@date" />
-                        }
-                        <input asp-for="TrainingOrder.CreateDate" type="hidden" />
+   <div class="body">
+      <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
+      <div class="properties">
+         <div class="user-form">
+            <p class="title">Approve Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
+            <div class="field-container">
+               <form method="post">
+                  <div asp-validation-summary="All" class="text-danger"></div>
+                  <input type="hidden" asp-for="TrainingOrder.Id" />
 
-                        <input asp-for="TrainingOrder.Medium" type="hidden" />
-                        <input asp-for="TrainingOrder.Status" type="hidden" value="Active" />
-                        <input asp-for="TrainingOrder.Description" type="hidden" />
+                  @{
+                     var date = DateOnly.FromDateTime(DateTime.Now);
+                     <input asp-for="TrainingOrder.BeginDate" hidden value="@date" />
+                  }
+                  <input asp-for="TrainingOrder.CreateDate" type="hidden" />
 
-                        <input asp-for="TrainingOrder.TraineeId" type="hidden" />
-                        <input asp-for="TrainingOrder.LocationId" type="hidden" />
+                  <input asp-for="TrainingOrder.Medium" type="hidden" />
+                  <input asp-for="TrainingOrder.Status" type="hidden" value="Active" />
+                  <input asp-for="TrainingOrder.Description" type="hidden" />
 
-                        <input type="hidden" id="employeesData" value="@ViewData["EmployeesJson"]" />
-                        <input type="hidden" id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
+                  <input asp-for="TrainingOrder.TraineeId" type="hidden" />
+                  <input asp-for="TrainingOrder.LocationId" type="hidden" />
+
+                  <input type="hidden" id="employeesData" value="@ViewData["EmployeesJson"]" />
+                  <input type="hidden" id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
 
 
-                        <div class="form-group">
-                            <div class="form">
-                                <div class="labels">
-                                    <p class="control-label">Trainers</p>
-                                    <span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
-                                </div>
-                                <div class="selections">
-                                    <ul id="trainerList" class="pill-container"></ul>
-                                    <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select</p></div>
-                                    <input id="trainersInput" asp-for="@Model.SelectedTrainerString" hidden />
-                                </div>
-                            </div>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Trainers</p>
+                           <span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <div class="form">
-                                <div class="labels">
-                                    <p class="control-label">Trainer Groups</p>
-                                    <span asp-validation-for="@Model.SelectedTrainerGroupString" class="text-danger"></span>
-                                </div>
-                                <div class="selections">
-                                    <ul id="groupList" class="pill-container"></ul>
-                                    <div class="btn bg-btn btnWhite" onclick="openComponent('groups')">Select</div>
-                                    <input id="groupsInput" asp-for="@Model.SelectedTrainerGroupString" hidden />
-                                </div>
-                            </div>
+                        <div class="selections">
+                           <ul id="trainerList" class="pill-container"></ul>
+                           <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select</p></div>
+                           <input id="trainersInput" asp-for="@Model.SelectedTrainerString" hidden />
                         </div>
-                        <div class="form-group">
-                            <div class="form">
-                                <div class="labels">
-                                    <p class="control-label">Training Hours Needed</p>
-                                    <span asp-validation-for="TrainingOrder.Duration" class="text-danger"></span>
-                                </div>
-                                <input type="text" asp-for="TrainingOrder.Duration" class="form-control" />
-                            </div>
-                            <div class="form">
-                                <div class="labels">
-                                    <p class="control-label">Priority Level</p>
-                                    <span asp-validation-for="TrainingOrder.Priority" class="text-danger"></span>
-                                </div>
-                                <select 
-                                    asp-for="TrainingOrder.Priority" class="form-drop2">
-                                    <option value="High">High</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="Low">Low</option>
-                                </select>
-                            </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Trainer Groups</p>
+                           <span asp-validation-for="@Model.SelectedTrainerGroupString" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <div class="btn-container">
-                                <input type="submit" value="Approve" class="btn bg-btn btnGreen" />
-                            </div>
+                        <div class="selections">
+                           <ul id="groupList" class="pill-container"></ul>
+                           <div class="btn bg-btn btnWhite" onclick="openComponent('groups')">Select</div>
+                           <input id="groupsInput" asp-for="@Model.SelectedTrainerGroupString" hidden />
                         </div>
-                    </form>
-                </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Training Hours Needed</p>
+                           <span asp-validation-for="TrainingOrder.Duration" class="text-danger"></span>
+                        </div>
+                        <input type="text" asp-for="TrainingOrder.Duration" class="form-control" />
+                     </div>
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Priority Level</p>
+                           <span asp-validation-for="TrainingOrder.Priority" class="text-danger"></span>
+                        </div>
+                        <select asp-for="TrainingOrder.Priority" class="form-drop2">
+                           <option value="High">High</option>
+                           <option value="Medium">Medium</option>
+                           <option value="Low">Low</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="btn-container">
+                        <input type="submit" value="Approve" class="btn bg-btn btnGreen" />
+                     </div>
+                  </div>
+               </form>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 </div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -99,184 +98,184 @@
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
 <script>
-    var employeesDataElement = document.getElementById('employeesData');
-    var employeesData = employeesDataElement.value ? JSON.parse(employeesDataElement.value) : [];
-    window.employeesData = employeesData;
+   var employeesDataElement = document.getElementById('employeesData');
+   var employeesData = employeesDataElement.value ? JSON.parse(employeesDataElement.value) : [];
+   window.employeesData = employeesData;
 
-    var trainergroupsDataElement = document.getElementById('trainergroupsData');
-    var trainergroupsData = trainergroupsDataElement.value ? JSON.parse(trainergroupsDataElement.value) : [];
-    window.trainergroupsData = trainergroupsData;
+   var trainergroupsDataElement = document.getElementById('trainergroupsData');
+   var trainergroupsData = trainergroupsDataElement.value ? JSON.parse(trainergroupsDataElement.value) : [];
+   window.trainergroupsData = trainergroupsData;
 
-    var peopleComponent = document.getElementById("sv-comp-people");
-    var overlay = document.querySelector(".overlay");
-    var trainersInput = document.getElementById("trainersInput");
-    var trainList = document.getElementById("trainerList");
-    var trainee = document.getElementById("trainee");
-    var traineeInput = document.getElementById("traineeInput");
-    var groupsInput = document.getElementById("groupsInput");
-    var groupList = document.getElementById("groupList");
-    var person = document.getElementsByClassName("person");
-    var group = document.getElementsByClassName("group");
+   var peopleComponent = document.getElementById("sv-comp-people");
+   var overlay = document.querySelector(".overlay");
+   var trainersInput = document.getElementById("trainersInput");
+   var trainList = document.getElementById("trainerList");
+   var trainee = document.getElementById("trainee");
+   var traineeInput = document.getElementById("traineeInput");
+   var groupsInput = document.getElementById("groupsInput");
+   var groupList = document.getElementById("groupList");
+   var person = document.getElementsByClassName("person");
+   var group = document.getElementsByClassName("group");
 
-    var trainerClasses = "pill person"
-    var traineeClasses = "pill person trainee"
-    var groupClasses = "pill group"
+   var trainerClasses = "pill person"
+   var traineeClasses = "pill person trainee"
+   var groupClasses = "pill group"
 
-    document.addEventListener('DOMContentLoaded', function () {
+   document.addEventListener('DOMContentLoaded', function () {
 
-        function safeAddEventListener(element, event, handler) {
-            if (element) {
-                element.addEventListener(event, handler);
-            }
-        }
+      function safeAddEventListener(element, event, handler) {
+         if (element) {
+            element.addEventListener(event, handler);
+         }
+      }
 
-        safeAddEventListener(overlay, "click", closeComponent);
+      safeAddEventListener(overlay, "click", closeComponent);
 
-        safeAddEventListener(trainee, "click", function (event) {
-            if (event.target.tagName === "LI") {
-                event.target.remove();
-                updateTraineeInput();
-            }
-        });
-
-        safeAddEventListener(trainList, "click", function (event) {
-            if (event.target.tagName === "LI") {
-                event.target.remove();
-                updateTrainersInput();
-            }
-        });
-
-        safeAddEventListener(groupList, "click", function (event) {
-            if (event.target.tagName === "LI") {
-                event.target.remove();
-                updateGroupsInput();
-            }
-        });
-
-        Array.from(person).forEach(item => {
-            safeAddEventListener(item, "click", addTrainer);
-        });
-
-        Array.from(group).forEach(item => {
-            safeAddEventListener(item, "click", addGroup);
-        });
-
-        function addTrainer(trainerItems) {
-            if (!trainerItems || trainerItems.length === 0) return;
-
-            var trainerList = document.getElementById("trainerList");
-            if (!trainerList) return;
-
-            trainerItems.forEach(item => {
-                if (!Array.from(trainerList.getElementsByTagName("li")).some(li => li.getAttribute("value") == item.id)) {
-                    trainerList.innerHTML += `<li value="${item.id}" class="${trainerClasses}">${item.name}</li>`;
-                }
-            });
-
-            updateTrainersInput();
-        }
-
-        function addTrainee(traineeName, traineeId) {
-            if (!traineeName || !traineeName.trim() || !traineeId) return;
-
-            var traineeList = document.getElementById("trainee");
-            if (!traineeList) return;
-
-            traineeList.innerHTML = `<li value="${traineeId}" class="${traineeClasses}">${traineeName.trim()}</li>`;
+      safeAddEventListener(trainee, "click", function (event) {
+         if (event.target.tagName === "LI") {
+            event.target.remove();
             updateTraineeInput();
-        }
+         }
+      });
 
-        function addGroup(groupItems) {
-            if (!groupItems || groupItems.length === 0) return;
+      safeAddEventListener(trainList, "click", function (event) {
+         if (event.target.tagName === "LI") {
+            event.target.remove();
+            updateTrainersInput();
+         }
+      });
 
-            var groupList = document.getElementById("groupList");
-            if (!groupList) return;
-
-            groupItems.forEach(item => {
-                if (!Array.from(groupList.getElementsByTagName("li")).some(li => li.getAttribute("value") == item.id)) {
-                    groupList.innerHTML += `<li value="${item.id}" class="${groupClasses}">${item.name}</li>`;
-                }
-            });
-
+      safeAddEventListener(groupList, "click", function (event) {
+         if (event.target.tagName === "LI") {
+            event.target.remove();
             updateGroupsInput();
-        }
+         }
+      });
 
-        function updateTrainersInput() {
-            if (!trainList || !trainersInput) return;
+      Array.from(person).forEach(item => {
+         safeAddEventListener(item, "click", addTrainer);
+      });
 
-            var trainerListItems = Array.from(trainList.getElementsByTagName("li"));
-            trainersInput.value = trainerListItems.map(item => `${item.getAttribute("value")}`).join(", ");
-        }
+      Array.from(group).forEach(item => {
+         safeAddEventListener(item, "click", addGroup);
+      });
 
-        function updateTraineeInput() {
-            if (!trainee || !traineeInput) return;
+      function addTrainer(trainerItems) {
+         if (!trainerItems || trainerItems.length === 0) return;
 
-            var traineeListItems = Array.from(trainee.getElementsByTagName("li"));
-            traineeInput.value = traineeListItems.length > 0 ? traineeListItems[0].getAttribute("value") : "";
-        }
+         var trainerList = document.getElementById("trainerList");
+         if (!trainerList) return;
 
-        function updateGroupsInput() {
-            if (!groupList || !groupsInput) return;
+         trainerItems.forEach(item => {
+            if (!Array.from(trainerList.getElementsByTagName("li")).some(li => li.getAttribute("value") == item.id)) {
+               trainerList.innerHTML += `<li value="${item.id}" class="${trainerClasses}">${item.name}</li>`;
+            }
+         });
 
-            var groupListItems = Array.from(groupList.getElementsByTagName("li"));
-            groupsInput.value = groupListItems.map(item => `${item.getAttribute("value")}`).join(", ");
-        }
+         updateTrainersInput();
+      }
 
-        if (trainList) {
-            const trainerListObserver = new MutationObserver(updateTrainersInput);
-            trainerListObserver.observe(trainList, { childList: true, subtree: true });
-        }
+      function addTrainee(traineeName, traineeId) {
+         if (!traineeName || !traineeName.trim() || !traineeId) return;
 
-        if (trainee) {
-            const traineeObserver = new MutationObserver(updateTraineeInput);
-            traineeObserver.observe(trainee, { childList: true, subtree: true });
-        }
+         var traineeList = document.getElementById("trainee");
+         if (!traineeList) return;
 
-        if (groupList) {
-            const groupListObserver = new MutationObserver(updateGroupsInput);
-            groupListObserver.observe(groupList, { childList: true, subtree: true });
-        }
+         traineeList.innerHTML = `<li value="${traineeId}" class="${traineeClasses}">${traineeName.trim()}</li>`;
+         updateTraineeInput();
+      }
 
-        document.addEventListener("addTrainerEvent", function (event) {
-            addTrainer(event.detail.items);
-            closeComponent();
-        });
+      function addGroup(groupItems) {
+         if (!groupItems || groupItems.length === 0) return;
 
-        document.addEventListener("addTraineeEvent", function (event) {
-            addTrainee(event.detail.name, event.detail.id);
-            closeComponent();
-        });
+         var groupList = document.getElementById("groupList");
+         if (!groupList) return;
 
-        document.addEventListener("addGroupEvent", function (event) {
-            addGroup(event.detail.items);
-            closeComponent();
-        });
+         groupItems.forEach(item => {
+            if (!Array.from(groupList.getElementsByTagName("li")).some(li => li.getAttribute("value") == item.id)) {
+               groupList.innerHTML += `<li value="${item.id}" class="${groupClasses}">${item.name}</li>`;
+            }
+         });
 
-        updateTrainersInput();
-        updateTraineeInput();
-        updateGroupsInput();
-    });
+         updateGroupsInput();
+      }
 
-    function openComponent(mode) {
-        window.peopleComponentMode = mode;
-        window.dispatchEvent(new Event('peopleComponentModeChange'));
+      function updateTrainersInput() {
+         if (!trainList || !trainersInput) return;
 
-        var peopleComponent = document.getElementById("sv-comp-people");
-        var overlay = document.querySelector(".overlay");
-        if (peopleComponent) peopleComponent.classList.remove("hidden");
-        if (overlay) overlay.classList.remove("hidden");
-    }
+         var trainerListItems = Array.from(trainList.getElementsByTagName("li"));
+         trainersInput.value = trainerListItems.map(item => `${item.getAttribute("value")}`).join(", ");
+      }
 
-    function closeComponent() {
-        var peopleComponent = document.getElementById("sv-comp-people");
-        var overlay = document.querySelector(".overlay");
-        if (peopleComponent) peopleComponent.classList.add("hidden");
-        if (overlay) overlay.classList.add("hidden");
-    }
+      function updateTraineeInput() {
+         if (!trainee || !traineeInput) return;
+
+         var traineeListItems = Array.from(trainee.getElementsByTagName("li"));
+         traineeInput.value = traineeListItems.length > 0 ? traineeListItems[0].getAttribute("value") : "";
+      }
+
+      function updateGroupsInput() {
+         if (!groupList || !groupsInput) return;
+
+         var groupListItems = Array.from(groupList.getElementsByTagName("li"));
+         groupsInput.value = groupListItems.map(item => `${item.getAttribute("value")}`).join(", ");
+      }
+
+      if (trainList) {
+         const trainerListObserver = new MutationObserver(updateTrainersInput);
+         trainerListObserver.observe(trainList, { childList: true, subtree: true });
+      }
+
+      if (trainee) {
+         const traineeObserver = new MutationObserver(updateTraineeInput);
+         traineeObserver.observe(trainee, { childList: true, subtree: true });
+      }
+
+      if (groupList) {
+         const groupListObserver = new MutationObserver(updateGroupsInput);
+         groupListObserver.observe(groupList, { childList: true, subtree: true });
+      }
+
+      document.addEventListener("addTrainerEvent", function (event) {
+         addTrainer(event.detail.items);
+         closeComponent();
+      });
+
+      document.addEventListener("addTraineeEvent", function (event) {
+         addTrainee(event.detail.name, event.detail.id);
+         closeComponent();
+      });
+
+      document.addEventListener("addGroupEvent", function (event) {
+         addGroup(event.detail.items);
+         closeComponent();
+      });
+
+      updateTrainersInput();
+      updateTraineeInput();
+      updateGroupsInput();
+   });
+
+   function openComponent(mode) {
+      window.peopleComponentMode = mode;
+      window.dispatchEvent(new Event('peopleComponentModeChange'));
+
+      var peopleComponent = document.getElementById("sv-comp-people");
+      var overlay = document.querySelector(".overlay");
+      if (peopleComponent) peopleComponent.classList.remove("hidden");
+      if (overlay) overlay.classList.remove("hidden");
+   }
+
+   function closeComponent() {
+      var peopleComponent = document.getElementById("sv-comp-people");
+      var overlay = document.querySelector(".overlay");
+      if (peopleComponent) peopleComponent.classList.add("hidden");
+      if (overlay) overlay.classList.add("hidden");
+   }
 </script>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+   @{
+      await Html.RenderPartialAsync("_ValidationScriptsPartial");
+   }
 }
