@@ -50,6 +50,10 @@ namespace WCSTrainer.Pages.Skills {
       }
 
       public async Task<IActionResult> OnPostAsync() {
+
+
+
+
          return Page();
       }
    }

@@ -13,9 +13,11 @@
             <div id="contentToPrint" class="print-block">
                <p class="title">Training Order #@Model.TrainingOrder.Id</p>
                <div class="field-container">
-                  <component type="typeof(TrainingDetails)"
-                             render-mode="WebAssemblyPrerendered"
-                             param-OrderId="@Model.TrainingOrder.Id" />
+                  <component 
+                     type="typeof(TrainingDetails)" 
+                     render-mode="WebAssemblyPrerendered" 
+                     param-OrderId="@Model.TrainingOrder.Id" 
+                  />
                </div>
             </div>
             <br />
