@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Versioning;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.Skills {
@@ -31,89 +33,103 @@ namespace WCSTrainer.Pages.Skills {
             return NotFound();
          }
 
-         var skill = await _context.Skills
+         Skill = await _context.Skills
              .Include(s => s.Employees)
              .Include(s => s.TrainingOrders)
              .FirstOrDefaultAsync(m => m.Id == id);
-         if (skill == null) {
+
+         if (Skill == null) {
             return NotFound();
-         } else {
-            Skill = skill;
          }
 
          Employees = await _context.Employees.ToListAsync();
-         ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer
-             .Serialize(Employees ?? new List<Employee>());
          TrainerGroups = await _context.TrainerGroups.ToListAsync();
-         ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer
-             .Serialize(TrainerGroups ?? new List<TrainerGroup>());
+
+         var options = GetJsonSerializerOptions();
+         ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees, options);
+         ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups, options);
 
          return Page();
       }
 
       public async Task<IActionResult> OnPostAsync() {
-
          if (!ModelState.IsValid) {
-            int? id = Skill.Id;
-            await OnGetAsync(id);
-         }
-
-         var trainee = await _context.Employees.FirstOrDefaultAsync(e => e.Id == SelectedTraineeId);
-         if (trainee == null) {
+            await LoadRelatedData();
             return Page();
          }
 
-         List<TrainerGroup> trainerGroups = new List<TrainerGroup>();
-         List<Employee> trainers = new List<Employee>();
-
-         if (SelectedTrainerGroupString != null) {
-            SelectedTrainerGroupIds = SelectedTrainerGroupString.Split(", ").Select(int.Parse).ToList();
-            var newTrainerGroups = await _context.TrainerGroups
-                    .Where(e => SelectedTrainerGroupIds.Contains(e.Id))
-                    .ToListAsync();
-            foreach (var i in newTrainerGroups) {
-               trainerGroups.Add(i);
-            }
+         var trainee = await _context.Employees.FindAsync(SelectedTraineeId);
+         if (trainee == null) {
+            ModelState.AddModelError("", "Selected trainee not found.");
+            await LoadRelatedData();
+            return Page();
          }
 
-         if (SelectedTrainerString != null) {
-            SelectedTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
-            var newTrainers = await _context.Employees
-                .Where(e => SelectedTrainerIds.Contains(e.Id))
-                .ToListAsync();
-            foreach (var i in newTrainers) {
-               trainers.Add(i);
-            }
-         }
+         var trainerGroups = await GetSelectedTrainerGroups();
+         var trainers = await GetSelectedTrainers();
 
-         foreach (var trainingOrder in Skill.TrainingOrders) {
-            var orderDuplicate = new TrainingOrder {
-               Description = trainingOrder.Description,
-               Duration = trainingOrder.Duration,
-               LocationId = trainingOrder.LocationId,
-               Medium = trainingOrder.Medium,
-               Status = trainingOrder.Status,
-               Trainee = trainee,
-               TrainerGroups = trainerGroups,
-               Trainers = trainers
-            };
-
-            trainee.TrainingOrdersAsTrainee.Add(orderDuplicate);
-         }
-
-         trainee.Skills.Add(Skill);
-
+         using var transaction = await _context.Database.BeginTransactionAsync();
          try {
+            foreach (var trainingOrder in Skill.TrainingOrders) {
+               var orderDuplicate = new TrainingOrder {
+                  Description = trainingOrder.Description,
+                  LocationId = trainingOrder.LocationId,
+                  Duration = trainingOrder.Duration,
+                  Medium = trainingOrder.Medium,
+                  Status = trainingOrder.Status,
+                  Trainee = trainee,
+                  Trainers = trainers,
+                  TrainerGroups = trainerGroups
+               };
+
+               trainee.TrainingOrdersAsTrainee.Add(orderDuplicate);
+            }
+
+            trainee.Skills.Add(Skill);
             await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
+
+            return RedirectToPage("./Index");  // Redirect to a success page
          } catch (DbUpdateConcurrencyException) {
-            if (!_context.Employees.Any(e => e.Id == trainee.Id)) {
+            await transaction.RollbackAsync();
+            if (!await _context.Employees.AnyAsync(e => e.Id == trainee.Id)) {
                return NotFound();
             } else {
-               throw;
+               ModelState.AddModelError("", "Concurrency error occurred. Please try again.");
+               await LoadRelatedData();
+               return Page();
             }
          }
+      }
 
-         return Page();
+      private async Task LoadRelatedData() {
+         Employees = await _context.Employees.ToListAsync();
+         TrainerGroups = await _context.TrainerGroups.ToListAsync();
+         ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees);
+         ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups);
+      }
+
+      private async Task<List<TrainerGroup>> GetSelectedTrainerGroups() {
+         if (string.IsNullOrEmpty(SelectedTrainerGroupString))
+            return new List<TrainerGroup>();
+
+         var ids = SelectedTrainerGroupString.Split(',').Select(s => int.TryParse(s.Trim(), out int id) ? id : -1).Where(id => id != -1).ToList();
+         return await _context.TrainerGroups.Where(tg => ids.Contains(tg.Id)).ToListAsync();
+      }
+
+      private async Task<List<Employee>> GetSelectedTrainers() {
+         if (string.IsNullOrEmpty(SelectedTrainerString))
+            return new List<Employee>();
+
+         var ids = SelectedTrainerString.Split(',').Select(s => int.TryParse(s.Trim(), out int id) ? id : -1).Where(id => id != -1).ToList();
+         return await _context.Employees.Where(e => ids.Contains(e.Id)).ToListAsync();
+      }
+
+      private JsonSerializerOptions GetJsonSerializerOptions() {
+         return new JsonSerializerOptions {
+            ReferenceHandler = ReferenceHandler.Preserve,
+            WriteIndented = true
+         };
       }
    }
 }

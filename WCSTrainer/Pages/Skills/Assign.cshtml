@@ -15,8 +15,10 @@
             <p class="title">Assign Skill #@Model.Skill.Id</p>
             <div class="field-container">
                <form method="post">
-                  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                  <div asp-validation-summary="All" class="text-danger"></div>
                   <input type="hidden" asp-for="Skill.Id" />
+                  <input hidden asp-for="Skill.Name"/>
+                  <input hidden asp-for="Skill.Description" />
                   <input type="hidden" id="employeesData" value="@ViewData["EmployeesJson"]" />
                   <input type="hidden" id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
                   <div class="form-group">
