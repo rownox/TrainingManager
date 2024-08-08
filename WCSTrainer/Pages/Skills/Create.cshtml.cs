@@ -19,11 +19,12 @@ namespace WCSTrainer.Pages.Skills {
 
       public string TrainingOrdersString { get; set; }
 
-      // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
       public async Task<IActionResult> OnPostAsync() {
          if (!ModelState.IsValid) {
             return Page();
          }
+
+         using var transaction = await _context.Database.BeginTransactionAsync();
 
          if (TrainingOrdersString != null) {
             var trainingOrderIds = TrainingOrdersString.Split(", ").Select(int.Parse).ToList();
@@ -37,6 +38,7 @@ namespace WCSTrainer.Pages.Skills {
 
          _context.Skills.Add(Skill);
          await _context.SaveChangesAsync();
+         await transaction.CommitAsync();
 
          return RedirectToPage("./Index");
       }
