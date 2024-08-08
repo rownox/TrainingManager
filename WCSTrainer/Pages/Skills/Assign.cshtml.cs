@@ -14,6 +14,7 @@ namespace WCSTrainer.Pages.Skills {
          _context = context;
       }
 
+      [BindProperty]
       public Skill Skill { get; set; } = default!;
       [BindProperty]
       public IList<Employee> Employees { get; set; }
@@ -25,29 +26,32 @@ namespace WCSTrainer.Pages.Skills {
       [BindProperty]
       public string? SelectedTrainerGroupString { get; set; }
       public List<int> SelectedTrainerGroupIds { get; set; } = new List<int>();
+      [BindProperty]
       public int SelectedTraineeId { get; set; }
 
 
       public async Task<IActionResult> OnGetAsync(int? id) {
+         Employees = await _context.Employees.ToListAsync();
+         ViewData["EmployeesJson"] = JsonSerializer
+              .Serialize(Employees ?? new List<Employee>());
+         TrainerGroups = await _context.TrainerGroups.ToListAsync();
+         ViewData["TrainerGroupsJson"] = JsonSerializer
+              .Serialize(TrainerGroups ?? new List<TrainerGroup>());
+
          if (id == null) {
             return NotFound();
          }
 
-         Skill = await _context.Skills
+         var tempSkill = await _context.Skills
              .Include(s => s.Employees)
              .Include(s => s.TrainingOrders)
              .FirstOrDefaultAsync(m => m.Id == id);
 
-         if (Skill == null) {
+         if (tempSkill == null) {
             return NotFound();
+         } else {
+            Skill = tempSkill;
          }
-
-         Employees = await _context.Employees.ToListAsync();
-         TrainerGroups = await _context.TrainerGroups.ToListAsync();
-
-         var options = GetJsonSerializerOptions();
-         ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees, options);
-         ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups, options);
 
          return Page();
       }
@@ -58,7 +62,7 @@ namespace WCSTrainer.Pages.Skills {
             return Page();
          }
 
-         var trainee = await _context.Employees.FindAsync(SelectedTraineeId);
+         var trainee = await _context.Employees.FirstOrDefaultAsync(e => e.Id == SelectedTraineeId);
          if (trainee == null) {
             ModelState.AddModelError("", "Selected trainee not found.");
             await LoadRelatedData();
@@ -82,6 +86,7 @@ namespace WCSTrainer.Pages.Skills {
                   TrainerGroups = trainerGroups
                };
 
+               _context.TrainingOrders.Add(orderDuplicate);
                trainee.TrainingOrdersAsTrainee.Add(orderDuplicate);
             }
 
@@ -89,7 +94,7 @@ namespace WCSTrainer.Pages.Skills {
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();
 
-            return RedirectToPage("./Index");  // Redirect to a success page
+            return RedirectToPage("./Index");
          } catch (DbUpdateConcurrencyException) {
             await transaction.RollbackAsync();
             if (!await _context.Employees.AnyAsync(e => e.Id == trainee.Id)) {

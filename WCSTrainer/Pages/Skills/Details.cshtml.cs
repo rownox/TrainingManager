@@ -17,7 +17,9 @@ namespace WCSTrainer.Pages.Skills {
             return NotFound();
          }
 
-         var skill = await _context.Skills.FirstOrDefaultAsync(m => m.Id == id);
+         var skill = await _context.Skills
+            .Include(s => s.TrainingOrders)
+            .FirstOrDefaultAsync(m => m.Id == id);
          if (skill == null) {
             return NotFound();
          } else {
