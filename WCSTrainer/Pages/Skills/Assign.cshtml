@@ -59,7 +59,7 @@
                            <ul id="trainee" class="pill-container">
                            </ul>
                            <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select</p></div>
-                           <input id="traineeInput" asp-for="@Model.SelectedTraineeId" />
+                           <input id="traineeInput" asp-for="@Model.SelectedTraineeId" hidden />
                         </div>
                      </div>
                   </div>
@@ -146,7 +146,6 @@
 
       function addTrainer(trainerItems) {
          if (!trainerItems || trainerItems.length === 0) return;
-
          var trainerList = document.getElementById("trainerList");
          if (!trainerList) return;
 
@@ -161,7 +160,6 @@
 
       function addTrainee(traineeName, traineeId) {
          if (!traineeName || !traineeName.trim() || !traineeId) return;
-
          var traineeList = document.getElementById("trainee");
          if (!traineeList) return;
 
@@ -171,7 +169,6 @@
 
       function addGroup(groupItems) {
          if (!groupItems || groupItems.length === 0) return;
-
          var groupList = document.getElementById("groupList");
          if (!groupList) return;
 
@@ -186,21 +183,18 @@
 
       function updateTrainersInput() {
          if (!trainList || !trainersInput) return;
-
          var trainerListItems = Array.from(trainList.getElementsByTagName("li"));
          trainersInput.value = trainerListItems.map(item => `${item.getAttribute("value")}`).join(", ");
       }
 
       function updateTraineeInput() {
          if (!trainee || !traineeInput) return;
-
          var traineeListItems = Array.from(trainee.getElementsByTagName("li"));
          traineeInput.value = traineeListItems.length > 0 ? traineeListItems[0].getAttribute("value") : "";
       }
 
       function updateGroupsInput() {
          if (!groupList || !groupsInput) return;
-
          var groupListItems = Array.from(groupList.getElementsByTagName("li"));
          groupsInput.value = groupListItems.map(item => `${item.getAttribute("value")}`).join(", ");
       }

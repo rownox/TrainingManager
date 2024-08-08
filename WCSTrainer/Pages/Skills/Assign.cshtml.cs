@@ -10,6 +10,7 @@ namespace WCSTrainer.Pages.Skills {
    public class AssignModel : PageModel {
 
       private readonly WCSTrainerContext _context;
+
       public AssignModel(WCSTrainerContext context) {
          _context = context;
       }
@@ -28,7 +29,6 @@ namespace WCSTrainer.Pages.Skills {
       public List<int> SelectedTrainerGroupIds { get; set; } = new List<int>();
       [BindProperty]
       public int SelectedTraineeId { get; set; }
-
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          Employees = await _context.Employees.ToListAsync();
@@ -71,10 +71,11 @@ namespace WCSTrainer.Pages.Skills {
 
          var trainerGroups = await GetSelectedTrainerGroups();
          var trainers = await GetSelectedTrainers();
-
          using var transaction = await _context.Database.BeginTransactionAsync();
+
          try {
             foreach (var trainingOrder in Skill.TrainingOrders) {
+
                var orderDuplicate = new TrainingOrder {
                   Description = trainingOrder.Description,
                   LocationId = trainingOrder.LocationId,
@@ -93,7 +94,6 @@ namespace WCSTrainer.Pages.Skills {
             trainee.Skills.Add(Skill);
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();
-
             return RedirectToPage("./Index");
          } catch (DbUpdateConcurrencyException) {
             await transaction.RollbackAsync();
@@ -110,8 +110,8 @@ namespace WCSTrainer.Pages.Skills {
       private async Task LoadRelatedData() {
          Employees = await _context.Employees.ToListAsync();
          TrainerGroups = await _context.TrainerGroups.ToListAsync();
-         ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees);
-         ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups);
+         ViewData["EmployeesJson"] = JsonSerializer.Serialize(Employees);
+         ViewData["TrainerGroupsJson"] = JsonSerializer.Serialize(TrainerGroups);
       }
 
       private async Task<List<TrainerGroup>> GetSelectedTrainerGroups() {
