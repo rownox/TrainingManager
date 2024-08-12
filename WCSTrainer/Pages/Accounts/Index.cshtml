@@ -8,20 +8,21 @@
       <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
       <div class="properties">
          <div class="flex-column">
+            <p class="title">Account Manager</p>
             <div class="order-list2">
                <table id="dataTable">
                   <tr>
                      <th>Username</th>
                      <th></th>
-                     <th></th>
-                     <th></th>
                   </tr>
                   @foreach (var item in Model.Users) {
                      <tr class="clickable">
                         <td>@Html.DisplayFor(modelItem => item.UserName)</td>
-                        <td><a asp-page="./Edit" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Edit</a></td>
-                        <td><a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Details</a></td>
-                        <td><a asp-page="./Delete" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Delete</a></td>
+                        <td>
+                           <a asp-page="./Edit" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Edit</a>
+                           <a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Details</a>
+                           <a asp-page="./Delete" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Delete</a>
+                        </td>
                      </tr>
                   }
                </table>

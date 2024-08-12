@@ -10,24 +10,23 @@
       <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
       <div class="properties">
          <div class="flex-column">
+            <p class="title">Trainer Group Editor</p>
             <div class="order-list2">
                <table id="dataTable">
                   <tr>
                      <th>Group ID</th>
                      <th>Name</th>
-                     <th>Members</th>
-                     <th></th>
-                     <th></th>
                      <th></th>
                   </tr>
                   @foreach (var item in Model.TrainerGroup) {
                      <tr class="clickable">
                         <td>@Html.DisplayFor(modelItem => item.Id)</td>
                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Trainers)</td>
-                        <td><a asp-page="./Edit" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Edit</a></td>
-                        <td><a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Details</a></td>
-                        <td><a asp-page="./Delete" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Delete</a></td>
+                        <td>
+                           <a asp-page="./Edit" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Edit</a>
+                           <a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Details</a>
+                           <a asp-page="./Delete" asp-route-id="@item.Id" class="btn nbg-btn btnGreen">Delete</a>
+                        </td>
                      </tr>
                   }
                </table>
