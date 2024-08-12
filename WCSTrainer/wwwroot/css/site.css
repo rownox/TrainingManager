@@ -79,12 +79,21 @@ nav {
 			align-items: center;
 		}
 
-		nav .nav-container .nav-options img {
-			height: 20px;
-			filter: invert(50%);
-		}
+			nav .nav-container .nav-options img {
+				height: 20px;
+				filter: invert(50%);
+				padding: 0;
+			}
 
-			nav .nav-container .nav-options a, form button {
+				nav .nav-container .nav-options img:hover {
+					filter: invert(70%);
+				}
+
+			nav .nav-container .nav-options a {
+				display: flex;
+			}
+
+			nav .nav-container .nav-options form button {
 				padding: 5px 10px;
 				font-size: 15px;
 			}
@@ -97,6 +106,7 @@ nav {
 				nav .nav-container .nav-options .login-email:hover {
 					text-decoration: underline;
 				}
+
 
 .panel {
 	display: flex;
@@ -500,7 +510,6 @@ nav {
 								font-size: 15px;
 							}
 
-
 			.panel .body .properties .order-list2 {
 				overflow-y: scroll;
 				max-height: 750px;
@@ -540,8 +549,6 @@ nav {
 						flex-direction: column;
 					}
 
-
-
 				.panel .body .properties .order-list2 table {
 					width: 100%;
 					border-collapse: collapse;
@@ -555,7 +562,7 @@ nav {
 					}
 
 						.panel .body .properties .order-list2 table .clickable:hover {
-							background-color: var(--gray3);
+							background-color: var(--gray2);
 							cursor: pointer;
 						}
 

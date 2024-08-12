@@ -6,7 +6,7 @@
 
 @if (SignInManager.IsSignedIn(User)) {
    var user = await UserManager.GetUserAsync(User);
-   <a asp-area="Identity" asp-page="/Account/Manage" class="img-container">
+   <a href="/Identity/Account/Manage" class="img-container">
       <img src="~/images/settings.svg" />
    </a>
    <p class="login-email">@user.Email</p>
