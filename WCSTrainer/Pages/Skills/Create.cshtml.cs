@@ -10,35 +10,33 @@ namespace WCSTrainer.Pages.Skills {
          _context = context;
       }
 
+      [BindProperty]
+      public Skill Skill { get; set; } = default!;
+      [BindProperty]
+      public string? TrainingOrdersString { get; set; }
+
       public IActionResult OnGet() {
          return Page();
       }
-
-      [BindProperty]
-      public Skill Skill { get; set; } = default!;
-
-      public string TrainingOrdersString { get; set; }
 
       public async Task<IActionResult> OnPostAsync() {
          if (!ModelState.IsValid) {
             return Page();
          }
 
-         using var transaction = await _context.Database.BeginTransactionAsync();
+         _context.Skills.Add(Skill);
+         await _context.SaveChangesAsync();
 
          if (TrainingOrdersString != null) {
             var trainingOrderIds = TrainingOrdersString.Split(", ").Select(int.Parse).ToList();
-            var orders = await _context.TrainingOrders
+
+            Skill.TrainingOrders = await _context.TrainingOrders
                 .Where(e => trainingOrderIds.Contains(e.Id))
                 .ToListAsync();
-            foreach (var i in orders) {
-               Skill.TrainingOrders.Add(i);
-            }
          }
 
-         _context.Skills.Add(Skill);
+         _context.Skills.Update(Skill);
          await _context.SaveChangesAsync();
-         await transaction.CommitAsync();
 
          return RedirectToPage("./Index");
       }
