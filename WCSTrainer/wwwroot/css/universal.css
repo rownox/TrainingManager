@@ -40,6 +40,15 @@ button {
 	display: none;
 }
 
+.black-pill {
+	border: 2px solid var(--gray3);
+	border-radius: 20px;
+	padding: 2px 10px;
+	font-size: 13px;
+	background-color: var(--black);
+	user-select: none;
+}
+
 .pill {
 	display: flex;
 	align-items: center;

@@ -52,12 +52,6 @@
                            <div class="info">
                               <div class="title">
                                  <p>Training Order #@item.Id </p>
-                              </div>
-                              <div class="sub">
-                                 <p class="identifier">Trainee - @name</p>
-                              </div>
-                              <div class="sub">
-                                 <p class="identifier">Status - </p>
                                  @{
                                     var type = "awaiting";
                                     if (item.Status.Equals("Active")) {
@@ -67,8 +61,11 @@
                                     } else if (item.Status.Equals("Completed")) {
                                        type = "completed";
                                     }
-                                    <p class="@type">@item.Status</p>
+                                    <p class="@type black-pill">@item.Status</p>
                                  }
+                              </div>
+                              <div class="sub">
+                                 <p class="identifier">Trainee - @name</p>
                               </div>
                            </div>
                            <div class="btns">
