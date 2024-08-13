@@ -74,12 +74,17 @@
 		transition: background-color 0s;
 	}
 
-.btnGray {
-	color: var(--gray4);
+.btnMenu {
+	border-bottom: 1px solid var(--gray3);
+	color: var(--textSub1);
+	text-decoration: none;
+	transition: background-color 0.1s ease-out;
+	text-align: left;
 }
 
-	.btnGray:hover {
+	.btnMenu:hover {
 		background-color: var(--gray3);
+		color: var(--textMain);
 		transition: background-color 0s;
 	}
 

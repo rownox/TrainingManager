@@ -81,22 +81,26 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
 
             var result = await _userManager.CreateAsync(user, Input.Password);
 
-            if (result.Succeeded) {
+            var employee = new Employee {
+               FirstName = Input.FirstName,
+               LastName = Input.LastName,
+               Status = "Trainee",
+               Skills = new HashSet<Skill>(),
+               TrainingOrdersAsTrainee = new HashSet<TrainingOrder>(),
+               TrainingOrdersAsTrainer = new HashSet<TrainingOrder>(),
+               UserAccountId = user.Id,
+               UserAccount = user
+            };
+
+            _context.Employees.Add(employee);
+            await _context.SaveChangesAsync();
+
+            user.EmployeeId = employee.Id;
+            user.Employee = employee;
+            var result2 = _userManager.UpdateAsync(user);
+
+            if (result.Succeeded && result2.IsCompletedSuccessfully) {
                _logger.LogInformation("User created a new account with password.");
-
-               var employee = new Employee {
-                  FirstName = Input.FirstName,
-                  LastName = Input.LastName,
-                  Status = "Trainee",
-                  Skills = new HashSet<Skill>(),
-                  TrainingOrdersAsTrainee = new HashSet<TrainingOrder>(),
-                  TrainingOrdersAsTrainer = new HashSet<TrainingOrder>(),
-                  UserAccountId = user.Id,
-                  UserAccount = user
-               };
-
-               _context.Employees.Add(employee);
-               await _context.SaveChangesAsync();
 
                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

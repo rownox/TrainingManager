@@ -136,18 +136,8 @@ nav {
 				margin: 0;
 			}
 
-			.panel .body .side-bar a {
-				border-bottom: 1px solid var(--gray3);
-				color: var(--textSub1);
-				text-decoration: none;
-				padding: 10px 5px;
-				transition: background-color 0.1s ease-out;
-			}
-
-				.panel .body .side-bar a:hover {
-					background-color: var(--gray3);
-					color: var(--textMain);
-					transition: background-color 0s;
+				.panel .body .side-bar .link-list .btn {
+					padding: 9px 5px;
 				}
 
 			.panel .body .side-bar .selected {
@@ -363,12 +353,7 @@ nav {
 					}
 
 						.panel .body .properties .tool-container .tools .btns .btn {
-							text-align: center;
-							text-decoration: none;
 							padding: 7px 5px;
-							border-bottom: 1px solid var(--gray3);
-							text-align: left;
-							color: var(--textMain);
 						}
 
 					.panel .body .properties .tool-container .tools .search {
@@ -376,6 +361,7 @@ nav {
 						display: flex;
 						flex-direction: column;
 						margin-top: 20px;
+						margin-bottom: 20px;
 					}
 
 						.panel .body .properties .tool-container .tools .search .side {
@@ -400,7 +386,6 @@ nav {
 
 					.panel .body .properties .tool-container .tools .selections {
 						margin-bottom: 20px;
-						margin-top: 20px;
 					}
 
 						.panel .body .properties .tool-container .tools .selections .section {

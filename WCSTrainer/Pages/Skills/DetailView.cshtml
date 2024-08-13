@@ -27,7 +27,7 @@
                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
                         <td>
                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnWhite">View</a>
-                           <a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnRed">Delete</a>
+                           <a asp-page="./Delete" asp-route-id="@item.Id" class="btn nbg-btn btnRed">Delete</a>
                         </td>
                      </tr>
                      Model.listCount++;
@@ -62,5 +62,4 @@
    function submitForm() {
       document.getElementById('maxCountForm').submit();
    }
-
 </script>
