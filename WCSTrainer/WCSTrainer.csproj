@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Accounts\Details.cshtml" />
     <Content Remove="wwwroot\svelteapp\src\People.svelte" />
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Accounts\Details.cshtml" />
     <_ContentIncludedByDefault Remove="wwwroot\svelteapp\src\People.svelte" />
   </ItemGroup>
 
@@ -28,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\Accounts\Details.cshtml" />
     <None Include="wwwroot\images\1N.png" />
     <None Include="wwwroot\svelteApp\.gitignore" />
     <None Include="wwwroot\svelteApp\public\build\bundle.css" />
@@ -42,6 +45,10 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\svelteApp\scripts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Accounts\Details.cshtml" />
   </ItemGroup>
 
 </Project>

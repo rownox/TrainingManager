@@ -7,17 +7,26 @@
    <div class="body">
       <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
       <div class="properties">
-         <h2>Edit User</h2>
+         <div class="user-form">
+            <div class="field-container">
+               <form method="post">
+                  <div asp-validation-summary="All" class="text-danger"></div>
 
-         <form method="post">
-            <div class="form-group">
-               <label asp-for="UserAccount.Email"></label>
-               <input asp-for="UserAccount.Email" class="form-control" />
-               <span asp-validation-for="UserAccount.Email" class="text-danger"></span>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <label asp-for="UserAccount.Email" class="control-label"></label>
+                           <span asp-validation-for="UserAccount.Email" class="text-danger"></span>
+                        </div>
+                        <input asp-for="UserAccount.Email" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <input type="submit" value="Save" class="btn bg-btn btnGreen" />
+                  </div>
+               </form>
             </div>
-            <button type="submit" class="btn btn-primary">Save</button>
-            <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
-         </form>
+         </div>
       </div>
    </div>
 </div>

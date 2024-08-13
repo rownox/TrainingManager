@@ -5,24 +5,24 @@
    ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-   <h4>Location</h4>
-   <hr />
-   <dl class="row">
-      <dt class="col-sm-2">
-         @Html.DisplayNameFor(model => model.Location.Name)
-      </dt>
-      <dd class="col-sm-10">
-         @Html.DisplayFor(model => model.Location.Name)
-      </dd>
-   </dl>
-
-   <form method="post">
-      <input type="hidden" asp-for="Location.Id" />
-      <input type="submit" value="Delete" class="btn btn-danger" /> |
-      <a asp-page="./Index">Back to List</a>
-   </form>
+<div class="panel">
+   <div class="body">
+      <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
+      <div class="properties">
+         <div class="user-form">
+            <p class="title">Location #@Html.DisplayFor(model => model.Location.Id)</p>
+            <div class="field-container">
+               <div class="text-group">
+                  <p class="title">Name</p>
+                  <p class="info">@Html.DisplayFor(model => model.Location.Name)</p>
+               </div>
+               <br />
+               <form method="post" class="form-group">
+                  <input type="hidden" asp-for="Location.Id" />
+                  <input type="submit" value="Delete" class="btn bg-btn btnRed" />
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
 </div>

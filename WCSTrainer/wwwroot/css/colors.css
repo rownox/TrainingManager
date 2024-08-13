@@ -1,149 +1,149 @@
 ﻿:root {
-    --black: black;
-    --gray1: #141516;
-    --gray2: #1b2124;
-    --gray3: #252a2e;
-    --gray4: #45494e;
-    --textMain: white;
-    --textSub1: #a0a9b4;
-    --textSub2: #787f87;
-    --mainTheme: #4e3bb0;
-    --white2: #3b4042;
-    --red1: #ff4d4d;
-    --red2: #d81d1d;
-    --blue1: #00abf5;
-    --blue2: #00415e;
-    --green1: #81ff8f;
-    --green2: #0fb021;
-    --yellow1: #fff764;
-    --yellow2: #98780c;
+	--black: black;
+	--gray1: #141516;
+	--gray2: #1b2022;
+	--gray3: #252a2e;
+	--gray4: #45494e;
+	--textMain: white;
+	--textSub1: #a0a9b4;
+	--textSub2: #787f87;
+	--mainTheme: #4e3bb0;
+	--white2: #3b4042;
+	--red1: #ff4d4d;
+	--red2: #d81d1d;
+	--blue1: #00abf5;
+	--blue2: #00415e;
+	--green1: #81ff8f;
+	--green2: #0fb021;
+	--yellow1: #fff764;
+	--yellow2: #98780c;
 }
 
 .light-mode {
-    --black: #ffffff;
-    --gray1: #dddddd;
-    --gray2: #b2b2b2;
-    --gray3: #b2b2b2;
-    --gray4: #000000;
-    --textMain: #000000;
-    --textSub1: #000000;
-    --textSub2: #000000;
-    --mainTheme: #c8c8c8;
-    --white2: #999999;
-    --red1: #000000;
-    --red2: #999999;
-    --blue1: #000000;
-    --blue2: #999999;
-    --green1: #000000;
-    --green2: #999999;
-    --yellow1: #000000;
-    --yellow2: #999999;
+	--black: #ffffff;
+	--gray1: #dddddd;
+	--gray2: #b2b2b2;
+	--gray3: #b2b2b2;
+	--gray4: #000000;
+	--textMain: #000000;
+	--textSub1: #000000;
+	--textSub2: #000000;
+	--mainTheme: #c8c8c8;
+	--white2: #999999;
+	--red1: #000000;
+	--red2: #999999;
+	--blue1: #000000;
+	--blue2: #999999;
+	--green1: #000000;
+	--green2: #999999;
+	--yellow1: #000000;
+	--yellow2: #999999;
 }
 
 .btn {
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.1s ease-out;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	user-select: none;
+	transition: background-color 0.1s ease-out;
 }
 
 .nbg-btn {
-    background: none;
-    border: none;
+	background: none;
+	border: none;
 }
 
-    .nbg-btn:active {
-        background-color: var(--gray4);
-        cursor: default;
-    }
+	.nbg-btn:active {
+		background-color: var(--gray4);
+		cursor: default;
+	}
 
 .bg-btn {
-    border: 1px solid var(--gray4);
-    background-color: var(--gray2);
-    border-radius: 5px;
+	border: 1px solid var(--gray4);
+	background-color: var(--gray2);
+	border-radius: 5px;
 }
 
 .btnWhite {
-    color: var(--textMain);
+	color: var(--textMain);
 }
 
-    .btnWhite:hover {
-        background-color: var(--white2);
-        border-color: black;
-        transition: background-color 0s;
-    }
+	.btnWhite:hover {
+		background-color: var(--white2);
+		border-color: black;
+		transition: background-color 0s;
+	}
 
 .btnGray {
-    color: var(--gray4);
+	color: var(--gray4);
 }
 
-    .btnGray:hover {
-        background-color: var(--gray3);
-        transition: background-color 0s;
-    }
+	.btnGray:hover {
+		background-color: var(--gray3);
+		transition: background-color 0s;
+	}
 
 .btnBlue {
-    color: var(--blue1);
+	color: var(--blue1);
 }
 
-    .btnBlue:hover {
-        border-color: black;
-        background-color: var(--blue1);
-        color: var(--textMain);
-        transition: background-color 0s;
-    }
+	.btnBlue:hover {
+		border-color: black;
+		background-color: var(--blue1);
+		color: var(--textMain);
+		transition: background-color 0s;
+	}
 
 .btnRed {
-    color: var(--red1);
+	color: var(--red1);
 }
 
-    .btnRed:hover {
-        border-color: black;
-        background-color: var(--red2);
-        color: var(--textMain);
-        transition: background-color 0s;
-    }
+	.btnRed:hover {
+		border-color: black;
+		background-color: var(--red2);
+		color: var(--textMain);
+		transition: background-color 0s;
+	}
 
 .btnGreen {
-    color: var(--green1);
+	color: var(--green1);
 }
 
-    .btnGreen:hover {
-        border-color: black;
-        background-color: var(--green2);
-        color: var(--textMain);
-        transition: background-color 0s;
-    }
+	.btnGreen:hover {
+		border-color: black;
+		background-color: var(--green2);
+		color: var(--textMain);
+		transition: background-color 0s;
+	}
 
 .active {
-    color: var(--green1);
+	color: var(--green1);
 }
 
 .awaiting {
-    color: var(--yellow1);
+	color: var(--yellow1);
 }
 
 .completed {
-    color: var(--blue1);
+	color: var(--blue1);
 }
 
 .verified {
-    color: var(--red1);
+	color: var(--red1);
 }
 
 .highlight {
-    color: var(--yellow1);
+	color: var(--yellow1);
 }
 
 .pill {
-    background-color: var(--mainTheme);
+	background-color: var(--mainTheme);
 }
 
-    .pill.group, .pill.groups {
-        background-color: var(--blue2);
-    }
+	.pill.group, .pill.groups {
+		background-color: var(--blue2);
+	}
 
-    .pill.trainee, .pill.trainees {
-        background-color: var(--red2);
-    }
+	.pill.trainee, .pill.trainees {
+		background-color: var(--red2);
+	}

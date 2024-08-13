@@ -21,6 +21,12 @@
                   <p class="info">@Html.DisplayFor(model => model.Skill.Description)</p>
                </div>
             </div>
+            <br />
+            <div class="btn-container">
+               <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Skill.Id">
+                  Edit
+               </a>
+            </div>
          </div>
       </div>
    </div>

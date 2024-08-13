@@ -17,6 +17,11 @@
                   <p class="info">@Html.DisplayFor(model => model.Location.Name)</p>
                </div>
             </div>
+            <div class="btn-container">
+               <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Location.Id">
+                  Edit
+               </a>
+            </div>
          </div>
       </div>
    </div>

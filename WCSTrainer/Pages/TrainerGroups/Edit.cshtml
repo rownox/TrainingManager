@@ -4,30 +4,33 @@
 @{
    ViewData["Title"] = "Edit";
 }
+<div class="panel">
+   <div class="body">
+      <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
+      <div class="properties">
+         <div class="user-form">
+            <div class="field-container">
+               <form method="post">
+                  <div asp-validation-summary="All" class="text-danger"></div>
+                  <input type="hidden" asp-for="TrainerGroup.Id" />
 
-<h1>Edit</h1>
-
-<h4>TrainerGroup</h4>
-<hr />
-<div class="row">
-   <div class="col-md-4">
-      <form method="post">
-         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-         <input type="hidden" asp-for="TrainerGroup.Id" />
-         <div class="form-group">
-            <label asp-for="TrainerGroup.Name" class="control-label"></label>
-            <input asp-for="TrainerGroup.Name" class="form-control" />
-            <span asp-validation-for="TrainerGroup.Name" class="text-danger"></span>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <label asp-for="TrainerGroup.Name" class="control-label"></label>
+                           <span asp-validation-for="TrainerGroup.Name" class="text-danger"></span>
+                        </div>
+                        <input asp-for="TrainerGroup.Name" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <input type="submit" value="Save" class="btn bg-btn btnGreen" />
+                  </div>
+               </form>
+            </div>
          </div>
-         <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-primary" />
-         </div>
-      </form>
+      </div>
    </div>
-</div>
-
-<div>
-   <a asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {
