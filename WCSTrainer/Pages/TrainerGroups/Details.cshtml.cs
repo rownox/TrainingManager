@@ -17,7 +17,9 @@ namespace WCSTrainer.Pages.TrainerGroups {
             return NotFound();
          }
 
-         var trainergroup = await _context.TrainerGroups.FirstOrDefaultAsync(m => m.Id == id);
+         var trainergroup = await _context.TrainerGroups
+            .Include(t => t.TrainingOrders)
+            .FirstOrDefaultAsync(m => m.Id == id);
          if (trainergroup == null) {
             return NotFound();
          } else {

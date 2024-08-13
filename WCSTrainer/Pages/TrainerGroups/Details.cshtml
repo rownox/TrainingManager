@@ -16,6 +16,12 @@
                   <p class="title">Name</p>
                   <p class="info">@Html.DisplayFor(model => model.TrainerGroup.Name)</p>
                </div>
+               <div class="text-group">
+                  <p class="title">Members</p>
+                  @foreach (var member in Model.TrainerGroup.Trainers) {
+                     <p class="info">@member.FirstName @member.LastName, </p>
+                  }
+               </div>
             </div>
             <div class="btn-container">
                <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainerGroup.Id">

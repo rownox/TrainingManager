@@ -632,6 +632,7 @@ nav {
 							margin-bottom: 10px;
 							border-bottom: 1px solid var(--gray4);
 							padding: 5px;
+							font-size: 18px;
 						}
 
 						.panel .body .properties .scheduling .schedule .months .month .info {
