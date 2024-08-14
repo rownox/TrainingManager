@@ -8,14 +8,14 @@
       ("Skills", "Skills"),
       ("TrainerGroups", "Trainer Groups"),
       ("Locations", "Locations"),
-      ("Accounts", "Account Manager"),
+      ("Accounts", "User Accounts"),
       };
 
          foreach (var link in links) {
             if (Navigation.Uri.Contains(link.Item1)) {
-               <a href="/@link.Item1" class="selected btn nbg-btn btnMenu">@link.Item2</a>
+               <a href="/@link.Item1" class="selected btn btnMenu">@link.Item2</a>
             } else {
-               <a href="/@link.Item1" class="btn nbg-btn btnMenu">@link.Item2</a>
+               <a href="/@link.Item1" class="btn btnMenu">@link.Item2</a>
             }
          }
       }

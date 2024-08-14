@@ -16,7 +16,6 @@ body {
 	flex-direction: column;
 	align-items: center;
 	background-color: var(--gray1);
-	color: var(--textMain);
 }
 
 .maintitle {
