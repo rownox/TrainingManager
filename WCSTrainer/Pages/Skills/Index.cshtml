@@ -26,7 +26,7 @@
                         <li id="@item.Id @item.Name" class="searchable">
                            <div class="info">
                               <div class="title">
-                                 <p>Skill #@item.Id </p>
+                                 <a class="name" asp-page="./Details" asp-route-id="@item.Id">Skill #@item.Id</a>
                               </div>
                               <div class="sub">
                                  <p class="identifier">@item.Name</p>

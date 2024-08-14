@@ -479,6 +479,17 @@ nav {
 								gap: 10px;
 								padding: 3px 0;
 							}
+
+								.panel .body .properties .list-container .order-list li .info .title .name {
+									color: var(--textMain);
+									text-decoration: none;
+									cursor: pointer;
+									user-select: none;
+								}
+
+								.panel .body .properties .list-container .order-list li .info .title .name:hover {
+									text-decoration: underline;
+								}
 								
 
 							.panel .body .properties .list-container .order-list li .info .sub {

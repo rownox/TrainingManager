@@ -51,7 +51,7 @@
                         <li id="@item.Id @name" class="@item.Status searchable">
                            <div class="info">
                               <div class="title">
-                                 <p>Training Order #@item.Id </p>
+                                 <a class="name" asp-page="./Details" asp-route-id="@item.Id">Training Order #@item.Id</a>
                                  @{
                                     var type = "awaiting";
                                     if (item.Status.Equals("Active")) {

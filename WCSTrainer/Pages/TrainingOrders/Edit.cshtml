@@ -15,132 +15,136 @@
          <div class="user-form">
             <p class="title">Edit Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
             <div class="field-container">
-               <form method="post">
-                  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                  <input type="hidden" asp-for="TrainingOrder.Id" />
+               @if (Model.TrainingOrder.Status != "Completed" && Model.TrainingOrder.Status != "Verified") {
+                  <form method="post">
+                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                     <input type="hidden" asp-for="TrainingOrder.Id" />
 
-                  <input asp-for="TrainingOrder.BeginDate" type="hidden" />
-                  <input asp-for="TrainingOrder.CompletionDate" type="hidden" />
-                  <input asp-for="TrainingOrder.CreateDate" type="hidden" />
-                  <input asp-for="TrainingOrder.Status" type="hidden" />
+                     <input asp-for="TrainingOrder.BeginDate" type="hidden" />
+                     <input asp-for="TrainingOrder.CompletionDate" type="hidden" />
+                     <input asp-for="TrainingOrder.CreateDate" type="hidden" />
+                     <input asp-for="TrainingOrder.Status" type="hidden" />
 
-                  <input type="hidden" id="employeesData" value="@ViewData["EmployeesJson"]" />
-                  <input type="hidden" id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
+                     <input type="hidden" id="employeesData" value="@ViewData["EmployeesJson"]" />
+                     <input type="hidden" id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
 
-                  @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
+                     @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Trainers</p>
+                                 <span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
+                              </div>
+                              <div class="selections">
+                                 <ul id="trainerList" class="pill-container">
+                                    @foreach (var trainer in Model.TrainingOrder.Trainers) {
+                                       <li draggable="true" class="pill person" value="@trainer.Id">@trainer.FirstName @trainer.LastName</li>
+                                    }
+                                 </ul>
+                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select</p></div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Trainer Groups</p>
+                                 <span asp-validation-for="@Model.SelectedTrainerGroupString" class="text-danger"></span>
+                              </div>
+                              <div class="selections">
+                                 <ul id="groupList" class="pill-container">
+                                    @foreach (var trainerGroup in Model.TrainingOrder.TrainerGroups) {
+                                       <li draggable="true" class="pill group" value="@trainerGroup.Id">@trainerGroup.Name</li>
+                                    }
+                                 </ul>
+                                 <div class="btn bg-btn btnWhite" onclick="openComponent('groups')">Select</div>
+                              </div>
+                           </div>
+                        </div>
+                     }
+
+                     <input id="trainersInput" asp-for="@Model.SelectedTrainerString" hidden />
+                     <input id="groupsInput" asp-for="@Model.SelectedTrainerGroupString" hidden />
+
                      <div class="form-group">
                         <div class="form">
                            <div class="labels">
-                              <p class="control-label">Trainers</p>
-                              <span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
+                              <p class="control-label">Trainee</p>
+                              <span asp-validation-for="TrainingOrder.TraineeId" class="text-danger"></span>
                            </div>
                            <div class="selections">
-                              <ul id="trainerList" class="pill-container">
-                                 @foreach (var trainer in Model.TrainingOrder.Trainers) {
-                                    <li draggable="true" class="pill person" value="@trainer.Id">@trainer.FirstName @trainer.LastName</li>
-                                 }
+                              <ul id="trainee" class="pill-container">
+                                 <li value="@Model.TrainingOrder.TraineeId" class="pill person trainee">
+                                    @Model.TrainingOrder.Trainee.FirstName @Model.TrainingOrder.Trainee.LastName
+                                 </li>
                               </ul>
-                              <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select</p></div>
+                              <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select</p></div>
+                              <input id="traineeInput" asp-for="TrainingOrder.TraineeId" type="hidden" />
                            </div>
                         </div>
                      </div>
                      <div class="form-group">
                         <div class="form">
                            <div class="labels">
-                              <p class="control-label">Trainer Groups</p>
-                              <span asp-validation-for="@Model.SelectedTrainerGroupString" class="text-danger"></span>
+                              <p class="control-label">Description</p>
+                              <span asp-validation-for="TrainingOrder.Description" class="text-danger"></span>
                            </div>
-                           <div class="selections">
-                              <ul id="groupList" class="pill-container">
-                                 @foreach (var trainerGroup in Model.TrainingOrder.TrainerGroups) {
-                                    <li draggable="true" class="pill group" value="@trainerGroup.Id">@trainerGroup.Name</li>
-                                 }
-                              </ul>
-                              <div class="btn bg-btn btnWhite" onclick="openComponent('groups')">Select</div>
+                           <textarea rows="4"
+                                     asp-for="TrainingOrder.Description"
+                                     placeholder="Describe the skill being trained and the goal.">
+                                   </textarea>
+                        </div>
+                     </div>
+                     @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Training Hours Needed</p>
+                                 <span asp-validation-for="TrainingOrder.Duration" class="text-danger"></span>
+                              </div>
+                              <input asp-for="TrainingOrder.Duration" class="form-control" />
+                           </div>
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Priority Level</p>
+                                 <span asp-validation-for="TrainingOrder.Priority" class="text-danger"></span>
+                              </div>
+                              <select asp-for="TrainingOrder.Priority" class="form-drop2">
+                                 <option value="High">High</option>
+                                 <option value="Medium">Medium</option>
+                                 <option value="Low">Low</option>
+                              </select>
                            </div>
                         </div>
-                     </div>
-                  }
-
-                  <input id="trainersInput" asp-for="@Model.SelectedTrainerString" hidden />
-                  <input id="groupsInput" asp-for="@Model.SelectedTrainerGroupString" hidden />
-
-                  <div class="form-group">
-                     <div class="form">
-                        <div class="labels">
-                           <p class="control-label">Trainee</p>
-                           <span asp-validation-for="TrainingOrder.TraineeId" class="text-danger"></span>
-                        </div>
-                        <div class="selections">
-                           <ul id="trainee" class="pill-container">
-                              <li value="@Model.TrainingOrder.TraineeId" class="pill person trainee">
-                                 @Model.TrainingOrder.Trainee.FirstName @Model.TrainingOrder.Trainee.LastName
-                              </li>
-                           </ul>
-                           <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select</p></div>
-                           <input id="traineeInput" asp-for="TrainingOrder.TraineeId" type="hidden" />
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <div class="form">
-                        <div class="labels">
-                           <p class="control-label">Description</p>
-                           <span asp-validation-for="TrainingOrder.Description" class="text-danger"></span>
-                        </div>
-                        <textarea rows="4"
-                                  asp-for="TrainingOrder.Description"
-                                  placeholder="Describe the skill being trained and the goal.">
-                                </textarea>
-                     </div>
-                  </div>
-                  @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
+                     }
                      <div class="form-group">
                         <div class="form">
                            <div class="labels">
-                              <p class="control-label">Training Hours Needed</p>
-                              <span asp-validation-for="TrainingOrder.Duration" class="text-danger"></span>
+                              <p class="control-label">Learning Medium</p>
+                              <span asp-validation-for="TrainingOrder.Medium" class="text-danger"></span>
                            </div>
-                           <input asp-for="TrainingOrder.Duration" class="form-control" />
+                           <input asp-for="TrainingOrder.Medium" class="form-control" />
                         </div>
                         <div class="form">
                            <div class="labels">
-                              <p class="control-label">Priority Level</p>
-                              <span asp-validation-for="TrainingOrder.Priority" class="text-danger"></span>
+                              <p class="control-label">Location</p>
+                              <span asp-validation-for="TrainingOrder.LocationId" class="text-danger"></span>
                            </div>
-                           <select asp-for="TrainingOrder.Priority" class="form-drop2">
-                              <option value="High">High</option>
-                              <option value="Medium">Medium</option>
-                              <option value="Low">Low</option>
+                           <select asp-for="TrainingOrder.LocationId" class="form-drop2" asp-items="@Model.Locations">
                            </select>
                         </div>
                      </div>
-                  }
-                  <div class="form-group">
-                     <div class="form">
-                        <div class="labels">
-                           <p class="control-label">Learning Medium</p>
-                           <span asp-validation-for="TrainingOrder.Medium" class="text-danger"></span>
-                        </div>
-                        <input asp-for="TrainingOrder.Medium" class="form-control" />
-                     </div>
-                     <div class="form">
-                        <div class="labels">
-                           <p class="control-label">Location</p>
-                           <span asp-validation-for="TrainingOrder.LocationId" class="text-danger"></span>
-                        </div>
-                        <select asp-for="TrainingOrder.LocationId" class="form-drop2" asp-items="@Model.Locations">
-                        </select>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <div class="form">
-                        <div class="btn-container">
-                           <input type="submit" value="Save" class="btn bg-btn btnGreen" />
+                     <div class="form-group">
+                        <div class="form">
+                           <div class="btn-container">
+                              <input type="submit" value="Save" class="btn bg-btn btnGreen" />
+                           </div>
                         </div>
                      </div>
-                  </div>
-               </form>
+                  </form>
+               } else {
+                  <p>No.</p>
+               }
             </div>
          </div>
       </div>
