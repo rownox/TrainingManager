@@ -4,7 +4,6 @@
 @{
    ViewData["Title"] = "Edit";
 }
-@using WCSTrainer.Components
 <div class="panel">
    <div class="body">
       <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
@@ -13,7 +12,7 @@
             <div class="field-container">
                <form method="post">
                   <div asp-validation-summary="All" class="text-danger"></div>
-                  <input type="hidden" asp-for="Employee.Id" />
+                  <input hidden asp-for="Employee.Id" />
                   <input asp-for="Employee.UserAccountId" class="form-control" hidden />
                   <input asp-for="Employee.Skills" class="form-control" hidden />
 

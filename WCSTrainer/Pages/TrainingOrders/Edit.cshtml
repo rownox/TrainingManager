@@ -18,15 +18,15 @@
                @if (Model.TrainingOrder.Status != "Completed" && Model.TrainingOrder.Status != "Verified") {
                   <form method="post">
                      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                     <input type="hidden" asp-for="TrainingOrder.Id" />
+                     <input hidden asp-for="TrainingOrder.Id" />
 
-                     <input asp-for="TrainingOrder.BeginDate" type="hidden" />
-                     <input asp-for="TrainingOrder.CompletionDate" type="hidden" />
-                     <input asp-for="TrainingOrder.CreateDate" type="hidden" />
-                     <input asp-for="TrainingOrder.Status" type="hidden" />
+                     <input asp-for="TrainingOrder.BeginDate" hidden />
+                     <input asp-for="TrainingOrder.CompletionDate" hidden />
+                     <input asp-for="TrainingOrder.CreateDate" hidden />
+                     <input asp-for="TrainingOrder.Status" hidden />
 
-                     <input type="hidden" id="employeesData" value="@ViewData["EmployeesJson"]" />
-                     <input type="hidden" id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
+                     <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
+                     <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
 
                      @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
                         <div class="form-group">
@@ -79,7 +79,7 @@
                                  </li>
                               </ul>
                               <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select</p></div>
-                              <input id="traineeInput" asp-for="TrainingOrder.TraineeId" type="hidden" />
+                              <input id="traineeInput" asp-for="TrainingOrder.TraineeId" hidden />
                            </div>
                         </div>
                      </div>

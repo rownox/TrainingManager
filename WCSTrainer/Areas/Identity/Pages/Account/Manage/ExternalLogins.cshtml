@@ -20,8 +20,8 @@
                         {
                             <form id="@($"remove-login-{login.LoginProvider}")" asp-page-handler="RemoveLogin" method="post">
                                 <div>
-                                    <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden" />
-                                    <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden" />
+                                    <input asp-for="@login.LoginProvider" name="LoginProvider" hidden />
+                                    <input asp-for="@login.ProviderKey" name="ProviderKey" hidden />
                                     <button type="submit" class="btn btn-primary" title="Remove this @login.ProviderDisplayName login from your account">Remove</button>
                                 </div>
                             </form>
