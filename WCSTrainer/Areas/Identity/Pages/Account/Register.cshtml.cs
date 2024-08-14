@@ -39,9 +39,8 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
 
       public class InputModel {
          [Required]
-         [EmailAddress]
-         [Display(Name = "Email")]
-         public string Email { get; set; }
+         [Display(Name = "Username")]
+         public string Username { get; set; }
 
          [Required]
          [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -73,56 +72,52 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
          ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
          if (ModelState.IsValid) {
-            var user = new UserAccount {
-               UserName = Input.Email,
-               Email = Input.Email,
-               DateCreated = DateTime.Now
-            };
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
-            var result = await _userManager.CreateAsync(user, Input.Password);
+            try {
+               var user = new UserAccount {
+                  UserName = Input.Username,
+                  DateCreated = DateTime.Now
+               };
 
-            var employee = new Employee {
-               FirstName = Input.FirstName,
-               LastName = Input.LastName,
-               Status = "Trainee",
-               Skills = new HashSet<Skill>(),
-               TrainingOrdersAsTrainee = new HashSet<TrainingOrder>(),
-               TrainingOrdersAsTrainer = new HashSet<TrainingOrder>(),
-               UserAccountId = user.Id,
-               UserAccount = user
-            };
+               var result = await _userManager.CreateAsync(user, Input.Password);
 
-            _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
+               if (result.Succeeded) {
+                  var employee = new Employee {
+                     FirstName = Input.FirstName,
+                     LastName = Input.LastName,
+                     Status = "Trainee",
+                     UserAccountId = user.Id,
+                     UserAccount = user
+                  };
 
-            user.EmployeeId = employee.Id;
-            user.Employee = employee;
-            var result2 = _userManager.UpdateAsync(user);
+                  _context.Employees.Add(employee);
+                  await _context.SaveChangesAsync();
 
-            if (result.Succeeded && result2.IsCompletedSuccessfully) {
-               _logger.LogInformation("User created a new account with password.");
+                  user.EmployeeId = employee.Id;
+                  await _userManager.UpdateAsync(user);
 
-               var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-               code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-               var callbackUrl = Url.Page(
-                   "/Account/ConfirmEmail",
-                   pageHandler: null,
-                   values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                   protocol: Request.Scheme);
+                  await transaction.CommitAsync();
 
-               await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                   $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                  _logger.LogInformation("User created a new account with password.");
 
-               if (_userManager.Options.SignIn.RequireConfirmedAccount) {
-                  return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-               } else {
-                  await _signInManager.SignInAsync(user, isPersistent: false);
-                  return LocalRedirect(returnUrl);
+                  await _userManager.AddToRoleAsync(user, "trainee");
+
+                  if (_userManager.Options.SignIn.RequireConfirmedAccount) {
+                     return RedirectToPage("RegisterConfirmation", new { username = Input.Username, returnUrl = returnUrl });
+                  } else {
+                     await _signInManager.SignInAsync(user, isPersistent: false);
+                     return LocalRedirect(returnUrl);
+                  }
                }
-            }
 
-            foreach (var error in result.Errors) {
-               ModelState.AddModelError(string.Empty, error.Description);
+               foreach (var error in result.Errors) {
+                  ModelState.AddModelError(string.Empty, error.Description);
+               }
+            } catch (Exception ex) {
+               await transaction.RollbackAsync();
+               _logger.LogError(ex, "An error occurred while registering a new user.");
+               ModelState.AddModelError(string.Empty, "An error occurred while registering. Please try again.");
             }
          }
 

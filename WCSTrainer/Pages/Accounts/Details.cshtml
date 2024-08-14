@@ -23,7 +23,14 @@
                      <p class="title">Phone Number</p>
                      <p class="info">@Model.UserAccount.PhoneNumber</p>
                   </div>
-                  @if (Model.Employee != null) {
+               </div>
+               <div class="btn-container">
+                  <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.UserAccount.Id">
+                     Edit Account
+                  </a>
+               </div>
+               @if (Model.Employee != null) {
+                  <div class="field-container">
                      <p class="title">Employee #@Model.Employee.Id</p>
                      <div class="field-container">
                         <div class="text-group">
@@ -39,13 +46,13 @@
                            <p class="info">@Model.Employee.Status</p>
                         </div>
                      </div>
-                  }
-               </div>
-               <div class="btn-container">
-                  <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.UserAccount.Id">
-                     Edit
-                  </a>
-               </div>
+                  </div>
+                  <div class="btn-container">
+                     <a class="btn bg-btn btnGreen" asp-page="./Employees/Edit" asp-route-id="@Model.UserAccount.EmployeeId">
+                        Edit Employee
+                     </a>
+                  </div>
+               }
             }
          </div>
       </div>

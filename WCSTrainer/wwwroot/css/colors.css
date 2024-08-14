@@ -78,14 +78,14 @@
 	border-bottom: 1px solid var(--gray3);
 	color: var(--textSub1);
 	text-decoration: none;
-	transition: background-color 0.1s ease-out;
+	transition: color 0.1s ease-out;
 	text-align: left;
 }
 
 	.btnMenu:hover {
-		background-color: var(--gray3);
+		border-color: var(--gray4);
 		color: var(--textMain);
-		transition: background-color 0s;
+		transition: color 0s;
 	}
 
 .btnBlue {
