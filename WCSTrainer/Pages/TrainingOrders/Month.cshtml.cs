@@ -1,21 +1,18 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using WCSTrainer.Data;
 
-namespace WCSTrainer.Pages.TrainingOrders {
-   [Authorize(Roles = "admin, trainer, trainee")]
-   public class SchedulingModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
-
+namespace WCSTrainer.Pages.TrainingOrders
+{
+    public class MonthModel(WCSTrainerContext context) : PageModel
+    {
       public IList<TrainingOrder> TrainingOrders { get; set; }
       public IList<Employee> Employees { get; set; }
-
       [BindProperty]
       public int selectedYear { get; set; } = DateTime.Now.Year;
-
       [BindProperty]
       public int selectedMonth { get; set; }
-
       [BindProperty]
       public string searchFor { get; set; } = "All";
 

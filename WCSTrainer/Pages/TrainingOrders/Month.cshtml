@@ -1,5 +1,5 @@
 ﻿@page
-@model WCSTrainer.Pages.TrainingOrders.SchedulingModel
+@model WCSTrainer.Pages.TrainingOrders.MonthModel
 @{
 }
 
@@ -14,39 +14,18 @@
                      DateTime date = new DateTime(Model.selectedYear, month, 1);
                      string monthName = date.ToString("MMMM");
                      string type = "month-inactive";
-                    
+
                      if (DateTime.Now.Month == month && DateTime.Now.Year == Model.selectedYear) {
                         type = "month-active";
                      }
 
-                     <div class="month @type">
-                        <div class="title">
-                           <p>@monthName</p>
-                        </div>
-                        <div class="info">
-                           <p>Preview:</p>
-                           @if (Model.getFirstTrainingOrder(month, 0) != null) {
-                              var order = @Model.getFirstTrainingOrder(month, 0);
-                              <div class="order live">Order #@order.Id - @order.BeginDate</div>
-                           } else {
-                              <div class="order gray"></div>
-                           }
-                           @if (Model.getFirstTrainingOrder(month, 1) != null) {
-                              var order = @Model.getFirstTrainingOrder(month, 1);
-                              <div class="order live">Order #@order.Id - @order.BeginDate</div>
-                           } else {
-                              <div class="order gray"></div>
-                           }
-                        </div>
-                        <div class="stats">
-                           <p>Training Orders: @Model.countMonthOrders(month)</p>
-                        </div>
+                     <div class="days" id="days" style="display: none;">
+                        @for (int day = 0; day < 30; day++) {
+                           <div class="day">@day</div>
+                        }
                      </div>
                   }
                </div>
-
-               
-
             </div>
          </div>
          <div class="tool-container">

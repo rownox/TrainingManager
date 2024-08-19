@@ -8,14 +8,13 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Pages.TrainingOrders {
    [Authorize(Roles = "admin, trainer")]
    public class EditModel(WCSTrainerContext context) : PageModel {
-
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;
       [BindProperty]
       public IList<Employee>? Employees { get; set; }
       [BindProperty]
       public IList<TrainerGroup>? TrainerGroups { get; set; }
-      public SelectList? Locations { get; set; }
+      public SelectList? Locations { get; set; } 
       [BindProperty]
       public string? SelectedTrainerString { get; set; }
       public List<int> SelectedTrainerIds { get; set; } = new List<int>();
@@ -24,7 +23,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
       public List<int> SelectedTrainerGroupIds { get; set; } = new List<int>();
 
       public async Task<IActionResult> OnGetAsync(int? id) {
-
          if (id == null) {
             return NotFound();
          }
@@ -92,7 +90,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
             var newTrainers = await context.Employees
                 .Where(e => newTrainerIds.Contains(e.Id))
                 .ToListAsync();
-
             trainingOrderToUpdate.Trainers = newTrainers;
          } else {
             trainingOrderToUpdate.Trainers.Clear();
@@ -103,7 +100,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
             var newTrainerGroups = await context.TrainerGroups
                 .Where(tg => newTrainerGroupIds.Contains(tg.Id))
                 .ToListAsync();
-
             trainingOrderToUpdate.TrainerGroups = newTrainerGroups;
          } else {
             trainingOrderToUpdate.TrainerGroups.Clear();
@@ -118,7 +114,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
                throw;
             }
          }
-
 
          return RedirectToPage("./Index");
       }
