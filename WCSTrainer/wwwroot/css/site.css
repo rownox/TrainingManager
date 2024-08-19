@@ -653,7 +653,7 @@ nav {
 							margin-bottom: 10px;
 							border-bottom: 1px solid var(--gray4);
 							padding: 5px;
-							font-size: 18px;
+							font-size: 17px;
 						}
 
 						.panel .body .properties .scheduling .schedule .months .month .info {
@@ -661,6 +661,7 @@ nav {
 							flex-direction: column;
 							gap: 5px;
 							padding: 5px;
+							color: var(--textMain);
 						}
 
 							.panel .body .properties .scheduling .schedule .months .month .info .order {
@@ -706,6 +707,7 @@ nav {
 							justify-content: center;
 							background-color: var(--gray2);
 							flex-grow: 1;
+							color: var(--textMain);
 						}
 
 							.panel .body .properties .scheduling .schedule .days .day:hover {
@@ -799,6 +801,7 @@ nav {
 	flex-direction: row;
 	border: 1px solid var(--gray4);
 	z-index: 2;
+	color: var(--textMain);
 }
 
 	.people-component .people-container {
@@ -888,6 +891,7 @@ nav {
 				font-size: 13px;
 				padding: 0 5px;
 				display: flex;
+				color: var(--textMain);
 			}
 
 				.people-component .people-container ul li .photo {
@@ -1161,7 +1165,6 @@ nav {
 		.identity-container .content a, button {
 			color: lightblue;
 		}
-
 
 .login-container {
 	display: flex;

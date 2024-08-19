@@ -7,21 +7,15 @@ using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.TrainingOrders {
    [Authorize(Roles = "admin, trainer")]
-   public class EditModel : PageModel {
-
-      private readonly WCSTrainerContext _context;
-
-      public EditModel(WCSTrainerContext context) {
-         _context = context;
-      }
+   public class EditModel(WCSTrainerContext context) : PageModel {
 
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;
       [BindProperty]
-      public IList<Employee> Employees { get; set; }
+      public IList<Employee>? Employees { get; set; }
       [BindProperty]
-      public IList<TrainerGroup> TrainerGroups { get; set; }
-      public SelectList Locations { get; set; }
+      public IList<TrainerGroup>? TrainerGroups { get; set; }
+      public SelectList? Locations { get; set; }
       [BindProperty]
       public string? SelectedTrainerString { get; set; }
       public List<int> SelectedTrainerIds { get; set; } = new List<int>();
@@ -35,15 +29,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return NotFound();
          }
 
-         Employees = await _context.Employees.ToListAsync();
-         ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer
-             .Serialize(Employees ?? new List<Employee>());
+         await initJson();
 
-         TrainerGroups = await _context.TrainerGroups.ToListAsync();
-         ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer
-             .Serialize(TrainerGroups ?? new List<TrainerGroup>());
-
-         var trainingorder = await _context.TrainingOrders
+         var trainingorder = await context.TrainingOrders
              .Include(t => t.Trainee)
              .Include(t => t.Location)
              .Include(t => t.Trainers)
@@ -68,36 +56,27 @@ namespace WCSTrainer.Pages.TrainingOrders {
          SelectedTrainerGroupIds = TrainingOrder.TrainerGroups.Select(tg => tg.Id).ToList();
          SelectedTrainerGroupString = string.Join(", ", SelectedTrainerGroupIds);
 
-         Locations = new SelectList(await _context.Locations.ToListAsync(), "Id", "Name");
+         Locations = new SelectList(await context.Locations.ToListAsync(), "Id", "Name");
 
          return Page();
       }
 
       public async Task<IActionResult> OnPostAsync() {
-         if (!ModelState.IsValid) {
-            Employees = await _context.Employees.ToListAsync();
-            ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer
-                .Serialize(Employees ?? new List<Employee>());
-            TrainerGroups = await _context.TrainerGroups.ToListAsync();
-            ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer
-                .Serialize(TrainerGroups ?? new List<TrainerGroup>());
 
+         if (string.IsNullOrWhiteSpace(SelectedTrainerGroupString) && string.IsNullOrWhiteSpace(SelectedTrainerString)) {
+            ModelState.AddModelError("SelectedTrainerString", "At least one trainer or trainer group must be selected.");
+            await initJson();
             return Page();
          }
 
-         _context.Attach(TrainingOrder).State = EntityState.Modified;
-
-         try {
-            await _context.SaveChangesAsync();
-         } catch (DbUpdateConcurrencyException) {
-            if (!_context.TrainingOrders.Any(e => e.Id == TrainingOrder.Id)) {
-               return NotFound();
-            } else {
-               throw;
-            }
+         if (!ModelState.IsValid) {
+            await initJson();
+            return Page();
          }
 
-         var trainingOrderToUpdate = await _context.TrainingOrders
+         context.Attach(TrainingOrder).State = EntityState.Modified;
+
+         var trainingOrderToUpdate = await context.TrainingOrders
              .Include(t => t.Trainers)
              .Include(t => t.TrainerGroups)
              .FirstOrDefaultAsync(t => t.Id == TrainingOrder.Id);
@@ -106,48 +85,34 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return NotFound();
          }
 
-         _context.Entry(trainingOrderToUpdate).CurrentValues.SetValues(TrainingOrder);
+         context.Entry(trainingOrderToUpdate).CurrentValues.SetValues(TrainingOrder);
 
-         if (SelectedTrainerGroupString != null && SelectedTrainerString != null) {
+         if (SelectedTrainerString != null) {
             List<int> newTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
-            var newTrainers = await _context.Employees
+            var newTrainers = await context.Employees
                 .Where(e => newTrainerIds.Contains(e.Id))
                 .ToListAsync();
 
-            foreach (var trainer in trainingOrderToUpdate.Trainers.ToList()) {
-               if (!newTrainerIds.Contains(trainer.Id)) {
-                  trainingOrderToUpdate.Trainers.Remove(trainer);
-               }
-            }
+            trainingOrderToUpdate.Trainers = newTrainers;
+         } else {
+            trainingOrderToUpdate.Trainers.Clear();
+         }
 
-            foreach (var trainer in newTrainers) {
-               if (!trainingOrderToUpdate.Trainers.Any(t => t.Id == trainer.Id)) {
-                  trainingOrderToUpdate.Trainers.Add(trainer);
-               }
-            }
-
+         if (SelectedTrainerGroupString != null) {
             List<int> newTrainerGroupIds = SelectedTrainerGroupString.Split(", ").Select(int.Parse).ToList();
-            var newTrainerGroups = await _context.TrainerGroups
+            var newTrainerGroups = await context.TrainerGroups
                 .Where(tg => newTrainerGroupIds.Contains(tg.Id))
                 .ToListAsync();
 
-            foreach (var trainerGroup in trainingOrderToUpdate.TrainerGroups.ToList()) {
-               if (!newTrainerGroupIds.Contains(trainerGroup.Id)) {
-                  trainingOrderToUpdate.TrainerGroups.Remove(trainerGroup);
-               }
-            }
-
-            foreach (var trainerGroup in newTrainerGroups) {
-               if (!trainingOrderToUpdate.TrainerGroups.Any(tg => tg.Id == trainerGroup.Id)) {
-                  trainingOrderToUpdate.TrainerGroups.Add(trainerGroup);
-               }
-            }
+            trainingOrderToUpdate.TrainerGroups = newTrainerGroups;
+         } else {
+            trainingOrderToUpdate.TrainerGroups.Clear();
          }
 
          try {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
          } catch (DbUpdateConcurrencyException) {
-            if (!_context.TrainingOrders.Any(e => e.Id == TrainingOrder.Id)) {
+            if (!context.TrainingOrders.Any(e => e.Id == TrainingOrder.Id)) {
                return NotFound();
             } else {
                throw;
@@ -156,6 +121,16 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
 
          return RedirectToPage("./Index");
+      }
+
+      private async Task initJson() {
+         Employees = await context.Employees.ToListAsync();
+         ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer
+            .Serialize(Employees ?? new List<Employee>());
+
+         TrainerGroups = await context.TrainerGroups.ToListAsync();
+         ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer
+           .Serialize(TrainerGroups ?? new List<TrainerGroup>());
       }
    }
 }

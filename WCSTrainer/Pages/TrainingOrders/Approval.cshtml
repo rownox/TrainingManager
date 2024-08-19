@@ -16,7 +16,7 @@
             <div class="field-container">
                @if (Model.TrainingOrder.Status == "Awaiting Approval") {
                   <form method="post">
-                     <div asp-validation-summary="All" class="text-danger"></div>
+                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                      <input hidden asp-for="TrainingOrder.Id" />
 
                      @{
@@ -26,7 +26,7 @@
                      <input asp-for="TrainingOrder.CreateDate" hidden />
 
                      <input asp-for="TrainingOrder.Medium" hidden />
-                     <input asp-for="TrainingOrder.Status" hidden value="Active" />
+                     <input asp-for="TrainingOrder.Status" hidden />
                      <input asp-for="TrainingOrder.Description" hidden />
 
                      <input asp-for="TrainingOrder.TraineeId" hidden />
@@ -34,7 +34,6 @@
 
                      <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
                      <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
-
 
                      <div class="form-group">
                         <div class="form">
@@ -277,9 +276,3 @@
       if (overlay) overlay.classList.add("hidden");
    }
 </script>
-
-@section Scripts {
-   @{
-      await Html.RenderPartialAsync("_ValidationScriptsPartial");
-   }
-}

@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel.DataAnnotations;
 
 namespace WCSTrainer.Pages.TrainingOrders {
    [Authorize(Roles = "admin, trainer")]
@@ -21,13 +23,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
       public List<int>? SelectedTrainerGroupIds { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
-         Employees = await context.Employees.ToListAsync();
-         ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer
-             .Serialize(Employees ?? new List<Employee>());
-
-         TrainerGroups = await context.TrainerGroups.ToListAsync();
-         ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer
-             .Serialize(TrainerGroups ?? new List<TrainerGroup>());
+         await initJson();
 
          if (id == null) {
             return NotFound();
@@ -44,15 +40,14 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
       public async Task<IActionResult> OnPostAsync() {
 
+         if (string.IsNullOrWhiteSpace(SelectedTrainerGroupString) & string.IsNullOrWhiteSpace(SelectedTrainerString)) {
+            ModelState.AddModelError("SelectedTrainerString", "At least one trainer or trainer group must be selected.");
+            await initJson();
+            return Page();
+         }
+
          if (!ModelState.IsValid) {
-            Employees = await context.Employees.ToListAsync();
-            ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer
-                .Serialize(Employees ?? new List<Employee>());
-
-            TrainerGroups = await context.TrainerGroups.ToListAsync();
-            ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer
-                .Serialize(TrainerGroups ?? new List<TrainerGroup>());
-
+            await initJson();
             return Page();
          }
 
@@ -84,6 +79,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 .ToListAsync();
          }
 
+         TrainingOrder.Status = "Active";
+
+
          context.TrainingOrders.Update(TrainingOrder);
          await context.SaveChangesAsync();
 
@@ -92,6 +90,16 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
       private bool TrainingOrderExists(int id) {
          return context.TrainingOrders.Any(e => e.Id == id);
+      }
+
+      private async Task initJson(){
+         Employees = await context.Employees.ToListAsync();
+         ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer
+            .Serialize(Employees ?? new List<Employee>());
+
+         TrainerGroups = await context.TrainerGroups.ToListAsync();
+         ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer
+           .Serialize(TrainerGroups ?? new List<TrainerGroup>());
       }
    }
 }
