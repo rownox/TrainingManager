@@ -21,7 +21,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
       public string? SelectedTrainerGroupString { get; set; }
       public List<int>? SelectedTrainerGroupIds { get; set; }
       [BindProperty]
-      public DateOnly? BeginDate { get; set; } 
+      public DateOnly? BeginDate { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          await initJson();
@@ -98,7 +98,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          return context.TrainingOrders.Any(e => e.Id == id);
       }
 
-      private async Task initJson(){
+      private async Task initJson() {
          Employees = await context.Employees.ToListAsync();
          ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer
             .Serialize(Employees ?? new List<Employee>());
