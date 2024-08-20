@@ -87,9 +87,14 @@ namespace WCSTrainer.Pages.Skills {
                   TrainerGroups = trainerGroups
                };
 
-               _context.TrainingOrders.Add(orderDuplicate);
-               trainee.TrainingOrdersAsTrainee.Add(orderDuplicate);
+               if (orderDuplicate != null) {
+                  _context.TrainingOrders.Add(orderDuplicate);
+                  trainee.TrainingOrdersAsTrainee.Add(orderDuplicate);
+                  _context.SaveChangesAsync();
+               }
             }
+
+            
 
             trainee.Skills.Add(Skill);
             await _context.SaveChangesAsync();
