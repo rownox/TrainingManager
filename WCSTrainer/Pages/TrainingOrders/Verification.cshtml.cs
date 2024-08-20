@@ -41,6 +41,16 @@ namespace WCSTrainer.Pages.TrainingOrders {
       }
 
       public async Task<IActionResult> OnPostAsync() {
+
+         if (string.IsNullOrWhiteSpace(VerifyNotes)) {
+            ModelState.AddModelError("VerifyNotes", "Please describe the training.");
+            return await OnGetAsync(TrainingOrder.Id);
+         }
+         if (string.IsNullOrWhiteSpace(Signature)) {
+            ModelState.AddModelError("Signature", "Please sign off the training.");
+            return await OnGetAsync(TrainingOrder.Id);
+         }
+
          if (!ModelState.IsValid) {
             return Page();
          }

@@ -14,7 +14,7 @@
                @if (Model.TrainingOrder.Status == "Completed") {
                   <form method="post">
 
-                     <div asp-validation-summary="All" class="text-danger"></div>
+                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                      <input hidden asp-for="TrainingOrder.Id" />
                      <input asp-for="TrainingOrder.BeginDate" hidden />
                      <input asp-for="TrainingOrder.CompletionDate" hidden />
@@ -38,6 +38,7 @@
                         <div class="form">
                            <div class="labels">
                               <p class="control-label">Has the individual grasped the training?</p>
+                              <span asp-validation-for="VerifyNotes" class="text-danger"></span>
                            </div>
                            <textarea asp-for="VerifyNotes" rows="5"></textarea>
                         </div>
@@ -46,6 +47,7 @@
                         <div class="form">
                            <div class="labels">
                               <p class="control-label">Signature</p>
+                              <span asp-validation-for="Signature" class="text-danger"></span>
                            </div>
                            <input asp-for="Signature" class="form-control" />
                         </div>
