@@ -2,11 +2,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.IdentityModel.Tokens;
-using System.ComponentModel.DataAnnotations;
 
 namespace WCSTrainer.Pages.TrainingOrders {
+
    [Authorize(Roles = "admin, trainer")]
    public class ApprovalModel(Data.WCSTrainerContext context) : PageModel {
 
@@ -23,7 +21,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
       public string? SelectedTrainerGroupString { get; set; }
       public List<int>? SelectedTrainerGroupIds { get; set; }
       [BindProperty]
-      public DateOnly? BeginDate { get; set; }
+      public DateOnly? BeginDate { get; set; } 
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          await initJson();
@@ -36,6 +34,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          if (trainingorder == null) {
             return NotFound();
          }
+
          TrainingOrder = trainingorder;
 
          return Page();
@@ -74,7 +73,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          if (SelectedTrainerGroupString != null) {
             SelectedTrainerGroupIds = SelectedTrainerGroupString.Split(", ").Select(int.Parse).ToList();
-
             TrainingOrder.TrainerGroups = await context.TrainerGroups
                     .Where(e => SelectedTrainerGroupIds.Contains(e.Id))
                     .ToListAsync();
@@ -89,7 +87,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
          }
 
          TrainingOrder.Status = "Active";
-
 
          context.TrainingOrders.Update(TrainingOrder);
          await context.SaveChangesAsync();
