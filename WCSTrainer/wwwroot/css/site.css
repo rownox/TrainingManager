@@ -210,7 +210,7 @@ nav {
 					margin-bottom: 20px;
 					min-width: 350px;
 					display: flex;
-					width: 550px;
+					width: 600px;
 					gap: 20px;
 				}
 
@@ -222,15 +222,17 @@ nav {
 					}
 
 						.panel .body .properties .user-form .field-container .form-group .form .labels {
+							display: flex;
+							flex-direction: column;
 							margin-bottom: 3px;
 							display: flex;
+							padding: 0;
 						}
 
 							.panel .body .properties .user-form .field-container .form-group .form .labels .control-label {
 							}
 
 							.panel .body .properties .user-form .field-container .form-group .form .labels .text-danger {
-								margin-left: 10px;
 								color: #ff3434;
 							}
 
@@ -285,13 +287,13 @@ nav {
 					.panel .body .properties .user-form .field-container .form-group .selector {
 					}
 
-					.panel .body .properties .user-form .field-container .btn {
-						font-size: 15px;
-						padding: 5px 10px;
-						min-width: fit-content;
-						height: fit-content;
-						align-self: flex-end;
-					}
+				.panel .body .properties .user-form .field-container .btn {
+					font-size: 15px;
+					padding: 5px 10px;
+					min-width: fit-content;
+					height: fit-content;
+					align-self: flex-end;
+				}
 
 				.panel .body .properties .user-form .field-container .title-row {
 					margin-top: 20px;
@@ -464,7 +466,6 @@ nav {
 					}
 
 						.panel .body .properties .list-container .order-list li:hover {
-							
 						}
 
 						.panel .body .properties .list-container .order-list li .info {
@@ -494,10 +495,10 @@ nav {
 									user-select: none;
 								}
 
-								.panel .body .properties .list-container .order-list li .info .title .name:hover {
-									text-decoration: underline;
-								}
-								
+									.panel .body .properties .list-container .order-list li .info .title .name:hover {
+										text-decoration: underline;
+									}
+
 
 							.panel .body .properties .list-container .order-list li .info .sub {
 								display: flex;

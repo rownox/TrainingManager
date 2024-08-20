@@ -19,10 +19,6 @@
                      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                      <input hidden asp-for="TrainingOrder.Id" />
 
-                     @{
-                        var date = DateOnly.FromDateTime(DateTime.Now);
-                        <input asp-for="TrainingOrder.BeginDate" hidden value="@date" />
-                     }
                      <input asp-for="TrainingOrder.CreateDate" hidden />
 
                      <input asp-for="TrainingOrder.Medium" hidden />
@@ -64,7 +60,7 @@
                      <div class="form-group">
                         <div class="form">
                            <div class="labels">
-                              <p class="control-label">Training Hours Needed</p>
+                              <p class="control-label">Req. Training Hours</p>
                               <span asp-validation-for="TrainingOrder.Duration" class="text-danger"></span>
                            </div>
                            <input type="text" asp-for="TrainingOrder.Duration" class="form-control" />
@@ -79,6 +75,13 @@
                               <option value="Medium">Medium</option>
                               <option value="Low">Low</option>
                            </select>
+                        </div>
+                        <div class="form">
+                           <div class="labels">
+                              <p class="control-label">Begin Date</p>
+                              <span asp-validation-for="BeginDate" class="text-danger"></span>
+                           </div>
+                           <input type="date" asp-for="BeginDate" class="form-control" />
                         </div>
                      </div>
                      <div class="form-group">

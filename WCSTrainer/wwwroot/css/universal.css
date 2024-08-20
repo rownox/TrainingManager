@@ -78,6 +78,31 @@ pre {
 	align-items: center;
 }
 
+::-webkit-datetime-edit {
+	height: 30px;
+	display: flex;
+	align-items: center;
+	border-right: 1px solid var(--gray4);
+}
+
+::-webkit-datetime-edit-fields-wrapper {
+
+	
+}
+
+::-webkit-datetime-edit-text {
+
+}
+
+::-webkit-inner-spin-button {
+
+}
+
+::-webkit-calendar-picker-indicator {
+	filter: invert(70%);
+}
+
+
 @media print {
 	body * {
 		visibility: hidden;
@@ -147,3 +172,4 @@ pre {
 			font-size: 16px;
 		}
 }
+
