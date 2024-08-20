@@ -14,7 +14,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
       public IList<Employee>? Employees { get; set; }
       [BindProperty]
       public IList<TrainerGroup>? TrainerGroups { get; set; }
-      public SelectList? Locations { get; set; } 
+      public SelectList? Locations { get; set; }
       [BindProperty]
       public string? SelectedTrainerString { get; set; }
       public List<int> SelectedTrainerIds { get; set; } = new List<int>();
@@ -29,17 +29,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          await initJson();
 
-         var trainingorder = await context.TrainingOrders
-             .Include(t => t.Trainee)
-             .Include(t => t.Location)
-             .Include(t => t.Trainers)
-             .Include(t => t.TrainerGroups)
-             .FirstOrDefaultAsync(m => m.Id == id);
-
-         if (trainingorder == null) {
-            return NotFound();
-         } else {
-            TrainingOrder = trainingorder;
+         var newOrder = initOrder(id).Result;
+         if (newOrder != null) {
+            TrainingOrder = newOrder;
          }
 
          foreach (var trainer in TrainingOrder.Trainers) {
@@ -64,12 +56,14 @@ namespace WCSTrainer.Pages.TrainingOrders {
          if (string.IsNullOrWhiteSpace(SelectedTrainerGroupString) && string.IsNullOrWhiteSpace(SelectedTrainerString)) {
             ModelState.AddModelError("SelectedTrainerString", "At least one trainer or trainer group must be selected.");
             await initJson();
-            return Page();
+
+            return await OnGetAsync(TrainingOrder.Id);
          }
 
          if (!ModelState.IsValid) {
             await initJson();
-            return Page();
+
+            return await OnGetAsync(TrainingOrder.Id);
          }
 
          context.Attach(TrainingOrder).State = EntityState.Modified;
@@ -126,6 +120,21 @@ namespace WCSTrainer.Pages.TrainingOrders {
          TrainerGroups = await context.TrainerGroups.ToListAsync();
          ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer
            .Serialize(TrainerGroups ?? new List<TrainerGroup>());
+      }
+
+      private async Task<TrainingOrder?> initOrder(int? id) {
+         var trainingorder = await context.TrainingOrders
+             .Include(t => t.Trainee)
+             .Include(t => t.Location)
+             .Include(t => t.Trainers)
+             .Include(t => t.TrainerGroups)
+             .FirstOrDefaultAsync(m => m.Id == id);
+
+         if (trainingorder != null) {
+            return trainingorder;
+         } else {
+            return null;
+         }
       }
    }
 }

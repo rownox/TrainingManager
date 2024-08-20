@@ -61,11 +61,11 @@
                               </div>
                            </div>
                         </div>
+
+                        <input id="trainersInput" asp-for="@Model.SelectedTrainerString" hidden />
+                        <input id="groupsInput" asp-for="@Model.SelectedTrainerGroupString" hidden />
                      }
-
-                     <input id="trainersInput" asp-for="@Model.SelectedTrainerString" hidden />
-                     <input id="groupsInput" asp-for="@Model.SelectedTrainerGroupString" hidden />
-
+                     
                      <div class="form-group">
                         <div class="form">
                            <div class="labels">
@@ -74,15 +74,18 @@
                            </div>
                            <div class="selections">
                               <ul id="trainee" class="pill-container">
-                                 <li value="@Model.TrainingOrder.TraineeId" class="pill person trainee">
-                                    @Model.TrainingOrder.Trainee.FirstName @Model.TrainingOrder.Trainee.LastName
-                                 </li>
+                                 @if (Model.TrainingOrder.Trainee != null) {
+                                    <li value="@Model.TrainingOrder.TraineeId" class="pill person trainee">
+                                       @Model.TrainingOrder.Trainee.FirstName @Model.TrainingOrder.Trainee.LastName
+                                    </li>
+                                 }
                               </ul>
                               <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select</p></div>
                               <input id="traineeInput" asp-for="TrainingOrder.TraineeId" hidden />
                            </div>
                         </div>
                      </div>
+                     
                      <div class="form-group">
                         <div class="form">
                            <div class="labels">
