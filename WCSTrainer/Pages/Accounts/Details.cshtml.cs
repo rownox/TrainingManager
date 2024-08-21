@@ -19,7 +19,11 @@ namespace WCSTrainer.Pages.Accounts
             return NotFound();
          }
 
-         Employee = await context.Employees.FirstOrDefaultAsync(e => e.Id == UserAccount.EmployeeId);
+         Employee = await context.Employees
+            .Include(e => e.TrainingOrdersAsTrainee)
+            .Include(e => e.TrainingOrdersAsTrainer)
+            .Include(e => e.Skills)
+            .FirstOrDefaultAsync(e => e.Id == UserAccount.EmployeeId);
 
          return Page();
       }

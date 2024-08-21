@@ -20,9 +20,9 @@ namespace WCSTrainer.Pages.Skills {
       }
 
       public async Task<IActionResult> OnPostAsync() {
-         if (!ModelState.IsValid) {
-            return Page();
-         }
+         //if (!ModelState.IsValid) {
+         //   return Page();
+         //}
 
          _context.Skills.Add(Skill);
          await _context.SaveChangesAsync();

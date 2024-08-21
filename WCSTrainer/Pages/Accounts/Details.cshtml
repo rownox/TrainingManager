@@ -45,6 +45,13 @@
                            <p class="title">Status</p>
                            <p class="info">@Model.Employee.Status</p>
                         </div>
+                        <div class="text-group">
+                           <p class="title">Skills</p>
+                           @foreach (var skill in Model.Employee.Skills) {
+                              <p class="info">@skill.Name</p>
+                           }
+                        </div>
+                        
                      </div>
                   </div>
                   <div class="btn-container">

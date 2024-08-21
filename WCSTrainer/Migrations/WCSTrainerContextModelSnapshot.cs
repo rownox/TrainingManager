@@ -145,19 +145,19 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f270f6b9-a0eb-4e57-938d-63d3620118b0",
+                            Id = "a1157900-95de-4d40-a56d-1828733e1a3f",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9de75606-b5c2-4d80-b391-508060f67055",
+                            Id = "1cba9ae0-a27a-423f-be0e-0f80ef23a52f",
                             Name = "trainer",
                             NormalizedName = "TRAINER"
                         },
                         new
                         {
-                            Id = "8c3f7b1d-a6dd-4dc9-ad3d-fc83272bce3a",
+                            Id = "fcd025c7-0504-4c0a-9167-9a372748e224",
                             Name = "trainee",
                             NormalizedName = "TRAINEE"
                         });
@@ -502,6 +502,31 @@ namespace WCSTrainer.Migrations
                     b.HasIndex("VerifierId");
 
                     b.ToTable("Verifications");
+                });
+
+            modelBuilder.Entity("WCSTrainer.Models.Person", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Groups")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Hours")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Person");
                 });
 
             modelBuilder.Entity("Employee", b =>

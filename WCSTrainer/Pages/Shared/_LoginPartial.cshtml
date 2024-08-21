@@ -6,10 +6,12 @@
 
 @if (SignInManager.IsSignedIn(User)) {
    var user = await UserManager.GetUserAsync(User);
-   <a href="/Identity/Account/Manage" class="img-container">
-      <img src="~/images/settings.svg" />
-   </a>
-   <p class="login-email">@user.UserName</p>
+   if (user != null) {
+      <a href="/Identity/Account/Manage" class="img-container">
+         <img src="~/images/settings.svg" />
+      </a>
+      <p class="login-email">@user.UserName</p>
+   }
    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
       <button id="logout" type="submit" class="btn bg-btn btnWhite">Logout</button>
    </form>
