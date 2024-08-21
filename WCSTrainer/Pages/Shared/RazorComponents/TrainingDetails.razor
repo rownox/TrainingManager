@@ -25,7 +25,7 @@
    </div>
    @if (!TrainingOrder.Status.Equals("Awaiting Approval")) {
       <div class="title-row">
-         <p class="title">Approved - @TrainingOrder.BeginDate</p>
+         <p class="title">Approved - @TrainingOrder.ApprovalDate</p>
       </div>
       <div class="text-group">
          <p class="title">Trainers</p>
@@ -46,6 +46,18 @@
          <p class="title">Training Hours Needed</p>
          <p class="info">@TrainingOrder.Duration Hours</p>
       </div>
+      <div class="text-group">
+         <p class="title">Begin Date</p>
+         <p class="info">@TrainingOrder.BeginDate</p>
+      </div>
+      if (TrainingOrder.Skills.Count > 0) {
+         <div class="text-group">
+            <p class="title">Parent Skills</p>
+            @foreach (var skill in TrainingOrder.Skills) {
+               <div class="pill">@skill.Name</div>
+            }
+         </div>
+      }
    }
    @if (!TrainingOrder.Status.Equals("Awaiting Approval") && !TrainingOrder.Status.Equals("Active")) {
       <div class="title-row">
@@ -96,6 +108,7 @@
           .Include(t => t.Trainers)
           .Include(t => t.Verification)
           .Include(t => t.TrainerGroups)
+          .Include(t => t.Skills)
           .FirstOrDefaultAsync(m => m.Id == OrderId);
    }
 }

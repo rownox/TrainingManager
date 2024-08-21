@@ -1,18 +1,24 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Accounts {
    public class EditModel(UserManager<UserAccount> userManager) : PageModel {
 
       [BindProperty]
-      public UserAccount? UserAccount { get; set; }
+      public UserAccount UserAccount { get; set; } = default!;
 
       public async Task<IActionResult> OnGetAsync(string id) {
-         UserAccount = await userManager.FindByIdAsync(id);
-         if (UserAccount == null) {
-            return NotFound();
+         
+         var newUser = await userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+         if (newUser == null) {
+            return Page();
+         } else {
+            UserAccount = newUser;
          }
+
          return Page();
       }
 
@@ -21,14 +27,9 @@ namespace WCSTrainer.Pages.Accounts {
             return Page();
          }
 
-         var user = await userManager.FindByIdAsync(UserAccount.Id);
-         if (user == null) {
-            return NotFound();
-         }
+         UserAccount.Email = UserAccount.Email;
 
-         user.Email = UserAccount.Email;
-
-         var result = await userManager.UpdateAsync(user);
+         var result = await userManager.UpdateAsync(UserAccount);
          if (result.Succeeded) {
             return RedirectToPage("Index");
          }

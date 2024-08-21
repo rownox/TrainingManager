@@ -27,6 +27,7 @@ namespace WCSTrainer.Pages.Skills {
       //[BindProperty]
       //public string? SelectedTrainerGroupString { get; set; }
       //public List<int> SelectedTrainerGroupIds { get; set; } = new List<int>();
+
       [BindProperty]
       public int SelectedTraineeId { get; set; }
 
@@ -63,38 +64,47 @@ namespace WCSTrainer.Pages.Skills {
          }
 
          var trainee = await _context.Employees
-            .Include(t => t.TrainingOrdersAsTrainee)
-            .Include(t => t.Skills)
-            .FirstOrDefaultAsync(e => e.Id == SelectedTraineeId);
+             .Include(t => t.TrainingOrdersAsTrainee)
+             .Include(t => t.Skills)
+             .FirstOrDefaultAsync(e => e.Id == SelectedTraineeId);
+
          if (trainee == null) {
             ModelState.AddModelError("", "Selected trainee not found.");
             await LoadRelatedData();
             return Page();
          }
 
-         //var trainerGroups = await GetSelectedTrainerGroups();
-         //var trainers = await GetSelectedTrainers();
          using var transaction = await _context.Database.BeginTransactionAsync();
 
          try {
             foreach (var trainingOrder in Skill.TrainingOrders) {
 
-               var orderDuplicate = new TrainingOrder {
-                  CreateDate = DateOnly.FromDateTime(DateTime.Now),
-                  LocationId = trainingOrder.LocationId,
-                  Duration = trainingOrder.Duration,
-                  Status = "Awaiting Approval",
-                  TraineeId = trainee.Id,
-               };
+               var otherOrder = await _context.TrainingOrders
+                  .Include(o => o.Trainers)
+                  .Include(o => o.TrainerGroups)
+                  .Include(o => o.Skills)
+                  .FirstOrDefaultAsync(m => m.Id == trainingOrder.Id);
 
-               if (orderDuplicate != null) {
+               if (otherOrder != null) {
+                  var orderDuplicate = new TrainingOrder {
+                     BeginDate = null,
+                     CompletionDate = null,
+                     CreateDate = DateOnly.FromDateTime(DateTime.Now),
+                     Medium = otherOrder.Medium,
+                     Status = "Awaiting Approval",
+                     Duration = otherOrder.Duration,
+                     Priority = otherOrder.Priority,
+                     Description = otherOrder.Description,
+                     ClosingNotes = otherOrder.ClosingNotes,
+                     TraineeId = trainee.Id,
+                     LocationId = otherOrder.LocationId,
+                     Trainers = new List<Employee>(otherOrder.Trainers),
+                     TrainerGroups = new List<TrainerGroup>(otherOrder.TrainerGroups),
+                     Skills = new List<Skill> { Skill }
+                  };
+
                   _context.TrainingOrders.Add(orderDuplicate);
                   trainee.TrainingOrdersAsTrainee.Add(orderDuplicate);
-                  await _context.SaveChangesAsync();
-               } else {
-                  ModelState.AddModelError("", "An error occured while duplicating the training orders.");
-                  await LoadRelatedData();
-                  return Page();
                }
             }
 
@@ -143,5 +153,6 @@ namespace WCSTrainer.Pages.Skills {
             WriteIndented = true
          };
       }
+
    }
 }

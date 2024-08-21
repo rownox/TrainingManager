@@ -20,8 +20,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
       [BindProperty]
       public string? SelectedTrainerGroupString { get; set; }
       public List<int>? SelectedTrainerGroupIds { get; set; }
-      [BindProperty]
-      public DateOnly? BeginDate { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          await initJson();
@@ -44,12 +42,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          if (string.IsNullOrWhiteSpace(SelectedTrainerGroupString) & string.IsNullOrWhiteSpace(SelectedTrainerString)) {
             ModelState.AddModelError("SelectedTrainerString", "At least one trainer or trainer group must be selected.");
-            await initJson();
-            return Page();
-         }
-
-         if (BeginDate == null) {
-            ModelState.AddModelError("BeginDate", "Please select a date.");
             await initJson();
             return Page();
          }
@@ -87,6 +79,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          }
 
          TrainingOrder.Status = "Active";
+         TrainingOrder.ApprovalDate = DateOnly.FromDateTime(DateTime.Now);
 
          context.TrainingOrders.Update(TrainingOrder);
          await context.SaveChangesAsync();

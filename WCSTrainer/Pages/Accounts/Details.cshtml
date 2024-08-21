@@ -9,8 +9,11 @@
       <div class="properties">
          <div class="user-form">
             @if (Model.UserAccount != null) {
-               <p class="title">Employee #@Model.UserAccount.Id</p>
+               <p class="title">User Account @Model.UserAccount.Id</p>
                <div class="field-container">
+                  <div class="title-row">
+                     <p class="title">Account Info</p>
+                  </div>
                   <div class="text-group">
                      <p class="title">Username</p>
                      <p class="info">@Model.UserAccount.UserName</p>
@@ -26,13 +29,19 @@
                </div>
                <div class="btn-container">
                   <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.UserAccount.Id">
-                     Edit Account
+                     Edit Info
                   </a>
                </div>
                @if (Model.Employee != null) {
                   <div class="field-container">
-                     <p class="title">Employee #@Model.Employee.Id</p>
                      <div class="field-container">
+                        <div class="title-row">
+                           <p class="title">Employee Info</p>
+                        </div>
+                        <div class="text-group">
+                           <p class="title">Employee ID</p>
+                           <p class="info">@Model.Employee.Id</p>
+                        </div>
                         <div class="text-group">
                            <p class="title">First Name</p>
                            <p class="info">@Model.Employee.FirstName</p>
@@ -51,12 +60,23 @@
                               <p class="info">@skill.Name</p>
                            }
                         </div>
-                        
+                        <div class="text-group">
+                           <p class="title">Assigned Learning</p>
+                           @foreach (var order in Model.Employee.TrainingOrdersAsTrainee) {
+                              <div class="pill">Training Order #@order.Id</div>
+                           }
+                        </div>
+                        <div class="text-group">
+                           <p class="title">Assigned Teaching</p>
+                           @foreach (var order in Model.Employee.TrainingOrdersAsTrainer) {
+                              <div class="pill">Training Order #@order.Id</div>
+                           }
+                        </div>
                      </div>
                   </div>
                   <div class="btn-container">
                      <a class="btn bg-btn btnGreen" asp-page="./Employees/Edit" asp-route-id="@Model.UserAccount.EmployeeId">
-                        Edit Employee
+                        Edit Info
                      </a>
                   </div>
                }
