@@ -26,60 +26,57 @@
                      <p class="title">Phone Number</p>
                      <p class="info">@Model.UserAccount.PhoneNumber</p>
                   </div>
-               </div>
-               <div class="btn-container">
-                  <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.UserAccount.Id">
-                     Edit Info
-                  </a>
-               </div>
-               @if (Model.Employee != null) {
-                  <div class="field-container">
-                     <div class="field-container">
-                        <div class="title-row">
-                           <p class="title">Employee Info</p>
-                        </div>
-                        <div class="text-group">
-                           <p class="title">Employee ID</p>
-                           <p class="info">@Model.Employee.Id</p>
-                        </div>
-                        <div class="text-group">
-                           <p class="title">First Name</p>
-                           <p class="info">@Model.Employee.FirstName</p>
-                        </div>
-                        <div class="text-group">
-                           <p class="title">Last Name</p>
-                           <p class="info">@Model.Employee.LastName</p>
-                        </div>
-                        <div class="text-group">
-                           <p class="title">Status</p>
-                           <p class="info">@Model.Employee.Status</p>
-                        </div>
-                        <div class="text-group">
-                           <p class="title">Skills</p>
-                           @foreach (var skill in Model.Employee.Skills) {
-                              <p class="info">@skill.Name</p>
-                           }
-                        </div>
-                        <div class="text-group">
-                           <p class="title">Assigned Learning</p>
+
+                  @if (Model.Employee != null) {
+                     <div class="title-row">
+                        <p class="title">Employee Info</p>
+                     </div>
+                     <div class="text-group">
+                        <p class="title">Employee ID</p>
+                        <p class="info">@Model.Employee.Id</p>
+                     </div>
+                     <div class="text-group">
+                        <p class="title">First Name</p>
+                        <p class="info">@Model.Employee.FirstName</p>
+                     </div>
+                     <div class="text-group">
+                        <p class="title">Last Name</p>
+                        <p class="info">@Model.Employee.LastName</p>
+                     </div>
+                     <div class="text-group">
+                        <p class="title">Status</p>
+                        <p class="info">@Model.Employee.Status</p>
+                     </div>
+                     <div class="text-group">
+                        <p class="title">Skills</p>
+                        @foreach (var skill in Model.Employee.Skills) {
+                           <p class="info">@skill.Name</p>
+                        }
+                     </div>
+                     <div class="text-group">
+                        <p class="title">Assigned Learning</p>
+                        <div class="info">
                            @foreach (var order in Model.Employee.TrainingOrdersAsTrainee) {
                               <div class="pill">Training Order #@order.Id</div>
                            }
                         </div>
-                        <div class="text-group">
-                           <p class="title">Assigned Teaching</p>
+                     </div>
+                     <div class="text-group">
+                        <p class="title">Assigned Teaching</p>
+                        <div class="info">
                            @foreach (var order in Model.Employee.TrainingOrdersAsTrainer) {
                               <div class="pill">Training Order #@order.Id</div>
                            }
                         </div>
                      </div>
-                  </div>
-                  <div class="btn-container">
-                     <a class="btn bg-btn btnGreen" asp-page="./Employees/Edit" asp-route-id="@Model.UserAccount.EmployeeId">
-                        Edit Info
-                     </a>
-                  </div>
-               }
+                     <div class="btn-container">
+                        <a class="btn bg-btn btnGreen" asp-page="./Employees/Edit" asp-route-id="@Model.UserAccount.EmployeeId">
+                           Edit Info
+                        </a>
+                     </div>
+                  }
+               </div>
+               
             }
          </div>
       </div>

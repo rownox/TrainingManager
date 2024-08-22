@@ -3,17 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.AccountManager {
-   public class IndexModel : PageModel {
-      private readonly UserManager<UserAccount> _userManager;
-
-      public IndexModel(UserManager<UserAccount> userManager) {
-         _userManager = userManager;
-      }
-
-      public List<UserAccount> Users { get; set; }
+   public class IndexModel(UserManager<UserAccount> userManager) : PageModel {
+      public List<UserAccount> Users { get; set; } = default!;
 
       public async Task OnGetAsync() {
-         Users = await _userManager.Users.ToListAsync();
+         Users = await userManager.Users.ToListAsync();
       }
    }
 }

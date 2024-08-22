@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NuGet.Versioning;
 using WCSTrainer.Data;
 
-namespace WCSTrainer.Pages.Accounts
-{
+namespace WCSTrainer.Pages.Accounts {
     public class DetailsModel(UserManager<UserAccount> userManager, WCSTrainerContext context) : PageModel {
       [BindProperty]
       public UserAccount? UserAccount { get; set; }
