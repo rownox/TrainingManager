@@ -5,20 +5,24 @@
    <div class="title-row">
       <p class="title">Created - @TrainingOrder.CreateDate</p>
    </div>
-   <div class="text-group">
-      <p class="title">Trainee</p>
-      <div class="info">
-         <div class="pill trainee">@TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName</div>
+   if (TrainingOrder.Trainee != null) {
+      <div class="text-group">
+         <p class="title">Trainee</p>
+         <div class="info">
+            <div class="pill trainee">@TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName</div>
+         </div>
       </div>
-   </div>
+   }
    <div class="text-group">
       <p class="title">Description</p>
       <pre class="info">@TrainingOrder.Description</pre>
    </div>
-   <div class="text-group">
-      <p class="title">Location</p>
-      <p class="info">@TrainingOrder.Location.Name</p>
-   </div>
+   if (TrainingOrder.Location != null) {
+      <div class="text-group">
+         <p class="title">Location</p>
+         <p class="info">@TrainingOrder.Location.Name</p>
+      </div>
+   }
    <div class="text-group">
       <p class="title">Learning Medium</p>
       <p class="info">@TrainingOrder.Medium</p>
@@ -38,6 +42,7 @@
             }
          </div>
       </div>
+
       <div class="text-group">
          <p class="title">Priority Level</p>
          <p class="info">@TrainingOrder.Priority</p>
@@ -50,11 +55,12 @@
          <p class="title">Begin Date</p>
          <p class="info">@TrainingOrder.BeginDate</p>
       </div>
+
       if (TrainingOrder.Skills.Count > 0) {
          <div class="text-group">
             <p class="title">Parent Skills</p>
             @foreach (var skill in TrainingOrder.Skills) {
-               <div class="pill">@skill.Name</div>
+               <div class="pill yellow">@skill.Name</div>
             }
          </div>
       }
@@ -91,7 +97,7 @@
    [Parameter]
    public int OrderId { get; set; }
 
-   private TrainingOrder? TrainingOrder;
+   private TrainingOrder TrainingOrder = default!;
 
    protected override async Task OnInitializedAsync() {
       await LoadTrainingOrderAsync();
@@ -102,7 +108,7 @@
    }
 
    private async Task LoadTrainingOrderAsync() {
-      TrainingOrder = await _context.TrainingOrders
+      var trainingOrder = await _context.TrainingOrders
           .Include(t => t.Trainee)
           .Include(t => t.Location)
           .Include(t => t.Trainers)
@@ -110,5 +116,8 @@
           .Include(t => t.TrainerGroups)
           .Include(t => t.Skills)
           .FirstOrDefaultAsync(m => m.Id == OrderId);
+      if (trainingOrder != null) {
+         TrainingOrder = trainingOrder;
+      }
    }
 }

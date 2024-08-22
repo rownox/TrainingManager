@@ -49,9 +49,11 @@
                      </div>
                      <div class="text-group">
                         <p class="title">Skills</p>
-                        @foreach (var skill in Model.Employee.Skills) {
-                           <p class="info">@skill.Name</p>
-                        }
+                        <div class="info">
+                           @foreach (var skill in Model.Employee.Skills) {
+                              <p class="pill yellow">@skill.Name</p>
+                           }
+                        </div>
                      </div>
                      <div class="text-group">
                         <p class="title">Assigned Learning</p>

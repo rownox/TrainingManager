@@ -1,6 +1,5 @@
 ﻿@page
 @model WCSTrainer.Pages.Skills.DetailsModel
-
 @{
    ViewData["Title"] = "Details";
 }
@@ -10,15 +9,23 @@
       <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
       <div class="properties">
          <div class="user-form">
-            <p class="title">Skill #@Html.DisplayFor(model => model.Skill.Id)</p>
+            <p class="title">Skill #@Model.Skill.Id</p>
             <div class="field-container">
                <div class="text-group">
                   <p class="title">Name</p>
-                  <p class="info">@Html.DisplayFor(model => model.Skill.Name)</p>
+                  <p class="info">@Model.Skill.Name</p>
                </div>
                <div class="text-group">
                   <p class="title">Description</p>
-                  <p class="info">@Html.DisplayFor(model => model.Skill.Description)</p>
+                  <p class="info">@Model.Skill.Description</p>
+               </div>
+               <div class="text-group">
+                  <p class="title">Included Training Orders</p>
+                  <div class="info">
+                     @foreach (var order in Model.Skill.TrainingOrders) {
+                        <div class="pill">Training Order #@order.Id</div>
+                     }
+                  </div>
                </div>
             </div>
             <br />

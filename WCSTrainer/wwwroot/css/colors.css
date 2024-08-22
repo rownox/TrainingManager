@@ -151,3 +151,8 @@
 	.pill.trainee, .pill.trainees {
 		background-color: var(--red2);
 	}
+
+	.pill.yellow {
+		background-color: var(--yellow1);
+		color: var(--black);
+	}
