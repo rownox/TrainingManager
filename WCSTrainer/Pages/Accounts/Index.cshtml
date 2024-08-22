@@ -19,7 +19,7 @@
                   </tr>
                   @foreach (var item in Model.Users) {
                      <tr class="clickable">
-                        <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                        <td>@item.UserName</td>
                         <td>
                            <a asp-page="./Details" 
                            asp-route-id="@item.Id" class="btn nbg-btn btnWhite">

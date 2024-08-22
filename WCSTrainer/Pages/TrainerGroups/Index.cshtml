@@ -20,8 +20,8 @@
                   </tr>
                   @foreach (var item in Model.TrainerGroup) {
                      <tr class="clickable">
-                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
                         <td>
                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnWhite">View</a>
                            <a asp-page="./Delete" asp-route-id="@item.Id" class="btn nbg-btn btnRed">Delete</a>
