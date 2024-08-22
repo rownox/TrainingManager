@@ -22,13 +22,11 @@
                         <input asp-for="TrainingOrder.CompletionDate" hidden value="@date" />
                      }
                      <input asp-for="TrainingOrder.CreateDate" hidden />
-
                      <input asp-for="TrainingOrder.Medium" hidden />
-                     <input asp-for="TrainingOrder.Status" hidden value="Completed" />
+                     <input asp-for="TrainingOrder.Status" type="hidden" value="Completed" />
                      <input asp-for="TrainingOrder.Duration" hidden />
                      <input asp-for="TrainingOrder.Priority" hidden />
-                     <input asp-for="TrainingOrder.Description" hidden />
-
+                     <input asp-for="TrainingOrder.Description" type="hidden" />
                      <input asp-for="TrainingOrder.TraineeId" hidden />
                      <input asp-for="TrainingOrder.LocationId" hidden />
 

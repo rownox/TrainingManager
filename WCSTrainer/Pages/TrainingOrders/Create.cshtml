@@ -24,7 +24,7 @@
                   <input asp-for="TrainingOrder.Status" hidden value="Awaiting Approval" />
                   @{
                      var date = DateOnly.FromDateTime(DateTime.Now);
-                        <input asp-for="TrainingOrder.CreateDate" hidden value="@date" />
+                     <input asp-for="TrainingOrder.CreateDate" type="hidden" value="@date" />
                   }
 
                   <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
