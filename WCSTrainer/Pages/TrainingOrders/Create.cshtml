@@ -1,6 +1,10 @@
 ﻿@page
 @model WCSTrainer.Pages.TrainingOrders.CreateModel
 
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<UserAccount> SignInManager
+@inject UserManager<UserAccount> UserManager
+
 @{
    ViewData["Title"] = "Create";
 }
@@ -17,68 +21,78 @@
             <p class="title">Create New Training Order</p>
             <p class="description">Fill out each required field.</p>
 
-            <div class="field-container">
-               <form method="post">
-                  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (SignInManager.IsSignedIn(User)) {
+               var user = await UserManager.GetUserAsync(User);
+               if (user != null) {
+                  <div class="field-container">
+                     <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                  <input asp-for="TrainingOrder.Status" hidden value="Awaiting Approval" />
-                  @{
-                     var date = DateOnly.FromDateTime(DateTime.Now);
-                     <input asp-for="TrainingOrder.CreateDate" type="hidden" value="@date" />
-                  }
+                        <input asp-for="TrainingOrder.Status" hidden value="Awaiting Approval" />
+                        @{
+                           var date = DateOnly.FromDateTime(DateTime.Now);
+                           <input asp-for="TrainingOrder.CreateDate" type="hidden" value="@date" />
+                        }
+                        <input asp-for="TrainingOrder.CreatedByUserId" type="hidden" value="@user.Id" />
 
-                  <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
-                  <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
+                        <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
+                        <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
 
-                  <div class="form-group">
-                     <div class="form">
-                        <div class="labels">
-                           <p class="control-label">Trainee</p>
-                           <span asp-validation-for="TrainingOrder.TraineeId" class="text-danger"></span>
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Trainee</p>
+                                 <span asp-validation-for="TrainingOrder.TraineeId" class="text-danger"></span>
+                              </div>
+                              <div class="selections">
+                                 <ul id="trainee" class="pill-container">
+                                 </ul>
+                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select Trainee</p></div>
+                                 <input id="traineeInput" asp-for="TrainingOrder.TraineeId" hidden />
+                              </div>
+                           </div>
                         </div>
-                        <div class="selections">
-                           <ul id="trainee" class="pill-container">
-                           </ul>
-                           <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select Trainee</p></div>
-                           <input id="traineeInput" asp-for="TrainingOrder.TraineeId" hidden />
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Description</p>
+                                 <span asp-validation-for="TrainingOrder.Description" class="text-danger"></span>
+                              </div>
+                              <textarea rows="4" asp-for="TrainingOrder.Description" placeholder="Describe the skill being trained and the goal.">
+                                 </textarea>
+                           </div>
                         </div>
-                     </div>
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Location</p>
+                                 <span asp-validation-for="TrainingOrder.LocationId" class="text-danger"></span>
+                              </div>
+                              <select asp-for="TrainingOrder.LocationId" class="form-control" asp-items="@Model.Locations"></select>
+                           </div>
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Learning Medium</p>
+                                 <span asp-validation-for="TrainingOrder.Medium" class="text-danger"></span>
+                              </div>
+                              <input asp-for="TrainingOrder.Medium" class="form-control" />
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="btn-container">
+                                 <input type="submit" value="Create" class="btn bg-btn btnGreen" />
+                              </div>
+                           </div>
+                        </div>
+                     </form>
                   </div>
-                  <div class="form-group">
-                     <div class="form">
-                        <div class="labels">
-                           <p class="control-label">Description</p>
-                           <span asp-validation-for="TrainingOrder.Description" class="text-danger"></span>
-                        </div>
-                        <textarea rows="4" asp-for="TrainingOrder.Description" placeholder="Describe the skill being trained and the goal.">
-                        </textarea>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <div class="form">
-                        <div class="labels">
-                           <p class="control-label">Location</p>
-                           <span asp-validation-for="TrainingOrder.LocationId" class="text-danger"></span>
-                        </div>
-                        <select asp-for="TrainingOrder.LocationId" class="form-control" asp-items="@Model.Locations"></select>
-                     </div>
-                     <div class="form">
-                        <div class="labels">
-                           <p class="control-label">Learning Medium</p>
-                           <span asp-validation-for="TrainingOrder.Medium" class="text-danger"></span>
-                        </div>
-                        <input asp-for="TrainingOrder.Medium" class="form-control" />
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <div class="form">
-                        <div class="btn-container">
-                           <input type="submit" value="Create" class="btn bg-btn btnGreen" />
-                        </div>
-                     </div>
-                  </div>
-               </form>
-            </div>
+               } else {
+                  <p>User invalid.</p>
+               }
+            } else {
+               <p>Not signed in.</p>
+            }
          </div>
       </div>
    </div>

@@ -1,6 +1,6 @@
 ﻿:root {
-	--white: white;
-	--black: black;
+	--white: #ffffff;
+	--black: #000000;
 	--gray1: #141516;
 	--gray2: #1b2022;
 	--gray3: #252a2e;
@@ -21,7 +21,7 @@
 }
 
 .light-mode {
-	--white: white;
+	--white: #ffffff;
 	--black: #ffffff;
 	--gray1: #dddddd;
 	--gray2: #b2b2b2;

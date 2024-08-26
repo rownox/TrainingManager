@@ -1,5 +1,9 @@
 ﻿@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity;
+
 @inject WCSTrainer.Data.WCSTrainerContext _context
+@inject SignInManager<UserAccount> SignInManager
+@inject UserManager<UserAccount> UserManager
 
 @if (TrainingOrder != null) {
    <div class="title-row">
@@ -27,6 +31,13 @@
       <p class="title">Learning Medium</p>
       <p class="info">@TrainingOrder.Medium</p>
    </div>
+   @if (TrainingOrder.CreatedByUserId != null) {
+      <div class="text-group">
+         <p class="title">Created By</p>
+         <p class="info">@CreatedByUserName</p>
+      </div>
+   }
+   
    @if (!TrainingOrder.Status.Equals("Awaiting Approval")) {
       <div class="title-row">
          <p class="title">Approved - @TrainingOrder.ApprovalDate</p>
@@ -98,6 +109,7 @@
    public int OrderId { get; set; }
 
    private TrainingOrder TrainingOrder = default!;
+   private string CreatedByUserName = "Unknown";
 
    protected override async Task OnInitializedAsync() {
       await LoadTrainingOrderAsync();
@@ -116,8 +128,14 @@
           .Include(t => t.TrainerGroups)
           .Include(t => t.Skills)
           .FirstOrDefaultAsync(m => m.Id == OrderId);
+
       if (trainingOrder != null) {
          TrainingOrder = trainingOrder;
+
+         if (TrainingOrder.CreatedByUserId != null) {
+            var user = await UserManager.FindByIdAsync(TrainingOrder.CreatedByUserId);
+            CreatedByUserName = user?.UserName ?? "Unknown";
+         }
       }
    }
 }

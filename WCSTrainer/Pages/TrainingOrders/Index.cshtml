@@ -2,6 +2,9 @@
 @using Microsoft.AspNetCore.Identity
 @model WCSTrainer.Pages.TrainingOrders.IndexModel
 
+@inject SignInManager<UserAccount> SignInManager
+@inject UserManager<UserAccount> UserManager
+
 @{
    ViewData["Title"] = "Index";
 }
@@ -38,46 +41,58 @@
                   </select>
                </form>
             </div>
-            <div class="order-list">
-               <ul>
-                  @foreach (var item in Model.TrainingOrder.Reverse()) {
-                     if (Model.listCount < Model.maxCount) {
-                        string name;
-                        if (item.Trainee != null) {
-                           name = item.Trainee.FirstName + " " + item.Trainee.LastName;
-                        } else {
-                           name = "N/A";
-                        }
-                        <li id="@item.Id @name" class="@item.Status searchable">
-                           <div class="info">
-                              <div class="title">
-                                 <a class="name" asp-page="./Details" asp-route-id="@item.Id">Training Order #@item.Id</a>
-                                 @{
-                                    var type = "awaiting";
-                                    if (item.Status.Equals("Active")) {
-                                       type = "active";
-                                    } else if (item.Status.Equals("Verified")) {
-                                       type = "verified";
-                                    } else if (item.Status.Equals("Completed")) {
-                                       type = "completed";
-                                    }
-                                    <p class="@type black-pill">@item.Status</p>
+            @if (SignInManager.IsSignedIn(User)) {
+               var user = await UserManager.GetUserAsync(User);
+               if (user != null) {
+                  <div class="order-list">
+                     <ul>
+                        @foreach (var item in Model.TrainingOrder.Reverse()) {
+                           if (Model.listCount < Model.maxCount) {
+                              var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
+                              if (!isAdmin) {
+                                 if (item.CreatedByUserId != user.Id) {
+                                    continue;
                                  }
-                              </div>
-                              <div class="sub">
-                                 <p class="identifier">Trainee - @name</p>
-                              </div>
-                           </div>
-                           <div class="btns">
-                              <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
-                              <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
-                           </div>
-                        </li>
-                        Model.listCount++;
-                     }
-                  }
-               </ul>
-            </div>
+                              }
+
+                              string name;
+                              if (item.Trainee != null) {
+                                 name = item.Trainee.FirstName + " " + item.Trainee.LastName;
+                              } else {
+                                 name = "N/A";
+                              }
+                              <li id="@item.Id @name" class="@item.Status searchable">
+                                 <div class="info">
+                                    <div class="title">
+                                       <a class="name" asp-page="./Details" asp-route-id="@item.Id">Training Order #@item.Id</a>
+                                       @{
+                                          var type = "awaiting";
+                                          if (item.Status.Equals("Active")) {
+                                             type = "active";
+                                          } else if (item.Status.Equals("Verified")) {
+                                             type = "verified";
+                                          } else if (item.Status.Equals("Completed")) {
+                                             type = "completed";
+                                          }
+                                          <p class="@type black-pill">@item.Status</p>
+                                       }
+                                    </div>
+                                    <div class="sub">
+                                       <p class="identifier">Trainee - @name</p>
+                                    </div>
+                                 </div>
+                                 <div class="btns">
+                                    <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
+                                    <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
+                                 </div>
+                              </li>
+                              Model.listCount++;
+                           }
+                        }
+                     </ul>
+                  </div>
+               }
+            }
          </div>
          <div class="tool-container">
             <div class="tools">

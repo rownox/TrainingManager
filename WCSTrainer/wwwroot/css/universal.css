@@ -102,6 +102,14 @@ pre {
 	filter: invert(70%);
 }
 
+.access {
+	color: white;
+}
+
+.login-container {
+	color: white;
+}
+
 
 @media print {
 	body * {
