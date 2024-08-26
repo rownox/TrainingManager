@@ -103,11 +103,11 @@ pre {
 }
 
 .access {
-	color: white;
+	color: var(--textMain);
 }
 
 .login-container {
-	color: white;
+	color: var(--textMain);
 }
 
 

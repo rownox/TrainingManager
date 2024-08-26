@@ -1,7 +1,9 @@
+using AngleSharp.Dom;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 namespace WCSTrainer.Pages.TrainingOrders {
    [Authorize(Roles = "admin, trainer, trainee")]
@@ -107,6 +109,25 @@ namespace WCSTrainer.Pages.TrainingOrders {
          }
          return count;
       }
+
+      public List<TrainingOrder> getMonthOrders(int month) {
+         List<TrainingOrder> ordersInMonth = new List<TrainingOrder>();
+         DateOnly monthStart = new DateOnly(selectedYear, month, 1);
+         DateOnly monthEnd = monthStart.AddMonths(1).AddDays(-1);
+
+         foreach (var order in TrainingOrders) {
+            DateOnly? orderStart = order.BeginDate;
+            DateOnly? orderEnd = order.CompletionDate;
+
+            if ((orderStart <= monthEnd) && (orderEnd >= monthStart)) {
+               if (employeeHasOrder(order)) {
+                  ordersInMonth.Add(order);
+               }
+            }
+         }
+         return ordersInMonth;
+      }
+
 
       public TrainingOrder? getFirstTrainingOrder(int month, int place) {
          DateOnly monthStart = new DateOnly(selectedYear, month, 1);

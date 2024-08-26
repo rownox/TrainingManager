@@ -53,11 +53,13 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
       public async Task<IActionResult> OnPostAsync() {
 
-         if (string.IsNullOrWhiteSpace(SelectedTrainerGroupString) && string.IsNullOrWhiteSpace(SelectedTrainerString)) {
-            ModelState.AddModelError("SelectedTrainerString", "At least one trainer or trainer group must be selected.");
-            await initJson();
+         if (TrainingOrder.Status != "Awaiting Approval") {
+            if (string.IsNullOrWhiteSpace(SelectedTrainerGroupString) && string.IsNullOrWhiteSpace(SelectedTrainerString)) {
+               ModelState.AddModelError("SelectedTrainerString", "At least one trainer or trainer group must be selected.");
+               await initJson();
 
-            return await OnGetAsync(TrainingOrder.Id);
+               return await OnGetAsync(TrainingOrder.Id);
+            }
          }
 
          if (!ModelState.IsValid) {
