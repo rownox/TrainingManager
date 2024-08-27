@@ -79,11 +79,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          foreach (TrainingOrder order in TrainingOrders) {
             DateOnly? orderStart = order.BeginDate;
-            DateOnly? orderEnd = order.CompletionDate;
-            DateOnly? effectiveStart = orderStart > monthStart ? orderStart : monthStart;
-            DateOnly? effectiveEnd = orderEnd < monthEnd ? orderEnd : monthEnd;
 
-            if (effectiveStart <= effectiveEnd) {
+            if (orderStart.HasValue && orderStart.Value.Month == month && orderStart.Value.Year == selectedYear) {
                if (employeeHasOrder(order)) {
                   count += order.Duration;
                }
@@ -99,9 +96,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          foreach (var order in TrainingOrders) {
             DateOnly? orderStart = order.BeginDate;
-            DateOnly? orderEnd = order.CompletionDate;
 
-            if ((orderStart <= monthEnd) && (orderEnd >= monthStart)) {
+            if (orderStart.HasValue && orderStart.Value.Month == month && orderStart.Value.Year == selectedYear) {
                if (employeeHasOrder(order)) {
                   count++;
                }
@@ -110,6 +106,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          return count;
       }
 
+
       public List<TrainingOrder> getMonthOrders(int month) {
          List<TrainingOrder> ordersInMonth = new List<TrainingOrder>();
          DateOnly monthStart = new DateOnly(selectedYear, month, 1);
@@ -117,9 +114,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          foreach (var order in TrainingOrders) {
             DateOnly? orderStart = order.BeginDate;
-            DateOnly? orderEnd = order.CompletionDate;
 
-            if ((orderStart <= monthEnd) && (orderEnd >= monthStart)) {
+            if (orderStart.HasValue && orderStart.Value.Month == month && orderStart.Value.Year == selectedYear) {
                if (employeeHasOrder(order)) {
                   ordersInMonth.Add(order);
                }
@@ -127,7 +123,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
          }
          return ordersInMonth;
       }
-
 
       public TrainingOrder? getFirstTrainingOrder(int month, int place) {
          DateOnly monthStart = new DateOnly(selectedYear, month, 1);
@@ -145,7 +140,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
                }
             }
          }
-
          return null;
       }
 

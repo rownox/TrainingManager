@@ -27,6 +27,7 @@
                      <input asp-for="TrainingOrder.Description" type="hidden"/>
                      <input asp-for="TrainingOrder.TraineeId" type="hidden" />
                      <input asp-for="TrainingOrder.LocationId" type="hidden" />
+                     <input asp-for="TrainingOrder.CreatedByUserId" hidden />
 
                      <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
                      <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />

@@ -51,10 +51,15 @@
                               var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
                               if (!isAdmin) {
                                  if (item.CreatedByUserId != user.Id) {
-                                    continue;
+                                    if (user.Employee != null) {
+                                       if (item.TraineeId != user.Employee.Id) {
+                                          if (!item.Trainers.Contains(user.Employee)) {
+                                             continue;
+                                          }
+                                       }
+                                    }
                                  }
                               }
-
                               string name;
                               if (item.Trainee != null) {
                                  name = item.Trainee.FirstName + " " + item.Trainee.LastName;

@@ -627,7 +627,6 @@ nav {
 							cursor: pointer;
 							background-color: var(--gray2);
 							flex-grow: 1;
-							justify-content: space-between;
 						}
 
 						.panel .body .properties .scheduling .schedule .months .month-inactive {
@@ -653,7 +652,6 @@ nav {
 							border-bottom: 1px solid var(--gray4);
 							padding: 5px;
 							font-size: 17px;
-							
 						}
 
 						.panel .body .properties .scheduling .schedule .months .month .info {
@@ -662,6 +660,7 @@ nav {
 							gap: 5px;
 							padding: 5px;
 							color: var(--textMain);
+							flex-grow: 1;
 						}
 
 							.panel .body .properties .scheduling .schedule .months .month .info .order {
@@ -682,7 +681,6 @@ nav {
 							}
 
 						.panel .body .properties .scheduling .schedule .months .month .stats {
-
 							padding: 5px;
 							color: var(--textSub2);
 						}

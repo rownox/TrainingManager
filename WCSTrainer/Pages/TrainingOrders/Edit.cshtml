@@ -23,6 +23,7 @@
                      <input asp-for="TrainingOrder.CompletionDate" hidden />
                      <input asp-for="TrainingOrder.CreateDate" hidden />
                      <input asp-for="TrainingOrder.Status" hidden />
+                     <input asp-for="TrainingOrder.CreatedByUserId" hidden />
 
                      <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
                      <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
@@ -77,7 +78,6 @@
                                     <li value="@Model.TrainingOrder.TraineeId" class="pill person trainee">
                                        @Model.TrainingOrder.Trainee.FirstName @Model.TrainingOrder.Trainee.LastName
                                     </li>
-
                                  }
                               </ul>
                               <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select</p></div>
