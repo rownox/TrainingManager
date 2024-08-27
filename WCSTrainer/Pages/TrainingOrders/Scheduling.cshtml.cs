@@ -9,15 +9,12 @@ namespace WCSTrainer.Pages.TrainingOrders {
    [Authorize(Roles = "admin, trainer, trainee")]
    public class SchedulingModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
 
-      public IList<TrainingOrder> TrainingOrders { get; set; }
-      public IList<Employee> Employees { get; set; }
-
+      public IList<TrainingOrder> TrainingOrders { get; set; } = default!;
+      public IList<Employee> Employees { get; set; } = default!;
       [BindProperty]
       public int selectedYear { get; set; } = DateTime.Now.Year;
-
       [BindProperty]
       public int selectedMonth { get; set; }
-
       [BindProperty]
       public string searchFor { get; set; } = "All";
 
