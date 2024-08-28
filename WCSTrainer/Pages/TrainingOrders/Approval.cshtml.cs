@@ -45,14 +45,12 @@ namespace WCSTrainer.Pages.TrainingOrders {
             await initJson();
             return Page();
          }
-
          if (!ModelState.IsValid) {
             await initJson();
             return Page();
          }
 
          context.Attach(TrainingOrder).State = EntityState.Modified;
-
          try {
             await context.SaveChangesAsync();
          } catch (DbUpdateConcurrencyException) {
@@ -66,16 +64,15 @@ namespace WCSTrainer.Pages.TrainingOrders {
          if (SelectedTrainerGroupString != null) {
             SelectedTrainerGroupIds = SelectedTrainerGroupString.Split(", ").Select(int.Parse).ToList();
             TrainingOrder.TrainerGroups = await context.TrainerGroups
-                    .Where(e => SelectedTrainerGroupIds.Contains(e.Id))
-                    .ToListAsync();
+               .Where(e => SelectedTrainerGroupIds.Contains(e.Id))
+               .ToListAsync();
          }
 
          if (SelectedTrainerString != null) {
             SelectedTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
-
             TrainingOrder.Trainers = await context.Employees
-                .Where(e => SelectedTrainerIds.Contains(e.Id))
-                .ToListAsync();
+               .Where(e => SelectedTrainerIds.Contains(e.Id))
+               .ToListAsync();
          }
 
          TrainingOrder.Status = "Active";
@@ -83,7 +80,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          context.TrainingOrders.Update(TrainingOrder);
          await context.SaveChangesAsync();
-
          return RedirectToPage("./Index");
       }
 

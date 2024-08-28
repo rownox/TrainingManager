@@ -69,7 +69,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
          }
 
          context.Attach(TrainingOrder).State = EntityState.Modified;
-
          var trainingOrderToUpdate = await context.TrainingOrders
              .Include(t => t.Trainers)
              .Include(t => t.TrainerGroups)
@@ -80,7 +79,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
          }
 
          context.Entry(trainingOrderToUpdate).CurrentValues.SetValues(TrainingOrder);
-
          if (SelectedTrainerString != null) {
             List<int> newTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
             var newTrainers = await context.Employees
