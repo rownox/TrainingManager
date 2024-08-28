@@ -9,13 +9,16 @@
 
       <div class="properties">
          <div class="user-form">
-            <p class="title">Verify Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
+            <p class="title">
+               Verify Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)
+            </p>
             <div class="field-container">
                @if (Model.TrainingOrder.Status == "Completed") {
                   <form method="post">
 
                      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                      <input hidden asp-for="TrainingOrder.Id" />
+
                      <input asp-for="TrainingOrder.BeginDate" hidden />
                      <input asp-for="TrainingOrder.CompletionDate" hidden />
                      <input asp-for="TrainingOrder.CreateDate" hidden />
@@ -32,9 +35,9 @@
                      <input asp-for="TrainingOrder.LocationId" hidden />
                      <input asp-for="TrainingOrder.CreatedByUserId" hidden />
 
-                     <component type="typeof(TrainingDetails)"
-                                render-mode="WebAssemblyPrerendered"
-                                param-OrderId="@Model.TrainingOrder.Id" />
+                     <component type="typeof(TrainingDetails)" render-mode="WebAssemblyPrerendered"
+                     param-OrderId="@Model.TrainingOrder.Id" />
+
                      <br />
                      <div class="form-group">
                         <div class="form">

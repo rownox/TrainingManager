@@ -13,12 +13,6 @@
                   @for (int month = 1; month <= 12; month++) {
                      DateTime date = new DateTime(Model.selectedYear, month, 1);
                      string monthName = date.ToString("MMMM");
-                     string type = "month-inactive";
-
-                     if (DateTime.Now.Month == month && DateTime.Now.Year == Model.selectedYear) {
-                        type = "month-active";
-                     }
-
                      <div class="days" id="days" style="display: none;">
                         @for (int day = 0; day < 30; day++) {
                            <div class="day">@day</div>
