@@ -10,8 +10,6 @@ namespace WCSTrainer.Pages.TrainerGroups {
          _context = context;
       }
 
-      
-
       [BindProperty]
       public TrainerGroup TrainerGroup { get; set; } = default!;
       [BindProperty]
@@ -29,7 +27,6 @@ namespace WCSTrainer.Pages.TrainerGroups {
 
          return Page();
       }
-
 
       public async Task<IActionResult> OnPostAsync() {
          if (!ModelState.IsValid) {
