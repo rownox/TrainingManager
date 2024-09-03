@@ -1,0 +1,66 @@
+﻿@page
+@model WCSTrainer.Pages.Lessons.CreateModel
+
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<UserAccount> SignInManager
+@inject UserManager<UserAccount> UserManager
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="panel">
+   <div class="body">
+      <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
+      <div class="properties">
+         <div class="user-form">
+            <p class="title">Create New Lesson</p>
+            <p class="description">Fill out each required field.</p>
+            @if (SignInManager.IsSignedIn(User)) {
+               var user = await UserManager.GetUserAsync(User);
+               if (user != null) {
+                  <div class="field-container">
+                     <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Name</p>
+                                 <span asp-validation-for="Lesson.Name" class="text-danger"></span>
+                              </div>
+                              <input asp-for="Lesson.Name" class="form-control" />
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Description</p>
+                                 <span asp-validation-for="Lesson.Description" class="text-danger"></span>
+                              </div>
+                              <input asp-for="Lesson.Description" class="form-control" />
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="btn-container">
+                                 <input type="submit" value="Create" class="btn bg-btn btnGreen" />
+                              </div>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               } else {
+                  <p>User invalid.</p>
+               }
+            } else {
+               <p>Not signed in.</p>
+            }
+         </div>
+      </div>
+   </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

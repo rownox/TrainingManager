@@ -15,7 +15,7 @@
 	--blue1: #00abf5;
 	--blue2: #00415e;
 	--green1: #81ff8f;
-	--green2: #0fb021;
+	--green2: #0a8e19;
 	--yellow1: #ffe464;
 	--yellow2: #98780c;
 }
@@ -155,4 +155,8 @@
 	.pill.yellow {
 		background-color: var(--yellow1);
 		color: var(--black);
+	}
+	.pill.green {
+		background-color: var(--green2);
+		color: var(--w);
 	}

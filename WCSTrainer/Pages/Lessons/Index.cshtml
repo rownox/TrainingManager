@@ -1,0 +1,41 @@
+﻿@page
+@model WCSTrainer.Pages.Lessons.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="panel">
+   <div class="body">
+      <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
+      <div class="properties">
+         <div class="flex-column">
+            <p class="title">Lesson Editor</p>
+            <div class="order-list2">
+               <table id="dataTable">
+                  <tr>
+                     <th>Lesson ID</th>
+                     <th>Lesson Name</th>
+                     <th></th>
+                  </tr>
+                  @foreach (var item in Model.Lesson) {
+                     <tr class="clickable">
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>
+                           <a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnWhite">View</a>
+                           <a asp-page="./Delete" asp-route-id="@item.Id" class="btn nbg-btn btnRed">Delete</a>
+                        </td>
+                     </tr>
+                  }
+               </table>
+               <div class="sorters">
+                  <div class="btns">
+                     <a asp-page="Create" class="btn bg-btn btnWhite">Create Lesson</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

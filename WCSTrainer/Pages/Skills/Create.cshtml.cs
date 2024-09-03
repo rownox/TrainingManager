@@ -13,7 +13,7 @@ namespace WCSTrainer.Pages.Skills {
       [BindProperty]
       public Skill Skill { get; set; } = default!;
       [BindProperty]
-      public string? TrainingOrdersString { get; set; }
+      public string? LessonString { get; set; }
 
       public IActionResult OnGet() {
          return Page();
@@ -27,11 +27,11 @@ namespace WCSTrainer.Pages.Skills {
          _context.Skills.Add(Skill);
          await _context.SaveChangesAsync();
 
-         if (TrainingOrdersString != null) {
-            var trainingOrderIds = TrainingOrdersString.Split(", ").Select(int.Parse).ToList();
+         if (LessonString != null) {
+            var lessonIds = LessonString.Split(", ").Select(int.Parse).ToList();
 
-            Skill.TrainingOrders = await _context.TrainingOrders
-                .Where(e => trainingOrderIds.Contains(e.Id))
+            Skill.Lessons = await _context.Lessons
+                .Where(e => lessonIds.Contains(e.Id))
                 .ToListAsync();
          }
 

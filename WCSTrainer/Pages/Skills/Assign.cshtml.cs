@@ -45,7 +45,7 @@ namespace WCSTrainer.Pages.Skills {
 
          var tempSkill = await _context.Skills
              .Include(s => s.Employees)
-             .Include(s => s.TrainingOrders)
+             .Include(s => s.Lessons)
              .FirstOrDefaultAsync(m => m.Id == id);
 
          if (tempSkill == null) {
@@ -77,35 +77,17 @@ namespace WCSTrainer.Pages.Skills {
          using var transaction = await _context.Database.BeginTransactionAsync();
 
          try {
-            foreach (var trainingOrder in Skill.TrainingOrders) {
+            foreach (var lesson in Skill.Lessons) {
+               var newOrder = new TrainingOrder {
+                  CreateDate = DateOnly.FromDateTime(DateTime.Now),
+                  Status = "Awaiting Approval",
+                  LessonId = lesson.Id,
+                  TraineeId = trainee.Id,
+                  ParentSkillId = Skill.Id
+               };
 
-               var otherOrder = await _context.TrainingOrders
-                  .Include(o => o.Trainers)
-                  .Include(o => o.TrainerGroups)
-                  .Include(o => o.Skills)
-                  .FirstOrDefaultAsync(m => m.Id == trainingOrder.Id);
-
-               if (otherOrder != null) {
-                  var orderDuplicate = new TrainingOrder {
-                     BeginDate = null,
-                     CompletionDate = null,
-                     CreateDate = DateOnly.FromDateTime(DateTime.Now),
-                     Medium = otherOrder.Medium,
-                     Status = "Awaiting Approval",
-                     Duration = otherOrder.Duration,
-                     Priority = otherOrder.Priority,
-                     Description = otherOrder.Description,
-                     ClosingNotes = otherOrder.ClosingNotes,
-                     TraineeId = trainee.Id,
-                     LocationId = otherOrder.LocationId,
-                     Trainers = new List<Employee>(otherOrder.Trainers),
-                     TrainerGroups = new List<TrainerGroup>(otherOrder.TrainerGroups),
-                     Skills = new List<Skill> { Skill }
-                  };
-
-                  _context.TrainingOrders.Add(orderDuplicate);
-                  trainee.TrainingOrdersAsTrainee.Add(orderDuplicate);
-               }
+               _context.TrainingOrders.Add(newOrder);
+               trainee.TrainingOrdersAsTrainee.Add(newOrder);
             }
 
             trainee.Skills.Add(Skill);

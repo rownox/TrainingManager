@@ -17,10 +17,14 @@
          </div>
       </div>
    }
-   <div class="text-group">
-      <p class="title">Description</p>
-      <pre class="info">@TrainingOrder.Description</pre>
-   </div>
+   if (TrainingOrder.Lesson != null) {
+      <div class="text-group">
+         <p class="title">Lesson</p>
+         <div class="info">
+            <div class="pill green">@TrainingOrder.Lesson.Name</div>
+         </div>
+      </div>
+   }
    if (TrainingOrder.Location != null) {
       <div class="text-group">
          <p class="title">Location</p>
@@ -67,12 +71,12 @@
          <p class="info">@TrainingOrder.BeginDate</p>
       </div>
 
-      if (TrainingOrder.Skills.Count > 0) {
+      if (TrainingOrder.ParentSkill != null) {
          <div class="text-group">
-            <p class="title">Parent Skills</p>
-            @foreach (var skill in TrainingOrder.Skills) {
-               <div class="pill yellow">@skill.Name</div>
-            }
+            <p class="title">Parent Skill</p>
+            <div class="info">
+               <div class="pill yellow">@TrainingOrder.ParentSkill.Name</div>
+            </div>
          </div>
       }
    }
@@ -126,7 +130,8 @@
           .Include(t => t.Trainers)
           .Include(t => t.Verification)
           .Include(t => t.TrainerGroups)
-          .Include(t => t.Skills)
+          .Include(t => t.ParentSkill)
+          .Include(t => t.Lesson)
           .FirstOrDefaultAsync(m => m.Id == OrderId);
 
       if (trainingOrder != null) {

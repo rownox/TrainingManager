@@ -87,12 +87,9 @@
                         <div class="form">
                            <div class="labels">
                               <p class="control-label">Description</p>
-                              <span asp-validation-for="TrainingOrder.Description" class="text-danger"></span>
+                              <span asp-validation-for="TrainingOrder.LessonId" class="text-danger"></span>
                            </div>
-                           <textarea rows="4"
-                              asp-for="TrainingOrder.Description"
-                              placeholder="Describe the skill being trained and the goal.">
-                           </textarea>
+                           <input asp-for="TrainingOrder.LessonId" class="form-control" />
                         </div>
                      </div>
                      @if (!Model.TrainingOrder.Status.Equals("Awaiting Approval")) {

@@ -14,65 +14,69 @@ namespace WCSTrainer.Data {
       public DbSet<TrainerGroup> TrainerGroups { get; set; }
       public DbSet<TrainingOrder> TrainingOrders { get; set; }
       public DbSet<Verification> Verifications { get; set; }
+      public DbSet<Lesson> Lessons { get; set; }
 
       protected override void OnModelCreating(ModelBuilder builder) {
          base.OnModelCreating(builder);
 
+         // Employee
          builder.Entity<Employee>()
              .HasOne(e => e.UserAccount)
              .WithOne(u => u.Employee)
-             .HasForeignKey<Employee>(e => e.UserAccountId);
+             .HasForeignKey<UserAccount>(u => u.EmployeeId);
 
          builder.Entity<Employee>()
              .HasMany(e => e.Skills)
              .WithMany(s => s.Employees);
 
-         builder.Entity<TrainingOrder>()
-             .HasOne(to => to.Trainee)
-             .WithMany(e => e.TrainingOrdersAsTrainee)
+         builder.Entity<Employee>()
+             .HasMany(e => e.TrainingOrdersAsTrainee)
+             .WithOne(to => to.Trainee)
              .HasForeignKey(to => to.TraineeId)
              .OnDelete(DeleteBehavior.Restrict);
 
-         builder.Entity<TrainingOrder>()
-             .HasMany(to => to.Trainers)
-             .WithMany(e => e.TrainingOrdersAsTrainer)
-             .UsingEntity(j => j.ToTable("TrainerTrainingOrders"));
+         builder.Entity<Employee>()
+             .HasMany(e => e.TrainingOrdersAsTrainer)
+             .WithMany(to => to.Trainers);
 
-         builder.Entity<TrainingOrder>()
-             .HasOne(to => to.Location)
-             .WithMany(l => l.TrainingOrders)
+         // Lesson
+         builder.Entity<Lesson>()
+             .HasMany(l => l.TrainingOrders)
+             .WithOne(to => to.Lesson)
+             .HasForeignKey(to => to.LessonId);
+
+         // Location
+         builder.Entity<Location>()
+             .HasMany(l => l.TrainingOrders)
+             .WithOne(to => to.Location)
              .HasForeignKey(to => to.LocationId);
+
+         // Skill
+         builder.Entity<Skill>()
+             .HasMany(s => s.Lessons)
+             .WithMany();
+
+         // TrainerGroup
+         builder.Entity<TrainerGroup>()
+             .HasMany(tg => tg.Trainers)
+             .WithMany();
+
+         builder.Entity<TrainerGroup>()
+             .HasMany(tg => tg.TrainingOrders)
+             .WithMany(to => to.TrainerGroups);
+
+         // TrainingOrder
+         builder.Entity<TrainingOrder>()
+             .HasOne(to => to.ParentSkill)
+             .WithMany()
+             .HasForeignKey(to => to.ParentSkillId);
 
          builder.Entity<TrainingOrder>()
              .HasOne(to => to.Verification)
              .WithOne(v => v.TrainingOrder)
              .HasForeignKey<Verification>(v => v.TrainingOrderId);
 
-         builder.Entity<TrainingOrder>()
-             .HasMany(to => to.Skills)
-             .WithMany(s => s.TrainingOrders)
-             .UsingEntity<Dictionary<string, object>>(
-                 "TrainingOrderSkill",
-                 j => j
-                     .HasOne<Skill>()
-                     .WithMany()
-                     .HasForeignKey("SkillId"),
-                 j => j
-                     .HasOne<TrainingOrder>()
-                     .WithMany()
-                     .HasForeignKey("TrainingOrderId")
-             );
-
-         builder.Entity<TrainingOrder>()
-             .HasMany(to => to.TrainerGroups)
-             .WithMany(tg => tg.TrainingOrders)
-             .UsingEntity(j => j.ToTable("TrainingOrderTrainerGroups"));
-
-         builder.Entity<TrainerGroup>()
-             .HasMany(tg => tg.Trainers)
-             .WithMany()
-             .UsingEntity(j => j.ToTable("TrainerGroupEmployees"));
-
+         // Verification
          builder.Entity<Verification>()
              .HasOne(v => v.Verifier)
              .WithMany()
@@ -83,6 +87,5 @@ namespace WCSTrainer.Data {
          var traineeRole = new IdentityRole("trainee") { NormalizedName = "TRAINEE" };
          builder.Entity<IdentityRole>().HasData(adminRole, trainerRole, traineeRole);
       }
-      public DbSet<WCSTrainer.Models.Person> Person { get; set; } = default!;
    }
 }

@@ -24,7 +24,7 @@
                      <input asp-for="TrainingOrder.Medium" type="hidden" />
                      <input asp-for="TrainingOrder.Status" type="hidden" />
                      
-                     <input asp-for="TrainingOrder.Description" type="hidden"/>
+                     <input asp-for="TrainingOrder.LessonId" type="hidden"/>
                      <input asp-for="TrainingOrder.TraineeId" type="hidden" />
                      <input asp-for="TrainingOrder.LocationId" type="hidden" />
                      <input asp-for="TrainingOrder.CreatedByUserId" hidden />
@@ -83,6 +83,23 @@
                               <span asp-validation-for="TrainingOrder.BeginDate" class="text-danger"></span>
                            </div>
                            <input type="date" asp-for="TrainingOrder.BeginDate" class="form-control" />
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="form">
+                           <div class="labels">
+                              <p class="control-label">Location</p>
+                              <span asp-validation-for="TrainingOrder.LocationId" class="text-danger"></span>
+                           </div>
+                           <select asp-for="TrainingOrder.LocationId" class="form-control" asp-items="@Model.Locations">
+                           </select>
+                        </div>
+                        <div class="form">
+                           <div class="labels">
+                              <p class="control-label">Learning Medium</p>
+                              <span asp-validation-for="TrainingOrder.Medium" class="text-danger"></span>
+                           </div>
+                           <input asp-for="TrainingOrder.Medium" class="form-control" />
                         </div>
                      </div>
                      <div class="form-group">

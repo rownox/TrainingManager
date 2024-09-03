@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.TrainingOrders {
@@ -20,6 +21,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
       [BindProperty]
       public string? SelectedTrainerGroupString { get; set; }
       public List<int>? SelectedTrainerGroupIds { get; set; }
+      public SelectList Locations { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          await initJson();
@@ -33,7 +35,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return NotFound();
          }
 
+
          TrainingOrder = trainingorder;
+         Locations = new SelectList(await context.Locations.ToListAsync(), "Id", "Name");
 
          return Page();
       }

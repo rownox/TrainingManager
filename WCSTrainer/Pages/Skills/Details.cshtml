@@ -20,10 +20,10 @@
                   <p class="info">@Model.Skill.Description</p>
                </div>
                <div class="text-group">
-                  <p class="title">Included Training Orders</p>
+                  <p class="title">Included Lessons</p>
                   <div class="info">
-                     @foreach (var order in Model.Skill.TrainingOrders) {
-                        <div class="pill">Training Order #@order.Id</div>
+                     @foreach (var lesson in Model.Skill.Lessons) {
+                        <div class="pill">@lesson.Name</div>
                      }
                   </div>
                </div>

@@ -22,7 +22,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
       [BindProperty]
       public IList<Employee> Employees { get; set; }
       public IList<TrainerGroup> TrainerGroups { get; set; }
-      public SelectList Locations { get; set; }
+      
 
       public async Task<IActionResult> OnGetAsync() {
          Employees = await _context.Employees.ToListAsync();
@@ -30,8 +30,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
          ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
-
-         Locations = new SelectList(await _context.Locations.ToListAsync(), "Id", "Name");
 
          return Page();
       }
