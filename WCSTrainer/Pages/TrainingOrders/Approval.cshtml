@@ -21,12 +21,11 @@
                      <input asp-for="TrainingOrder.Id" hidden />
 
                      <input asp-for="TrainingOrder.CreateDate" type="hidden" />
-                     <input asp-for="TrainingOrder.Medium" type="hidden" />
                      <input asp-for="TrainingOrder.Status" type="hidden" />
-                     
-                     <input asp-for="TrainingOrder.LessonId" type="hidden"/>
-                     <input asp-for="TrainingOrder.TraineeId" type="hidden" />
-                     <input asp-for="TrainingOrder.LocationId" type="hidden" />
+
+                     <input asp-for="TrainingOrder.LessonId" hidden />
+                     <input asp-for="TrainingOrder.TraineeId" hidden />
+                     <input asp-for="TrainingOrder.ParentSkillId" hidden />
                      <input asp-for="TrainingOrder.CreatedByUserId" hidden />
 
                      <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />

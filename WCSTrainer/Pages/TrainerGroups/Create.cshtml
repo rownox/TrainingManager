@@ -17,17 +17,14 @@
       <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
       <div class="properties">
          <div class="user-form">
-
             <p class="title">Create New Trainer Group</p>
             <p class="description">Fill out each required field.</p>
-
             @if (SignInManager.IsSignedIn(User)) {
                var user = await UserManager.GetUserAsync(User);
                if (user != null) {
                   <div class="field-container">
                      <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
                         <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
                         <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
                         <div class="form-group">
@@ -43,18 +40,19 @@
                            <div class="form">
                               <div class="labels">
                                  <p class="control-label">Trainers</p>
-                                 <span asp-validation-for="@Model.SelectedEmployeeIds" class="text-danger"></span>
+                                 <span asp-validation-for="@Model.SelectedEmployeeIdString" class="text-danger"></span>
                               </div>
                               <div class="selections">
-                                 <ul id="trainer" class="pill-container"></ul>
+                                 <ul id="trainerList" class="pill-container">
+
+                                 </ul>
                                  <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')">
                                     <p>Select Trainers</p>
                                  </div>
-                                 <input id="trainerInput" asp-for="@Model.SelectedEmployeeIds" hidden />
+                                 <input id="trainersInput" asp-for="@Model.SelectedEmployeeIdString" type="hidden" />
                               </div>
                            </div>
                         </div>
-                        
                         <div class="form-group">
                            <div class="form">
                               <div class="btn-container">

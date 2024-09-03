@@ -18,9 +18,11 @@
                </div>
                <div class="text-group">
                   <p class="title">Members</p>
-                  @foreach (var member in Model.TrainerGroup.Trainers) {
-                     <p class="info">@member.FirstName @member.LastName, </p>
-                  }
+                  <div class="info">
+                     @foreach (var member in Model.TrainerGroup.Trainers) {
+                        <div class="pill">@member.FirstName @member.LastName</div>
+                     }
+                  </div>
                </div>
             </div>
             <div class="btn-container">

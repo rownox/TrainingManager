@@ -19,11 +19,10 @@ namespace WCSTrainer.Data {
       protected override void OnModelCreating(ModelBuilder builder) {
          base.OnModelCreating(builder);
 
-         // Employee
          builder.Entity<Employee>()
-             .HasOne(e => e.UserAccount)
-             .WithOne(u => u.Employee)
-             .HasForeignKey<UserAccount>(u => u.EmployeeId);
+                .HasOne(u => u.UserAccount)
+                .WithOne(e => e.Employee)
+                .HasForeignKey<Employee>(e => e.UserAccountId);
 
          builder.Entity<Employee>()
              .HasMany(e => e.Skills)

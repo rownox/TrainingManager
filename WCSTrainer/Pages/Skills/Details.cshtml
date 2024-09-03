@@ -27,6 +27,14 @@
                      }
                   </div>
                </div>
+               <div class="text-group">
+                  <p class="title">Assigned To</p>
+                  <div class="info">
+                     @foreach (var person in Model.Skill.Employees) {
+                        <div class="pill">@person.FirstName @person.LastName</div>
+                     }
+                  </div>
+               </div>
             </div>
             <br />
             <div class="btn-container">

@@ -37,7 +37,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
 
          TrainingOrder = trainingorder;
-         Locations = new SelectList(await context.Locations.ToListAsync(), "Id", "Name");
 
          return Page();
       }
@@ -99,6 +98,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
          TrainerGroups = await context.TrainerGroups.ToListAsync();
          ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer
            .Serialize(TrainerGroups ?? new List<TrainerGroup>());
+
+         Locations = new SelectList(await context.Locations.ToListAsync(), "Id", "Name");
       }
    }
 }

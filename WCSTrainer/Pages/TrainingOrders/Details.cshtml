@@ -12,6 +12,7 @@
          <div class="user-form">
             <div id="contentToPrint" class="print-block">
                <p class="title">Training Order #@Model.TrainingOrder.Id</p>
+               <p class="black-pill">@Model.TrainingOrder.Status</p>
                <div class="field-container">
                   <component type="typeof(TrainingDetails)" 
                      render-mode="WebAssemblyPrerendered" 

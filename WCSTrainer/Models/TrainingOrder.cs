@@ -9,13 +9,13 @@
    public int Duration { get; set; }
    public string? Priority { get; set; }
    public string ClosingNotes { get; set; } = string.Empty;
-   public int ParentSkillId { get; set; }
+   public int? ParentSkillId { get; set; }
    public Skill? ParentSkill { get; set; }
    public int LessonId { get; set; }
    public Lesson? Lesson { get; set; }
    public int TraineeId { get; set; }
    public Employee? Trainee { get; set; }
-   public int LocationId { get; set; }
+   public int? LocationId { get; set; }
    public Location? Location { get; set; }
    public int? VerificationId { get; set; }
    public Verification? Verification { get; set; }

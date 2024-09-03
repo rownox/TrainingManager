@@ -9,36 +9,35 @@
    <div class="title-row">
       <p class="title">Created - @TrainingOrder.CreateDate</p>
    </div>
-   if (TrainingOrder.Trainee != null) {
-      <div class="text-group">
-         <p class="title">Trainee</p>
-         <div class="info">
-            <div class="pill trainee">@TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName</div>
-         </div>
-      </div>
-   }
-   if (TrainingOrder.Lesson != null) {
-      <div class="text-group">
-         <p class="title">Lesson</p>
-         <div class="info">
-            <div class="pill green">@TrainingOrder.Lesson.Name</div>
-         </div>
-      </div>
-   }
-   if (TrainingOrder.Location != null) {
-      <div class="text-group">
-         <p class="title">Location</p>
-         <p class="info">@TrainingOrder.Location.Name</p>
-      </div>
-   }
    <div class="text-group">
-      <p class="title">Learning Medium</p>
-      <p class="info">@TrainingOrder.Medium</p>
+      <p class="title">Trainee</p>
+      <div class="info">
+         @if (TrainingOrder.Trainee != null) {
+            <div class="pill trainee">@TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName</div>
+         }
+      </div>
    </div>
-   @if (TrainingOrder.CreatedByUserId != null) {
-      <div class="text-group">
-         <p class="title">Created By</p>
+   <div class="text-group">
+      <p class="title">Lesson</p>
+      <div class="info">
+         @if (TrainingOrder.Lesson != null) {
+            <div class="pill green">@TrainingOrder.Lesson.Name</div>
+         }
+      </div>
+   </div>
+   <div class="text-group">
+      <p class="title">Created By</p>
+      @if (TrainingOrder.CreatedByUserId != null) {
          <p class="info">@CreatedByUserName</p>
+      }
+   </div>
+   
+   if (TrainingOrder.ParentSkill != null) {
+      <div class="text-group">
+         <p class="title">Parent Skill</p>
+         <div class="info">
+            <div class="pill yellow">@TrainingOrder.ParentSkill.Name</div>
+         </div>
       </div>
    }
    
@@ -66,19 +65,20 @@
          <p class="title">Training Hours Needed</p>
          <p class="info">@TrainingOrder.Duration Hours</p>
       </div>
+      if (TrainingOrder.Location != null) {
+         <div class="text-group">
+            <p class="title">Location</p>
+            <p class="info">@TrainingOrder.Location.Name</p>
+         </div>
+      }
+      <div class="text-group">
+         <p class="title">Learning Medium</p>
+         <p class="info">@TrainingOrder.Medium</p>
+      </div>
       <div class="text-group">
          <p class="title">Begin Date</p>
          <p class="info">@TrainingOrder.BeginDate</p>
       </div>
-
-      if (TrainingOrder.ParentSkill != null) {
-         <div class="text-group">
-            <p class="title">Parent Skill</p>
-            <div class="info">
-               <div class="pill yellow">@TrainingOrder.ParentSkill.Name</div>
-            </div>
-         </div>
-      }
    }
    @if (!TrainingOrder.Status.Equals("Awaiting Approval") && !TrainingOrder.Status.Equals("Active")) {
       <div class="title-row">
