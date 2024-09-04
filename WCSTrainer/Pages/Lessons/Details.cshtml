@@ -10,15 +10,15 @@
       <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
       <div class="properties">
          <div class="user-form">
-            <p class="title">Employee #@Model.Lesson.Id</p>
+            <p class="title">Lesson #@Model.Lesson.Id</p>
             <div class="field-container">
                <div class="text-group">
                   <p class="title">Name</p>
                   <p class="info">@Model.Lesson.Name</p>
                </div>
                <div class="text-group">
-                  <p class="title">Name</p>
-                  <p class="info">@Model.Lesson.Description</p>
+                  <p class="title">Description</p>
+                  <pre class="info">@Model.Lesson.Description</pre>
                </div>
             </div>
             <div class="btn-container">

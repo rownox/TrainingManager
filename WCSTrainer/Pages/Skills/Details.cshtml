@@ -23,7 +23,7 @@
                   <p class="title">Included Lessons</p>
                   <div class="info">
                      @foreach (var lesson in Model.Skill.Lessons) {
-                        <div class="pill">@lesson.Name</div>
+                        <a href="/Lessons/Details?id=@lesson.Id" class="pill">@lesson.Name</a>
                      }
                   </div>
                </div>
@@ -31,7 +31,7 @@
                   <p class="title">Assigned To</p>
                   <div class="info">
                      @foreach (var person in Model.Skill.Employees) {
-                        <div class="pill">@person.FirstName @person.LastName</div>
+                        <a href="/Accounts/Details?id=@person.UserAccountId" class="pill">@person.FirstName @person.LastName</a>
                      }
                   </div>
                </div>

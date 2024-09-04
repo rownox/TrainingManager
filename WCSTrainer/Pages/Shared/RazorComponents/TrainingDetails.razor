@@ -13,7 +13,9 @@
       <p class="title">Trainee</p>
       <div class="info">
          @if (TrainingOrder.Trainee != null) {
-            <div class="pill trainee">@TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName</div>
+            <a href="/Accounts/Details?id=@TrainingOrder.Trainee.UserAccountId" class="pill trainee">
+               @TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName
+            </a>
          }
       </div>
    </div>
@@ -21,24 +23,29 @@
       <p class="title">Lesson</p>
       <div class="info">
          @if (TrainingOrder.Lesson != null) {
-            <div class="pill green">@TrainingOrder.Lesson.Name</div>
+            <a href="/Lessons/Details?id=@TrainingOrder.Lesson.Id" class="pill">
+               @TrainingOrder.Lesson.Name
+            </a>
          }
       </div>
    </div>
+   if (TrainingOrder.ParentSkill != null) {
+      <div class="text-group">
+         <p class="title">Parent Skill</p>
+         <div class="info">
+            <a href="/Skills/Details?id=@TrainingOrder.ParentSkill.Id" class="pill yellow">
+               @TrainingOrder.ParentSkill.Name
+            </a>
+         </div>
+      </div>
+   }
    <div class="text-group">
       <p class="title">Created By</p>
       @if (TrainingOrder.CreatedByUserId != null) {
          <p class="info">@CreatedByUserName</p>
       }
    </div>
-   if (TrainingOrder.ParentSkill != null) {
-      <div class="text-group">
-         <p class="title">Parent Skill</p>
-         <div class="info">
-            <div class="pill yellow">@TrainingOrder.ParentSkill.Name</div>
-         </div>
-      </div>
-   }
+   
    @if (!TrainingOrder.Status.Equals("Awaiting Approval")) {
       <div class="title-row">
          <p class="title">Approved - @TrainingOrder.ApprovalDate</p>
@@ -47,10 +54,10 @@
          <p class="title">Trainers</p>
          <div class="info">
             @foreach (var trainer in TrainingOrder.Trainers) {
-               <div class="pill">@trainer.FirstName @trainer.LastName</div>
+               <a href="/Accounts/Details?id=@trainer.UserAccountId" class="pill">@trainer.FirstName @trainer.LastName</a>
             }
             @foreach (var trainer in TrainingOrder.TrainerGroups) {
-               <div class="pill group">@trainer.Name</div>
+               <a class="pill group">@trainer.Name</a>
             }
          </div>
       </div>

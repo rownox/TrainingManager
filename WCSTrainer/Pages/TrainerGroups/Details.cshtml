@@ -10,7 +10,7 @@
       <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
       <div class="properties">
          <div class="user-form">
-            <p class="title">Employee #@Model.TrainerGroup.Id</p>
+            <p class="title">Trainer Group #@Model.TrainerGroup.Id</p>
             <div class="field-container">
                <div class="text-group">
                   <p class="title">Name</p>
@@ -20,7 +20,7 @@
                   <p class="title">Members</p>
                   <div class="info">
                      @foreach (var member in Model.TrainerGroup.Trainers) {
-                        <div class="pill">@member.FirstName @member.LastName</div>
+                        <a href="/Accounts/Details?id=@member.UserAccountId" class="pill">@member.FirstName @member.LastName</a>
                      }
                   </div>
                </div>

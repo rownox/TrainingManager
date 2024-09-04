@@ -51,7 +51,7 @@
                         <p class="title">Skills</p>
                         <div class="info">
                            @foreach (var skill in Model.Employee.Skills) {
-                              <p class="pill yellow">@skill.Name</p>
+                              <a href="/Skills/Details?id=@skill.Id" class="pill yellow">@skill.Name</a>
                            }
                         </div>
                      </div>
@@ -59,7 +59,7 @@
                         <p class="title">Assigned Learning</p>
                         <div class="info">
                            @foreach (var order in Model.Employee.TrainingOrdersAsTrainee) {
-                              <div class="pill">Training Order #@order.Id</div>
+                              <a href="/TrainingOrders/Details?id=@order.Id" class="pill">Training Order #@order.Id</a>
                            }
                         </div>
                      </div>
@@ -67,7 +67,7 @@
                         <p class="title">Assigned Teaching</p>
                         <div class="info">
                            @foreach (var order in Model.Employee.TrainingOrdersAsTrainer) {
-                              <div class="pill">Training Order #@order.Id</div>
+                              <a href="/TrainingOrders/Details?id=@order.Id" class="pill">Training Order #@order.Id</a>
                            }
                         </div>
                      </div>

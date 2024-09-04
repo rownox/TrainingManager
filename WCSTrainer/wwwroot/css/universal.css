@@ -59,6 +59,7 @@ button {
 	user-select: none;
 	font-weight: 500;
 	font-size: 15px;
+	text-decoration: none;
 }
 
 pre {
@@ -150,6 +151,7 @@ pre {
 	.pill {
 		padding: 0 !important;
 		font-weight: normal !important;
+		border: none !important;
 	}
 
 		.pill:after {
