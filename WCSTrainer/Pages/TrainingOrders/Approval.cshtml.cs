@@ -48,6 +48,13 @@ namespace WCSTrainer.Pages.TrainingOrders {
             await initJson();
             return Page();
          }
+
+         if (TrainingOrder.BeginDate == null) {
+            ModelState.AddModelError("BeginDate", "Please select a beginning date.");
+            await initJson();
+            return Page();
+         }
+
          if (!ModelState.IsValid) {
             await initJson();
             return Page();

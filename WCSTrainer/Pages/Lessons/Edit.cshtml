@@ -15,7 +15,6 @@
                <form method="post">
                   <div asp-validation-summary="All" class="text-danger"></div>
                   <input hidden asp-for="Lesson.Id" />
-
                   <div class="form-group">
                      <div class="form">
                         <div class="labels">
@@ -31,7 +30,9 @@
                            <label asp-for="Lesson.Description" class="control-label"></label>
                            <span asp-validation-for="Lesson.Description" class="text-danger"></span>
                         </div>
-                        <textarea rows="5" asp-for="Lesson.Description" placeholder="Describe the steps needed to complete this lesson.">
+                        <textarea rows="5" asp-for="Lesson.Description" 
+                        placeholder="Describe the steps needed to complete this lesson.">
+
                         </textarea>
                      </div>
                   </div>

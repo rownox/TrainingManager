@@ -150,6 +150,10 @@
 	border: 1px solid white;
 }
 
+.text-danger {
+	color: var(--red1);
+}
+
 /*
 	.pill.group, .pill.groups {
 		background-color: var(--blue2);
