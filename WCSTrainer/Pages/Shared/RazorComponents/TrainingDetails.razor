@@ -31,7 +31,6 @@
          <p class="info">@CreatedByUserName</p>
       }
    </div>
-   
    if (TrainingOrder.ParentSkill != null) {
       <div class="text-group">
          <p class="title">Parent Skill</p>
@@ -40,7 +39,6 @@
          </div>
       </div>
    }
-   
    @if (!TrainingOrder.Status.Equals("Awaiting Approval")) {
       <div class="title-row">
          <p class="title">Approved - @TrainingOrder.ApprovalDate</p>

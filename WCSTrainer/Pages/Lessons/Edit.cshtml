@@ -5,35 +5,45 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div class="panel">
+   <div class="body">
+      <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
+      <div class="properties">
+         <div class="user-form">
+            <p class="title">Skill #@Html.DisplayFor(model => model.Lesson.Id)</p>
+            <div class="field-container">
+               <form method="post">
+                  <div asp-validation-summary="All" class="text-danger"></div>
+                  <input hidden asp-for="Lesson.Id" />
 
-<h4>Lesson</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Lesson.Id" />
-            <div class="form-group">
-                <label asp-for="Lesson.Name" class="control-label"></label>
-                <input asp-for="Lesson.Name" class="form-control" />
-                <span asp-validation-for="Lesson.Name" class="text-danger"></span>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <label asp-for="Lesson.Name" class="control-label"></label>
+                           <span asp-validation-for="Lesson.Name" class="text-danger"></span>
+                        </div>
+                        <input asp-for="Lesson.Name" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <label asp-for="Lesson.Description" class="control-label"></label>
+                           <span asp-validation-for="Lesson.Description" class="text-danger"></span>
+                        </div>
+                        <input asp-for="Lesson.Description" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <input type="submit" value="Save" class="btn bg-btn btnGreen" />
+                  </div>
+               </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Lesson.Description" class="control-label"></label>
-                <input asp-for="Lesson.Description" class="form-control" />
-                <span asp-validation-for="Lesson.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+         </div>
+      </div>
+   </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
