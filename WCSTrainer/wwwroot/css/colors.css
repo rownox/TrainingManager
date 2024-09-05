@@ -143,12 +143,12 @@
 .pill {
 	border: 1px solid var(--gray1);
 	color: var(--textMain);
-	background: linear-gradient(20deg, var(--mainTheme), var(--blue2));
+	background: linear-gradient(20deg, #291782, #7d64ff);
 }
 
-.pill:hover {
-	border: 1px solid white;
-}
+	.pill:hover {
+		border: 1px solid #9063ff;
+	}
 
 .text-danger {
 	color: var(--red1);

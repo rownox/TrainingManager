@@ -8,7 +8,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
    [Authorize(Roles = "admin, trainer")]
    public class ApprovalModel(Data.WCSTrainerContext context) : PageModel {
-
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;
       [BindProperty]
@@ -34,7 +33,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
          if (trainingorder == null) {
             return NotFound();
          }
-
 
          TrainingOrder = trainingorder;
 
