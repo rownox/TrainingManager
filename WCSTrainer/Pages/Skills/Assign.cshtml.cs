@@ -14,34 +14,25 @@ namespace WCSTrainer.Pages.Skills {
 
       [BindProperty]
       public Skill Skill { get; set; } = default!;
-      public IList<Employee> Employees { get; set; } = default!;
-      public IList<TrainerGroup> TrainerGroups { get; set; } = default!;
-
       [BindProperty]
       public int SelectedTraineeId { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
-         Employees = await context.Employees.ToListAsync();
-         ViewData["EmployeesJson"] = JsonSerializer
-              .Serialize(Employees ?? new List<Employee>());
-         TrainerGroups = await context.TrainerGroups.ToListAsync();
-         ViewData["TrainerGroupsJson"] = JsonSerializer
-              .Serialize(TrainerGroups ?? new List<TrainerGroup>());
-
          if (id == null) {
             return NotFound();
          }
 
-         var tempSkill = await context.Skills
+         var skill = await context.Skills
              .Include(s => s.Employees)
              .Include(s => s.Lessons)
              .FirstOrDefaultAsync(m => m.Id == id);
 
-         if (tempSkill == null) {
+         if (skill == null) {
             return NotFound();
-         } else {
-            Skill = tempSkill;
          }
+
+         Skill = skill;
+         await LoadRelatedData();
 
          return Page();
       }
@@ -128,10 +119,16 @@ namespace WCSTrainer.Pages.Skills {
       }
 
       private async Task LoadRelatedData() {
-         Employees = await context.Employees.ToListAsync();
-         TrainerGroups = await context.TrainerGroups.ToListAsync();
-         ViewData["EmployeesJson"] = JsonSerializer.Serialize(Employees);
-         ViewData["TrainerGroupsJson"] = JsonSerializer.Serialize(TrainerGroups);
+         var employees = await context.Employees
+             .Select(e => new { e.Id, e.FirstName, e.LastName, e.Status })
+             .ToListAsync();
+
+         var trainerGroups = await context.TrainerGroups
+             .Select(tg => new { tg.Id, tg.Name })
+             .ToListAsync();
+
+         ViewData["EmployeesJson"] = JsonSerializer.Serialize(employees);
+         ViewData["TrainerGroupsJson"] = JsonSerializer.Serialize(trainerGroups);
       }
 
       private JsonSerializerOptions GetJsonSerializerOptions() {
@@ -140,6 +137,5 @@ namespace WCSTrainer.Pages.Skills {
             WriteIndented = true
          };
       }
-
    }
 }

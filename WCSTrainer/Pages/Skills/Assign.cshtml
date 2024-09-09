@@ -32,7 +32,7 @@
 
                         <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
                         <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
-@*                                              
+@*
                         <div class="form-group">
                            <div class="form">
                               <div class="labels">
@@ -125,13 +125,11 @@
    var groupClasses = "pill group"
 
    document.addEventListener('DOMContentLoaded', function () {
-
       function safeAddEventListener(element, event, handler) {
          if (element) {
             element.addEventListener(event, handler);
          }
       }
-
       safeAddEventListener(overlay, "click", closeComponent);
 
       safeAddEventListener(trainee, "click", function (event) {
