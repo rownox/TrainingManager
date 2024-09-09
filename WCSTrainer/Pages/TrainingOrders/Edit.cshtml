@@ -39,10 +39,14 @@
                               <div class="selections">
                                  <ul id="trainerList" class="pill-container">
                                     @foreach (var trainer in Model.TrainingOrder.Trainers) {
-                                       <li draggable="true" class="pill person" value="@trainer.Id">@trainer.FirstName @trainer.LastName</li>
+                                       <li draggable="true" class="pill person" value="@trainer.Id">
+                                          @trainer.FirstName @trainer.LastName
+                                       </li>
                                     }
                                  </ul>
-                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select</p></div>
+                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')">
+                                    <p>Select</p>
+                                 </div>
                               </div>
                            </div>
                         </div>
@@ -55,7 +59,9 @@
                               <div class="selections">
                                  <ul id="groupList" class="pill-container">
                                     @foreach (var trainerGroup in Model.TrainingOrder.TrainerGroups) {
-                                       <li draggable="true" class="pill group" value="@trainerGroup.Id">@trainerGroup.Name</li>
+                                       <li draggable="true" class="pill group" value="@trainerGroup.Id">
+                                          @trainerGroup.Name
+                                       </li>
                                     }
                                  </ul>
                                  <div class="btn bg-btn btnWhite" onclick="openComponent('groups')">Select</div>
@@ -126,7 +132,7 @@
                                  <p class="control-label">Begin Date</p>
                                  <span asp-validation-for="TrainingOrder.BeginDate" class="text-danger"></span>
                               </div>
-                              <input type="date" asp-for="TrainingOrder.BeginDate" hidden />
+                              <input type="date" asp-for="TrainingOrder.BeginDate" class="form-control" />
                            </div>
                         </div>
                      }

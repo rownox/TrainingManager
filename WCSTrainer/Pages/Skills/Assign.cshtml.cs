@@ -10,36 +10,21 @@ using System.Net.NetworkInformation;
 using System.Security.Claims;
 
 namespace WCSTrainer.Pages.Skills {
-   public class AssignModel : PageModel {
-
-      private readonly WCSTrainerContext _context;
-
-      public AssignModel(WCSTrainerContext context) {
-         _context = context;
-      }
+   public class AssignModel(WCSTrainerContext context) : PageModel {
 
       [BindProperty]
       public Skill Skill { get; set; } = default!;
-      [BindProperty]
-      public IList<Employee> Employees { get; set; }
-      [BindProperty]
-      public IList<TrainerGroup> TrainerGroups { get; set; }
-
-      //[BindProperty]
-      //public string? SelectedTrainerString { get; set; }
-      //public List<int> SelectedTrainerIds { get; set; } = new List<int>();
-      //[BindProperty]
-      //public string? SelectedTrainerGroupString { get; set; }
-      //public List<int> SelectedTrainerGroupIds { get; set; } = new List<int>();
+      public IList<Employee> Employees { get; set; } = default!;
+      public IList<TrainerGroup> TrainerGroups { get; set; } = default!;
 
       [BindProperty]
       public int SelectedTraineeId { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
-         Employees = await _context.Employees.ToListAsync();
+         Employees = await context.Employees.ToListAsync();
          ViewData["EmployeesJson"] = JsonSerializer
               .Serialize(Employees ?? new List<Employee>());
-         TrainerGroups = await _context.TrainerGroups.ToListAsync();
+         TrainerGroups = await context.TrainerGroups.ToListAsync();
          ViewData["TrainerGroupsJson"] = JsonSerializer
               .Serialize(TrainerGroups ?? new List<TrainerGroup>());
 
@@ -47,7 +32,7 @@ namespace WCSTrainer.Pages.Skills {
             return NotFound();
          }
 
-         var tempSkill = await _context.Skills
+         var tempSkill = await context.Skills
              .Include(s => s.Employees)
              .Include(s => s.Lessons)
              .FirstOrDefaultAsync(m => m.Id == id);
@@ -67,7 +52,7 @@ namespace WCSTrainer.Pages.Skills {
             return Page();
          }
 
-         var trainee = await _context.Employees
+         var trainee = await context.Employees
              .Include(t => t.TrainingOrdersAsTrainee)
              .Include(t => t.Skills)
              .FirstOrDefaultAsync(e => e.Id == SelectedTraineeId);
@@ -78,8 +63,9 @@ namespace WCSTrainer.Pages.Skills {
             return Page();
          }
 
-         var skill = await _context.Skills
+         var skill = await context.Skills
              .Include(s => s.Lessons)
+             .Include(s => s.Employees)
              .FirstOrDefaultAsync(s => s.Id == Skill.Id);
 
          if (skill == null) {
@@ -88,7 +74,13 @@ namespace WCSTrainer.Pages.Skills {
             return Page();
          }
 
-         using var transaction = await _context.Database.BeginTransactionAsync();
+         if (skill.Employees.Contains(trainee)) {
+            ModelState.AddModelError("", "The skill was already assigned to this employee.");
+            await LoadRelatedData();
+            return Page();
+         }
+
+         using var transaction = await context.Database.BeginTransactionAsync();
 
          try {
             if (!trainee.Skills.Any(s => s.Id == skill.Id)) {
@@ -110,17 +102,17 @@ namespace WCSTrainer.Pages.Skills {
                   CreatedByUserId = userId
                };
 
-               _context.TrainingOrders.Add(newOrder);
+               context.TrainingOrders.Add(newOrder);
                trainee.TrainingOrdersAsTrainee.Add(newOrder);
             }
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             await transaction.CommitAsync();
 
             return RedirectToPage("./Index");
          } catch (DbUpdateConcurrencyException) {
             await transaction.RollbackAsync();
-            if (!await _context.Employees.AnyAsync(e => e.Id == trainee.Id)) {
+            if (!await context.Employees.AnyAsync(e => e.Id == trainee.Id)) {
                return NotFound();
             } else {
                ModelState.AddModelError("", "Concurrency error occurred. Please try again.");
@@ -136,27 +128,11 @@ namespace WCSTrainer.Pages.Skills {
       }
 
       private async Task LoadRelatedData() {
-         Employees = await _context.Employees.ToListAsync();
-         TrainerGroups = await _context.TrainerGroups.ToListAsync();
+         Employees = await context.Employees.ToListAsync();
+         TrainerGroups = await context.TrainerGroups.ToListAsync();
          ViewData["EmployeesJson"] = JsonSerializer.Serialize(Employees);
          ViewData["TrainerGroupsJson"] = JsonSerializer.Serialize(TrainerGroups);
       }
-
-      //private async Task<List<TrainerGroup>> GetSelectedTrainerGroups() {
-      //   if (string.IsNullOrEmpty(SelectedTrainerGroupString))
-      //      return new List<TrainerGroup>();
-
-      //   var ids = SelectedTrainerGroupString.Split(',').Select(s => int.TryParse(s.Trim(), out int id) ? id : -1).Where(id => id != -1).ToList();
-      //   return await _context.TrainerGroups.Where(tg => ids.Contains(tg.Id)).ToListAsync();
-      //}
-
-      //private async Task<List<Employee>> GetSelectedTrainers() {
-      //   if (string.IsNullOrEmpty(SelectedTrainerString))
-      //      return new List<Employee>();
-
-      //   var ids = SelectedTrainerString.Split(',').Select(s => int.TryParse(s.Trim(), out int id) ? id : -1).Where(id => id != -1).ToList();
-      //   return await _context.Employees.Where(e => ids.Contains(e.Id)).ToListAsync();
-      //}
 
       private JsonSerializerOptions GetJsonSerializerOptions() {
          return new JsonSerializerOptions {

@@ -23,40 +23,45 @@
                   var user = await UserManager.GetUserAsync(User);
                   if (user != null) {
                      <form method="post">
+
                         <div asp-validation-summary="All" class="text-danger"></div>
+
                         <input hidden asp-for="Skill.Id" />
                         <input hidden asp-for="Skill.Name" />
                         <input hidden asp-for="Skill.Description" />
+
                         <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
                         <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
-                        @*                   <div class="form-group">
-                  <div class="form">
-                  <div class="labels">
-                  <p class="control-label">Trainers</p>
-                  <span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
-                  </div>
-                  <div class="selections">
-                  <ul id="trainerList" class="pill-container">
-                  </ul>
-                  <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select</p></div>
-                  <input id="trainersInput" asp-for="@Model.SelectedTrainerString" hidden />
-                  </div>
-                  </div>
-                  </div>
-                  <div class="form-group">
-                  <div class="form">
-                  <div class="labels">
-                  <p class="control-label">Trainer Groups</p>
-                  <span asp-validation-for="@Model.SelectedTrainerGroupString" class="text-danger"></span>
-                  </div>
-                  <div class="selections">
-                  <ul id="groupList" class="pill-container">
-                  </ul>
-                  <div class="btn bg-btn btnWhite" onclick="openComponent('groups')">Select</div>
-                  <input id="groupsInput" asp-for="@Model.SelectedTrainerGroupString" hidden />
-                  </div>
-                  </div>
-                  </div> *@
+@*                                              
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Trainers</p>
+                                 <span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
+                              </div>
+                              <div class="selections">
+                                 <ul id="trainerList" class="pill-container">
+                                 </ul>
+                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select</p></div>
+                                 <input id="trainersInput" asp-for="@Model.SelectedTrainerString" hidden />
+                              </div>
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Trainer Groups</p>
+                                 <span asp-validation-for="@Model.SelectedTrainerGroupString" class="text-danger"></span>
+                              </div>
+                              <div class="selections">
+                                 <ul id="groupList" class="pill-container">
+                                 </ul>
+                                 <div class="btn bg-btn btnWhite" onclick="openComponent('groups')">Select</div>
+                                 <input id="groupsInput" asp-for="@Model.SelectedTrainerGroupString" hidden />
+                              </div>
+                           </div>
+                        </div> 
+*@
                         <div class="form-group">
                            <div class="form">
                               <div class="labels">
