@@ -1,0 +1,68 @@
+﻿@model List<Employee>
+
+
+<div class="people-container">
+   <div class="search">
+      <input type="search" placeholder="Search By Name" />
+   </div>
+
+   <ul class="item-container">
+      @foreach (var item in Model) {
+         <li class="item">
+            <div class="photo">
+               <div class="frame"></div>
+            </div>
+            <div class="info">
+               <p>@item.FirstName @item.LastName</p>
+               <div class="sub">
+                  <p>Status: </p>
+                  <p class="@(item.Status == "Trainer" ? "highlight" : "")">@item.Status</p>
+               </div>
+            </div>
+            <div class="selector">
+               <img src="~/images/add.svg" onclick="addItemToPartial('@item.Id', '@item.FirstName', '@item.LastName')" />
+            </div>
+         </li>
+      }
+   </ul>
+
+   <p>Selected:</p>
+
+   <div class="list-container">
+      <div class="selected-list">
+         <ul id="partialTempList"></ul>
+      </div>
+   </div>
+
+   <button class="btn btnWhite nbg-btn" onclick="confirmSelectionInPartial()">
+      Add Trainer
+   </button>
+</div>
+
+<div class="details">
+   <div class="top">
+      <div class="{displayMode !== 'groups' ? 'person-info' : 'group-info'} info-container">
+         <p class="title">{selected.name}</p>
+         <div class="info">
+            <p class="one">{selected.detailLabel}</p>
+            <p class="two">{selected.detailValue}</p>
+         </div>
+         <div class="info">
+            <p class="one">Affiliated groups:</p>
+            <p class="two">{selected.affGroup}</p>
+         </div>
+         <div class="info">
+            <p class="one">Assigned Trainings:</p>
+         </div>
+         <div class="list">
+            <p class="item">Placeholder</p>
+         </div>
+         <div class="info">
+            <p class="one">Total Assigned Hours:</p>
+            <p class="two">{selected.hours}</p>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script src="~/js/people.js"></script>

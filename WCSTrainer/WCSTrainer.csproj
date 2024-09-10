@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\images\1N.png" />
+    <None Include="wwwroot\js\people.js" />
     <None Include="wwwroot\svelteApp\.gitignore" />
     <None Include="wwwroot\svelteApp\public\build\bundle.css" />
     <None Include="wwwroot\svelteApp\public\build\bundle.js" />

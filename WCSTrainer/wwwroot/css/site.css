@@ -831,14 +831,23 @@ nav {
 		}
 
 			.people-component .people-container .list-container .selected-list {
-				justify-content: flex-start;
-				align-items: flex-start;
-				height: fit-content;
-				flex-wrap: wrap;
-				display: flex;
 				width: 100%;
-				gap: 5px;
+				height: 100%;
 			}
+
+				.people-component .people-container .list-container .selected-list ul {
+					display: flex;
+					height: 100%;
+					flex-direction: row;
+					gap: 5px;
+					align-items: flex-start;
+					justify-content: flex-start;
+					flex-wrap: wrap;
+				}
+
+					.people-component .people-container .list-container .selected-list ul li {
+						
+					}
 
 				.people-component .people-container .list-container .selected-list .selection {
 				}
@@ -873,7 +882,7 @@ nav {
 				width: 100%;
 			}
 
-		.people-component .people-container ul {
+		.people-component .people-container .item-container {
 			border-bottom: 1px solid var(--gray4);
 			flex-direction: column;
 			scrollbar-width: none;
@@ -884,7 +893,7 @@ nav {
 			height: 50%;
 		}
 
-			.people-component .people-container ul li {
+			.people-component .people-container .item {
 				border-bottom: 1px solid var(--gray3);
 				justify-content: space-between;
 				align-items: center;
@@ -895,7 +904,7 @@ nav {
 				color: var(--textMain);
 			}
 
-				.people-component .people-container ul li .photo {
+				.people-component .people-container .item .photo {
 					justify-content: center;
 					align-items: center;
 					min-width: 40px;
@@ -903,7 +912,7 @@ nav {
 					height: 100%;
 				}
 
-					.people-component .people-container ul li .photo .frame {
+					.people-component .people-container .item .photo .frame {
 						background-color: var(--gray3);
 						border: 1px solid var(--gray4);
 						border-radius: 50%;
@@ -913,7 +922,7 @@ nav {
 						width: 27px;
 					}
 
-				.people-component .people-container ul li .info {
+				.people-component .people-container .item .info {
 					justify-content: center;
 					flex-direction: column;
 					padding: 5px 10px;
@@ -921,7 +930,7 @@ nav {
 					flex-grow: 1;
 				}
 
-				.people-component .people-container ul li .selector {
+				.people-component .people-container .item .selector {
 					height: 100%;
 					min-width: 22px;
 					display: flex;
@@ -929,34 +938,34 @@ nav {
 					justify-content: center;
 				}
 
-					.people-component .people-container ul li .selector img {
+					.people-component .people-container .item .selector img {
 						height: 18px;
 						width: 18px;
 						filter: invert(60%);
 					}
 
-						.people-component .people-container ul li .selector img:hover {
+						.people-component .people-container .item .selector img:hover {
 							filter: invert(100%);
 						}
 
-						.people-component .people-container ul li .selector img:active {
+						.people-component .people-container .item .selector img:active {
 							height: 20px;
 							width: 20px;
 						}
 
-				.people-component .people-container ul li:hover {
+				.people-component .people-container .item:hover {
 					background-color: var(--gray3);
 					border-bottom: 1px solid var(--gray4);
 					cursor: pointer;
 				}
 
-				.people-component .people-container ul li .sub {
+				.people-component .people-container .item .sub {
 					color: var(--textSub1);
 					display: flex;
 					gap: 5px;
 				}
 
-			.people-component .people-container ul .selected {
+			.people-component .people-container .item-container .selected {
 				background-color: var(--gray2);
 				color: var(--green1);
 				border-bottom: 1px solid var(--gray4);
