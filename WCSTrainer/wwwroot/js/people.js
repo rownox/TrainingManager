@@ -1,4 +1,10 @@
 var tempSelectedItems = [];
+
+function updateTrainersInput(input, output) {
+   var trainerListItems = Array.from(input.getElementsByTagName("li"));
+   output.value = trainerListItems.map(item => `${item.getAttribute("value")}`).join(", ");
+}
+
 function removeItem(item) {
    if (item.tagName === "LI") {
       item.remove();
@@ -69,6 +75,7 @@ function openComponent(mode) {
 }
 
 function closeComponent() {
+
    var peopleComponent = document.getElementById("people-component");
    var overlay = document.querySelector(".overlay");
    if (peopleComponent) peopleComponent.classList.add("hidden");
