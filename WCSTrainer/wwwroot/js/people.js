@@ -78,7 +78,6 @@ function openComponent(mode) {
 }
 
 function closeComponent() {
-
    var peopleComponent = document.getElementById("people-component");
    var overlay = document.querySelector(".overlay");
    if (peopleComponent) peopleComponent.classList.add("hidden");
