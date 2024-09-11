@@ -56,7 +56,7 @@
                               <div class="selections">
                                  <ul id="groupList" class="pill-container">
                                     @foreach (var trainerGroup in Model.TrainingOrder.TrainerGroups) {
-                                       <li class="pill group removable" value="@trainerGroup.Id">@trainerGroup.Name</li>
+                                       <li class="pill removable" value="@trainerGroup.Id">@trainerGroup.Name</li>
                                     }
                                  </ul>
                                  <div class="btn bg-btn btnWhite" onclick="openComponent('groups')">Select</div>
@@ -74,11 +74,13 @@
                            </div>
                            <div class="selections">
                               <ul id="trainee" class="pill-container">
-                                 @if (Model.TrainingOrder.Trainee != null) {
-                                    <li value="@Model.TrainingOrder.TraineeId" class="pill person trainee removable">
-                                       @Model.TrainingOrder.Trainee.FirstName @Model.TrainingOrder.Trainee.LastName
-                                    </li>
+                                 @{
+                                    var trainee = Model.TrainingOrder.Trainee;
+                                    if (trainee != null) {
+                                       <li value="@Model.TrainingOrder.TraineeId" class="pill removable">@trainee.FirstName @trainee.LastName</li>
+                                    }
                                  }
+                                 
                               </ul>
                               <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select</p></div>
                               <input id="traineeInput" asp-for="TrainingOrder.TraineeId" hidden />
