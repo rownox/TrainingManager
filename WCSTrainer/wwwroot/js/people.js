@@ -1,12 +1,15 @@
 function updateInput(input, output) {
-   var trainerListItems = Array.from(input.getElementsByTagName("li"));
-   output.value = trainerListItems.map(item => `${item.getAttribute("value")}`).join(", ");
+   var inputElement = document.getElementById(input);
+   var outputElement = document.getElementById(output);
+
+   var trainerListItems = Array.from(inputElement.getElementsByTagName("li"));
+   outputElement.value = trainerListItems.map(item => `${item.getAttribute("value")}`).join(", ");
 }
 
 function removeItem(item) {
    if (item.tagName === "LI") {
       item.remove();
-      // updateInput();
+      updateInput("trainerList", "trainersInput");
    }
 }
 
@@ -34,6 +37,7 @@ function addItemToPartial(id, firstName, lastName) {
 
 function confirmSelectionInPartial() {
    var listElement = document.getElementById('partialTempList');
+
    var selectedItems = Array.from(listElement.children).map(function (li) {
       return {
          Id: li.dataset.id,
@@ -48,6 +52,7 @@ function confirmSelectionInPartial() {
 
 function confirmSelectionFromPartial(selectedItems) {
    var listElement = document.getElementById('trainerList');
+
    selectedItems.forEach(function (item) {
       var itemExistsInList = Array.from(listElement.children).some(function (li) {
          return li.textContent === item.firstName + ' ' + item.lastName;
@@ -55,6 +60,7 @@ function confirmSelectionFromPartial(selectedItems) {
 
       if (!itemExistsInList) {
          var li = document.createElement('li');
+
          li.classList.add("pill");
          li.addEventListener("click", function () {
             removeItem(li);
@@ -62,6 +68,8 @@ function confirmSelectionFromPartial(selectedItems) {
          li.value = item.Id;
          li.textContent = item.firstName + ' ' + item.lastName;
          listElement.appendChild(li);
+
+         updateInput("trainerList", "trainersInput");
       }
    });
    closeComponent();
@@ -82,4 +90,7 @@ function closeComponent() {
    var overlay = document.querySelector(".overlay");
    if (peopleComponent) peopleComponent.classList.add("hidden");
    if (overlay) overlay.classList.add("hidden");
+
+   var listElement = document.getElementById('partialTempList');
+   listElement.innerHTML = '';
 }
