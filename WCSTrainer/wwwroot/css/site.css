@@ -26,6 +26,7 @@ nav {
 	}
 
 		nav .nav-container .nav-buttons {
+
 		}
 
 			nav .nav-container .nav-buttons ul {
@@ -156,13 +157,13 @@ nav {
 				}
 
 					.panel .body .side-bar .link-list .btn .icon {
-						height: 25px;
-						width: 25px;
+						height: 22px;
+						width: 22px;
 						filter: invert();
 					}
 
 					.panel .body .side-bar .link-list .btn .text {
-						padding-right: 65px;
+						min-width: 200px;
 					}
 
 					.panel .body .side-bar .link-list .btn:hover {
@@ -254,6 +255,7 @@ nav {
 						}
 
 							.panel .body .properties .user-form .field-container .form-group .form .labels .control-label {
+
 							}
 
 							.panel .body .properties .user-form .field-container .form-group .form .labels .text-danger {
