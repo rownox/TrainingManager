@@ -72,7 +72,7 @@
 
 	.btnWhite:hover {
 		background-color: var(--white2);
-		border-color: black;
+		border-color: var(--white2);
 		transition: background-color 0s;
 	}
 

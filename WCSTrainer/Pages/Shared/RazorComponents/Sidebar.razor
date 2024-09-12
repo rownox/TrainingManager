@@ -5,25 +5,35 @@
 @inject UserManager<UserAccount> UserManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-<div class="side-bar">
-   <div class="link-list">
-      @if (Navigation.Uri.Contains("TrainingOrders")) {
-         <a href="/TrainingOrders" class="selected btn btnMenu">Training Orders</a>
-      } else {
-         <a href="/TrainingOrders" class="btn btnMenu">Training Orders</a>
-      }
+@if (Navigation.Uri.Contains("TrainingOrders")) {
+   <a href="/TrainingOrders" class="selected btn btnMenu">
+      <img class="icon" src="/images/TrainingOrders.svg">
+      <p class="text">Training Orders</p>
+   </a>
+} else {
+   <a href="/TrainingOrders" class="btn btnMenu">
+      <img class="icon" src="/images/TrainingOrders.svg">
+      <p class="text">Training Orders</p>
+   </a>
+}
 
-      @if (isAdmin) {
-         @foreach (var link in links) {
-            if (Navigation.Uri.Contains(link.Item1)) {
-               <a href="/@link.Item1" class="selected btn btnMenu">@link.Item2</a>
-            } else {
-               <a href="/@link.Item1" class="btn btnMenu">@link.Item2</a>
-            }
-         }
+@if (isAdmin) {
+   @foreach (var link in links) {
+      if (Navigation.Uri.Contains(link.Item1)) {
+         var source = "/images/" + link.Item1 + ".svg";
+         <a href="/@link.Item1" class="selected btn btnMenu">
+            <img class="icon" src="@source">
+            <p class="text">@link.Item2</p>
+         </a>
+      } else {
+         var source = "/images/" + link.Item1 + ".svg";
+         <a href="/@link.Item1" class="btn btnMenu">
+            <img class="icon" src="@source">
+            <p class="text">@link.Item2</p>
+         </a>
       }
-   </div>
-</div>
+   }
+}
 
 @code {
    private bool isAdmin = false;

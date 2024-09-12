@@ -2,7 +2,7 @@
 	justify-content: flex-start;
 	flex-direction: column;
 	align-items: center;
-	max-width: 95%;
+	max-width: 100%;
 	display: flex;
 	width: 1500px;
 }
@@ -20,13 +20,12 @@ nav {
 	nav .nav-container {
 		justify-content: space-between;
 		align-items: center;
-		max-width: 95%;
+		max-width: 100%;
 		display: flex;
 		width: 1500px;
 	}
 
 		nav .nav-container .nav-buttons {
-			width: 50%;
 		}
 
 			nav .nav-container .nav-buttons ul {
@@ -40,6 +39,7 @@ nav {
 					font-weight: 400;
 					color: var(--textMain);
 					margin-right: 50px;
+					padding: 0 10px;
 				}
 
 				nav .nav-container .nav-buttons ul li {
@@ -63,7 +63,6 @@ nav {
 					}
 
 					nav .nav-container .nav-buttons ul li .clickable {
-
 					}
 
 						nav .nav-container .nav-buttons ul li .clickable:hover {
@@ -78,6 +77,7 @@ nav {
 			height: 100%;
 			justify-content: center;
 			align-items: center;
+			padding: 0 20px;
 		}
 
 			nav .nav-container .nav-options .btn {
@@ -125,25 +125,49 @@ nav {
 		height: 100%;
 		width: 100%;
 		gap: 30px;
+		padding: 10px;
 	}
 
 		.panel .body .side-bar {
 			flex-direction: column;
-			min-width: 250px;
 			display: flex;
 		}
 
 			.panel .body .side-bar .link-list {
 				flex-direction: column;
 				display: flex;
-				width: 100%;
 				padding: 0;
 				margin: 0;
 			}
 
-				.panel .body .side-bar .link-list .btn {
-					padding: 9px 5px;
+				.panel .body .side-bar .link-list .condenser {
+					display: flex;
+					justify-content: flex-end;
+					margin-bottom: 10px;
+					align-items: center;
 				}
+
+				.panel .body .side-bar .link-list .btn {
+					display: flex;
+					padding: 9px;
+					max-height: 20px;
+					align-items: center;
+					gap: 15px;
+				}
+
+					.panel .body .side-bar .link-list .btn .icon {
+						height: 25px;
+						width: 25px;
+						filter: invert();
+					}
+
+					.panel .body .side-bar .link-list .btn .text {
+						padding-right: 65px;
+					}
+
+					.panel .body .side-bar .link-list .btn:hover {
+						background-color: var(--gray3);
+					}
 
 			.panel .body .side-bar .selected {
 				background-color: var(--gray3);
@@ -331,7 +355,8 @@ nav {
 					}
 
 			.panel .body .properties .tool-container {
-				min-width: 270px;
+				width: 270px;
+				min-width: 200px;
 				display: flex;
 			}
 
@@ -466,7 +491,6 @@ nav {
 					}
 
 						.panel .body .properties .list-container .order-list li:hover {
-
 						}
 
 						.panel .body .properties .list-container .order-list li .info {
@@ -487,6 +511,7 @@ nav {
 								align-items: flex-start;
 								gap: 10px;
 								padding: 3px 0;
+								flex-wrap: wrap;
 							}
 
 								.panel .body .properties .list-container .order-list li .info .title .name {
@@ -846,7 +871,6 @@ nav {
 				}
 
 					.people-component .people-container .list-container .selected-list ul li {
-						
 					}
 
 				.people-component .people-container .list-container .selected-list .selection {
@@ -893,83 +917,83 @@ nav {
 			height: 50%;
 		}
 
-			.people-component .people-container .item {
-				border-bottom: 1px solid var(--gray3);
-				justify-content: space-between;
+		.people-component .people-container .item {
+			border-bottom: 1px solid var(--gray3);
+			justify-content: space-between;
+			align-items: center;
+			user-select: none;
+			font-size: 13px;
+			padding: 0 5px;
+			display: flex;
+			color: var(--textMain);
+		}
+
+			.people-component .people-container .item .photo {
+				justify-content: center;
 				align-items: center;
-				user-select: none;
-				font-size: 13px;
-				padding: 0 5px;
+				min-width: 40px;
 				display: flex;
-				color: var(--textMain);
+				height: 100%;
 			}
 
-				.people-component .people-container .item .photo {
-					justify-content: center;
-					align-items: center;
-					min-width: 40px;
-					display: flex;
-					height: 100%;
-				}
-
-					.people-component .people-container .item .photo .frame {
-						background-color: var(--gray3);
-						border: 1px solid var(--gray4);
-						border-radius: 50%;
-						min-height: 27px;
-						min-width: 27px;
-						height: 27px;
-						width: 27px;
-					}
-
-				.people-component .people-container .item .info {
-					justify-content: center;
-					flex-direction: column;
-					padding: 5px 10px;
-					display: flex;
-					flex-grow: 1;
-				}
-
-				.people-component .people-container .item .selector {
-					height: 100%;
-					min-width: 22px;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-				}
-
-					.people-component .people-container .item .selector img {
-						height: 18px;
-						width: 18px;
-						filter: invert(60%);
-					}
-
-						.people-component .people-container .item .selector img:hover {
-							filter: invert(100%);
-						}
-
-						.people-component .people-container .item .selector img:active {
-							height: 20px;
-							width: 20px;
-						}
-
-				.people-component .people-container .item:hover {
+				.people-component .people-container .item .photo .frame {
 					background-color: var(--gray3);
-					border-bottom: 1px solid var(--gray4);
-					cursor: pointer;
+					border: 1px solid var(--gray4);
+					border-radius: 50%;
+					min-height: 27px;
+					min-width: 27px;
+					height: 27px;
+					width: 27px;
 				}
 
-				.people-component .people-container .item .sub {
-					color: var(--textSub1);
-					display: flex;
-					gap: 5px;
-				}
-
-			.people-component .people-container .item-container .selected {
-				background-color: var(--gray2);
-				color: var(--green1);
-				border-bottom: 1px solid var(--gray4);
+			.people-component .people-container .item .info {
+				justify-content: center;
+				flex-direction: column;
+				padding: 5px 10px;
+				display: flex;
+				flex-grow: 1;
 			}
+
+			.people-component .people-container .item .selector {
+				height: 100%;
+				min-width: 22px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+				.people-component .people-container .item .selector img {
+					height: 18px;
+					width: 18px;
+					filter: invert(60%);
+				}
+
+					.people-component .people-container .item .selector img:hover {
+						filter: invert(100%);
+					}
+
+					.people-component .people-container .item .selector img:active {
+						height: 20px;
+						width: 20px;
+					}
+
+			.people-component .people-container .item:hover {
+				background-color: var(--gray3);
+				border-bottom: 1px solid var(--gray4);
+				cursor: pointer;
+			}
+
+			.people-component .people-container .item .sub {
+				color: var(--textSub1);
+				display: flex;
+				gap: 5px;
+			}
+
+		.people-component .people-container .item-container .selected {
+			background-color: var(--gray2);
+			color: var(--green1);
+			border-bottom: 1px solid var(--gray4);
+		}
 
 		.people-component .people-container .groups {
 			height: 50%;

@@ -33,7 +33,7 @@ function addItemToPartial(id, firstName, lastName) {
    } else {
       alert(firstName + " " + lastName + " is already in the temporary list.");
    }
-}
+}  
 
 function confirmSelectionInPartial() {
    var listElement = document.getElementById('partialTempList');
