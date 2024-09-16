@@ -1,59 +1,28 @@
 ﻿@inject NavigationManager Navigation
-@using Microsoft.AspNetCore.Components.Authorization
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<UserAccount> SignInManager
-@inject UserManager<UserAccount> UserManager
-@inject AuthenticationStateProvider AuthenticationStateProvider
 
-@if (Navigation.Uri.Contains("TrainingOrders")) {
-   <a href="/TrainingOrders" class="selected btn btnMenu">
-      <img class="icon" src="/images/TrainingOrders.svg">
-      <p class="text">Training Orders</p>
-   </a>
-} else {
-   <a href="/TrainingOrders" class="btn btnMenu">
-      <img class="icon" src="/images/TrainingOrders.svg">
-      <p class="text">Training Orders</p>
-   </a>
-}
-
-@if (isAdmin) {
-   @foreach (var link in links) {
-      if (Navigation.Uri.Contains(link.Item1)) {
-         var source = "/images/" + link.Item1 + ".svg";
-         <a href="/@link.Item1" class="selected btn btnMenu">
-            <img class="icon" src="@source">
-            <p class="text">@link.Item2</p>
-         </a>
-      } else {
-         var source = "/images/" + link.Item1 + ".svg";
-         <a href="/@link.Item1" class="btn btnMenu">
-            <img class="icon" src="@source">
-            <p class="text">@link.Item2</p>
-         </a>
-      }
+@foreach (var link in links) {
+   if (Navigation.Uri.Contains(link.Item1)) {
+      var source = "/images/" + link.Item1 + ".svg";
+      <a href="/@link.Item1" class="selected btn btnMenu">
+         <img class="icon" src="@source">
+         <p class="text">@link.Item2</p>
+      </a>
+   } else {
+      var source = "/images/" + link.Item1 + ".svg";
+      <a href="/@link.Item1" class="btn btnMenu">
+         <img class="icon" src="@source">
+         <p class="text">@link.Item2</p>
+      </a>
    }
 }
 
 @code {
-   private bool isAdmin = false;
    private List<(string, string)> links = new List<(string, string)> {
+      ("TrainingOrders", "Training Orders"),
       ("Lessons", "Lessons"),
       ("Skills", "Skills"),
       ("TrainerGroups", "Trainer Groups"),
       ("Locations", "Locations"),
       ("Accounts", "User Accounts"),
    };
-
-   protected override async Task OnInitializedAsync() {
-      var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-      var user = authState.User;
-
-      if (user.Identity.IsAuthenticated) {
-         var userAccount = await UserManager.GetUserAsync(user);
-         if (userAccount != null) {
-            isAdmin = await UserManager.IsInRoleAsync(userAccount, "admin");
-         }
-      }
-   }
 }

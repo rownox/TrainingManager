@@ -1,8 +1,32 @@
-﻿<div class="side-bar">
+﻿@using Microsoft.AspNetCore.Http
+
+<script src="~/js/sidebar.js"></script>
+
+@{
+   var links = new List<(string, string)> {
+      ("TrainingOrders", "Training Orders"),
+      ("Lessons", "Lessons"),
+      ("Skills", "Skills"),
+      ("TrainerGroups", "Trainer Groups"),
+      ("Locations", "Locations"),
+      ("Accounts", "User Accounts"),
+   };
+}
+
+<div class="side-bar">
    <div class="link-list">
       <button id="condenser" onclick="toggleExpand()" class="btn btnWhite bg-btn condenser">⯇⯈</button>
-      <component type="typeof(Sidebar)" render-mode="WebAssemblyPrerendered" />
+      @foreach (var link in links) {
+         var source = "/images/" + link.Item1 + ".svg";
+         <div class="menu-btn-container">
+            <a href="/@link.Item1" 
+            class="@(Context.Request.Path.ToString().Contains(link.Item1) ? "selected" : "") btn btnMenu">
+               <img class="icon" src="@source" />
+               <p class="text">@link.Item2</p>
+            </a>
+         </div>
+      }
    </div>
 </div>
 
-<script src="~/js/sidebar.js"></script>
+
