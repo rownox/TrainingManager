@@ -58,7 +58,7 @@ namespace WCSTrainer.Data {
          // TrainerGroup
          builder.Entity<TrainerGroup>()
              .HasMany(tg => tg.Trainers)
-             .WithMany();
+             .WithMany(e => e.Groups);
 
          builder.Entity<TrainerGroup>()
              .HasMany(tg => tg.TrainingOrders)

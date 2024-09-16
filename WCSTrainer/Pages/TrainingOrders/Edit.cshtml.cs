@@ -108,12 +108,15 @@ namespace WCSTrainer.Pages.TrainingOrders {
                throw;
             }
          }
-
          return RedirectToPage("./Index");
       }
 
       private async Task initJson() {
-         Employees = await context.Employees.ToListAsync();
+         Employees = await context.Employees
+            .Include(e => e.TrainingOrdersAsTrainee)
+            .Include(e => e.TrainingOrdersAsTrainer)
+            .Include(e => e.Groups)
+            .ToListAsync();
          TrainerGroups = await context.TrainerGroups.ToListAsync();
       }
 

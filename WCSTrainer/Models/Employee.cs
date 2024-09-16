@@ -8,4 +8,5 @@
    public ICollection<Skill> Skills { get; set; } = new List<Skill>();
    public ICollection<TrainingOrder> TrainingOrdersAsTrainee { get; set; } = new List<TrainingOrder>();
    public ICollection<TrainingOrder> TrainingOrdersAsTrainer { get; set; } = new List<TrainingOrder>();
+   public ICollection<TrainerGroup> Groups { get; set; } = new List<TrainerGroup>();
 }

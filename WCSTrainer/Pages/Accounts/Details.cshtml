@@ -71,6 +71,14 @@
                            }
                         </div>
                      </div>
+                     <div class="text-group">
+                        <p class="title">Affiliated Groups</p>
+                        <div class="info">
+                           @foreach (var group in Model.Employee.Groups) {
+                              <a href="/TrainerGroups/Details?id=@group.Id" class="pill">@group.Name</a>
+                           }
+                        </div>
+                     </div>
                      <div class="btn-container">
                         <a class="btn bg-btn btnGreen" asp-page="./Employees/Edit" asp-route-id="@Model.UserAccount.EmployeeId">
                            Edit Info

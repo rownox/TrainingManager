@@ -22,6 +22,7 @@ namespace WCSTrainer.Pages.Accounts {
             .Include(e => e.TrainingOrdersAsTrainee)
             .Include(e => e.TrainingOrdersAsTrainer)
             .Include(e => e.Skills)
+            .Include(e => e.Groups)
             .FirstOrDefaultAsync(e => e.Id == UserAccount.EmployeeId);
 
          return Page();

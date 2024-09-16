@@ -1,5 +1,6 @@
-﻿@model List<Employee>
-
+﻿@using System.Text.Json
+@using System.Text.Json.Serialization
+@model List<Employee>
 
 <div class="people-container">
    <div class="search">
@@ -8,7 +9,12 @@
 
    <ul class="item-container">
       @foreach (var item in Model) {
-         <li class="item">
+         var jsonOptions = new JsonSerializerOptions {
+               ReferenceHandler = ReferenceHandler.Preserve,
+               WriteIndented = false
+            };
+         var employeeJson = JsonSerializer.Serialize(item, jsonOptions);
+         <li onclick="setSelected('@employeeJson')" class="item">
             <div class="photo">
                <div class="frame"></div>
             </div>
@@ -35,30 +41,83 @@
    </div>
    <button class="btn btnWhite nbg-btn" onclick="confirmSelectionInPartial()">Add Trainer</button>
 </div>
+
 <div class="details">
    <div class="top">
-      <div class="{displayMode !== 'groups' ? 'person-info' : 'group-info'} info-container">
-         <p class="title">{selected.name}</p>
+      <div id="info-container" class="info-container hidden">
+         <p id="name" class="title"></p>
          <div class="info">
-            <p class="one">{selected.detailLabel}</p>
-            <p class="two">{selected.detailValue}</p>
+            <p class="one">Status</p>
+            <p id="status" class="two"></p>
          </div>
          <div class="info">
             <p class="one">Affiliated groups:</p>
-            <p class="two">{selected.affGroup}</p>
+            <p id="affiliated-groups" class="two"></p>
          </div>
          <div class="info">
             <p class="one">Assigned Trainings:</p>
          </div>
-         <div class="list">
-            <p class="item">Placeholder</p>
+         <div id="training-list" class="list"></div>
+         <div class="info">
+            <p class="one">Trainer Groups:</p>
          </div>
+         <div id="group-list" class="list"></div>
          <div class="info">
             <p class="one">Total Assigned Hours:</p>
-            <p class="two">{selected.hours}</p>
+            <p id="total-hours" class="two"></p>
          </div>
       </div>
    </div>
 </div>
 
 <script src="~/js/people.js"></script>
+
+<script>
+   var selected;
+
+   function setSelected(employeeJson) {
+      var infoContainer = document.getElementById('info-container');
+      if (infoContainer.classList.contains("hidden")) {
+         infoContainer.classList.remove("hidden");
+      }
+
+      selected = JSON.parse(employeeJson);
+      updateSelected();
+   }
+
+   function updateSelected() {
+      document.getElementById('name').textContent = selected.FirstName + " " + selected.LastName;
+      document.getElementById('status').textContent = selected.Status;
+
+      document.getElementById('affiliated-groups').textContent = selected.UserAccount?.AffiliatedGroups || "N/A";
+
+      var trainingList = document.getElementById('training-list');
+      trainingList.innerHTML = '';
+
+      if (Array.isArray(selected.TrainingOrdersAsTrainer)) {
+         selected.TrainingOrdersAsTrainer.forEach(function (order) {
+            var item = document.createElement('p');
+            item.classList.add('item');
+            item.textContent = order.TrainingName;
+            trainingList.appendChild(item);
+         });
+      }
+
+      var groupList = document.getElementById('group-list');
+      groupList.innerHTML = '';
+
+      if (Array.isArray(selected.TrainingOrdersAsTrainer)) {
+         selected.Groups.forEach(function (group) {
+            var item = document.createElement('p');
+            item.classList.add('item');
+            item.textContent = group.GroupName;
+            groupList.appendChild(item);
+         });
+      } else {
+         console.log("TrainingOrdersAsTrainer is not an array");
+      }
+      
+
+      document.getElementById('total-hours').textContent = selected.TotalAssignedHours || 0;
+   }
+</script>
