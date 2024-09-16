@@ -18,6 +18,8 @@
 	--green2: #0a8e19;
 	--yellow1: #ffe464;
 	--yellow2: #89640c;
+	--svg: invert(75%);
+	--svgHover: invert(100%);
 }
 
 .light-mode {
@@ -40,6 +42,8 @@
 	--green2: #999999;
 	--yellow1: #000000;
 	--yellow2: #999999;
+	--svg: invert(0%);
+	--svgHover: invert(30%);
 }
 
 .btn {

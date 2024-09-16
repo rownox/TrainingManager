@@ -88,12 +88,12 @@ nav {
 
 			nav .nav-container .nav-options img {
 				height: 20px;
-				filter: invert(50%);
+				filter: var(--svg);
 				padding: 0;
 			}
 
 				nav .nav-container .nav-options img:hover {
-					filter: invert(70%);
+					filter: var(--svgHover);
 				}
 
 			nav .nav-container .nav-options a {
@@ -159,7 +159,7 @@ nav {
 					.panel .body .side-bar .link-list .btn .icon {
 						height: 22px;
 						width: 22px;
-						filter: invert();
+						filter: var(--svg);
 					}
 
 					.panel .body .side-bar .link-list .btn .text {
@@ -168,11 +168,20 @@ nav {
 
 					.panel .body .side-bar .link-list .btn:hover {
 						background-color: var(--gray3);
+						
+					}
+
+					.panel .body .side-bar .link-list .btn:hover .icon {
+						filter: var(--svgHover);
 					}
 
 			.panel .body .side-bar .selected {
 				background-color: var(--gray3);
 				color: var(--textMain);
+			}
+
+			.panel .body .side-bar .selected-img {
+				filter: var(--svgHover) !important;
 			}
 
 		.panel .body .properties {
@@ -219,6 +228,7 @@ nav {
 						padding: 6px 10px;
 						margin-top: 5px;
 						font-size: 15px;
+						display: flex;
 					}
 
 						.panel .body .properties .user-form .btn-container .btn:hover .form-drop {
@@ -228,7 +238,12 @@ nav {
 				.panel .body .properties .user-form img {
 					height: 20px;
 					max-width: 20px;
+					filter: var(--svg);
 				}
+
+					.panel .body .properties .user-form img:hover {
+						filter: var(--svgHover);
+					}
 
 				.panel .body .properties .user-form .field-container .form-group {
 					flex-direction: row;
@@ -967,11 +982,11 @@ nav {
 				.people-component .people-container .item .selector img {
 					height: 18px;
 					width: 18px;
-					filter: invert(60%);
+					filter: var(--svg);
 				}
 
 					.people-component .people-container .item .selector img:hover {
-						filter: invert(100%);
+						filter: var(--svgHover);
 					}
 
 					.people-component .people-container .item .selector img:active {

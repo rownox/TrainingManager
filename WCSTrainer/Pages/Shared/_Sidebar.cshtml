@@ -18,13 +18,11 @@
       <button id="condenser" onclick="toggleExpand()" class="btn btnWhite bg-btn condenser">⯇⯈</button>
       @foreach (var link in links) {
          var source = "/images/" + link.Item1 + ".svg";
-         <div class="menu-btn-container">
-            <a href="/@link.Item1" 
+         <a href="/@link.Item1"
             class="@(Context.Request.Path.ToString().Contains(link.Item1) ? "selected" : "") btn btnMenu">
-               <img class="icon" src="@source" />
-               <p class="text">@link.Item2</p>
-            </a>
-         </div>
+            <img class="icon @(Context.Request.Path.ToString().Contains(link.Item1) ? "selected-img" : "")" src="@source" />
+            <p class="text">@link.Item2</p>
+         </a>
       }
    </div>
 </div>

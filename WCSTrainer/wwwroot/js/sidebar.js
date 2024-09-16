@@ -11,13 +11,8 @@
    });
 }
 
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", function () {
    var textElements = document.getElementsByClassName("text");
-   var btnElements = document.getElementsByClassName("menu-btn-container");
-
-   Array.from(btnElements).forEach(function (item, index) {
-      item.classList.remove("hidden");
-   });
 
    Array.from(textElements).forEach(function (item, index) {
       var isHidden = localStorage.getItem("textHidden-" + index);
@@ -28,4 +23,4 @@ window.onload = function () {
          item.classList.remove("hidden");
       }
    });
-};
+});
