@@ -59,6 +59,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          }
 
          context.Attach(TrainingOrder).State = EntityState.Modified;
+
          try {
             await context.SaveChangesAsync();
          } catch (DbUpdateConcurrencyException) {
@@ -71,9 +72,17 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          if (SelectedTrainerGroupString != null) {
             SelectedTrainerGroupIds = SelectedTrainerGroupString.Split(", ").Select(int.Parse).ToList();
-            TrainingOrder.TrainerGroups = await context.TrainerGroups
+            var groups = await context.TrainerGroups
                .Where(e => SelectedTrainerGroupIds.Contains(e.Id))
+               .Include(g => g.Trainers)
                .ToListAsync();
+            TrainingOrder.TrainerGroups = groups;
+            foreach (var group in groups) {
+               var employees = group.Trainers;
+               foreach (var employee in employees) {
+                  TrainingOrder.Trainers.Add(employee);
+               }
+            }
          }
 
          if (SelectedTrainerString != null) {

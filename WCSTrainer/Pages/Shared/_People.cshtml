@@ -10,9 +10,9 @@
    <ul class="item-container">
       @foreach (var item in Model) {
          var jsonOptions = new JsonSerializerOptions {
-               ReferenceHandler = ReferenceHandler.Preserve,
-               WriteIndented = false
-            };
+            ReferenceHandler = ReferenceHandler.Preserve,
+            WriteIndented = false
+         };
          var employeeJson = JsonSerializer.Serialize(item, jsonOptions);
          <li onclick="setSelected('@employeeJson')" class="item">
             <div class="photo">
@@ -31,37 +31,40 @@
          </li>
       }
    </ul>
-
    <p>Selected:</p>
-
    <div class="list-container">
       <div class="selected-list">
          <ul id="partialTempList"></ul>
       </div>
    </div>
+
    <button class="btn btnWhite nbg-btn" onclick="confirmSelectionInPartial()">Add Trainer</button>
 </div>
 
 <div class="details">
    <div class="top">
-      <div id="info-container" class="info-container hidden">
+      <div id="info-container" class="info-container">
          <p id="name" class="title"></p>
+
          <div class="info">
             <p class="one">Status</p>
             <p id="status" class="two"></p>
          </div>
-         <div class="info">
-            <p class="one">Affiliated groups:</p>
-            <p id="affiliated-groups" class="two"></p>
-         </div>
-         <div class="info">
-            <p class="one">Assigned Trainings:</p>
-         </div>
-         <div id="training-list" class="list"></div>
+
          <div class="info">
             <p class="one">Trainer Groups:</p>
          </div>
-         <div id="group-list" class="list"></div>
+         <div id="group-list" class="list">
+            <div class="item">Placeholder</div>
+         </div>
+
+         <div class="info">
+            <p class="one">Assigned Trainings:</p>
+         </div>
+         <div id="training-list" class="list">
+            <div class="item">Placeholder</div>
+         </div>
+
          <div class="info">
             <p class="one">Total Assigned Hours:</p>
             <p id="total-hours" class="two"></p>
@@ -74,13 +77,11 @@
 
 <script>
    var selected;
-
    function setSelected(employeeJson) {
       var infoContainer = document.getElementById('info-container');
-      if (infoContainer.classList.contains("hidden")) {
-         infoContainer.classList.remove("hidden");
+      if (infoContainer.style.display != "flex") {
+         infoContainer.style.display = "flex";
       }
-
       selected = JSON.parse(employeeJson);
       updateSelected();
    }
@@ -89,23 +90,8 @@
       document.getElementById('name').textContent = selected.FirstName + " " + selected.LastName;
       document.getElementById('status').textContent = selected.Status;
 
-      document.getElementById('affiliated-groups').textContent = selected.UserAccount?.AffiliatedGroups || "N/A";
-
-      var trainingList = document.getElementById('training-list');
-      trainingList.innerHTML = '';
-
-      if (Array.isArray(selected.TrainingOrdersAsTrainer)) {
-         selected.TrainingOrdersAsTrainer.forEach(function (order) {
-            var item = document.createElement('p');
-            item.classList.add('item');
-            item.textContent = order.TrainingName;
-            trainingList.appendChild(item);
-         });
-      }
-
       var groupList = document.getElementById('group-list');
       groupList.innerHTML = '';
-
       if (Array.isArray(selected.TrainingOrdersAsTrainer)) {
          selected.Groups.forEach(function (group) {
             var item = document.createElement('p');
@@ -116,8 +102,21 @@
       } else {
          console.log("TrainingOrdersAsTrainer is not an array");
       }
-      
 
-      document.getElementById('total-hours').textContent = selected.TotalAssignedHours || 0;
+      var time = 0;
+
+      var trainingList = document.getElementById('training-list');
+      trainingList.innerHTML = '';
+      if (Array.isArray(selected.TrainingOrdersAsTrainer)) {
+         selected.TrainingOrdersAsTrainer.forEach(function (order) {
+            var item = document.createElement('p');
+            item.classList.add('item');
+            item.textContent = order.TrainingName;
+            trainingList.appendChild(item);
+            time = time + order.Duration;
+         });
+      }
+
+      document.getElementById('total-hours').textContent = time;
    }
 </script>

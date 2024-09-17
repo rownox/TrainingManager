@@ -79,16 +79,19 @@
                                           } else if (item.Status.Equals("Completed")) {
                                              type = "completed";
                                           }
+
                                           <p class="@type black-pill">@item.Status</p>
                                        }
                                     </div>
                                     <div class="sub">
-                                       <p class="identifier">Trainee - @name</p>
+                                       <div class="sub-text">
+                                          <p class="identifier">Trainee - @name</p>
+                                       </div>
+                                       <div class="btns">
+                                          <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
+                                          <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
+                                       </div>
                                     </div>
-                                 </div>
-                                 <div class="btns">
-                                    <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
-                                    <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
                                  </div>
                               </li>
                               Model.listCount++;
@@ -99,6 +102,7 @@
                }
             }
          </div>
+
          <div class="tool-container">
             <div class="tools">
                <p class="title">Options:</p>

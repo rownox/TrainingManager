@@ -29,14 +29,17 @@
                                  <a class="name" asp-page="./Details" asp-route-id="@item.Id">Skill #@item.Id</a>
                               </div>
                               <div class="sub">
-                                 <p class="identifier">@item.Name</p>
+                                 <div class="sub-text">
+                                    <p class="identifier">@item.Name</p>
+                                 </div>
+                                 <div class="btns">
+                                    <a class="btn bg-btn btnGreen" asp-page="./Assign" asp-route-id="@item.Id">Assign</a>
+                                    <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
+                                    <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                 </div>
                               </div>
                            </div>
-                           <div class="btns">
-                              <a class="btn bg-btn btnGreen" asp-page="./Assign" asp-route-id="@item.Id">Assign</a>
-                              <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
-                              <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                           </div>
+                           
                         </li>
                         Model.listCount++;
                      }

@@ -56,9 +56,6 @@
             @foreach (var trainer in TrainingOrder.Trainers) {
                <a href="/Accounts/Details?id=@trainer.UserAccountId" class="pill">@trainer.FirstName @trainer.LastName</a>
             }
-            @foreach (var trainer in TrainingOrder.TrainerGroups) {
-               <a class="pill group">@trainer.Name</a>
-            }
          </div>
       </div>
 

@@ -504,7 +504,8 @@ nav {
 						justify-content: space-between;
 						align-items: center;
 						width: 100%;
-						padding: 8px 0;
+						padding: 5px 0;
+						
 					}
 
 						.panel .body .properties .list-container .order-list li:hover {
@@ -527,7 +528,6 @@ nav {
 								font-size: 17px;
 								align-items: flex-start;
 								gap: 10px;
-								padding: 3px 0;
 								flex-wrap: wrap;
 							}
 
@@ -545,25 +545,31 @@ nav {
 
 							.panel .body .properties .list-container .order-list li .info .sub {
 								display: flex;
-								margin-top: 2px;
-								font-size: 15px;
+								padding-top: 3px;
 								color: var(--textSub2);
+								flex-direction: row;
+								justify-content: space-between;
 							}
 
-								.panel .body .properties .list-container .order-list li .info .sub p {
-									margin-right: 5px;
+								.panel .body .properties .list-container .order-list li .info .sub .sub-text {
+
 								}
 
-						.panel .body .properties .list-container .order-list li .btns {
-							display: flex;
-							gap: 10px;
-							margin-right: 10px;
-						}
+									.panel .body .properties .list-container .order-list li .info .sub .sub-text p {
+										display: flex;
+									}
 
-							.panel .body .properties .list-container .order-list li .btns .btn {
-								padding: 5px 10px;
-								font-size: 14px;
-							}
+								.panel .body .properties .list-container .order-list li .info .sub .btns {
+									display: flex;
+									gap: 5px;
+								}
+
+									.panel .body .properties .list-container .order-list li .info .sub .btns .btn {
+										padding: 4px 10px;
+										font-size: 13px;
+									}
+
+								
 
 			.panel .body .properties .order-list2 {
 				overflow-y: scroll;
@@ -1033,7 +1039,7 @@ nav {
 		}
 
 			.people-component .details .top .info-container {
-				display: flex;
+				display: none;
 				flex-direction: column;
 				gap: 10px;
 				font-size: 18px;
