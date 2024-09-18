@@ -13,6 +13,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          _context = context;
       }
 
+      [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;
 
       public async Task<IActionResult> OnGetAsync(int? id) {
@@ -29,6 +30,20 @@ namespace WCSTrainer.Pages.TrainingOrders {
          }
 
          return Page();
+      }
+
+      public async Task<IActionResult> OnPostAsync() {
+
+         var newTrainingOrder = await _context.TrainingOrders.FirstOrDefaultAsync(m => m.Id == TrainingOrder.Id);
+         if (newTrainingOrder == null) {
+            return NotFound();
+         }
+
+         newTrainingOrder.Archived = !newTrainingOrder.Archived;
+         _context.Entry(newTrainingOrder).State = EntityState.Modified;
+
+         await _context.SaveChangesAsync();
+         return RedirectToPage("./Index");
       }
    }
 }

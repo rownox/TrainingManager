@@ -140,6 +140,10 @@
 	color: var(--red1);
 }
 
+.archived {
+	color: var(--textSub1);
+}
+
 .highlight {
 	color: var(--yellow1);
 }

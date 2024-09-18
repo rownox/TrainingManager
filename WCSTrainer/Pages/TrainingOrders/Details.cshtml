@@ -1,5 +1,9 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity
 @model WCSTrainer.Pages.TrainingOrders.DetailsModel
+
+@inject SignInManager<UserAccount> SignInManager
+@inject UserManager<UserAccount> UserManager
 
 @{
    ViewData["Title"] = "Details";
@@ -12,6 +16,12 @@
          <div class="user-form">
             <div id="contentToPrint" class="print-block">
                <p class="title">Training Order #@Model.TrainingOrder.Id</p>
+               @if (Model.TrainingOrder.Archived == true) {
+                  <div class="archive-warning">
+                     <img src="/images/exclamation.svg"/>
+                     <p>You are viewing an archived document.</p>
+                  </div>
+               }
                <div class="field-container">
                   <component type="typeof(TrainingDetails)" 
                      render-mode="WebAssemblyPrerendered" 
@@ -39,8 +49,22 @@
                      Verify Order
                   </a>
                }
+
+               @if (SignInManager.IsSignedIn(User)) {
+                  var user = await UserManager.GetUserAsync(User);
+                  if (user != null) {
+                     bool isAdmin = await UserManager.IsInRoleAsync(user, "admin");
+                     if (isAdmin) {
+                        <form method="post" id="archiveForm">
+                           <a class="btn bg-btn btnWhite" href="#" onclick="document.getElementById('archiveForm').submit();">
+                              Archive Document
+                           </a>
+                        </form>
+                     }
+                  }
+               }
                <div class="btn bg-btn">
-                  <img id="printButton" src="/images/print.svg">
+                  <img id="printButton" class="hover-img" src="/images/print.svg">
                </div>
             </div>
          </div>

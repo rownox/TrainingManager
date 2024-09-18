@@ -22,4 +22,5 @@
    public ICollection<Employee> Trainers { get; set; } = new List<Employee>();
    public ICollection<TrainerGroup> TrainerGroups { get; set; } = new List<TrainerGroup>();
    public string? CreatedByUserId { get; set; }
+   public bool Archived { get; set; }
 }

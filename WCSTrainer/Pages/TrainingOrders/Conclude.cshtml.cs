@@ -52,15 +52,15 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return NotFound();
          }
 
-         existingTrainingOrder.CreateDate = TrainingOrder.CreateDate;
-         existingTrainingOrder.BeginDate = TrainingOrder.BeginDate;
-         existingTrainingOrder.LocationId = TrainingOrder.LocationId;
-         existingTrainingOrder.Duration = TrainingOrder.Duration;
-         existingTrainingOrder.TraineeId = TrainingOrder.TraineeId;
          existingTrainingOrder.CompletionDate = TrainingOrder.CompletionDate;
+         existingTrainingOrder.ClosingNotes = TrainingOrder.ClosingNotes;
+         existingTrainingOrder.LocationId = TrainingOrder.LocationId;
+         existingTrainingOrder.CreateDate = TrainingOrder.CreateDate;
+         existingTrainingOrder.TraineeId = TrainingOrder.TraineeId;
+         existingTrainingOrder.BeginDate = TrainingOrder.BeginDate;
+         existingTrainingOrder.Duration = TrainingOrder.Duration;
          existingTrainingOrder.Medium = TrainingOrder.Medium;
          existingTrainingOrder.Status = TrainingOrder.Status;
-         existingTrainingOrder.ClosingNotes = TrainingOrder.ClosingNotes;
 
          _context.Entry(existingTrainingOrder).State = EntityState.Modified;
 

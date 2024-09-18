@@ -66,7 +66,7 @@
                               } else {
                                  name = "N/A";
                               }
-                              <li id="@item.Id @name" class="@item.Status searchable">
+                              <li id="@item.Id @name" class="@item.Status @(item.Archived ? "Archived" : "") searchable">
                                  <div class="info">
                                     <div class="title">
                                        <a class="name" asp-page="./Details" asp-route-id="@item.Id">Training Order #@item.Id</a>
@@ -79,8 +79,10 @@
                                           } else if (item.Status.Equals("Completed")) {
                                              type = "completed";
                                           }
-
                                           <p class="@type black-pill">@item.Status</p>
+                                          if (item.Archived == true) {
+                                             <p class="archived black-pill">Archived</p>
+                                          }
                                        }
                                     </div>
                                     <div class="sub">
@@ -112,6 +114,10 @@
                <div class="selections">
                   <p class="section-title">Show in List:</p>
                   <div class="section">
+                     <input type="checkbox" id="Archived" onchange="checkedBox(this)" />
+                     <p class="section-info black-pill archived">Archived</p>
+                  </div>
+                  <div class="section">
                      <input type="checkbox" checked id="Verified" onchange="checkedBox(this)" />
                      <p class="section-info black-pill verified">Verified</p>
                   </div>
@@ -140,6 +146,7 @@
 </div>
 
 <script>
+   // Close modal functions
    const closeModalBtn = document.querySelector(".btn-close");
    const deleteText = document.getElementById("deleteText");
    const deleteBtn = document.querySelector("#deleteBtn");
@@ -161,15 +168,48 @@
    closeModalBtn.addEventListener("click", closeModal);
    overlay.addEventListener("click", closeModal);
 
-   function toggleDisplay(className, show) {
-      var elements = document.getElementsByClassName(className);
-      for (var i = 0; i < elements.length; i++) {
-         elements[i].style.display = show ? "flex" : "none";
-      }
-   }
-
+   // Save checkbox state to localStorage
    function checkedBox(checkboxElem) {
       toggleDisplay(checkboxElem.id, checkboxElem.checked);
+      localStorage.setItem(checkboxElem.id, checkboxElem.checked);
+   }
+
+   // Load saved checkbox states from localStorage on page load
+   function loadCheckboxStates() {
+      var checkboxes = document.querySelectorAll(".selections input[type='checkbox']");
+      checkboxes.forEach(checkbox => {
+         var storedState = localStorage.getItem(checkbox.id);
+         if (storedState !== null) {
+            checkbox.checked = (storedState === "true");
+            toggleDisplay(checkbox.id, checkbox.checked);
+         }
+      });
+
+      var archivedItems = document.getElementsByClassName("Archived");
+      Array.from(archivedItems).forEach(item => {
+         item.style.display = "none";
+      });
+   }
+
+   // Toggle display of items based on checkbox
+   function toggleDisplay(className, show) {
+      var elements = document.getElementsByClassName(className);
+      var archived = document.getElementById("Archived");
+      for (var i = 0; i < elements.length; i++) {
+         var item = elements[i];
+         if (className != "Archived") {
+            if (!archived.checked) {
+               if (!item.classList.contains("Archived")) {
+                  item.style.display = show ? "flex" : "none";
+               }
+            } else {
+               item.style.display = show ? "flex" : "none";
+            }
+         } else {
+            //TODO: check if all other check boxes are selected
+            item.style.display = show ? "flex" : "none";
+         }
+      }
    }
 
    function update(searchElement) {
@@ -195,4 +235,6 @@
    function submitForm() {
       document.getElementById('maxCountForm').submit();
    }
+
+   window.onload = loadCheckboxStates;
 </script>

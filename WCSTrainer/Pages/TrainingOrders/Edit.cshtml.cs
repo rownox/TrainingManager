@@ -8,18 +8,26 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Pages.TrainingOrders {
    [Authorize(Roles = "admin, trainer")]
    public class EditModel(WCSTrainerContext context) : PageModel {
+
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;
+
       [BindProperty]
       public IList<Employee>? Employees { get; set; }
+
       [BindProperty]
       public IList<TrainerGroup>? TrainerGroups { get; set; }
+
       public SelectList? Locations { get; set; }
+
       [BindProperty]
       public string? SelectedTrainerString { get; set; }
+
       public List<int> SelectedTrainerIds { get; set; } = new List<int>();
+
       [BindProperty]
       public string? SelectedTrainerGroupString { get; set; }
+
       public List<int> SelectedTrainerGroupIds { get; set; } = new List<int>();
 
       public async Task<IActionResult> OnGetAsync(int? id) {
@@ -117,6 +125,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             .Include(e => e.TrainingOrdersAsTrainer)
             .Include(e => e.Groups)
             .ToListAsync();
+
          TrainerGroups = await context.TrainerGroups.ToListAsync();
       }
 
