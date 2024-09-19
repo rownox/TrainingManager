@@ -186,8 +186,6 @@
             toggleDisplay(checkbox.id, checkbox.checked);
          }
       });
-
-      
    }
 
    function toggleDisplay(className, show) {
@@ -204,7 +202,7 @@
          var isVerified = item.classList.contains("Verified");
          var isCompleted = item.classList.contains("Completed");
          var isActive = item.classList.contains("Active");
-         var isAwaiting = item.classList.contains("Awaiting Approval");
+         var isAwaiting = item.classList.contains("awaiting");
 
          item.style.display = "none";
 

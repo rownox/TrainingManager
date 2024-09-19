@@ -1,0 +1,87 @@
+﻿@using Microsoft.EntityFrameworkCore
+@inject WCSTrainer.Data.WCSTrainerContext _context
+
+@if (employee != null) {
+   <div class="title-row">
+      <p class="title">Employee Info</p>
+   </div>
+   <div class="text-group">
+      <p class="title">Employee ID</p>
+      <p class="info">@employee.Id</p>
+   </div>
+   <div class="text-group">
+      <p class="title">First Name</p>
+      <p class="info">@employee.FirstName</p>
+   </div>
+   <div class="text-group">
+      <p class="title">Last Name</p>
+      <p class="info">@employee.LastName</p>
+   </div>
+   <div class="text-group">
+      <p class="title">Status</p>
+      <p class="info">@employee.Status</p>
+   </div>
+   <div class="text-group">
+      <p class="title">Skills</p>
+      <div class="info">
+         @foreach (var skill in employee.Skills) {
+            <a href="/Skills/Details?id=@skill.Id" class="pill yellow">@skill.Name</a>
+         }
+      </div>
+   </div>
+   <div class="text-group">
+      <p class="title">Assigned Learning</p>
+      <div class="info">
+         @foreach (var order in employee.TrainingOrdersAsTrainee) {
+            <a href="/TrainingOrders/Details?id=@order.Id" class="pill">Training Order #@order.Id</a>
+         }
+      </div>
+   </div>
+   <div class="text-group">
+      <p class="title">Assigned Teaching</p>
+      <div class="info">
+         @foreach (var order in employee.TrainingOrdersAsTrainer) {
+            <a href="/TrainingOrders/Details?id=@order.Id" class="pill">Training Order #@order.Id</a>
+         }
+      </div>
+   </div>
+   <div class="text-group">
+      <p class="title">Affiliated Groups</p>
+      <div class="info">
+         @foreach (var group in employee.Groups) {
+            <a href="/TrainerGroups/Details?id=@group.Id" class="pill">@group.Name</a>
+         }
+      </div>
+   </div>
+} else {
+   <p>Loading...</p>
+}
+
+
+@code {
+   [Parameter]
+   public int EmployeeId { get; set; }
+
+   private Employee employee = default!;
+
+   protected override async Task OnInitializedAsync() {
+      await LoadTrainingOrderAsync();
+   }
+
+   protected override async Task OnParametersSetAsync() {
+      await LoadTrainingOrderAsync();
+   }
+
+   private async Task LoadTrainingOrderAsync() {
+      var tempEmployee = await _context.Employees
+          .Include(e => e.TrainingOrdersAsTrainer)
+          .Include(e => e.TrainingOrdersAsTrainee)
+          .Include(e => e.Groups)
+          .Include(e => e.Skills)
+          .FirstOrDefaultAsync(m => m.Id == EmployeeId);
+
+      if (tempEmployee != null) {
+         employee = tempEmployee;
+      }
+   }
+}

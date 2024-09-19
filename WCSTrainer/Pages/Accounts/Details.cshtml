@@ -28,57 +28,7 @@
                   </div>
 
                   @if (Model.Employee != null) {
-                     <div class="title-row">
-                        <p class="title">Employee Info</p>
-                     </div>
-                     <div class="text-group">
-                        <p class="title">Employee ID</p>
-                        <p class="info">@Model.Employee.Id</p>
-                     </div>
-                     <div class="text-group">
-                        <p class="title">First Name</p>
-                        <p class="info">@Model.Employee.FirstName</p>
-                     </div>
-                     <div class="text-group">
-                        <p class="title">Last Name</p>
-                        <p class="info">@Model.Employee.LastName</p>
-                     </div>
-                     <div class="text-group">
-                        <p class="title">Status</p>
-                        <p class="info">@Model.Employee.Status</p>
-                     </div>
-                     <div class="text-group">
-                        <p class="title">Skills</p>
-                        <div class="info">
-                           @foreach (var skill in Model.Employee.Skills) {
-                              <a href="/Skills/Details?id=@skill.Id" class="pill yellow">@skill.Name</a>
-                           }
-                        </div>
-                     </div>
-                     <div class="text-group">
-                        <p class="title">Assigned Learning</p>
-                        <div class="info">
-                           @foreach (var order in Model.Employee.TrainingOrdersAsTrainee) {
-                              <a href="/TrainingOrders/Details?id=@order.Id" class="pill">Training Order #@order.Id</a>
-                           }
-                        </div>
-                     </div>
-                     <div class="text-group">
-                        <p class="title">Assigned Teaching</p>
-                        <div class="info">
-                           @foreach (var order in Model.Employee.TrainingOrdersAsTrainer) {
-                              <a href="/TrainingOrders/Details?id=@order.Id" class="pill">Training Order #@order.Id</a>
-                           }
-                        </div>
-                     </div>
-                     <div class="text-group">
-                        <p class="title">Affiliated Groups</p>
-                        <div class="info">
-                           @foreach (var group in Model.Employee.Groups) {
-                              <a href="/TrainerGroups/Details?id=@group.Id" class="pill">@group.Name</a>
-                           }
-                        </div>
-                     </div>
+                     <component type="typeof(Person)" render-mode="WebAssemblyPrerendered" param-EmployeeId="@Model.Employee.Id" />
                      <div class="btn-container">
                         <a class="btn bg-btn btnGreen" asp-page="./Employees/Edit" asp-route-id="@Model.UserAccount.EmployeeId">
                            Edit Info
