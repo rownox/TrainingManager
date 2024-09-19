@@ -33,7 +33,14 @@
       <p class="title">Assigned Learning</p>
       <div class="info">
          @foreach (var order in employee.TrainingOrdersAsTrainee) {
-            <a href="/TrainingOrders/Details?id=@order.Id" class="pill">Training Order #@order.Id</a>
+            if (!order.Archived && order.Status == "Active") {
+               <a href="/TrainingOrders/Details?id=@order.Id" class="pill">Order #@order.Id</a>
+            }
+         }
+         @foreach (var order in employee.TrainingOrdersAsTrainee) {
+            if (order.Archived || order.Status != "Active") {
+               <a href="/TrainingOrders/Details?id=@order.Id" class="pill inactive">Order #@order.Id</a>
+            }
          }
       </div>
    </div>
@@ -41,7 +48,14 @@
       <p class="title">Assigned Teaching</p>
       <div class="info">
          @foreach (var order in employee.TrainingOrdersAsTrainer) {
-            <a href="/TrainingOrders/Details?id=@order.Id" class="pill">Training Order #@order.Id</a>
+            if (!order.Archived && order.Status == "Active") {
+               <a href="/TrainingOrders/Details?id=@order.Id" class="pill">Order #@order.Id</a>
+            }
+         }
+         @foreach (var order in employee.TrainingOrdersAsTrainer) {
+            if (order.Archived || order.Status != "Active") {
+               <a href="/TrainingOrders/Details?id=@order.Id" class="pill inactive">Order #@order.Id</a>
+            }
          }
       </div>
    </div>

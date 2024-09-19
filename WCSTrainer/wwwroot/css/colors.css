@@ -158,6 +158,12 @@
 		border: 1px solid #7863ff;
 	}
 
+	.pill.inactive {
+		background: none;
+		background-color: var(--gray3);
+		color: var(--textSub1);
+	}
+
 .text-danger {
 	color: var(--red1);
 }
