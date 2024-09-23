@@ -3,10 +3,14 @@
 namespace WCSTrainer.Data {
    public static class SeedData {
       public static async Task AssignRoles(UserManager<UserAccount> userManager, RoleManager<IdentityRole> roleManager) {
-         var user = await userManager.FindByNameAsync("AadamH");
+         var adminsList = new List<String>() { "AadamH", "JayD" };
 
-         if (user != null) {
-            await userManager.AddToRoleAsync(user, "admin");
+         foreach (var admin in adminsList) {
+            var user = await userManager.FindByNameAsync(admin);
+
+            if (user != null) {
+               await userManager.AddToRoleAsync(user, "admin");
+            }
          }
       }
    }

@@ -2,41 +2,6 @@
 @using System.Text.Json.Serialization
 @model List<Employee>
 
-@functions {
-    public class EmployeeDto {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Status { get; set; }
-        public List<string> Groups { get; set; }
-        public List<TrainingOrderDto> TrainingOrdersAsTrainer { get; set; }
-    }
-
-    public class TrainingOrderDto {
-        public int Duration { get; set; }
-    }
-
-    public string SerializeEmployee(Employee employee) {
-        var dto = new EmployeeDto {
-            Id = employee.Id,
-            FirstName = employee.FirstName,
-            LastName = employee.LastName,
-            Status = employee.Status,
-            Groups = employee.Groups.Select(g => g.Name).ToList(),
-            TrainingOrdersAsTrainer = employee.TrainingOrdersAsTrainer
-                .Select(t => new TrainingOrderDto { Duration = t.Duration })
-                .ToList()
-        };
-
-        var options = new JsonSerializerOptions {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = false
-        };
-
-        return JsonSerializer.Serialize(dto, options);
-    }
-}
-
 <div class="people-container">
    <div class="search">
       <input type="search" placeholder="Search By Name" />
@@ -44,7 +9,11 @@
 
    <ul class="item-container">
       @foreach (var item in Model) {
-         var employeeJson = SerializeEmployee(item);
+         var jsonOptions = new JsonSerializerOptions {
+               ReferenceHandler = ReferenceHandler.Preserve,
+               WriteIndented = false
+            };
+         var employeeJson = JsonSerializer.Serialize(item, jsonOptions);
          <li onclick="setSelected('@Html.Raw(employeeJson)')" class="item">
             <div class="photo">
                <div class="frame"></div>
@@ -118,25 +87,25 @@
       document.getElementById('name').textContent = selected.firstName + " " + selected.lastName;
       document.getElementById('status').textContent = selected.status;
 
-      var groupList = document.getElementById('group-list');
-      groupList.innerHTML = '';
-      selected.groups.forEach(function (group) {
-         var item = document.createElement('p');
-         item.classList.add('item');
-         item.textContent = group;
-         groupList.appendChild(item);
-      });
+      // var groupList = document.getElementById('group-list');
+      // groupList.innerHTML = '';
+      // selected.groups.forEach(function (group) {
+      //    var item = document.createElement('p');
+      //    item.classList.add('item');
+      //    item.textContent = group;
+      //    groupList.appendChild(item);
+      // });
 
-      var time = 0;
-      var trainingList = document.getElementById('training-list');
-      trainingList.innerHTML = '';
-      selected.trainingOrdersAsTrainer.forEach(function (order) {
-         var item = document.createElement('p');
-         item.classList.add('item');
-         item.textContent = order.trainingName;
-         trainingList.appendChild(item);
-         time += order.duration;
-      });
+      // var time = 0;
+      // var trainingList = document.getElementById('training-list');
+      // trainingList.innerHTML = '';
+      // selected.trainingOrdersAsTrainer.forEach(function (order) {
+      //    var item = document.createElement('p');
+      //    item.classList.add('item');
+      //    item.textContent = order.trainingName;
+      //    trainingList.appendChild(item);
+      //    time += order.duration;
+      // });
 
       document.getElementById('total-hours').textContent = time;
    }

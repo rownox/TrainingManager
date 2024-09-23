@@ -197,6 +197,11 @@ nav {
 				font-size: 30px;
 			}
 
+			.panel .body .properties .subtitle {
+				color: var(--textSub1);
+				font-size: 18px;
+			}
+
 			.panel .body .properties .archive-warning {
 				margin-top: 10px;
 				border: 1px solid var(--gray4);
@@ -745,6 +750,7 @@ nav {
 
 							.panel .body .properties .scheduling .schedule .months .month .info .gray {
 								background-color: var(--gray1);
+								flex-grow: 1;
 							}
 
 							.panel .body .properties .scheduling .schedule .months .month .info .live {

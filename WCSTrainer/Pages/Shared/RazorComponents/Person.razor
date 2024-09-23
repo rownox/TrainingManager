@@ -32,30 +32,18 @@
    <div class="text-group">
       <p class="title">Assigned Learning</p>
       <div class="info">
-         @foreach (var order in employee.TrainingOrdersAsTrainee) {
-            if (!order.Archived && order.Status == "Active") {
-               <a href="/TrainingOrders/Details?id=@order.Id" class="pill">Order #@order.Id</a>
-            }
-         }
-         @foreach (var order in employee.TrainingOrdersAsTrainee) {
-            if (order.Archived || order.Status != "Active") {
-               <a href="/TrainingOrders/Details?id=@order.Id" class="pill inactive">Order #@order.Id</a>
-            }
+         @foreach (var order in employee.TrainingOrdersAsTrainee.OrderBy(o => o.Archived || o.Status != "Active")) {
+            var cssClass = order.Archived || order.Status != "Active" ? "pill inactive" : "pill";
+            <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">Order #@order.Id</a>
          }
       </div>
    </div>
    <div class="text-group">
       <p class="title">Assigned Teaching</p>
       <div class="info">
-         @foreach (var order in employee.TrainingOrdersAsTrainer) {
-            if (!order.Archived && order.Status == "Active") {
-               <a href="/TrainingOrders/Details?id=@order.Id" class="pill">Order #@order.Id</a>
-            }
-         }
-         @foreach (var order in employee.TrainingOrdersAsTrainer) {
-            if (order.Archived || order.Status != "Active") {
-               <a href="/TrainingOrders/Details?id=@order.Id" class="pill inactive">Order #@order.Id</a>
-            }
+         @foreach (var order in employee.TrainingOrdersAsTrainer.OrderBy(o => o.Archived || o.Status != "Active")) {
+            var cssClass = order.Archived || order.Status != "Active" ? "pill inactive" : "pill";
+            <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">Order #@order.Id</a>
          }
       </div>
    </div>

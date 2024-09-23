@@ -14,14 +14,16 @@
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="user-form">
+            @if (Model.TrainingOrder.Archived == true) {
+               <div class="archive-warning">
+                  <img src="/images/exclamation.svg" />
+                  <p>You are viewing an archived document.</p>
+               </div>
+               <br />
+            }
             <div id="contentToPrint" class="print-block">
                <p class="title">Training Order #@Model.TrainingOrder.Id</p>
-               @if (Model.TrainingOrder.Archived == true) {
-                  <div class="archive-warning">
-                     <img src="/images/exclamation.svg"/>
-                     <p>You are viewing an archived document.</p>
-                  </div>
-               }
+               <p class="subtitle">Status: @Model.TrainingOrder.Status</p>
                <div class="field-container">
                   <component type="typeof(TrainingDetails)" 
                      render-mode="WebAssemblyPrerendered" 
@@ -55,9 +57,15 @@
                   if (user != null) {
                      bool isAdmin = await UserManager.IsInRoleAsync(user, "admin");
                      if (isAdmin) {
+                        string text = "";
                         <form method="post" id="archiveForm">
+                           @if (Model.TrainingOrder.Archived) {
+                              text = "Unarchive";
+                           } else {
+                              text = "Archive";
+                           }
                            <a class="btn bg-btn btnWhite" href="#" onclick="document.getElementById('archiveForm').submit();">
-                              Archive Document
+                              @text Document
                            </a>
                         </form>
                      }
