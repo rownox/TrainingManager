@@ -6,39 +6,63 @@
    <div class="search">
       <input type="search" placeholder="Search By Name" />
    </div>
-
-   <ul class="item-container">
-      @foreach (var item in Model) {
-         var jsonOptions = new JsonSerializerOptions {
-               ReferenceHandler = ReferenceHandler.Preserve,
-               WriteIndented = false
-            };
-         var employeeJson = JsonSerializer.Serialize(item, jsonOptions);
-         <li onclick="setSelected('@Html.Raw(employeeJson)')" class="item">
-            <div class="photo">
-               <div class="frame"></div>
-            </div>
-            <div class="info">
-               <p>@item.FirstName @item.LastName</p>
-               <div class="sub">
-                  <p>Status: </p>
-                  <p class="@(item.Status == "Trainer" ? "highlight" : "")">@item.Status</p>
-               </div>
-            </div>
-            <div class="selector">
-               <img src="~/images/add.svg" onclick="addItemToPartial('@item.Id', '@item.FirstName', '@item.LastName')" />
-            </div>
-         </li>
-      }
-   </ul>
-
-   <p>Selected:</p>
-   <div class="list-container">
-      <div class="selected-list">
-         <ul id="partialTempList"></ul>
+   @{
+      var jsonOptions = new JsonSerializerOptions {
+            ReferenceHandler = ReferenceHandler.Preserve,
+            WriteIndented = false
+      };
+   }
+   <div class="btns-container">
+      <div class="btns">
+         <div id="traineeBtn" class="btn" onclick="toggleView('trainees')">Trainees</div>
+         <div id="trainerBtn" class="btn" onclick="toggleView('trainers')">Trainers</div>
       </div>
    </div>
-   <button class="btn btnWhite nbg-btn" onclick="confirmSelectionInPartial()">Add Trainer</button>
+   <ul id="traineesList" class="item-container">
+      @foreach (var item in Model) {
+         if (item.Status == "Trainee") {
+            var employeeJson = JsonSerializer.Serialize(item, jsonOptions);
+            <li onclick="setSelected('@employeeJson')" class="item">
+               <div class="photo">
+                  <div class="frame"></div>
+               </div>
+               <div class="info">
+                  <p>@item.FirstName @item.LastName</p>
+                  <div class="sub">
+                     <p>Status: </p>
+                     <p class="@(item.Status == "Trainer" ? "highlight" : "")">@item.Status</p>
+                  </div>
+               </div>
+               <div class="selector">
+                  <img src="~/images/add.svg" onclick="addItemToPartial('@item.Id', '@item.FirstName', '@item.LastName')" />
+               </div>
+            </li>
+         }
+      }
+   </ul>
+   <ul id="trainersList" class="item-container">
+      @foreach (var item in Model) {
+         if (item.Status == "Trainer") {
+            var employeeJson = JsonSerializer.Serialize(item, jsonOptions);
+            <li onclick="setSelected('@employeeJson')" class="item">
+               <div class="photo">
+                  <div class="frame"></div>
+               </div>
+               <div class="info">
+                  <p>@item.FirstName @item.LastName</p>
+                  <div class="sub">
+                     <p>Status: </p>
+                     <p class="@(item.Status == "Trainer" ? "highlight" : "")">@item.Status</p>
+                  </div>
+               </div>
+               <div class="selector">
+                  <img src="~/images/add.svg" onclick="addItemToPartial('@item.Id', '@item.FirstName', '@item.LastName')" />
+               </div>
+            </li>
+         }
+      }
+   </ul>
+   
 </div>
 
 <div class="details">
@@ -46,25 +70,26 @@
       <div id="info-container" class="info-container">
          <p id="name" class="title"></p>
          <div class="info">
+            <p class="one">Employee ID</p>
+            <p id="employeeId" class="two"></p>
+         </div>
+         <div class="info">
             <p class="one">Status</p>
             <p id="status" class="two"></p>
          </div>
-         <div class="info">
-            <p class="one">Trainer Groups:</p>
+         <div class="btn-container">
+            <a class="btn btnBlue bg-btn" onclick="linkToUser()">View User Details</a>
          </div>
-         <div id="group-list" class="list">
-            <div class="item">Placeholder</div>
-         </div>
-         <div class="info">
-            <p class="one">Assigned Trainings:</p>
-         </div>
-         <div id="training-list" class="list">
-            <div class="item">Placeholder</div>
-         </div>
-         <div class="info">
-            <p class="one">Total Assigned Hours:</p>
-            <p id="total-hours" class="two"></p>
-         </div>
+      </div>
+   </div>
+   <div class="bottom">
+      <div class="list-container">
+         <p>Selected:</p>
+         <ul id="partialTempList" class="list"></ul>
+      </div>
+
+      <div class="btn-container">
+         <button class="btn btnWhite bg-btn" onclick="confirmSelectionInPartial()">Add Selection</button>
       </div>
    </div>
 </div>
@@ -72,8 +97,32 @@
 <script src="~/js/people.js"></script>
 
 <script>
-   var selected;
+   var traineesList = document.getElementById("traineesList");
+   var trainersList = document.getElementById("trainersList");
+   var traineeBtn = document.getElementById("traineeBtn");
+   var trainerBtn = document.getElementById("trainerBtn");
+   trainersList.style.display = "none";
+   traineeBtn.classList.add("selected");
 
+   function linkToUser() {
+      window.open('/Accounts/Details?id=' + selected.UserAccountId, '_blank');
+   }
+
+   function toggleView(type) {
+      if (type == "trainees") {
+         traineesList.style.display = "flex";
+         trainersList.style.display = "none";
+         traineeBtn.classList.add("selected");
+         trainerBtn.classList.remove("selected");
+      } else if (type == "trainers") {
+         traineesList.style.display = "none";
+         trainersList.style.display = "flex";
+         traineeBtn.classList.remove("selected");
+         trainerBtn.classList.add("selected");
+      }
+   }
+
+   var selected;
    function setSelected(employeeJson) {
       var infoContainer = document.getElementById('info-container');
       if (infoContainer.style.display != "flex") {
@@ -84,29 +133,8 @@
    }
 
    function updateSelected() {
-      document.getElementById('name').textContent = selected.firstName + " " + selected.lastName;
-      document.getElementById('status').textContent = selected.status;
-
-      // var groupList = document.getElementById('group-list');
-      // groupList.innerHTML = '';
-      // selected.groups.forEach(function (group) {
-      //    var item = document.createElement('p');
-      //    item.classList.add('item');
-      //    item.textContent = group;
-      //    groupList.appendChild(item);
-      // });
-
-      // var time = 0;
-      // var trainingList = document.getElementById('training-list');
-      // trainingList.innerHTML = '';
-      // selected.trainingOrdersAsTrainer.forEach(function (order) {
-      //    var item = document.createElement('p');
-      //    item.classList.add('item');
-      //    item.textContent = order.trainingName;
-      //    trainingList.appendChild(item);
-      //    time += order.duration;
-      // });
-
-      document.getElementById('total-hours').textContent = time;
+      document.getElementById('name').textContent = selected.FirstName + " " + selected.LastName;
+      document.getElementById('status').textContent = selected.Status;
+      document.getElementById('employeeId').textContent = selected.Id;
    }
 </script>
