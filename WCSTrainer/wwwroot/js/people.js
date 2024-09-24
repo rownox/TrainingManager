@@ -15,6 +15,7 @@ function removeItem(item) {
 
 function addItemToPartial(id, firstName, lastName) {
    var listElement = document.getElementById('partialTempList');
+
    var exists = Array.from(listElement.children).some(function (li) {
       return li.textContent === firstName + ' ' + lastName;
    });
