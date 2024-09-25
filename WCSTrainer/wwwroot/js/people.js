@@ -1,22 +1,25 @@
-function updateInput(input, output) {
-   var inputElement = document.getElementById(input);
-   var outputElement = document.getElementById(output);
+var displayMode;
+var inputElement;
+var partialTempList = document.getElementById('partialTempList');
 
-   var trainerListItems = Array.from(inputElement.getElementsByTagName("li"));
+function updateInput(mode) {
+   var element = document.getElementById(mode + "List");
+   var outputElement = document.getElementById(mode + "Input");
+
+   var trainerListItems = Array.from(element.getElementsByTagName("li"));
    outputElement.value = trainerListItems.map(item => `${item.getAttribute("value")}`).join(", ");
 }
 
-function removeItem(item) {
+function removeItem(item, mode) {
    if (item.tagName === "LI") {
       item.remove();
-      updateInput("trainerList", "trainersInput");
+      updateInput(mode);
    }
 }
 
 function addItemToPartial(id, firstName, lastName) {
-   var listElement = document.getElementById('partialTempList');
 
-   var exists = Array.from(listElement.children).some(function (li) {
+   var exists = Array.from(partialTempList.children).some(function (li) {
       return li.textContent === firstName + ' ' + lastName;
    });
 
@@ -30,16 +33,14 @@ function addItemToPartial(id, firstName, lastName) {
       li.dataset.id = id;
       li.dataset.firstName = firstName;
       li.dataset.lastName = lastName;
-      listElement.appendChild(li);
+      partialTempList.appendChild(li);
    } else {
       alert(firstName + " " + lastName + " is already in the temporary list.");
    }
 }  
 
 function confirmSelectionInPartial() {
-   var listElement = document.getElementById('partialTempList');
-
-   var selectedItems = Array.from(listElement.children).map(function (li) {
+   var selectedItems = Array.from(partialTempList.children).map(function (li) {
       return {
          Id: li.dataset.id,
          firstName: li.dataset.firstName,
@@ -48,15 +49,13 @@ function confirmSelectionInPartial() {
    });
 
    confirmSelectionFromPartial(selectedItems);
-   listElement.innerHTML = '';
+   partialTempList.innerHTML = '';
 }
 
 function confirmSelectionFromPartial(selectedItems) {
-   var listElement = document.getElementById('trainerList');
-
    selectedItems.forEach(function (item) {
-      var itemExistsInList = Array.from(listElement.children).some(function (li) {
-         return li.textContent === item.firstName + ' ' + item.lastName;
+      var itemExistsInList = Array.from(inputElement.children).some(function (li) {
+         return li.value === item.Id;
       });
 
       if (!itemExistsInList) {
@@ -68,17 +67,17 @@ function confirmSelectionFromPartial(selectedItems) {
          });
          li.value = item.Id;
          li.textContent = item.firstName + ' ' + item.lastName;
-         listElement.appendChild(li);
+         inputElement.appendChild(li);
 
-         updateInput("trainerList", "trainersInput");
+         updateInput(displayMode);
       }
    });
    closeComponent();
 }
 
 function openComponent(mode) {
-   window.peopleComponentMode = mode;
-   window.dispatchEvent(new Event('peopleComponentModeChange'));
+   displayMode = mode;
+   inputElement = document.getElementById(mode + "List");
 
    var peopleComponent = document.getElementById("people-component");
    var overlay = document.querySelector(".overlay");
@@ -91,7 +90,6 @@ function closeComponent() {
    var overlay = document.querySelector(".overlay");
    if (peopleComponent) peopleComponent.classList.add("hidden");
    if (overlay) overlay.classList.add("hidden");
-
-   var listElement = document.getElementById('partialTempList');
-   listElement.innerHTML = '';
+   
+   partialTempList.innerHTML = '';
 }

@@ -38,10 +38,12 @@
                               <div class="selections">
                                  <ul id="trainerList" class="pill-container">
                                     @foreach (var trainer in Model.TrainingOrder.Trainers) {
-                                       <li class="pill person" onclick="removeItem(this)" value="@trainer.Id">@trainer.FirstName @trainer.LastName</li>
+                                       <li class="pill person" onclick="removeItem(this, 'trainer')" value="@trainer.Id">
+                                          @trainer.FirstName @trainer.LastName
+                                       </li>
                                     }
                                  </ul>
-                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')">
+                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainer')">
                                     <p>Select</p>
                                  </div>
                               </div>
@@ -56,15 +58,15 @@
                               <div class="selections">
                                  <ul id="groupList" class="pill-container">
                                     @foreach (var trainerGroup in Model.TrainingOrder.TrainerGroups) {
-                                       <li class="pill removable" value="@trainerGroup.Id">@trainerGroup.Name</li>
+                                       <li class="pill removable" value="@trainerGroup.Id" onclick="removeItem(this, 'group')">@trainerGroup.Name</li>
                                     }
                                  </ul>
-                                 <div class="btn bg-btn btnWhite" onclick="openComponent('groups')">Select</div>
+                                 <div class="btn bg-btn btnWhite" onclick="openComponent('group')">Select</div>
                               </div>
                            </div>
                         </div>
-                        <input id="trainersInput" asp-for="@Model.SelectedTrainerString" hidden />
-                        <input id="groupsInput" asp-for="@Model.SelectedTrainerGroupString" hidden />
+                        <input id="trainerInput" asp-for="@Model.SelectedTrainerString" hidden />
+                        <input id="groupInput" asp-for="@Model.SelectedTrainerGroupString" hidden />
                      }
                      <div class="form-group">
                         <div class="form">
@@ -73,16 +75,15 @@
                               <span asp-validation-for="TrainingOrder.TraineeId" class="text-danger"></span>
                            </div>
                            <div class="selections">
-                              <ul id="trainee" class="pill-container">
+                              <ul id="traineeList" class="pill-container">
                                  @{
                                     var trainee = Model.TrainingOrder.Trainee;
                                     if (trainee != null) {
-                                       <li value="@Model.TrainingOrder.TraineeId" class="pill removable">@trainee.FirstName @trainee.LastName</li>
+                                       <li value="@Model.TrainingOrder.TraineeId" class="pill removable" onclick="removeItem(this, 'trainee')">@trainee.FirstName @trainee.LastName</li>
                                     }
                                  }
-                                 
                               </ul>
-                              <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select</p></div>
+                              <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')"><p>Select</p></div>
                               <input id="traineeInput" asp-for="TrainingOrder.TraineeId" hidden />
                            </div>
                         </div>
