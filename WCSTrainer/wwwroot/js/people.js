@@ -20,10 +20,13 @@ function removeItem(item, mode) {
 function addItemToPartial(id, firstName, lastName) {
 
    var exists = Array.from(partialTempList.children).some(function (li) {
-      return li.textContent === firstName + ' ' + lastName;
+      return li.dataset.id == id;
    });
 
    if (!exists) {
+      if (displayMode == "trainee") {
+         partialTempList.innerHTML = '';
+      }
       var li = document.createElement('li');
       li.classList.add("pill");
       li.addEventListener("click", function () {
@@ -55,10 +58,13 @@ function confirmSelectionInPartial() {
 function confirmSelectionFromPartial(selectedItems) {
    selectedItems.forEach(function (item) {
       var itemExistsInList = Array.from(inputElement.children).some(function (li) {
-         return li.value === item.Id;
+         return li.value == item.Id;
       });
 
       if (!itemExistsInList) {
+         if (displayMode == "trainee") {
+            inputElement.innerHTML = '';
+         }
          var li = document.createElement('li');
 
          li.classList.add("pill");
