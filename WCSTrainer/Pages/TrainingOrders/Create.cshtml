@@ -36,6 +36,7 @@
                         <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
                         <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
 
+
                         <div class="form-group">
                            <div class="form">
                               <div class="labels">
@@ -44,7 +45,7 @@
                               </div>
                               <div class="selections">
                                  <ul id="traineeList" class="pill-container"></ul>
-                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')">
+                                 <div class="btn bg-btn btnWhite" onclick="openPeopleComponent('trainee')">
                                     <p>Select Trainee</p>
                                  </div>
                                  <input id="traineeInput" asp-for="TrainingOrder.TraineeId" hidden />

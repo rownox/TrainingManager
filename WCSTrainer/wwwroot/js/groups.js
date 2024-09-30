@@ -1,4 +1,5 @@
-function addItemToPartial(id, firstName, lastName) {
+function addItemToGroupPartial(id, firstName, lastName) {
+
    var exists = Array.from(partialTempList.children).some(function (li) {
       return li.dataset.id == id;
    });
@@ -10,7 +11,7 @@ function addItemToPartial(id, firstName, lastName) {
       var li = document.createElement('li');
       li.classList.add("pill");
       li.addEventListener("click", function () {
-         removeItem(li);
+         removeItem2(li);
       });
       li.textContent = firstName + ' ' + lastName;
       li.dataset.id = id;
@@ -60,13 +61,11 @@ function confirmSelectionFromPartial(selectedItems) {
    });
    closeComponent();
 }
+function openGroupsComponent() {
+   inputElement = document.getElementById("GroupList");
 
-function openPeopleComponent(mode) {
-   displayMode = mode;
-   inputElement = document.getElementById(mode + "List");
-
-   var peopleComponent = document.getElementById("people-component");
+   var groupsComponent = document.getElementById("groups-component");
    var overlay = document.querySelector(".overlay");
-   if (peopleComponent) peopleComponent.classList.remove("hidden");
+   if (groupsComponent) groupsComponent.classList.remove("hidden");
    if (overlay) overlay.classList.remove("hidden");
 }

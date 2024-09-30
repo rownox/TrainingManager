@@ -16,9 +16,6 @@
       @foreach (var item in Model) {
          var groupJson = JsonSerializer.Serialize(item, jsonOptions);
          <li onclick="setSelected('@groupJson')" class="item">
-            <div class="photo">
-               <div class="frame"></div>
-            </div>
             <div class="info">
                <p>@item.Name</p>
             </div>
@@ -55,7 +52,8 @@
    </div>
 </div>
 
-<script src="~/js/people.js"></script>
+<script src="~/js/component.js"></script>
+<script src="~/js/groups.js"></script>
 
 <script>
    function linkToUser() {

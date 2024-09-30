@@ -5,6 +5,9 @@
    ViewData["Title"] = "Edit";
 }
 
+<div id="groups-component" class="people-component hidden">
+   <partial name="_Groups" model="Model.TrainerGroups" />
+</div>
 <div id="people-component" class="people-component hidden">
    <partial name="_People" model="Model.Employees" />
 </div>
@@ -43,7 +46,7 @@
                                        </li>
                                     }
                                  </ul>
-                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainer')">
+                                 <div class="btn bg-btn btnWhite" onclick="openPeopleComponent('trainer')">
                                     <p>Select</p>
                                  </div>
                               </div>
@@ -61,7 +64,7 @@
                                        <li class="pill removable" value="@trainerGroup.Id">@trainerGroup.Name</li>
                                     }
                                  </ul>
-                                 <div class="btn bg-btn btnWhite">Select</div>
+                                 <div class="btn bg-btn btnWhite" onclick="openGroupsComponent()">Select</div>
                               </div>
                            </div>
                         </div>
@@ -83,7 +86,7 @@
                                     }
                                  }
                               </ul>
-                              <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')"><p>Select</p></div>
+                              <div class="btn bg-btn btnWhite" onclick="openPeopleComponent('trainee')"><p>Select</p></div>
                               <input id="traineeInput" asp-for="TrainingOrder.TraineeId" hidden />
                            </div>
                         </div>
