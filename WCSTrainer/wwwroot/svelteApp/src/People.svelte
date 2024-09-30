@@ -7,7 +7,6 @@
     let groups = [];
 
     const selectedItems = writable([]);
-
     let selected = null;
 
     function clearSelection() {
@@ -70,11 +69,9 @@
                     detail = { items: itemsToAdd };
                     break;
             }
-
             const event = new CustomEvent(eventName, { detail });
             document.dispatchEvent(event);
         }
-
         selectedItems.set([]);
     }
 
@@ -98,7 +95,6 @@
         }
 
         window.addEventListener('peopleComponentModeChange', updateDisplayMode);
-
         updateDisplayMode();
     });
 </script>
@@ -108,11 +104,11 @@
         <input type="search" placeholder="Search By Name" />
     </div>
 
-    <ul>
+    <ul class="item-container">
         {#if displayMode === 'groups'}
             {#each groups as item}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li on:click={() => selectItem(item)}
+                <li class="item" on:click={() => selectItem(item)}
                     class:selected={$selectedItems.some(i => i.id === item.id)}>
                     <div class="info">
                         <p>{item.name}</p>
@@ -130,7 +126,7 @@
         {:else}
             {#each people.filter(p => displayMode === 'trainers' ? p.status === 'Trainer' : p.status !== 'Trainer') as item}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li on:click={() => selectItem(item)}
+                <li class="item" on:click={() => selectItem(item)}
                     class:selected={$selectedItems.some(i => i.id === item.id)}>
                     <div class="photo">
                         <div class="frame"></div>
@@ -151,25 +147,11 @@
             {/each}
         {/if}
     </ul>
-
-    <p>Selected:</p>
-
-    <div class="list-container">
-        <div class="selected-list">
-            {#each $selectedItems as item}
-                <div class="selection pill {displayMode}">{item.name}</div>
-            {/each}
-        </div>
-    </div>
-    
-    <button class="btn btnWhite nbg-btn" on:click={addSelection}>
-        Add {displayMode === 'trainers' ? 'Trainers' : displayMode === 'groups' ? 'Groups' : 'Trainee'}
-    </button>
 </div>
 
 <div class="details">
-    {#if selected}
-        <div class="top">
+    <div class="top">
+        {#if selected}
             <div class="{displayMode !== 'groups' ? 'person-info' : 'group-info'} info-container">
                 <p class="title">{selected.name}</p>
                 <div class="info">
@@ -200,8 +182,24 @@
                     </div>
                 {/if}
             </div>
+        {/if}
+    </div>
+    <div class="bottom">
+        <div class="list-container">
+            <p>Selected:</p>
+            <ul class="list">
+               {#each $selectedItems as item}
+                     <li class="selection pill {displayMode}">{item.name}</li>
+               {/each}
+            </ul>
         </div>
-    {/if}
+
+        <div class="btn-container">
+            <button class="btn btnWhite bg-btn" on:click={addSelection}>
+               Add {displayMode === 'trainers' ? 'Trainers' : displayMode === 'groups' ? 'Groups' : 'Trainee'}
+            </button>
+        </div>
+    </div>
 </div>
 
 <style>

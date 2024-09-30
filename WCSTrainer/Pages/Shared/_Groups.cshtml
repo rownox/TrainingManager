@@ -1,0 +1,80 @@
+﻿@using System.Text.Json
+@using System.Text.Json.Serialization
+@model List<TrainerGroup>
+
+<div class="people-container">
+   <div class="search">
+      <input type="search" placeholder="Search By Name" />
+   </div>
+   @{
+      var jsonOptions = new JsonSerializerOptions {
+            ReferenceHandler = ReferenceHandler.Preserve,
+            WriteIndented = false
+         };
+   }
+   <ul id="traineesList" class="item-container">
+      @foreach (var item in Model) {
+         var groupJson = JsonSerializer.Serialize(item, jsonOptions);
+         <li onclick="setSelected('@groupJson')" class="item">
+            <div class="photo">
+               <div class="frame"></div>
+            </div>
+            <div class="info">
+               <p>@item.Name</p>
+            </div>
+            <div class="selector">
+               <img src="~/images/add.svg" onclick="addItemToPartial('@item.Id', '@item.Name')" />
+            </div>
+         </li>
+      }
+   </ul>
+</div>
+
+<div class="details">
+   <div class="top">
+      <div id="info-container" class="info-container">
+         <p id="name" class="title"></p>
+         <div class="info">
+            <p class="one">Group ID</p>
+            <p id="employeeId" class="two"></p>
+         </div>
+         <div class="btn-container">
+            <a class="btn btnWhite bg-btn" onclick="linkToUser()">View Details</a>
+         </div>
+      </div>
+   </div>
+   <div class="bottom">
+      <div class="list-container">
+         <p>Selected:</p>
+         <ul id="partialTempList" class="list"></ul>
+      </div>
+
+      <div class="btn-container">
+         <button class="btn btnWhite bg-btn" onclick="confirmSelectionInPartial()">Add Selection</button>
+      </div>
+   </div>
+</div>
+
+<script src="~/js/people.js"></script>
+
+<script>
+   function linkToUser() {
+      window.open('/TrainerGroups/Details?id=' + selected.Id, '_blank');
+   }
+
+   var selected;
+   function setSelected(employeeJson) {
+      var infoContainer = document.getElementById('info-container');
+      if (infoContainer.style.display != "flex") {
+         infoContainer.style.display = "flex";
+      }
+      selected = JSON.parse(employeeJson);
+      updateSelected();
+   }
+
+   function updateSelected() {
+      document.getElementById('name').textContent = selected.FirstName + " " + selected.LastName;
+      document.getElementById('status').textContent = selected.Status;
+      document.getElementById('employeeId').textContent = selected.Id;
+   }
+</script>

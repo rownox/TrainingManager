@@ -11,23 +11,16 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;
-
       [BindProperty]
       public IList<Employee>? Employees { get; set; }
-
       [BindProperty]
       public IList<TrainerGroup>? TrainerGroups { get; set; }
-
       public SelectList? Locations { get; set; }
-
       [BindProperty]
       public string? SelectedTrainerString { get; set; }
-
       public List<int> SelectedTrainerIds { get; set; } = new List<int>();
-
       [BindProperty]
       public string? SelectedTrainerGroupString { get; set; }
-
       public List<int> SelectedTrainerGroupIds { get; set; } = new List<int>();
 
       public async Task<IActionResult> OnGetAsync(int? id) {
