@@ -12,7 +12,7 @@
             WriteIndented = false
          };
    }
-   <ul id="traineesList" class="item-container">
+   <ul id="groupsList" class="item-container">
       @foreach (var item in Model) {
          var groupJson = JsonSerializer.Serialize(item, jsonOptions);
          <li onclick="setSelected('@groupJson')" class="item">
@@ -29,11 +29,11 @@
 
 <div class="details">
    <div class="top">
-      <div id="info-container" class="info-container">
-         <p id="name" class="title"></p>
+      <div id="group-info-container" class="info-container">
+         <p id="groupName" class="title"></p>
          <div class="info">
             <p class="one">Group ID</p>
-            <p id="employeeId" class="two"></p>
+            <p id="groupId" class="two"></p>
          </div>
          <div class="btn-container">
             <a class="btn btnWhite bg-btn" onclick="linkToUser()">View Details</a>
@@ -43,7 +43,7 @@
    <div class="bottom">
       <div class="list-container">
          <p>Selected:</p>
-         <ul id="partialTempList" class="list"></ul>
+         <ul id="partialGroupTempList" class="list"></ul>
       </div>
 
       <div class="btn-container">
@@ -52,7 +52,6 @@
    </div>
 </div>
 
-<script src="~/js/component.js"></script>
 <script src="~/js/groups.js"></script>
 
 <script>
@@ -62,7 +61,7 @@
 
    var selected;
    function setSelected(employeeJson) {
-      var infoContainer = document.getElementById('info-container');
+      var infoContainer = document.getElementById('group-info-container');
       if (infoContainer.style.display != "flex") {
          infoContainer.style.display = "flex";
       }
@@ -71,8 +70,7 @@
    }
 
    function updateSelected() {
-      document.getElementById('name').textContent = selected.FirstName + " " + selected.LastName;
-      document.getElementById('status').textContent = selected.Status;
-      document.getElementById('employeeId').textContent = selected.Id;
+      document.getElementById('groupName').textContent = selected.Name;
+      document.getElementById('groupId').textContent = selected.Id;
    }
 </script>

@@ -1,6 +1,5 @@
 ﻿var displayMode;
 var inputElement;
-var partialTempList = document.getElementById('partialTempList');
 
 function updateInput(mode) {
    var element = document.getElementById(mode + "List");
@@ -17,6 +16,21 @@ function removeItem(item, mode) {
    }
 }
 
+function openComponent(mode) {
+   displayMode = mode;
+   inputElement = document.getElementById(mode + "List");
+
+   var peopleComponent = document.getElementById("people-component");
+   var groupsComponent = document.getElementById("groups-component");
+   var overlay = document.querySelector(".overlay");
+   if (mode == "group") {
+      if (groupsComponent) groupsComponent.classList.remove("hidden");
+   } else {
+      if (peopleComponent) peopleComponent.classList.remove("hidden");
+   }
+   if (overlay) overlay.classList.remove("hidden");
+}
+
 function closeComponent() {
    var peopleComponent = document.getElementById("people-component");
    var groupsComponent = document.getElementById("groups-component");
@@ -25,5 +39,32 @@ function closeComponent() {
    if (peopleComponent) peopleComponent.classList.add("hidden");
    if (overlay) overlay.classList.add("hidden");
 
-   partialTempList.innerHTML = '';
+   peopleTempList.innerHTML = '';
+   groupsTempList.innerHTML = '';
+}
+
+function confirmSelectionFromPartial(selectedItems) {
+   selectedItems.forEach(function (item) {
+      var itemExistsInList = Array.from(inputElement.children).some(function (li) {
+         return li.value == item.Id;
+      });
+
+      if (!itemExistsInList) {
+         if (displayMode == "trainee") {
+            inputElement.innerHTML = '';
+         }
+         var li = document.createElement('li');
+
+         li.classList.add("pill");
+         li.addEventListener("click", function () {
+            removeItem(li);
+         });
+         li.value = item.Id;
+         li.textContent = item.firstName + ' ' + item.lastName;
+         inputElement.appendChild(li);
+
+         updateInput(displayMode);
+      }
+   });
+   closeComponent();
 }
