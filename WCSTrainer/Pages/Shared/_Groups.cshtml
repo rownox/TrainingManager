@@ -20,7 +20,7 @@
                <p>@item.Name</p>
             </div>
             <div class="selector">
-               <img src="~/images/add.svg" onclick="addItemToPartial('@item.Id', '@item.Name')" />
+               <img src="~/images/add.svg" onclick="addItemToGroupPartial('@item.Id', '@item.Name')" />
             </div>
          </li>
       }
@@ -43,11 +43,11 @@
    <div class="bottom">
       <div class="list-container">
          <p>Selected:</p>
-         <ul id="partialGroupTempList" class="list"></ul>
+         <ul id="groupTempList" class="list"></ul>
       </div>
 
       <div class="btn-container">
-         <button class="btn btnWhite bg-btn" onclick="confirmSelectionInPartial()">Add Selection</button>
+         <button class="btn btnWhite bg-btn" onclick="confirmGroupSelection()">Add Selection</button>
       </div>
    </div>
 </div>

@@ -24,7 +24,7 @@ function addItemToPartial(id, firstName, lastName) {
    }
 }  
 
-function confirmSelectionInPartial() {
+function confirmPeopleSelection() {
    var selectedItems = Array.from(peopleTempList.children).map(function (li) {
       return {
          Id: li.dataset.id,

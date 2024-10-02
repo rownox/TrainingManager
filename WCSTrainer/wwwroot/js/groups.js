@@ -1,6 +1,6 @@
 var groupTempList = document.getElementById('groupTempList');
 
-function addItemToGroupPartial(id, firstName, lastName) {
+function addItemToGroupPartial(id, Name) {
 
    var exists = Array.from(groupTempList.children).some(function (li) {
       return li.dataset.id == id;
@@ -15,22 +15,20 @@ function addItemToGroupPartial(id, firstName, lastName) {
       li.addEventListener("click", function () {
          removeItem2(li);
       });
-      li.textContent = firstName + ' ' + lastName;
+      li.textContent = Name;
       li.dataset.id = id;
-      li.dataset.firstName = firstName;
-      li.dataset.lastName = lastName;
+      li.dataset.Name = Name;
       groupTempList.appendChild(li);
    } else {
-      alert(firstName + " " + lastName + " is already in the temporary list.");
+      alert(Name + " is already in the temporary list.");
    }
 }  
 
-function confirmSelectionInPartial() {
+function confirmGroupSelection() {
    var selectedItems = Array.from(groupTempList.children).map(function (li) {
       return {
          Id: li.dataset.id,
-         firstName: li.dataset.firstName,
-         lastName: li.dataset.lastName
+         Name: li.dataset.Name,
       };
    });
 
