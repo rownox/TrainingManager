@@ -1029,7 +1029,7 @@ nav {
 		.people-component .details .top {
 			display: flex;
 			border-bottom: 1px solid var(--gray4);
-			flex-grow: 1;
+			height: 250px;
 		}
 
 			.people-component .details .top .btn-container {

@@ -61,7 +61,7 @@
                               <div class="selections">
                                  <ul id="groupList" class="pill-container">
                                     @foreach (var trainerGroup in Model.TrainingOrder.TrainerGroups) {
-                                       <li class="pill removable" value="@trainerGroup.Id">@trainerGroup.Name</li>
+                                       <li class="pill removable" onclick="removeItem(this, 'group')" value="@trainerGroup.Id">@trainerGroup.Name</li>
                                     }
                                  </ul>
                                  <div class="btn bg-btn btnWhite" onclick="openComponent('group')">Select</div>

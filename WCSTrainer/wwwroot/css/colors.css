@@ -151,11 +151,11 @@
 .pill {
 	border: 1px solid var(--gray1);
 	color: var(--textMain);
-	background: linear-gradient(20deg, #291782, #7d64ff);
+	background: linear-gradient(20deg, #3f1782, #9659fb);
 }
 
 	.pill:hover {
-		border: 1px solid #7863ff;
+		border: 1px solid #9a5eff;
 	}
 
 	.pill.inactive {

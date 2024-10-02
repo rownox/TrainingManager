@@ -60,7 +60,7 @@ function confirmSelectionFromPartial(selectedItems) {
             removeItem(li);
          });
          li.value = item.Id;
-         li.textContent = item.firstName + ' ' + item.lastName;
+         li.textContent = item.Name;
          inputElement.appendChild(li);
 
          updateInput(displayMode);

@@ -1,31 +1,27 @@
-var groupTempList = document.getElementById('groupTempList');
+var groupsTempList = document.getElementById('groupTempList');
 
 function addItemToGroupPartial(id, Name) {
-
-   var exists = Array.from(groupTempList.children).some(function (li) {
+   var exists = Array.from(groupsTempList.children).some(function (li) {
       return li.dataset.id == id;
    });
 
    if (!exists) {
-      if (displayMode == "trainee") {
-         groupTempList.innerHTML = '';
-      }
       var li = document.createElement('li');
       li.classList.add("pill");
       li.addEventListener("click", function () {
-         removeItem2(li);
+         removeItem(li, displayMode);
       });
       li.textContent = Name;
       li.dataset.id = id;
       li.dataset.Name = Name;
-      groupTempList.appendChild(li);
+      groupsTempList.appendChild(li);
    } else {
       alert(Name + " is already in the temporary list.");
    }
 }  
 
 function confirmGroupSelection() {
-   var selectedItems = Array.from(groupTempList.children).map(function (li) {
+   var selectedItems = Array.from(groupsTempList.children).map(function (li) {
       return {
          Id: li.dataset.id,
          Name: li.dataset.Name,
@@ -33,5 +29,5 @@ function confirmGroupSelection() {
    });
 
    confirmSelectionFromPartial(selectedItems);
-   groupTempList.innerHTML = '';
+   groupsTempList.innerHTML = '';
 }

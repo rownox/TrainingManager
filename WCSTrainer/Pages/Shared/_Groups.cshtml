@@ -15,9 +15,14 @@
    <ul id="groupsList" class="item-container">
       @foreach (var item in Model) {
          var groupJson = JsonSerializer.Serialize(item, jsonOptions);
-         <li onclick="setSelected('@groupJson')" class="item">
+         var count = item.Trainers.Count();
+         <li onclick="setSelectedGroup('@groupJson', '@count')" class="item">
             <div class="info">
                <p>@item.Name</p>
+               <div class="sub">
+                  <p>Member Count: </p>
+                  <p>@count</p>
+               </div>
             </div>
             <div class="selector">
                <img src="~/images/add.svg" onclick="addItemToGroupPartial('@item.Id', '@item.Name')" />
@@ -35,8 +40,12 @@
             <p class="one">Group ID</p>
             <p id="groupId" class="two"></p>
          </div>
+         <div class="info">
+            <p class="one">Member Count</p>
+            <p id="groupMemberCount" class="two"></p>
+         </div>
          <div class="btn-container">
-            <a class="btn btnWhite bg-btn" onclick="linkToUser()">View Details</a>
+            <a class="btn btnWhite bg-btn" onclick="linkToGroup()">View Details</a>
          </div>
       </div>
    </div>
@@ -55,22 +64,24 @@
 <script src="~/js/groups.js"></script>
 
 <script>
-   function linkToUser() {
-      window.open('/TrainerGroups/Details?id=' + selected.Id, '_blank');
-   }
+   var selectedGroup;
 
-   var selected;
-   function setSelected(employeeJson) {
-      var infoContainer = document.getElementById('group-info-container');
-      if (infoContainer.style.display != "flex") {
-         infoContainer.style.display = "flex";
+   function linkToGroup() {
+      window.open('/TrainerGroups/Details?id=' + selectedGroup.Id, '_blank');
+   }
+   
+   function setSelectedGroup(groupJson, count) {
+      var groupInfoContainer = document.getElementById('group-info-container');
+      if (groupInfoContainer.style.display != "flex") {
+         groupInfoContainer.style.display = "flex";
       }
-      selected = JSON.parse(employeeJson);
-      updateSelected();
+      selectedGroup = JSON.parse(groupJson);
+      updateSelectedGroup();
+      document.getElementById('groupMemberCount').textContent = count;
    }
 
-   function updateSelected() {
-      document.getElementById('groupName').textContent = selected.Name;
-      document.getElementById('groupId').textContent = selected.Id;
+   function updateSelectedGroup() {
+      document.getElementById('groupName').textContent = selectedGroup.Name;
+      document.getElementById('groupId').textContent = selectedGroup.Id;
    }
 </script>
