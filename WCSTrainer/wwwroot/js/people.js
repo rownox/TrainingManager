@@ -30,6 +30,7 @@ function confirmPeopleSelection() {
          Id: li.dataset.id,
          firstName: li.dataset.firstName,
          lastName: li.dataset.lastName
+
       };
    });
 

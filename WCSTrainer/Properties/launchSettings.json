@@ -13,7 +13,7 @@
          "commandName": "Project",
          "dotnetRunMessages": true,
          "launchBrowser": true,
-         "applicationUrl": "http://*:5194", // Listen on all interfaces
+         "applicationUrl": "http://*:8080", // Changed to port 8080
          "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development"
          }
@@ -22,7 +22,7 @@
          "commandName": "Project",
          "dotnetRunMessages": true,
          "launchBrowser": true,
-         "applicationUrl": "https://*:7138;http://*:5194", // Listen on all interfaces
+         "applicationUrl": "https://*:7138;http://*:8080", // Changed to port 8080
          "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development"
          }
