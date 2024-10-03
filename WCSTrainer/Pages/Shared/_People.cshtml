@@ -22,7 +22,7 @@
       @foreach (var item in Model) {
          if (item.Status == "Trainee") {
             var employeeJson = JsonSerializer.Serialize(item, jsonOptions);
-            <li onclick="setSelected('@employeeJson')" class="item">
+            <li onclick="selectTrainee('@employeeJson', this)" class="item">
                <div class="photo">
                   <div class="frame"></div>
                </div>
@@ -44,7 +44,7 @@
       @foreach (var item in Model) {
          if (item.Status == "Trainer") {
             var employeeJson = JsonSerializer.Serialize(item, jsonOptions);
-            <li onclick="setSelected('@employeeJson')" class="item">
+            <li onclick="selectTrainer('@employeeJson', this)" class="item">
                <div class="photo">
                   <div class="frame"></div>
                </div>
@@ -123,13 +123,24 @@
    }
 
    var selected;
-   function setSelected(employeeJson) {
+
+   function selectTrainer(json, element) {
+      setSelected(json, element, 'trainersList');
+   }
+
+   function selectTrainee(json, element) {
+      setSelected(json, element, 'traineesList');
+   }
+
+   function setSelected(employeeJson, element, list) {
       var infoContainer = document.getElementById('info-container');
       if (infoContainer.style.display != "flex") {
          infoContainer.style.display = "flex";
       }
       selected = JSON.parse(employeeJson);
       updateSelected();
+
+      highlight(element, list);
    }
 
    function updateSelected() {

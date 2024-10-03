@@ -16,7 +16,7 @@
       @foreach (var item in Model) {
          var groupJson = JsonSerializer.Serialize(item, jsonOptions);
          var count = item.Trainers.Count();
-         <li onclick="setSelectedGroup('@groupJson', '@count')" class="item">
+         <li onclick="setSelectedGroup('@groupJson', '@count', this)" class="item">
             <div class="info">
                <p>@item.Name</p>
                <div class="sub">
@@ -70,7 +70,7 @@
       window.open('/TrainerGroups/Details?id=' + selectedGroup.Id, '_blank');
    }
    
-   function setSelectedGroup(groupJson, count) {
+   function setSelectedGroup(groupJson, count, element) {
       var groupInfoContainer = document.getElementById('group-info-container');
       if (groupInfoContainer.style.display != "flex") {
          groupInfoContainer.style.display = "flex";
@@ -78,6 +78,8 @@
       selectedGroup = JSON.parse(groupJson);
       updateSelectedGroup();
       document.getElementById('groupMemberCount').textContent = count;
+
+      highlight(element, 'groupsList');
    }
 
    function updateSelectedGroup() {

@@ -1,5 +1,6 @@
 ﻿var displayMode;
 var inputElement;
+var lastSelected;
 
 function updateInput(mode) {
    var element = document.getElementById(mode + "List");
@@ -67,4 +68,12 @@ function confirmSelectionFromPartial(selectedItems) {
       }
    });
    closeComponent();
+}
+
+function highlight(element, list) {
+   if (lastSelected != null) {
+      lastSelected.classList.remove('selected');
+   }
+   element.classList.add('selected');
+   lastSelected = element;
 }
