@@ -60,6 +60,7 @@ function confirmSelectionFromPartial(selectedItems) {
          li.addEventListener("click", function () {
             removeItem(li);
          });
+
          li.value = item.Id;
          li.textContent = item.Name;
          inputElement.appendChild(li);
@@ -74,6 +75,7 @@ function highlight(element, list) {
    if (lastSelected != null) {
       lastSelected.classList.remove('selected');
    }
+
    element.classList.add('selected');
    lastSelected = element;
 }

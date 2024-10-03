@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\js\groups.js" />
-    <Content Remove="wwwroot\svelteapp\src\People.svelte" />
+    <Compile Remove="wwwroot\svelteApp\**" />
+    <Content Remove="wwwroot\svelteApp\**" />
+    <EmbeddedResource Remove="wwwroot\svelteApp\**" />
+    <None Remove="wwwroot\svelteApp\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\svelteapp\src\People.svelte" />
+    <Content Remove="wwwroot\js\groups.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,19 +39,10 @@
     <None Include="wwwroot\images\1N.png" />
     <None Include="wwwroot\js\groups.js" />
     <None Include="wwwroot\js\people.js" />
-    <None Include="wwwroot\svelteApp\.gitignore" />
-    <None Include="wwwroot\svelteApp\public\build\bundle.css" />
-    <None Include="wwwroot\svelteApp\public\build\bundle.js" />
-    <None Include="wwwroot\svelteApp\public\build\bundle.js.map" />
-    <None Include="wwwroot\svelteApp\public\global.css" />
-    <None Include="wwwroot\svelteApp\rollup.config.js" />
-    <None Include="wwwroot\svelteApp\src\main.js" />
-    <None Include="wwwroot\svelteapp\src\People.svelte" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="wwwroot\svelteApp\scripts\" />
   </ItemGroup>
 
 </Project>

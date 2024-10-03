@@ -53,8 +53,21 @@
       <div class="text-group">
          <p class="title">Trainers</p>
          <div class="info">
-            @foreach (var trainer in TrainingOrder.Trainers) {
-               <a href="/Accounts/Details?id=@trainer.UserAccountId" class="pill">@trainer.FirstName @trainer.LastName</a>
+            @{
+               var list = new List<Employee>();
+               foreach (var trainer in TrainingOrder.Trainers) {
+                  list.Add(trainer);
+               }
+               foreach (var group in TrainingOrder.TrainerGroups) {
+                  foreach (var trainer in group.Trainers) {
+                     if (!list.Contains(trainer)) {
+                        list.Add(trainer);
+                     }
+                  }
+               }
+               foreach (var item in list) {
+                  <a href="/Accounts/Details?id=@item.UserAccountId" class="pill">@item.FirstName @item.LastName</a>
+               }
             }
          </div>
       </div>

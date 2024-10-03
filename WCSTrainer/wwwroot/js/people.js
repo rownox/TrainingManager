@@ -20,7 +20,7 @@ function addItemToPartial(id, firstName, lastName) {
       li.dataset.Name = personName;
       peopleTempList.appendChild(li);
    } else {
-      alert(personName + " is already in the temporary list.");
+      alert(personName + " is already in the list.");
    }
 }  
 

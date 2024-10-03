@@ -16,7 +16,7 @@ function addItemToGroupPartial(id, Name) {
       li.dataset.Name = Name;
       groupsTempList.appendChild(li);
    } else {
-      alert(Name + " is already in the temporary list.");
+      alert(Name + " is already in the list.");
    }
 }  
 
