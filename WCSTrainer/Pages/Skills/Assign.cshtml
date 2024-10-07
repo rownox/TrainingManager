@@ -30,13 +30,10 @@
                      <form method="post">
 
                         <div asp-validation-summary="All" class="text-danger"></div>
-
                         <input hidden asp-for="Skill.Id" />
                         <input hidden asp-for="Skill.Name" />
                         <input hidden asp-for="Skill.Description" />
 
-                        <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
-                        <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
 @*
                         <div class="form-group">
                            <div class="form">
@@ -76,7 +73,7 @@
                               <div class="selections">
                                  <ul id="trainee" class="pill-container">
                                  </ul>
-                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainees')"><p>Select</p></div>
+                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')"><p>Select</p></div>
                                  <input id="traineeInput" asp-for="@Model.SelectedTraineeId" hidden />
                               </div>
                            </div>

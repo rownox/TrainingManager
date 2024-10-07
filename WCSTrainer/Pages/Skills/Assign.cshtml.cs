@@ -36,8 +36,6 @@ namespace WCSTrainer.Pages.Skills {
          Skill = skill;
          await LoadRelatedData();
 
-         Employees = await context.Employees.ToListAsync();
-
          return Page();
       }
 
@@ -123,23 +121,7 @@ namespace WCSTrainer.Pages.Skills {
       }
 
       private async Task LoadRelatedData() {
-         var employees = await context.Employees
-             .Select(e => new { e.Id, e.FirstName, e.LastName, e.Status })
-             .ToListAsync();
-
-         var trainerGroups = await context.TrainerGroups
-             .Select(tg => new { tg.Id, tg.Name })
-             .ToListAsync();
-
-         ViewData["EmployeesJson"] = JsonSerializer.Serialize(employees);
-         ViewData["TrainerGroupsJson"] = JsonSerializer.Serialize(trainerGroups);
-      }
-
-      private JsonSerializerOptions GetJsonSerializerOptions() {
-         return new JsonSerializerOptions {
-            ReferenceHandler = ReferenceHandler.Preserve,
-            WriteIndented = true
-         };
+         Employees = await context.Employees.ToListAsync();
       }
    }
 }
