@@ -16,6 +16,8 @@ namespace WCSTrainer.Pages.Skills {
       public Skill Skill { get; set; } = default!;
       [BindProperty]
       public int SelectedTraineeId { get; set; }
+      [BindProperty]
+      public IList<Employee>? Employees { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          if (id == null) {
@@ -33,6 +35,8 @@ namespace WCSTrainer.Pages.Skills {
 
          Skill = skill;
          await LoadRelatedData();
+
+         Employees = await context.Employees.ToListAsync();
 
          return Page();
       }

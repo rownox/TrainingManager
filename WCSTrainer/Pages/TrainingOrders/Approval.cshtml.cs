@@ -106,12 +106,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
       private async Task initJson() {
          Employees = await context.Employees.ToListAsync();
-         ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer
-            .Serialize(Employees ?? new List<Employee>());
-
          TrainerGroups = await context.TrainerGroups.ToListAsync();
-         ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer
-           .Serialize(TrainerGroups ?? new List<TrainerGroup>());
 
          Locations = new SelectList(await context.Locations.ToListAsync(), "Id", "Name");
       }
