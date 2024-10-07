@@ -5,7 +5,6 @@ var lastSelected;
 function updateInput(mode) {
    var element = document.getElementById(mode + "List");
    var outputElement = document.getElementById(mode + "Input");
-
    var trainerListItems = Array.from(element.getElementsByTagName("li"));
    outputElement.value = trainerListItems.map(item => `${item.getAttribute("value")}`).join(", ");
 }
@@ -36,12 +35,15 @@ function closeComponent() {
    var peopleComponent = document.getElementById("people-component");
    var groupsComponent = document.getElementById("groups-component");
    var overlay = document.querySelector(".overlay");
-   if (groupsComponent) groupsComponent.classList.add("hidden");
-   if (peopleComponent) peopleComponent.classList.add("hidden");
+   if (groupsComponent) {
+      groupsComponent.classList.add("hidden");
+      groupsTempList.innerHTML = '';
+   }
+   if (peopleComponent) {
+      peopleComponent.classList.add("hidden");
+      peopleTempList.innerHTML = '';
+   }
    if (overlay) overlay.classList.add("hidden");
-
-   peopleTempList.innerHTML = '';
-   groupsTempList.innerHTML = '';
 }
 
 function confirmSelectionFromPartial(selectedItems) {
@@ -58,9 +60,8 @@ function confirmSelectionFromPartial(selectedItems) {
 
          li.classList.add("pill");
          li.addEventListener("click", function () {
-            removeItem(li);
+            removeItem(li, displayMode);
          });
-
          li.value = item.Id;
          li.textContent = item.Name;
          inputElement.appendChild(li);

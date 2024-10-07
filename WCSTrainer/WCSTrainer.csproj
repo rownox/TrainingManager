@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\svelteApp\**" />
-    <Content Remove="wwwroot\svelteApp\**" />
-    <EmbeddedResource Remove="wwwroot\svelteApp\**" />
-    <None Remove="wwwroot\svelteApp\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="wwwroot\js\groups.js" />
   </ItemGroup>
 

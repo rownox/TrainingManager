@@ -4,7 +4,7 @@
 
 <div class="people-container">
    <div class="search">
-      <input type="search" placeholder="Search By Name" />
+      <input type="search" id="searchInputGroups" placeholder="Search By Name" oninput="searchGroups()" />
    </div>
    @{
       var jsonOptions = new JsonSerializerOptions {
@@ -16,7 +16,7 @@
       @foreach (var item in Model) {
          var groupJson = JsonSerializer.Serialize(item, jsonOptions);
          var count = item.Trainers.Count();
-         <li onclick="setSelectedGroup('@groupJson', '@count', this)" class="item">
+         <li onclick="setSelectedGroup('@groupJson', '@count', this)" class="item" data-name="@item.Name">
             <div class="info">
                <p>@item.Name</p>
                <div class="sub">
@@ -85,5 +85,21 @@
    function updateSelectedGroup() {
       document.getElementById('groupName').textContent = selectedGroup.Name;
       document.getElementById('groupId').textContent = selectedGroup.Id;
+   }
+
+   function searchGroups() {
+      var input = document.getElementById('searchInputGroups');
+      var filter = input.value.toUpperCase();
+      var list = document.getElementById('groupsList');
+      var items = list.getElementsByTagName('li');
+
+      for (var i = 0; i < items.length; i++) {
+         var name = items[i].getAttribute('data-name');
+         if (name.toUpperCase().indexOf(filter) > -1) {
+            items[i].style.display = "";
+         } else {
+            items[i].style.display = "none";
+         }
+      }
    }
 </script>

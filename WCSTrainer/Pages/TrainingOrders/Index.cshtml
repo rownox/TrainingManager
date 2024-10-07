@@ -34,7 +34,7 @@
          <div class="list-container">
             <div class="top">
                <form method="post" id="maxCountForm">
-                  <select asp-for="maxCount" class="drop-main" onchange="submitForm()">
+                  <select asp-for="maxCount" class="drop-main" onchange="updateMaxCount(this.value)">
                      <option value="10">10</option>
                      <option value="50">50</option>
                      <option value="@Model.TrainingOrder.Count()">Max</option>
@@ -46,58 +46,60 @@
                if (user != null) {
                   <div class="order-list">
                      <ul>
+                        @{
+                           int itemCount = 0;
+                        }
                         @foreach (var item in Model.TrainingOrder.Reverse()) {
-                           if (Model.listCount < Model.maxCount) {
-                              var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
-                              if (!isAdmin) {
-                                 if (item.CreatedByUserId != user.Id) {
-                                    if (user.Employee != null) {
-                                       if (item.TraineeId != user.Employee.Id) {
-                                          if (!item.Trainers.Contains(user.Employee)) {
-                                             continue;
-                                          }
+                           var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
+                           if (!isAdmin) {
+                              if (item.CreatedByUserId != user.Id) {
+                                 if (user.Employee != null) {
+                                    if (item.TraineeId != user.Employee.Id) {
+                                       if (!item.Trainers.Contains(user.Employee)) {
+                                          continue;
                                        }
                                     }
                                  }
                               }
-                              string name;
-                              if (item.Trainee != null) {
-                                 name = item.Trainee.FirstName + " " + item.Trainee.LastName;
-                              } else {
-                                 name = "N/A";
-                              }
-                              <li id="@item.Id @name" class="@item.Status @(item.Archived ? "Archived" : "") searchable">
-                                 <div class="info">
-                                    <div class="title">
-                                       <a class="name" asp-page="./Details" asp-route-id="@item.Id">Training Order #@item.Id</a>
-                                       @{
-                                          var type = "awaiting";
-                                          if (item.Status.Equals("Active")) {
-                                             type = "active";
-                                          } else if (item.Status.Equals("Verified")) {
-                                             type = "verified";
-                                          } else if (item.Status.Equals("Completed")) {
-                                             type = "completed";
-                                          }
-                                          <p class="@type black-pill">@item.Status</p>
-                                          if (item.Archived == true) {
-                                             <p class="archived black-pill">Archived</p>
-                                          }
+                           }
+                           string name;
+                           if (item.Trainee != null) {
+                              name = item.Trainee.FirstName + " " + item.Trainee.LastName;
+                           } else {
+                              name = "N/A";
+                           }
+                           <li id="@item.Id" class="@item.Status @(item.Archived ? "Archived" : "") searchable"
+                               data-name="@name" style="display: @(itemCount < Model.maxCount ? "flex" : "none");">
+                              <div class="info">
+                                 <div class="title">
+                                    <a class="name" asp-page="./Details" asp-route-id="@item.Id">Training Order #@item.Id</a>
+                                    @{
+                                       var type = "awaiting";
+                                       if (item.Status.Equals("Active")) {
+                                          type = "active";
+                                       } else if (item.Status.Equals("Verified")) {
+                                          type = "verified";
+                                       } else if (item.Status.Equals("Completed")) {
+                                          type = "completed";
                                        }
+                                       <p class="@type black-pill">@item.Status</p>
+                                       if (item.Archived == true) {
+                                          <p class="archived black-pill">Archived</p>
+                                       }
+                                    }
+                                 </div>
+                                 <div class="sub">
+                                    <div class="sub-text">
+                                       <p class="identifier">Trainee - @name</p>
                                     </div>
-                                    <div class="sub">
-                                       <div class="sub-text">
-                                          <p class="identifier">Trainee - @name</p>
-                                       </div>
-                                       <div class="btns">
-                                          <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
-                                          <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
-                                       </div>
+                                    <div class="btns">
+                                       <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
+                                       <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
                                     </div>
                                  </div>
-                              </li>
-                              Model.listCount++;
-                           }
+                              </div>
+                           </li>
+                           itemCount++;
                         }
                      </ul>
                   </div>
@@ -109,7 +111,7 @@
             <div class="tools">
                <p class="title">Options:</p>
                <div class="search">
-                  <input placeholder="Search Training Orders" type="search" onchange="update(this)" />
+                  <input id="searchInput" placeholder="Search Training Orders" type="search" oninput="searchTrainingOrders()" />
                </div>
                <div class="selections">
                   <p class="section-title">Show in List:</p>
@@ -170,6 +172,7 @@
    function checkedBox(checkboxElem) {
       toggleDisplay(checkboxElem.id, checkboxElem.checked);
       localStorage.setItem(checkboxElem.id, checkboxElem.checked);
+      searchTrainingOrders();
    }
 
    function loadCheckboxStates() {
@@ -228,31 +231,65 @@
       }
    }
 
-
-
-   function update(searchElement) {
-      var value = searchElement.value.toLowerCase();
+   function searchTrainingOrders() {
+      var input = document.getElementById('searchInput');
+      var filter = input.value.toLowerCase();
       var elements = document.getElementsByClassName("searchable");
+      var maxCount = parseInt(document.querySelector('.drop-main').value);
+      var visibleCount = 0;
 
-      if (value == "") {
-         for (var i = 0; i < elements.length; i++) {
-            elements[i].style.display = "flex";
-         }
-      } else {
-         for (var i = 0; i < elements.length; i++) {
-            var id = elements[i].id.toLowerCase();
-            if (id.indexOf(value) === -1) {
-               elements[i].style.display = "none";
+      for (var i = 0; i < elements.length; i++) {
+         var item = elements[i];
+         var id = item.id.toLowerCase();
+         var name = item.getAttribute('data-name').toLowerCase();
+         var matchesSearch = id.includes(filter) || name.includes(filter);
+         var matchesCheckbox = shouldDisplay(item);
+
+         if (matchesSearch && matchesCheckbox) {
+            if (visibleCount < maxCount) {
+               item.style.display = "flex";
+               visibleCount++;
             } else {
-               elements[i].style.display = "flex";
+               item.style.display = "none";
             }
+         } else {
+            item.style.display = "none";
          }
       }
+   }
+
+   function shouldDisplay(item) {
+      var archivedCheckbox = document.getElementById("Archived");
+      var verifiedCheckbox = document.getElementById("Verified");
+      var completedCheckbox = document.getElementById("Completed");
+      var activeCheckbox = document.getElementById("Active");
+      var awaitingCheckbox = document.getElementById("Awaiting Approval");
+
+      var isArchived = item.classList.contains("Archived");
+      var isVerified = item.classList.contains("Verified");
+      var isCompleted = item.classList.contains("Completed");
+      var isActive = item.classList.contains("Active");
+      var isAwaiting = item.classList.contains("Awaiting");
+
+      if (isArchived && !archivedCheckbox.checked) return false;
+      if (isVerified && !verifiedCheckbox.checked) return false;
+      if (isCompleted && !completedCheckbox.checked) return false;
+      if (isActive && !activeCheckbox.checked) return false;
+      if (isAwaiting && !awaitingCheckbox.checked) return false;
+
+      return true;
+   }
+
+   function updateMaxCount(value) {
+      searchTrainingOrders();
    }
 
    function submitForm() {
       document.getElementById('maxCountForm').submit();
    }
 
-   window.onload = loadCheckboxStates;
+   window.onload = function () {
+      loadCheckboxStates();
+      searchTrainingOrders();
+   };
 </script>

@@ -4,7 +4,7 @@
 
 <div class="people-container">
    <div class="search">
-      <input type="search" placeholder="Search By Name" />
+      <input type="search" id="searchInputPeople" placeholder="Search By Name" oninput="searchEmployees()" />
    </div>
    @{
       var jsonOptions = new JsonSerializerOptions {
@@ -22,7 +22,7 @@
       @foreach (var item in Model) {
          if (item.Status == "Trainee") {
             var employeeJson = JsonSerializer.Serialize(item, jsonOptions);
-            <li onclick="selectTrainee('@employeeJson', this)" class="item">
+            <li onclick="selectTrainee('@employeeJson', this)" class="item" data-name="@item.FirstName @item.LastName">
                <div class="photo">
                   <div class="frame"></div>
                </div>
@@ -44,7 +44,7 @@
       @foreach (var item in Model) {
          if (item.Status == "Trainer") {
             var employeeJson = JsonSerializer.Serialize(item, jsonOptions);
-            <li onclick="selectTrainer('@employeeJson', this)" class="item">
+            <li onclick="selectTrainer('@employeeJson', this)" class="item" data-name="@item.FirstName @item.LastName">
                <div class="photo">
                   <div class="frame"></div>
                </div>
@@ -120,6 +120,7 @@
          traineeBtn.classList.remove("selected");
          trainerBtn.classList.add("selected");
       }
+      searchEmployees();
    }
 
    var selected;
@@ -147,5 +148,23 @@
       document.getElementById('name').textContent = selected.FirstName + " " + selected.LastName;
       document.getElementById('status').textContent = selected.Status;
       document.getElementById('employeeId').textContent = selected.Id;
+   }
+
+   function searchEmployees() {
+      var input = document.getElementById('searchInputPeople');
+      var filter = input.value.toUpperCase();
+      var lists = [traineesList, trainersList];
+
+      lists.forEach(function (list) {
+         var items = list.getElementsByTagName('li');
+         for (var i = 0; i < items.length; i++) {
+            var name = items[i].getAttribute('data-name');
+            if (name.toUpperCase().indexOf(filter) > -1) {
+               items[i].style.display = "";
+            } else {
+               items[i].style.display = "none";
+            }
+         }
+      });
    }
 </script>
