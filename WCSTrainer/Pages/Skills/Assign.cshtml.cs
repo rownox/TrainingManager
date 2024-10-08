@@ -20,6 +20,9 @@ namespace WCSTrainer.Pages.Skills {
       public IList<Employee>? Employees { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
+
+         Employees = await context.Employees.ToListAsync();
+
          if (id == null) {
             return NotFound();
          }
@@ -34,14 +37,13 @@ namespace WCSTrainer.Pages.Skills {
          }
 
          Skill = skill;
-         await LoadRelatedData();
+         
 
          return Page();
       }
 
       public async Task<IActionResult> OnPostAsync() {
          if (!ModelState.IsValid) {
-            await LoadRelatedData();
             return Page();
          }
 
@@ -52,7 +54,6 @@ namespace WCSTrainer.Pages.Skills {
 
          if (trainee == null) {
             ModelState.AddModelError("", "Selected trainee not found.");
-            await LoadRelatedData();
             return Page();
          }
 
@@ -63,13 +64,11 @@ namespace WCSTrainer.Pages.Skills {
 
          if (skill == null) {
             ModelState.AddModelError("", "Selected skill not found.");
-            await LoadRelatedData();
             return Page();
          }
 
          if (skill.Employees.Contains(trainee)) {
             ModelState.AddModelError("", "The skill was already assigned to this employee.");
-            await LoadRelatedData();
             return Page();
          }
 
@@ -109,19 +108,13 @@ namespace WCSTrainer.Pages.Skills {
                return NotFound();
             } else {
                ModelState.AddModelError("", "Concurrency error occurred. Please try again.");
-               await LoadRelatedData();
                return Page();
             }
          } catch (Exception ex) {
             await transaction.RollbackAsync();
             ModelState.AddModelError("", $"An error occurred: {ex.Message}");
-            await LoadRelatedData();
             return Page();
          }
-      }
-
-      private async Task LoadRelatedData() {
-         Employees = await context.Employees.ToListAsync();
       }
    }
 }

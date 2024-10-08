@@ -22,6 +22,7 @@
             <div class="field-container">
                @if (Model.TrainingOrder.Status != "Completed" && Model.TrainingOrder.Status != "Verified") {
                   <form method="post">
+
                      <div asp-validation-summary="All" class="text-danger"></div>
                      <input hidden asp-for="TrainingOrder.Id" />
 

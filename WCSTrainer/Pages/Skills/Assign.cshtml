@@ -71,8 +71,7 @@
                                  <span asp-validation-for="@Model.SelectedTraineeId" class="text-danger"></span>
                               </div>
                               <div class="selections">
-                                 <ul id="trainee" class="pill-container">
-                                 </ul>
+                                 <ul id="traineeList" class="pill-container"></ul>
                                  <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')"><p>Select</p></div>
                                  <input id="traineeInput" asp-for="@Model.SelectedTraineeId" hidden />
                               </div>
