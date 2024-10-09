@@ -20,9 +20,6 @@ namespace WCSTrainer.Pages.Skills {
       public IList<Employee>? Employees { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
-
-         Employees = await context.Employees.ToListAsync();
-
          if (id == null) {
             return NotFound();
          }
@@ -37,7 +34,7 @@ namespace WCSTrainer.Pages.Skills {
          }
 
          Skill = skill;
-         
+         Employees = await context.Employees.ToListAsync();
 
          return Page();
       }

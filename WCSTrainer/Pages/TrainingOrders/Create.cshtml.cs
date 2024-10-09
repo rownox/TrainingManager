@@ -10,27 +10,14 @@ using Microsoft.AspNetCore.Identity;
 
 namespace WCSTrainer.Pages.TrainingOrders {
    [Authorize(Roles = "admin, trainer")]
-   public class CreateModel : PageModel {
-      private readonly WCSTrainerContext _context;
-
-      public CreateModel(WCSTrainerContext context) {
-         _context = context;
-      }
-
+   public class CreateModel(WCSTrainerContext context) : PageModel {
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = new TrainingOrder();
       [BindProperty]
-      public IList<Employee> Employees { get; set; }
-      public IList<TrainerGroup> TrainerGroups { get; set; }
-      
+      public IList<Employee>? Employees { get; set; }
 
       public async Task<IActionResult> OnGetAsync() {
-         Employees = await _context.Employees.ToListAsync();
-         TrainerGroups = await _context.TrainerGroups.ToListAsync();
-
-         ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
-         ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
-
+         Employees = await context.Employees.ToListAsync();
          return Page();
       }
 
@@ -41,8 +28,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return Page();
          }
 
-         _context.TrainingOrders.Add(TrainingOrder);
-         await _context.SaveChangesAsync();
+         context.TrainingOrders.Add(TrainingOrder);
+         await context.SaveChangesAsync();
 
          return RedirectToPage("./Index");
       }

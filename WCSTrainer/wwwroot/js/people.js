@@ -19,10 +19,11 @@ function addItemToPartial(id, firstName, lastName) {
       li.dataset.id = id;
       li.dataset.Name = personName;
       peopleTempList.appendChild(li);
+
    } else {
       alert(personName + " is already in the list.");
    }
-}  
+}
 
 function confirmPeopleSelection() {
    var selectedItems = Array.from(peopleTempList.children).map(function (li) {

@@ -9,9 +9,6 @@
    ViewData["Title"] = "Assign";
 }
 
-@* <div id="groups-component" class="people-component hidden">
-   <partial name="_Groups" model="Model.TrainerGroups" />
-</div> *@
 <div id="people-component" class="people-component hidden">
    <partial name="_People" model="Model.Employees" />
 </div>
@@ -34,36 +31,6 @@
                         <input hidden asp-for="Skill.Name" />
                         <input hidden asp-for="Skill.Description" />
 
-@*
-                        <div class="form-group">
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Trainers</p>
-                                 <span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
-                              </div>
-                              <div class="selections">
-                                 <ul id="trainerList" class="pill-container">
-                                 </ul>
-                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainers')"><p>Select</p></div>
-                                 <input id="trainersInput" asp-for="@Model.SelectedTrainerString" hidden />
-                              </div>
-                           </div>
-                        </div>
-                        <div class="form-group">
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Trainer Groups</p>
-                                 <span asp-validation-for="@Model.SelectedTrainerGroupString" class="text-danger"></span>
-                              </div>
-                              <div class="selections">
-                                 <ul id="groupList" class="pill-container">
-                                 </ul>
-                                 <div class="btn bg-btn btnWhite" onclick="openComponent('groups')">Select</div>
-                                 <input id="groupsInput" asp-for="@Model.SelectedTrainerGroupString" hidden />
-                              </div>
-                           </div>
-                        </div> 
-*@
                         <div class="form-group">
                            <div class="form">
                               <div class="labels">
