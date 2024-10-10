@@ -333,23 +333,24 @@ nav {
 						border: 1px solid var(--gray4);
 					}
 
-					.panel .body .properties .user-form .field-container .form-group .selections {
+				.panel .body .properties .user-form .field-container .selections {
+					display: flex;
+					gap: 10px;
+				}
+
+					.panel .body .properties .user-form .field-container .selections .pill-container {
+						border: 1px solid var(--gray4);
+						flex-direction: row;
+						flex-wrap: wrap;
 						display: flex;
-						gap: 10px;
+						min-height: fit-content;
+						flex-grow: 1;
+						gap: 5px;
+						align-content: flex-end;
+						padding: 5px;
+						background-color: var(--black);
 					}
 
-						.panel .body .properties .user-form .field-container .form-group .selections .pill-container {
-							border: 1px solid var(--gray4);
-							flex-direction: row;
-							flex-wrap: wrap;
-							display: flex;
-							min-height: fit-content;
-							flex-grow: 1;
-							gap: 5px;
-							align-content: flex-end;
-							padding: 5px;
-							background-color: var(--black);
-						}
 
 					.panel .body .properties .user-form .field-container .form-group .selector {
 					}
@@ -399,7 +400,7 @@ nav {
 
 			.panel .body .properties .tool-container {
 				width: 270px;
-				min-width: 200px;
+				min-width: 270px;
 				display: flex;
 			}
 
@@ -415,6 +416,31 @@ nav {
 					width: 100%;
 				}
 
+					.panel .body .properties .tool-container .tools .selectors-container {
+						display: flex;
+						flex-direction: column;
+						gap: 10px;
+						padding-top: 20px;
+					}
+
+					.panel .body .properties .tool-container .tools .selectors {
+						display: flex;
+						gap: 5px;
+					}
+
+						.panel .body .properties .tool-container .tools .selectors .pill-container {
+							border: 1px solid var(--gray4);
+							flex-direction: row;
+							flex-wrap: wrap;
+							display: flex;
+							min-height: fit-content;
+							flex-grow: 1;
+							gap: 5px;
+							align-content: flex-end;
+							padding: 5px;
+							background-color: var(--black);
+						}
+
 					.panel .body .properties .tool-container .tools .title {
 						border-bottom: 1px solid var(--gray4);
 						padding-bottom: 10px;
@@ -427,16 +453,19 @@ nav {
 						display: flex;
 					}
 
-						.panel .body .properties .tool-container .tools .btns .btn {
-							padding: 7px 5px;
+						.panel .body .properties .tool-container .tools .btn {
+							padding: 5px 10px;
+							text-align: center;
+							display: flex;
+							align-items: center;
+							font-size: 15px;
 						}
 
 					.panel .body .properties .tool-container .tools .search {
 						width: 100%;
 						display: flex;
 						flex-direction: column;
-						margin-top: 20px;
-						margin-bottom: 20px;
+						padding: 20px 0;
 					}
 
 						.panel .body .properties .tool-container .tools .search .side {
@@ -790,6 +819,9 @@ nav {
 								background-color: var(--gray4);
 								cursor: pointer;
 							}
+
+			
+			
 
 .modal {
 	display: flex;

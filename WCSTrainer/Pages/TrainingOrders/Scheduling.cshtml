@@ -53,16 +53,17 @@
          <div class="tool-container">
             <div class="tools">
                <p class="title">Options: </p>
-               <form method="post">
-                  <div class="labels">
-                     <p class="control-label">Search by Trainer</p>
-                  </div>
-                  <div class="selections">
-                     <ul id="traineeList" class="pill-container"></ul>
-                     <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')">
-                        <p>Select</p>
+               <form id="scheduleForm" method="post">
+                  <div class="selectors-container">
+                     <p class="label">Search by Trainer</p>
+                     <div class="selectors">
+                        <ul id="traineeList" class="pill-container"></ul>
+                        <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')">
+                           <p>Select</p>
+                        </div>
+                        <button class="btn bg-btn btnRed" onclick="clearForm()">Clear</button>
+                        <input id="traineeInput" asp-for="searchFor" hidden/>
                      </div>
-                     <input id="traineeInput" asp-for="searchFor"/>
                   </div>
                   <div class="search">
                      <p>Year:</p>
@@ -102,6 +103,12 @@
 </div>
 
 <script>
+
+   function clearForm() {
+      document.getElementById("traineeInput").value = 0;
+      document.getElementById("scheduleForm").submit();
+   }
+
    document.addEventListener("DOMContentLoaded", function () {
       var monthElements = document.getElementsByClassName("month");
       var months = document.getElementById("months");
