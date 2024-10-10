@@ -13,11 +13,13 @@
             <p class="title">Location Editor</p>
             <div class="order-list2">
                <table id="dataTable">
+
                   <tr>
                      <th>Location ID</th>
                      <th>Name</th>
                      <th></th>
                   </tr>
+
                   @foreach (var item in Model.Location) {
                      <tr class="clickable">
                         <td>@Html.DisplayFor(modelItem => item.Id)</td>
