@@ -58,11 +58,9 @@
                foreach (var trainer in TrainingOrder.Trainers) {
                   list.Add(trainer);
                }
-               foreach (var group in TrainingOrder.TrainerGroups) {
-                  foreach (var trainer in group.Trainers) {
-                     if (!list.Contains(trainer)) {
-                        list.Add(trainer);
-                     }
+               foreach (var groupPerson in groupPeople) {
+                  if (!list.Contains(groupPerson)) {
+                     list.Add(groupPerson);
                   }
                }
                foreach (var item in list) {
@@ -71,6 +69,18 @@
             }
          </div>
       </div>
+      if (TrainingOrder.TrainerGroups.Count > 0) {
+         <div class="text-group">
+            <p class="title">Trainer Groups</p>
+            <div class="info">
+               @{
+                  foreach (var group in TrainingOrder.TrainerGroups) {
+                     <a href="/TrainerGroups/Details?id=@group.Id" class="pill">@group.Name</a>
+                  }
+               }
+            </div>
+         </div>
+      }
 
       <div class="text-group">
          <p class="title">Priority Level</p>
@@ -130,6 +140,8 @@
    private TrainingOrder TrainingOrder = default!;
    private string CreatedByUserName = "Unknown";
 
+   private List<Employee> groupPeople = new List<Employee>();
+
    protected override async Task OnInitializedAsync() {
       await LoadTrainingOrderAsync();
    }
@@ -155,6 +167,15 @@
          if (TrainingOrder.CreatedByUserId != null) {
             var user = await UserManager.FindByIdAsync(TrainingOrder.CreatedByUserId);
             CreatedByUserName = user?.UserName ?? "Unknown";
+         }
+
+         foreach (var group in TrainingOrder.TrainerGroups) {
+            var trainerGroup = await _context.TrainerGroups
+            .Include(g => g.Trainers)
+            .FirstOrDefaultAsync(g => g.Id == group.Id);
+            foreach(var person in trainerGroup.Trainers) {
+               groupPeople.Add(person);
+            }
          }
       }
    }

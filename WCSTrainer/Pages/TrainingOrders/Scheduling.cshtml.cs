@@ -114,7 +114,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             if (orderStart.HasValue && orderStart.Value.Month == month && orderStart.Value.Year == selectedYear) {
                if (employeeHasOrder(order)) {
-                  ordersInMonth.Add(order);
+                  if (order.Archived != true && order.Status == "Active") {
+                     ordersInMonth.Add(order);
+                  }
                }
             }
          }
