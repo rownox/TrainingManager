@@ -2,6 +2,14 @@
 @using System.Text.Json.Serialization
 @model List<Employee>
 
+@functions {
+   public class Person {
+      public int Id { get; set; }
+      public string Name { get; set; } = string.Empty;
+      public string Status { get; set; } = string.Empty;
+   }
+}
+
 <div class="people-container">
    <div class="search">
       <input type="search" id="searchInputPeople" placeholder="Search By Name" oninput="searchEmployees()" />
@@ -21,20 +29,26 @@
    <ul id="traineesList" class="item-container">
       @foreach (var item in Model) {
          if (item.Status == "Trainee") {
-            var employeeJson = JsonSerializer.Serialize(item, jsonOptions);
-            <li onclick="selectTrainee('@employeeJson', this)" class="item" data-name="@item.FirstName @item.LastName">
+            var newPerson = new Person {
+                  Id = item.Id,
+                  Name = item.FirstName + " " + item.LastName,
+                  Status = item.Status
+            };
+
+            var employeeJson = JsonSerializer.Serialize(newPerson, jsonOptions);
+            <li onclick="selectTrainee('@employeeJson', this)" class="item" data-name="@newPerson.Name">
                <div class="photo">
                   <div class="frame"></div>
                </div>
                <div class="info">
-                  <p>@item.FirstName @item.LastName</p>
+                  <p>@newPerson.Name</p>
                   <div class="sub">
                      <p>Status: </p>
-                     <p class="@(item.Status == "Trainer" ? "highlight" : "")">@item.Status</p>
+                     <p class="@(newPerson.Status == "Trainer" ? "highlight" : "")">@newPerson.Status</p>
                   </div>
                </div>
                <div class="selector">
-                  <img src="~/images/add.svg" onclick="addItemToPartial('@item.Id', '@item.FirstName', '@item.LastName')" />
+                  <img src="~/images/add.svg" onclick="addItemToPartial('@newPerson.Id', '@newPerson.Name')" />
                </div>
             </li>
          }
@@ -43,20 +57,25 @@
    <ul id="trainersList" class="item-container">
       @foreach (var item in Model) {
          if (item.Status == "Trainer") {
-            var employeeJson = JsonSerializer.Serialize(item, jsonOptions);
-            <li onclick="selectTrainer('@employeeJson', this)" class="item" data-name="@item.FirstName @item.LastName">
+            var newPerson = new Person {
+                  Id = item.Id,
+                  Name = item.FirstName + " " + item.LastName,
+                  Status = item.Status
+            };
+            var employeeJson = JsonSerializer.Serialize(newPerson, jsonOptions);
+            <li onclick="selectTrainer('@employeeJson', this)" class="item" data-name="@newPerson.Name">
                <div class="photo">
                   <div class="frame"></div>
                </div>
                <div class="info">
-                  <p>@item.FirstName @item.LastName</p>
+                  <p>@newPerson.Name</p>
                   <div class="sub">
                      <p>Status: </p>
-                     <p class="@(item.Status == "Trainer" ? "highlight" : "")">@item.Status</p>
+                     <p class="@(newPerson.Status == "Trainer" ? "highlight" : "")">@newPerson.Status</p>
                   </div>
                </div>
                <div class="selector">
-                  <img src="~/images/add.svg" onclick="addItemToPartial('@item.Id', '@item.FirstName', '@item.LastName')" />
+                  <img src="~/images/add.svg" onclick="addItemToPartial('@newPerson.Id', '@newPerson.Name')" />
                </div>
             </li>
          }
@@ -145,7 +164,7 @@
    }
 
    function updateSelected() {
-      document.getElementById('name').textContent = selected.FirstName + " " + selected.LastName;
+      document.getElementById('name').textContent = selected.Name;
       document.getElementById('status').textContent = selected.Status;
       document.getElementById('employeeId').textContent = selected.Id;
    }

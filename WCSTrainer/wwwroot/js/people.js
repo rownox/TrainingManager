@@ -1,7 +1,6 @@
 var peopleTempList = document.getElementById('peopleTempList');
 
-function addItemToPartial(id, firstName, lastName) {
-   var personName = firstName + ' ' + lastName;
+function addItemToPartial(id, personName) {
    var exists = Array.from(peopleTempList.children).some(function (li) {
       return li.dataset.id == id;
    });

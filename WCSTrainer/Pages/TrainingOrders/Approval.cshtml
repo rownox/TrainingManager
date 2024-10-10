@@ -21,13 +21,10 @@
             <div class="field-container">
                @if (Model.TrainingOrder.Status == "Awaiting Approval") {
                   <form method="post">
-                  
-                     <div asp-validation-summary="All" class="text-danger"></div>
                      <input asp-for="TrainingOrder.Id" hidden />
-
+                     <div asp-validation-summary="All" class="text-danger"></div>
                      <input asp-for="TrainingOrder.CreateDate" type="hidden" />
                      <input asp-for="TrainingOrder.Status" type="hidden" />
-
                      <input asp-for="TrainingOrder.LessonId" hidden />
                      <input asp-for="TrainingOrder.TraineeId" hidden />
                      <input asp-for="TrainingOrder.ParentSkillId" hidden />
