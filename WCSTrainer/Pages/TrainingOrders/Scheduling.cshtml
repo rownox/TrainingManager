@@ -1,7 +1,10 @@
 ﻿@page
 @model WCSTrainer.Pages.TrainingOrders.SchedulingModel
-@{
-}
+
+<div id="people-component" class="people-component hidden">
+   <partial name="_People" model="Model.Employees" />
+</div>
+<div class="overlay hidden" onclick="closeComponent()"></div>
 
 <div class="panel">
    <div class="body">
@@ -51,9 +54,15 @@
             <div class="tools">
                <p class="title">Options: </p>
                <form method="post">
-                  <div class="search">
-                     <p class="section-title">Search By Trainer:</p>
-                     <input asp-for="searchFor" type="search" />
+                  <div class="labels">
+                     <p class="control-label">Search by Trainer</p>
+                  </div>
+                  <div class="selections">
+                     <ul id="traineeList" class="pill-container"></ul>
+                     <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')">
+                        <p>Select</p>
+                     </div>
+                     <input id="traineeInput" asp-for="searchFor"/>
                   </div>
                   <div class="search">
                      <p>Year:</p>

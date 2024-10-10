@@ -16,15 +16,19 @@ namespace WCSTrainer.Pages.TrainingOrders {
       [BindProperty]
       public int selectedMonth { get; set; }
       [BindProperty]
-      public string searchFor { get; set; } = "All";
+      public int searchFor { get; set; }
 
       public async Task OnGetAsync() {
-         Employees = await context.Employees.ToListAsync();
+         Employees = await context.Employees
+            .Include(e => e.TrainingOrdersAsTrainer)
+            .ToListAsync();
          TrainingOrders = await context.TrainingOrders.ToListAsync();
       }
 
       public async Task<IActionResult> OnPostAsync() {
-         Employees = await context.Employees.ToListAsync();
+         Employees = await context.Employees
+            .Include(e => e.TrainingOrdersAsTrainer)
+            .ToListAsync();
          TrainingOrders = await context.TrainingOrders.ToListAsync();
          return Page();
       }
@@ -143,25 +147,19 @@ namespace WCSTrainer.Pages.TrainingOrders {
       }
 
       public bool employeeHasOrder(TrainingOrder order) {
-         fixSearch();
-         if (searchFor.Equals("All")) {
+         if (searchFor == 0) {
             return true;
          } else {
+
             foreach (Employee employee in Employees) {
-               if (searchFor.Contains(employee.FirstName) && searchFor.Contains(employee.LastName)) {
-                  if (employee.TrainingOrdersAsTrainee.Contains(order)) {
+               if (searchFor == employee.Id) {
+                  if (employee.TrainingOrdersAsTrainer.Contains(order)) {
                      return true;
                   }
                }
             }
          }
          return false;
-      }
-
-      public void fixSearch() {
-         if (searchFor == null) {
-            searchFor = "All";
-         }
       }
    }
 }
