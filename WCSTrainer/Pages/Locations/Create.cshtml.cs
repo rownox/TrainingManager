@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WCSTrainer.Pages.Locations {
+   [Authorize(Roles = "admin, trainer")]
    public class CreateModel : PageModel {
       private readonly WCSTrainer.Data.WCSTrainerContext _context;
 

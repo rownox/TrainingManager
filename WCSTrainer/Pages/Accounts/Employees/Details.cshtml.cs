@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -5,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.Accounts.Employees {
+   [Authorize(Roles = "admin, trainer")]
    public class DetailsModel(WCSTrainerContext context) : PageModel {
 
       [BindProperty]

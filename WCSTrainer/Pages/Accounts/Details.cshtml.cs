@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,7 +7,8 @@ using NuGet.Versioning;
 using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.Accounts {
-    public class DetailsModel(UserManager<UserAccount> userManager, WCSTrainerContext context) : PageModel {
+   [Authorize(Roles = "admin")]
+   public class DetailsModel(UserManager<UserAccount> userManager, WCSTrainerContext context) : PageModel {
       [BindProperty]
       public UserAccount? UserAccount { get; set; }
       public Employee? Employee { get; set; }

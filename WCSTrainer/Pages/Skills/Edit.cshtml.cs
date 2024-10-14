@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Skills {
+   [Authorize(Roles = "admin, trainer")]
    public class EditModel : PageModel {
       private readonly WCSTrainer.Data.WCSTrainerContext _context;
 

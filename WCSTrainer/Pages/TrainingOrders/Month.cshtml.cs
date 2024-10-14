@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -5,7 +6,8 @@ using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.TrainingOrders
 {
-    public class MonthModel(WCSTrainerContext context) : PageModel
+   [Authorize(Roles = "admin, trainer, trainee")]
+   public class MonthModel(WCSTrainerContext context) : PageModel
     {
       public IList<TrainingOrder> TrainingOrders { get; set; }
       public IList<Employee> Employees { get; set; }

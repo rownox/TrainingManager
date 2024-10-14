@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.Locations {
+   [Authorize(Roles = "admin, trainer")]
    public class IndexModel : PageModel {
       private readonly WCSTrainerContext _context;
 

@@ -8,8 +8,10 @@ using WCSTrainer.Data;
 using Microsoft.AspNetCore.Identity;
 using System.Net.NetworkInformation;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WCSTrainer.Pages.Skills {
+   [Authorize(Roles = "admin, trainer")]
    public class AssignModel(WCSTrainerContext context) : PageModel {
 
       [BindProperty]
