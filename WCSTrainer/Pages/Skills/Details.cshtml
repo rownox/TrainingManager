@@ -31,7 +31,7 @@
                   <p class="title">Assigned To</p>
                   <div class="info">
                      @foreach (var person in Model.Skill.Employees) {
-                        <a href="/Accounts/Details?id=@person.UserAccountId" class="pill">@person.FirstName @person.LastName</a>
+                        <a href="/Accounts/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
                      }
                   </div>
                </div>

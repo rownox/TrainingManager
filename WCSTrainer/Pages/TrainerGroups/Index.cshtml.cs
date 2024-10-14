@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.TrainerGroups {
-   [Authorize(Roles = "admin, trainer")]
+   [Authorize(Roles = "owner, admin, user")]
    public class IndexModel : PageModel {
       private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
@@ -16,5 +16,7 @@ namespace WCSTrainer.Pages.TrainerGroups {
       public async Task OnGetAsync() {
          TrainerGroup = await _context.TrainerGroups.ToListAsync();
       }
+
+
    }
 }

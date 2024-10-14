@@ -13,7 +13,7 @@
       <p class="title">Trainee</p>
       <div class="info">
          @if (TrainingOrder.Trainee != null) {
-            <a href="/Accounts/Details?id=@TrainingOrder.Trainee.UserAccountId" class="pill trainee">
+            <a href="/Accounts/Employees/Details?id=@TrainingOrder.Trainee.Id" class="pill trainee">
                @TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName
             </a>
          }
@@ -64,7 +64,7 @@
                   }
                }
                foreach (var item in list) {
-                  <a href="/Accounts/Details?id=@item.UserAccountId" class="pill">@item.FirstName @item.LastName</a>
+                  <a href="/Accounts/Employees/Details?id=@item.Id" class="pill">@item.FirstName @item.LastName</a>
                }
             }
          </div>

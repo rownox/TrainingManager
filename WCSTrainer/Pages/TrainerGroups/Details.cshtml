@@ -20,7 +20,7 @@
                   <p class="title">Members</p>
                   <div class="info">
                      @foreach (var member in Model.TrainerGroup.Trainers) {
-                        <a href="/Accounts/Details?id=@member.UserAccountId" class="pill">@member.FirstName @member.LastName</a>
+                        <a href="/Accounts/Employees/Details?id=@member.Id" class="pill">@member.FirstName @member.LastName</a>
                      }
                   </div>
                </div>

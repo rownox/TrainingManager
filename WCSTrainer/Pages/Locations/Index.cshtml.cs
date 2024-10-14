@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.Locations {
-   [Authorize(Roles = "admin, trainer")]
+   [Authorize(Roles = "owner, admin, user")]
    public class IndexModel : PageModel {
       private readonly WCSTrainerContext _context;
 

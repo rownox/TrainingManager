@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Locations {
-   [Authorize(Roles = "admin, trainer")]
+   [Authorize(Roles = "owner")]
    public class DeleteModel(Data.WCSTrainerContext context) : PageModel {
 
       [BindProperty]

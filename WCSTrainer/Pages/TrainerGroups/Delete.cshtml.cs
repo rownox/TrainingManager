@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.TrainerGroups {
-   [Authorize(Roles = "admin, trainer")]
+   [Authorize(Roles = "owner")]
    public class DeleteModel : PageModel {
       private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
