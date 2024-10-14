@@ -26,7 +26,7 @@ namespace WCSTrainer.Pages.TrainerGroups {
          }
          TrainerGroup = trainergroup;
          return Page();
-      } 
+      }
 
       public async Task<IActionResult> OnPostAsync() {
          if (!ModelState.IsValid) {

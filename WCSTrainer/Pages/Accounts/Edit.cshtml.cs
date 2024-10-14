@@ -12,7 +12,7 @@ namespace WCSTrainer.Pages.Accounts {
       public UserAccount UserAccount { get; set; } = default!;
 
       public async Task<IActionResult> OnGetAsync(string id) {
-         
+
          var newUser = await userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
 
          if (newUser == null) {

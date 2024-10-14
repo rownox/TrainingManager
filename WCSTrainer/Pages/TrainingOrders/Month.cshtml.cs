@@ -4,11 +4,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
 
-namespace WCSTrainer.Pages.TrainingOrders
-{
+namespace WCSTrainer.Pages.TrainingOrders {
    [Authorize(Roles = "owner, admin, user")]
-   public class MonthModel(WCSTrainerContext context) : PageModel
-    {
+   public class MonthModel(WCSTrainerContext context) : PageModel {
       public IList<TrainingOrder> TrainingOrders { get; set; }
       public IList<Employee> Employees { get; set; }
       [BindProperty]

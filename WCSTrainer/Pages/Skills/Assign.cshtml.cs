@@ -1,14 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Versioning;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using WCSTrainer.Data;
-using Microsoft.AspNetCore.Identity;
-using System.Net.NetworkInformation;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.Skills {
    [Authorize(Roles = "owner, admin, user")]
