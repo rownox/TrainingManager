@@ -6,7 +6,7 @@ using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.TrainingOrders
 {
-   [Authorize(Roles = "admin, trainer, trainee")]
+   [Authorize(Roles = "owner, admin, user")]
    public class MonthModel(WCSTrainerContext context) : PageModel
     {
       public IList<TrainingOrder> TrainingOrders { get; set; }

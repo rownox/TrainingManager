@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.TrainingOrders {
-   [Authorize(Roles = "admin, trainer, trainee")]
-
+   [Authorize(Roles = "owner, admin, user, guest")]
    public class IndexModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
 
       public IList<TrainingOrder> TrainingOrder { get; set; } = default!;

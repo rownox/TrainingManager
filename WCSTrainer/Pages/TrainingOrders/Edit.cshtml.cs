@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.TrainingOrders {
-   [Authorize(Roles = "admin, trainer")]
+   [Authorize(Roles = "owner, admin, user")]
    public class EditModel(WCSTrainerContext context) : PageModel {
 
       [BindProperty]

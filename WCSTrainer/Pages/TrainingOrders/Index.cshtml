@@ -50,8 +50,8 @@
                            int itemCount = 0;
                         }
                         @foreach (var item in Model.TrainingOrder.Reverse()) {
-                           var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
-                           if (!isAdmin) {
+                           var hasPermissions = await UserManager.IsInRoleAsync(user, "admin") || await UserManager.IsInRoleAsync(user, "owner");
+                           if (!hasPermissions) {
                               if (item.CreatedByUserId != user.Id) {
                                  if (user.Employee != null) {
                                     if (item.TraineeId != user.Employee.Id) {

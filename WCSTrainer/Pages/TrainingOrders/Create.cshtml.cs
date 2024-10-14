@@ -9,7 +9,7 @@ using WCSTrainer.Data;
 using Microsoft.AspNetCore.Identity;
 
 namespace WCSTrainer.Pages.TrainingOrders {
-   [Authorize(Roles = "admin, trainer")]
+   [Authorize(Roles = "owner, admin, user")]
    public class CreateModel(WCSTrainerContext context) : PageModel {
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = new TrainingOrder();

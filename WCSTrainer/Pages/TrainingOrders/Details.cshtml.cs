@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.TrainingOrders {
-   [Authorize(Roles = "admin, trainer, trainee")]
+   [Authorize(Roles = "owner, admin, user, guest")]
    public class DetailsModel : PageModel {
       private readonly WCSTrainerContext _context;
 

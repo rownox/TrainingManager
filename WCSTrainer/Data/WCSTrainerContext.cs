@@ -81,10 +81,11 @@ namespace WCSTrainer.Data {
              .WithMany()
              .HasForeignKey(v => v.VerifierId);
 
+         var ownerRole = new IdentityRole("owner") { NormalizedName = "OWNER" };
          var adminRole = new IdentityRole("admin") { NormalizedName = "ADMIN" };
-         var trainerRole = new IdentityRole("trainer") { NormalizedName = "TRAINER" };
-         var traineeRole = new IdentityRole("trainee") { NormalizedName = "TRAINEE" };
-         builder.Entity<IdentityRole>().HasData(adminRole, trainerRole, traineeRole);
+         var userRole = new IdentityRole("user") { NormalizedName = "USER" };
+         var guestRole = new IdentityRole("guest") { NormalizedName = "GUEST" };
+         builder.Entity<IdentityRole>().HasData(ownerRole, adminRole, userRole, guestRole);
       }
    }
 }

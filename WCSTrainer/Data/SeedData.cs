@@ -3,22 +3,32 @@
 namespace WCSTrainer.Data {
    public static class SeedData {
       public static async Task AssignRoles(UserManager<UserAccount> userManager, RoleManager<IdentityRole> roleManager) {
-         var adminsList = new List<String>() { "AadamH", "JayD" };
-         var trainerList = new List<String>() { "KayS" };
+         var ownerList = new List<String>() { "AadamH" };
+         var adminList = new List<String>() { "JayD" };
+         var userList = new List<String>() { "KayS" };
 
-         foreach (var admin in adminsList) {
-            var user = await userManager.FindByNameAsync(admin);
+
+         foreach (var ownerPerm in ownerList) {
+            var user = await userManager.FindByNameAsync(ownerPerm);
+
+            if (user != null) {
+               await userManager.AddToRoleAsync(user, "owner");
+            }
+         }
+
+         foreach (var adminPerm in adminList) {
+            var user = await userManager.FindByNameAsync(adminPerm);
 
             if (user != null) {
                await userManager.AddToRoleAsync(user, "admin");
             }
          }
 
-         foreach (var trainer in trainerList) {
-            var user = await userManager.FindByNameAsync(trainer);
+         foreach (var userPerm in userList) {
+            var user = await userManager.FindByNameAsync(userPerm);
 
             if (user != null) {
-               await userManager.AddToRoleAsync(user, "trainer");
+               await userManager.AddToRoleAsync(user, "user");
             }
          }
       }

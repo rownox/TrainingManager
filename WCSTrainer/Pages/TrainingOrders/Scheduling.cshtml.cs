@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections;
 
 namespace WCSTrainer.Pages.TrainingOrders {
-   [Authorize(Roles = "admin, trainer")]
+   [Authorize(Roles = "owner, admin, user")]
    public class SchedulingModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
 
       public IList<TrainingOrder> TrainingOrders { get; set; } = default!;
