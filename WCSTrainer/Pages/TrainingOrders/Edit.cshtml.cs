@@ -121,7 +121,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          TrainerGroups = await context.TrainerGroups.ToListAsync();
       }
-
       private async Task<TrainingOrder?> initOrder(int? id) {
          var trainingorder = await context.TrainingOrders
              .Include(t => t.Trainee)

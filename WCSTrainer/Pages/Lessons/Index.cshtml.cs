@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.Lessons {
-   [Authorize(Roles = "admin, trainer")]
+   [Authorize(Roles = "owner, admin, user")]
    public class IndexModel : PageModel {
       private readonly WCSTrainer.Data.WCSTrainerContext _context;
 

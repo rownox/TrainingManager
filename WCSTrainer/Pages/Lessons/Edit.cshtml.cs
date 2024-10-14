@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Lessons {
-   [Authorize(Roles = "admin, trainer")]
+   [Authorize(Roles = "owner, admin")]
    public class EditModel : PageModel {
       private readonly WCSTrainer.Data.WCSTrainerContext _context;
 

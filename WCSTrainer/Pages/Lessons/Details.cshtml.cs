@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Lessons {
-   [Authorize(Roles = "admin, trainer")]
+   [Authorize(Roles = "owner, admin, user, guest")]
    public class DetailsModel : PageModel {
       private readonly WCSTrainer.Data.WCSTrainerContext _context;
 
