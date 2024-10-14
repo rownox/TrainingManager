@@ -11,7 +11,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WCSTrainer.Pages.Skills {
-   [Authorize(Roles = "admin, trainer")]
+   [Authorize(Roles = "owner, admin, user")]
    public class AssignModel(WCSTrainerContext context) : PageModel {
 
       [BindProperty]

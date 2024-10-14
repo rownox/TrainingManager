@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.TrainingOrders {
 
-   [Authorize(Roles = "owner, admin, user")]
+   [Authorize(Roles = "owner, admin")]
    public class ApprovalModel(Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;
