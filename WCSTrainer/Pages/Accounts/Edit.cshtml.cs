@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Accounts {
-   [Authorize(Roles = "admin")]
+   [Authorize(Roles = "owner")]
    public class EditModel(UserManager<UserAccount> userManager) : PageModel {
 
       [BindProperty]

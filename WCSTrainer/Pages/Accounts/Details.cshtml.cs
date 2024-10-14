@@ -7,7 +7,7 @@ using NuGet.Versioning;
 using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.Accounts {
-   [Authorize(Roles = "admin")]
+   [Authorize(Roles = "owner, admin")]
    public class DetailsModel(UserManager<UserAccount> userManager, WCSTrainerContext context) : PageModel {
       [BindProperty]
       public UserAccount? UserAccount { get; set; }

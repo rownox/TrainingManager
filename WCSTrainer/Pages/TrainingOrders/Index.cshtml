@@ -50,8 +50,9 @@
                            int itemCount = 0;
                         }
                         @foreach (var item in Model.TrainingOrder.Reverse()) {
-                           var hasPermissions = await UserManager.IsInRoleAsync(user, "admin") || await UserManager.IsInRoleAsync(user, "owner");
-                           if (!hasPermissions) {
+                           var isOwner = await UserManager.IsInRoleAsync(user, "owner");
+                           var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
+                           if (!isOwner && !isAdmin) {
                               if (item.CreatedByUserId != user.Id) {
                                  if (user.Employee != null) {
                                     if (item.TraineeId != user.Employee.Id) {
@@ -94,7 +95,9 @@
                                     </div>
                                     <div class="btns">
                                        <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
-                                       <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
+                                       @if (isOwner) {
+                                          <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
+                                       }
                                     </div>
                                  </div>
                               </div>

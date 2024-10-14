@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.AccountManager {
-   [Authorize(Roles = "admin")]
+   [Authorize(Roles = "owner, admin")]
    public class IndexModel(UserManager<UserAccount> userManager) : PageModel {
       public List<UserAccount> Users { get; set; } = default!;
 

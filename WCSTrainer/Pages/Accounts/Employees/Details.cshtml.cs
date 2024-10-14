@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.Accounts.Employees {
-   [Authorize(Roles = "admin, trainer")]
+   [Authorize(Roles = "owner, admin, user")]
    public class DetailsModel(WCSTrainerContext context) : PageModel {
 
       [BindProperty]
