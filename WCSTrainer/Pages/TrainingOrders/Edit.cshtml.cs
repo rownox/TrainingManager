@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
+using WCSTrainer.Helpers;
+using Microsoft.AspNetCore.Identity;
 
 namespace WCSTrainer.Pages.TrainingOrders {
    [Authorize(Roles = "owner, admin, user")]
-   public class EditModel(WCSTrainerContext context) : PageModel {
+   public class EditModel(WCSTrainerContext context, UserManager<UserAccount> userManager) : PageModel {
 
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;
@@ -33,6 +35,10 @@ namespace WCSTrainer.Pages.TrainingOrders {
          var newOrder = initOrder(id).Result;
          if (newOrder != null) {
             TrainingOrder = newOrder;
+         }
+
+         if (!TrainingOrderHelper.hasPerms(userManager, User, context, TrainingOrder).Result) {
+            return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
          }
 
          foreach (var trainer in TrainingOrder.Trainers) {

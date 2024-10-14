@@ -50,59 +50,54 @@
                            int itemCount = 0;
                         }
                         @foreach (var item in Model.TrainingOrder.Reverse()) {
-                           var isOwner = await UserManager.IsInRoleAsync(user, "owner");
-                           var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
-                           if (!isOwner && !isAdmin) {
-                              if (item.CreatedByUserId != user.Id) {
-                                 if (user.Employee != null) {
-                                    if (item.TraineeId != user.Employee.Id) {
-                                       if (!item.Trainers.Contains(user.Employee)) {
-                                          continue;
-                                       }
-                                    }
-                                 }
+                           if (user.Employee != null) {
+                              if (!TrainingOrderHelper.orderInvolves(UserManager, User, user.Employee, item)) {
+                                 continue;
                               }
-                           }
-                           string name;
-                           if (item.Trainee != null) {
-                              name = item.Trainee.FirstName + " " + item.Trainee.LastName;
-                           } else {
-                              name = "N/A";
-                           }
-                           <li id="@item.Id" class="@item.Status @(item.Archived ? "Archived" : "") searchable"
-                               data-name="@name" style="display: @(itemCount < Model.maxCount ? "flex" : "none");">
-                              <div class="info">
-                                 <div class="title">
-                                    <a class="name" asp-page="./Details" asp-route-id="@item.Id">Training Order #@item.Id</a>
-                                    @{
-                                       var type = "awaiting";
-                                       if (item.Status.Equals("Active")) {
-                                          type = "active";
-                                       } else if (item.Status.Equals("Verified")) {
-                                          type = "verified";
-                                       } else if (item.Status.Equals("Completed")) {
-                                          type = "completed";
-                                       }
-                                       <p class="@type black-pill">@item.Status</p>
-                                       if (item.Archived == true) {
-                                          <p class="archived black-pill">Archived</p>
-                                       }
-                                    }
-                                 </div>
-                                 <div class="sub">
-                                    <div class="sub-text">
-                                       <p class="identifier">Trainee - @name</p>
-                                    </div>
-                                    <div class="btns">
-                                       <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
-                                       @if (isOwner) {
-                                          <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
+                              string name;
+                              if (item.Trainee != null) {
+                                 name = item.Trainee.FirstName + " " + item.Trainee.LastName;
+                              } else {
+                                 name = "N/A";
+                              }
+                              <li id="@item.Id" class="@item.Status @(item.Archived ? "Archived" : "") searchable"
+                                  data-name="@name" style="display: @(itemCount < Model.maxCount ? "flex" : "none");">
+                                 <div class="info">
+                                    <div class="title">
+                                       <a class="name" asp-page="./Details" asp-route-id="@item.Id">Training Order #@item.Id</a>
+                                       @{
+                                          var type = "awaiting";
+                                          if (item.Status.Equals("Active")) {
+                                             type = "active";
+                                          } else if (item.Status.Equals("Verified")) {
+                                             type = "verified";
+                                          } else if (item.Status.Equals("Completed")) {
+                                             type = "completed";
+                                          }
+                                          <p class="@type black-pill">@item.Status</p>
+                                          if (item.Archived == true) {
+                                             <p class="archived black-pill">Archived</p>
+                                          }
                                        }
                                     </div>
+                                    <div class="sub">
+                                       <div class="sub-text">
+                                          <p class="identifier">Trainee - @name</p>
+                                       </div>
+                                       <div class="btns">
+                                          <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>
+                                          @{
+                                             var isOwner = await UserManager.IsInRoleAsync(user, "owner");
+                                             if (isOwner) {
+                                                <a class="btn bg-btn btnRed" onclick="openModal(@item.Id)">Delete</a>
+                                             }
+                                          }
+                                       </div>
+                                    </div>
                                  </div>
-                              </div>
-                           </li>
-                           itemCount++;
+                              </li>
+                              itemCount++;
+                           }
                         }
                      </ul>
                   </div>
