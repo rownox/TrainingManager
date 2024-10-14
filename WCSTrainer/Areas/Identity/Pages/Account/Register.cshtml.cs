@@ -98,7 +98,7 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
 
                   _logger.LogInformation("User created a new account with password.");
 
-                  await _userManager.AddToRoleAsync(user, "trainee");
+                  await _userManager.AddToRoleAsync(user, "guest");
 
                   if (_userManager.Options.SignIn.RequireConfirmedAccount) {
                      return RedirectToPage("RegisterConfirmation", new { username = Input.Username, returnUrl = returnUrl });
