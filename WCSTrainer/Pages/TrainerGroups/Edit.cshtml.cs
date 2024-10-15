@@ -5,38 +5,57 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.TrainerGroups {
    [Authorize(Roles = "owner, admin")]
-   public class EditModel : PageModel {
-      private readonly WCSTrainer.Data.WCSTrainerContext _context;
-
-      public EditModel(WCSTrainer.Data.WCSTrainerContext context) {
-         _context = context;
-      }
-
+   public class EditModel(Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public TrainerGroup TrainerGroup { get; set; } = default!;
+      [BindProperty]
+      public string SelectedEmployeeIdString { get; set; } = default!;
+      public IList<Employee>? Employees { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          if (id == null) {
             return NotFound();
          }
 
-         var trainergroup = await _context.TrainerGroups.FirstOrDefaultAsync(m => m.Id == id);
+         var trainergroup = await context.TrainerGroups
+            .Include(t => t.Trainers)
+            .FirstOrDefaultAsync(m => m.Id == id);
          if (trainergroup == null) {
             return NotFound();
          }
          TrainerGroup = trainergroup;
+         Employees = await context.Employees.ToListAsync();
          return Page();
       }
 
       public async Task<IActionResult> OnPostAsync() {
          if (!ModelState.IsValid) {
+            Employees = await context.Employees.ToListAsync();
             return Page();
          }
 
-         _context.Attach(TrainerGroup).State = EntityState.Modified;
+         context.Attach(TrainerGroup).State = EntityState.Modified;
+         var trainerGroupToUpdate = await context.TrainerGroups
+             .Include(t => t.Trainers)
+             .FirstOrDefaultAsync(t => t.Id == TrainerGroup.Id);
+
+         if (trainerGroupToUpdate == null) {
+            return NotFound();
+         }
+
+         context.Entry(trainerGroupToUpdate).CurrentValues.SetValues(TrainerGroup);
+         if (SelectedEmployeeIdString != null) {
+            List<int> newTrainerIds = SelectedEmployeeIdString.Split(", ").Select(int.Parse).ToList();
+            var newTrainers = await context.Employees
+                .Where(e => newTrainerIds.Contains(e.Id))
+                .ToListAsync();
+            trainerGroupToUpdate.Trainers = newTrainers;
+         } else {
+            trainerGroupToUpdate.Trainers.Clear();
+         }
 
          try {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
          } catch (DbUpdateConcurrencyException) {
             if (!TrainerGroupExists(TrainerGroup.Id)) {
                return NotFound();
@@ -49,7 +68,7 @@ namespace WCSTrainer.Pages.TrainerGroups {
       }
 
       private bool TrainerGroupExists(int id) {
-         return _context.TrainerGroups.Any(e => e.Id == id);
+         return context.TrainerGroups.Any(e => e.Id == id);
       }
    }
 }

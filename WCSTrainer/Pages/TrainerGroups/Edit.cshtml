@@ -1,33 +1,74 @@
 ﻿@page
 @model WCSTrainer.Pages.TrainerGroups.EditModel
 
-@{
-   ViewData["Title"] = "Edit";
-}
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<UserAccount> SignInManager
+@inject UserManager<UserAccount> UserManager
+
+
+<div id="people-component" class="people-component hidden">
+   <partial name="_People" model="Model.Employees" />
+</div>
+<div class="overlay hidden" onclick="closeComponent()"></div>
+
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="user-form">
-            <div class="field-container">
-               <form method="post">
-                  <div asp-validation-summary="All" class="text-danger"></div>
-                  <input hidden asp-for="TrainerGroup.Id" />
-
-                  <div class="form-group">
-                     <div class="form">
-                        <div class="labels">
-                           <label asp-for="TrainerGroup.Name" class="control-label"></label>
-                           <span asp-validation-for="TrainerGroup.Name" class="text-danger"></span>
+            <p class="title">Edit Trainer Group #@Model.TrainerGroup.Id</p>
+            <p class="description">Fill out each required field.</p>
+            @if (SignInManager.IsSignedIn(User)) {
+               var user = await UserManager.GetUserAsync(User);
+               if (user != null) {
+                  <div class="field-container">
+                     <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Name</p>
+                                 <span asp-validation-for="TrainerGroup.Name" class="text-danger"></span>
+                              </div>
+                              <input asp-for="TrainerGroup.Name" class="form-control" />
+                           </div>
                         </div>
-                        <input asp-for="TrainerGroup.Name" class="form-control" />
-                     </div>
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Trainers</p>
+                                 <span asp-validation-for="@Model.SelectedEmployeeIdString" class="text-danger"></span>
+                              </div>
+                              <div class="selections">
+                                 <ul id="trainerList" class="pill-container">
+                                    @foreach (var trainer in Model.TrainerGroup.Trainers) {
+                                       <li class="pill person" onclick="removeItem(this, 'trainer')" value="@trainer.Id">
+                                          @trainer.FirstName @trainer.LastName
+                                       </li>
+                                    }
+                                 </ul>
+                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainer')">
+                                    <p>Select Trainers</p>
+                                 </div>
+                                 <input id="trainerInput" asp-for="@Model.SelectedEmployeeIdString" type="hidden" />
+                              </div>
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="btn-container">
+                                 <input type="submit" value="Save" class="btn bg-btn btnGreen" />
+                              </div>
+                           </div>
+                        </div>
+                     </form>
                   </div>
-                  <div class="form-group">
-                     <input type="submit" value="Save" class="btn bg-btn btnGreen" />
-                  </div>
-               </form>
-            </div>
+               } else {
+                  <p>User invalid.</p>
+               }
+            } else {
+               <p>Not signed in.</p>
+            }
          </div>
       </div>
    </div>

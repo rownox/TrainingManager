@@ -16,7 +16,5 @@ namespace WCSTrainer.Pages.TrainerGroups {
       public async Task OnGetAsync() {
          TrainerGroup = await _context.TrainerGroups.ToListAsync();
       }
-
-
    }
 }

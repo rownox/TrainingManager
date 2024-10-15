@@ -17,26 +17,15 @@ namespace WCSTrainer.Pages.TrainerGroups {
       [BindProperty]
       public string SelectedEmployeeIdString { get; set; } = default!;
       public IList<Employee> Employees { get; set; }
-      public IList<TrainerGroup> TrainerGroups { get; set; }
 
       public async Task<IActionResult> OnGetAsync() {
          Employees = await _context.Employees.ToListAsync();
-         TrainerGroups = await _context.TrainerGroups.ToListAsync();
-
-         ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
-         ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
-
          return Page();
       }
 
       public async Task<IActionResult> OnPostAsync() {
          if (!ModelState.IsValid) {
-
             Employees = await _context.Employees.ToListAsync();
-            TrainerGroups = await _context.TrainerGroups.ToListAsync();
-
-            ViewData["EmployeesJson"] = System.Text.Json.JsonSerializer.Serialize(Employees ?? new List<Employee>());
-            ViewData["TrainerGroupsJson"] = System.Text.Json.JsonSerializer.Serialize(TrainerGroups ?? new List<TrainerGroup>());
             return Page();
          }
 
