@@ -24,6 +24,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
       [BindProperty]
       public string? SelectedTrainerGroupString { get; set; }
       public List<int> SelectedTrainerGroupIds { get; set; } = new List<int>();
+      public SelectList LessonSelectList { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          if (id == null) {
@@ -127,6 +128,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             .ToListAsync();
 
          TrainerGroups = await context.TrainerGroups.ToListAsync();
+         LessonSelectList = new SelectList(await context.Lessons.ToListAsync(), "Id", "Name");
       }
       private async Task<TrainingOrder?> initOrder(int? id) {
          var trainingorder = await context.TrainingOrders
