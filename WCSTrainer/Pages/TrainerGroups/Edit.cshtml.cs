@@ -10,6 +10,7 @@ namespace WCSTrainer.Pages.TrainerGroups {
       public TrainerGroup TrainerGroup { get; set; } = default!;
       [BindProperty]
       public string SelectedEmployeeIdString { get; set; } = default!;
+      [BindProperty]
       public IList<Employee>? Employees { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
@@ -34,41 +35,30 @@ namespace WCSTrainer.Pages.TrainerGroups {
             return Page();
          }
 
-         context.Attach(TrainerGroup).State = EntityState.Modified;
          var trainerGroupToUpdate = await context.TrainerGroups
              .Include(t => t.Trainers)
              .FirstOrDefaultAsync(t => t.Id == TrainerGroup.Id);
 
-         if (trainerGroupToUpdate == null) {
-            return NotFound();
-         }
-
-         context.Entry(trainerGroupToUpdate).CurrentValues.SetValues(TrainerGroup);
-         if (SelectedEmployeeIdString != null) {
-            List<int> newTrainerIds = SelectedEmployeeIdString.Split(", ").Select(int.Parse).ToList();
-            var newTrainers = await context.Employees
-                .Where(e => newTrainerIds.Contains(e.Id))
-                .ToListAsync();
-            trainerGroupToUpdate.Trainers = newTrainers;
-         } else {
-            trainerGroupToUpdate.Trainers.Clear();
-         }
-
-         try {
-            await context.SaveChangesAsync();
-         } catch (DbUpdateConcurrencyException) {
-            if (!TrainerGroupExists(TrainerGroup.Id)) {
-               return NotFound();
+         if (trainerGroupToUpdate != null) {
+            if (SelectedEmployeeIdString != null) {
+               List<int> newTrainerIds = SelectedEmployeeIdString.Split(", ").Select(int.Parse).ToList();
+               var newTrainers = await context.Employees
+                   .Where(e => newTrainerIds.Contains(e.Id))
+                   .ToListAsync();
+               trainerGroupToUpdate.Trainers = newTrainers;
             } else {
-               throw;
+               trainerGroupToUpdate.Trainers.Clear();
             }
+
+            try {
+               await context.SaveChangesAsync();
+            } catch (DbUpdateConcurrencyException) {
+               return NotFound();
+            }
+
+            return RedirectToPage("./Index");
          }
-
-         return RedirectToPage("./Index");
-      }
-
-      private bool TrainerGroupExists(int id) {
-         return context.TrainerGroups.Any(e => e.Id == id);
+         return Page();
       }
    }
 }

@@ -63,6 +63,7 @@
                      list.Add(groupPerson);
                   }
                }
+               
                foreach (var item in list) {
                   <a href="/Accounts/Employees/Details?id=@item.Id" class="pill">@item.FirstName @item.LastName</a>
                }
