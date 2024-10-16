@@ -51,7 +51,6 @@
 	text-decoration: none;
 	cursor: pointer;
 	user-select: none;
-	transition: background-color 0.1s ease-out;
 }
 
 .nbg-btn {
@@ -67,7 +66,7 @@
 .bg-btn {
 	border: 1px solid var(--gray4);
 	background-color: var(--gray2);
-	border-radius: 5px;
+	border-radius: 3px;
 }
 
 .btnWhite {
@@ -75,9 +74,7 @@
 }
 
 	.btnWhite:hover {
-		background-color: var(--white2);
-		border-color: var(--white2);
-		transition: background-color 0s;
+		border-color: var(--white);
 	}
 
 .btnMenu {
@@ -96,10 +93,7 @@
 }
 
 	.btnBlue:hover {
-		border-color: black;
-		background-color: var(--blue1);
-		color: var(--textMain);
-		transition: background-color 0s;
+		border-color: var(--blue1);
 	}
 
 .btnRed {
@@ -107,10 +101,7 @@
 }
 
 	.btnRed:hover {
-		border-color: black;
-		background-color: var(--red2);
-		color: var(--textMain);
-		transition: background-color 0s;
+		border-color: var(--red2);
 	}
 
 .btnGreen {
@@ -118,10 +109,7 @@
 }
 
 	.btnGreen:hover {
-		border-color: black;
-		background-color: var(--green2);
-		color: var(--textMain);
-		transition: background-color 0s;
+		border-color: var(--green);
 	}
 
 .active {
@@ -151,11 +139,11 @@
 .pill {
 	border: 1px solid var(--gray1);
 	color: var(--textMain);
-	background: linear-gradient(20deg, #3f1782, #9659fb);
+	background: linear-gradient(20deg, #3d2d81, #7859fb);
 }
 
 	.pill:hover {
-		border: 1px solid #9a5eff;
+		border: 1px solid #886cff;
 	}
 
 	.pill.inactive {

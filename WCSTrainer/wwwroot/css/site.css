@@ -261,16 +261,16 @@ nav {
 							display: block;
 						}
 
+						.panel .body .properties .user-form .btn-container .btn:hover .hover-img {
+							filter: var(--svgHover);
+						}
+
 				.panel .body .properties .user-form img {
 					height: 20px;
 					max-width: 20px;
 					filter: var(--svg);
 					user-select: none;
 				}
-
-					.panel .body .properties .user-form .hover-img:hover {
-						filter: var(--svgHover);
-					}
 
 				.panel .body .properties .user-form .field-container .form-group {
 					flex-direction: row;

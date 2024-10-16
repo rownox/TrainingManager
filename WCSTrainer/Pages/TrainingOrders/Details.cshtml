@@ -51,7 +51,6 @@
                      Verify Order
                   </a>
                }
-
                @if (SignInManager.IsSignedIn(User)) {
                   var user = await UserManager.GetUserAsync(User);
                   if (user != null) {
@@ -71,8 +70,8 @@
                      }
                   }
                }
-               <div class="btn bg-btn">
-                  <img id="printButton" class="hover-img" src="/images/print.svg">
+               <div id="printButton" class="btn bg-btn btnWhite">
+                  <img class="hover-img" src="/images/print.svg">
                </div>
             </div>
          </div>
