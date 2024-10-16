@@ -9,7 +9,8 @@ namespace WCSTrainer.Pages.TrainerGroups {
       [BindProperty]
       public TrainerGroup TrainerGroup { get; set; } = default!;
       [BindProperty]
-      public string SelectedEmployeeIdString { get; set; } = default!;
+      public string? SelectedTrainerString { get; set; }
+      public List<int> SelectedTrainerIds { get; set; } = new List<int>();
       [BindProperty]
       public IList<Employee>? Employees { get; set; }
 
@@ -26,6 +27,12 @@ namespace WCSTrainer.Pages.TrainerGroups {
          }
          TrainerGroup = trainergroup;
          Employees = await context.Employees.ToListAsync();
+
+         foreach (var trainer in TrainerGroup.Trainers) {
+            SelectedTrainerIds.Add(trainer.Id);
+         }
+         SelectedTrainerIds = TrainerGroup.Trainers.Select(t => t.Id).ToList();
+         SelectedTrainerString = string.Join(", ", SelectedTrainerIds);
          return Page();
       }
 
@@ -40,8 +47,8 @@ namespace WCSTrainer.Pages.TrainerGroups {
              .FirstOrDefaultAsync(t => t.Id == TrainerGroup.Id);
 
          if (trainerGroupToUpdate != null) {
-            if (SelectedEmployeeIdString != null) {
-               List<int> newTrainerIds = SelectedEmployeeIdString.Split(", ").Select(int.Parse).ToList();
+            if (SelectedTrainerString != null) {
+               List<int> newTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
                var newTrainers = await context.Employees
                    .Where(e => newTrainerIds.Contains(e.Id))
                    .ToListAsync();

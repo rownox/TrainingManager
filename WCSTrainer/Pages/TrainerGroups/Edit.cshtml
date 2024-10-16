@@ -38,7 +38,7 @@
                            <div class="form">
                               <div class="labels">
                                  <p class="control-label">Trainers</p>
-                                 <span asp-validation-for="@Model.SelectedEmployeeIdString" class="text-danger"></span>
+                                       <span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
                               </div>
                               <div class="selections">
                                  <ul id="trainerList" class="pill-container">
@@ -51,7 +51,7 @@
                                  <div class="btn bg-btn btnWhite" onclick="openComponent('trainer')">
                                     <p>Select Trainers</p>
                                  </div>
-                                 <input id="trainerInput" asp-for="@Model.SelectedEmployeeIdString" type="hidden" />
+                                 <input id="trainerInput" asp-for="@Model.SelectedTrainerString" type="hidden" />
                               </div>
                            </div>
                         </div>
