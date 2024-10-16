@@ -2,6 +2,13 @@
 @using System.Text.Json.Serialization
 @model List<TrainerGroup>
 
+@functions {
+   public class Group {
+      public int Id { get; set; }
+      public string Name { get; set; } = string.Empty;
+   }
+}
+
 <div class="people-container">
    <div class="search">
       <input type="search" id="searchInputGroups" placeholder="Search By Name" oninput="searchGroups()" />
@@ -14,7 +21,12 @@
    }
    <ul id="groupsList" class="item-container">
       @foreach (var item in Model) {
-         var groupJson = JsonSerializer.Serialize(item, jsonOptions);
+         var newGroup = new Group {
+            Id = item.Id,
+            Name = item.Name,
+         };
+
+         var groupJson = JsonSerializer.Serialize(newGroup, jsonOptions);
          var count = item.Trainers.Count();
          <li onclick="setSelectedGroup('@groupJson', '@count', this)" class="item" data-name="@item.Name">
             <div class="info">
