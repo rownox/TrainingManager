@@ -1,10 +1,6 @@
 ﻿@page
 @model WCSTrainer.Pages.Skills.IndexModel
 
-@{
-   ViewData["Title"] = "Index";
-}
-
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
@@ -51,7 +47,7 @@
             <div class="tools">
                <p class="title">Options:</p>
                <div class="search">
-                  <input placeholder="Search Training Orders" type="search" onchange="update(this)" />
+                  <input placeholder="Search Skills" type="search" onchange="update(this)" />
                </div>
                <div class="btns">
                   <a asp-page="Create" class="btn nbg-btn btnMenu">Create New Skill</a>
