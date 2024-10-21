@@ -6,7 +6,7 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Helpers {
    public class TrainingOrderHelper {
 
-      public static async Task<bool> hasPerms(UserManager<UserAccount> userManager, ClaimsPrincipal claim, WCSTrainerContext context, TrainingOrder trainingOrder) {
+      public static async Task<bool> HasPerms(UserManager<UserAccount> userManager, ClaimsPrincipal claim, WCSTrainerContext context, TrainingOrder trainingOrder) {
          var user = await userManager.GetUserAsync(claim);
          if (user == null) {
             return false;
@@ -16,43 +16,44 @@ namespace WCSTrainer.Helpers {
             return false;
          }
 
-         if (hasPerms(userManager, claim, currentEmployee, trainingOrder).Result) {
+         if (HasPerms(userManager, user, currentEmployee, trainingOrder).Result) {
             return true;
          }
          return false;
       }
 
-      public static async Task<bool> hasPerms(UserManager<UserAccount> userManager, ClaimsPrincipal claim, Employee employee, TrainingOrder trainingOrder) {
-         var user = await userManager.GetUserAsync(claim);
-         if (user == null) {
-            return false;
-         }
+      public static async Task<bool> HasPerms(UserManager<UserAccount> userManager, UserAccount user, Employee employee, TrainingOrder trainingOrder) {
          var isOwner = await userManager.IsInRoleAsync(user, "owner");
          var isAdmin = await userManager.IsInRoleAsync(user, "admin");
          if (isAdmin || isOwner) return true;
 
-         if (employeeOwns(employee, trainingOrder)) {
+         if (EmployeeOwns(employee, trainingOrder)) {
             return true;
          }
          return false;
       }
 
-      public static bool employeeOwns(Employee employee, TrainingOrder order) {
+      public static bool EmployeeOwns(Employee employee, TrainingOrder order) {
          if (order.CreatedByUserId == employee.UserAccountId) {
             return true;
          }
          return false;
       }
 
-      public static bool orderInvolves(UserManager<UserAccount> userManager, ClaimsPrincipal claim, Employee employee, TrainingOrder trainingOrder) {
-         if (employee.TrainingOrdersAsTrainee.Contains(trainingOrder)) {
-            return true;
-         }
-         if (employee.TrainingOrdersAsTrainer.Contains(trainingOrder)) {
-            return true;
-         }
-         if (hasPerms(userManager, claim, employee, trainingOrder).Result) {
-            return true;
+      public static async Task<bool> OrderInvolves(UserManager<UserAccount> userManager, ClaimsPrincipal claim, TrainingOrder trainingOrder) {
+         var user = await userManager.GetUserAsync(claim);
+         if (user != null) {
+            if (user.Employee != null) {
+               if (HasPerms(userManager, user, user.Employee, trainingOrder).Result == true) {
+                  return true;
+               }
+               if (user.Employee.TrainingOrdersAsTrainee.Contains(trainingOrder)) {
+                  return true;
+               }
+               if (user.Employee.TrainingOrdersAsTrainer.Contains(trainingOrder)) {
+                  return true;
+               }
+            }
          }
          return false;
       }

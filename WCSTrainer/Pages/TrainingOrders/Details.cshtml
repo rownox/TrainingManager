@@ -46,24 +46,20 @@
                   <a class="btn bg-btn btnRed" asp-page="./Verification" asp-route-id="@Model.TrainingOrder.Id">
                      Verify Order
                   </a>
-               }
+               }               
                @if (SignInManager.IsSignedIn(User)) {
-                  var user = await UserManager.GetUserAsync(User);
-                  if (user != null) {
-                     bool isAdmin = await UserManager.IsInRoleAsync(user, "admin");
-                     if (isAdmin) {
-                        string text = "";
-                        <form method="post" id="archiveForm">
-                           @if (Model.TrainingOrder.Archived) {
-                              text = "Unarchive";
-                           } else {
-                              text = "Archive";
-                           }
-                           <a class="btn bg-btn btnWhite" href="#" onclick="document.getElementById('archiveForm').submit();">
-                              @text Document
-                           </a>
-                        </form>
-                     }
+                  if (TrainingOrderHelper.OrderInvolves(UserManager, User, Model.TrainingOrder).Result == true) {
+                     string text = "";
+                     <form method="post" id="archiveForm">
+                        @if (Model.TrainingOrder.Archived) {
+                           text = "Unarchive";
+                        } else {
+                           text = "Archive";
+                        }
+                        <a class="btn bg-btn btnWhite" href="#" onclick="document.getElementById('archiveForm').submit();">
+                           @text Document
+                        </a>
+                     </form>
                   }
                }
                <div id="printButton" class="btn bg-btn btnWhite">

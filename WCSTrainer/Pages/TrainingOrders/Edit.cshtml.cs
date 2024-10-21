@@ -38,7 +38,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             TrainingOrder = newOrder;
          }
 
-         if (!TrainingOrderHelper.hasPerms(userManager, User, context, TrainingOrder).Result) {
+         if (!TrainingOrderHelper.HasPerms(userManager, User, context, TrainingOrder).Result) {
             return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
          }
 
