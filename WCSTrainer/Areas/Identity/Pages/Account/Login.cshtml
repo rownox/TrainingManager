@@ -1,9 +1,6 @@
 ﻿@page
 @model LoginModel
 
-@{
-}
-
 <div class="login-container">
     <p class="title">Log in</p>
     <form id="account" method="post">
@@ -30,7 +27,7 @@
         <div class="login-links">
             <a id="forgot-password" asp-page="./ForgotPassword">Forgot Password?</a>
             <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register Account</a>
-            <!-- <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a> -->
+            <!-- <a id="resend-confirmation" asp-page="./resendemailconfirmation">resend email confirmation</a> -->
         </div>
     </form>
 </div>
