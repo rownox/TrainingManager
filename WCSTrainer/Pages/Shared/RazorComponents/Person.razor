@@ -24,9 +24,38 @@
    <div class="text-group">
       <p class="title">Skills</p>
       <div class="info">
-         @foreach (var skill in employee.Skills) {
-            <a href="/Skills/Details?id=@skill.Id" class="pill yellow">@skill.Name</a>
-         }
+         <div class="skills-container">
+            @foreach (var skill in employee.Skills) {
+               <div class="skill-box">
+                  <div class="title-container">
+                     <a href="/Skills/Details?id=@skill.Id" class="skill-title">@skill.Name</a>
+                  </div>
+                  @if (skill.TrainingOrders.Count > 0) {
+                     <div class="order-list">
+                        @foreach (var order in employee.TrainingOrdersAsTrainee.OrderBy(o => o.Archived || o.Status != "Active")) {
+                           var cssClass = order.Archived ? "pill inactive" : "pill";
+                           if (order.ParentSkillId == skill.Id) {
+                              <div class="order-block">
+                                 <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+                                 @{
+                                    var type = "awaiting";
+                                    if (order.Status.Equals("Active")) {
+                                       type = "active";
+                                    } else if (order.Status.Equals("Verified")) {
+                                       type = "verified";
+                                    } else if (order.Status.Equals("Completed")) {
+                                       type = "completed";
+                                    }
+                                    <p class="@type">⬤</p>
+                                 }
+                              </div>
+                           }
+                        }
+                     </div>
+                  }
+               </div>
+            }
+         </div>
       </div>
    </div>
    <div class="text-group">
@@ -34,7 +63,9 @@
       <div class="info">
          @foreach (var order in employee.TrainingOrdersAsTrainee.OrderBy(o => o.Archived || o.Status != "Active")) {
             var cssClass = order.Archived || order.Status != "Active" ? "pill inactive" : "pill";
-            <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+            if (order.ParentSkill == null) {
+               <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+            }
          }
       </div>
    </div>
@@ -78,6 +109,7 @@
       var tempEmployee = await _context.Employees
           .Include(e => e.TrainingOrdersAsTrainer)
           .Include(e => e.TrainingOrdersAsTrainee)
+            .ThenInclude(t => t.ParentSkill)
           .Include(e => e.Groups)
           .Include(e => e.Skills)
           .FirstOrDefaultAsync(m => m.Id == EmployeeId);

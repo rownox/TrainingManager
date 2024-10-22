@@ -78,6 +78,9 @@
                                  <div class="sub">
                                     <div class="sub-text">
                                        <p class="identifier">Trainee - @name</p>
+                                       @if (item.ParentSkill != null) {
+                                          <p class="identifier">Skill - @item.ParentSkill.Name</p>
+                                       }
                                     </div>
                                     <div class="btns">
                                        <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>

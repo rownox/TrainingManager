@@ -402,6 +402,53 @@ nav {
 						gap: 5px;
 					}
 
+					.panel .body .properties .user-form .field-container .text-group .info .skills-container {
+						display: flex;
+						gap: 10px;
+						flex-wrap: wrap;
+					}
+
+						.panel .body .properties .user-form .skill-box {
+							padding: 5px;
+							display: flex;
+							gap: 5px;
+							flex-direction: column;
+							justify-content: center;
+							width: 100px;
+							border: 1px solid var(--gray4);
+						}
+
+							.panel .body .properties .user-form .skill-box .title-container {
+								width: 100%;
+							}
+
+								.panel .body .properties .user-form .skill-box .title-container .skill-title {
+									color: var(--textSub1);
+									font-size: 14px;
+									font-weight: 500;
+									display: flex;
+									justify-content: center;
+									width: 100%;
+								}
+
+								.panel .body .properties .user-form .skill-box .title-container .skill-title:hover {
+									color: var(--textMain);
+								}
+
+							.panel .body .properties .user-form .skill-box .order-list {
+								gap: 5px;
+							}
+
+								.panel .body .properties .user-form .skill-box .order-list .pill {
+									font-size: 14px;
+									flex-grow: 1;
+								}
+
+								.panel .body .properties .user-form .skill-box .order-list .order-block {
+									display: flex;
+									gap: 5px;
+								}
+
 			.panel .body .properties .tool-container {
 				width: 270px;
 				min-width: 270px;

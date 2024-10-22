@@ -55,6 +55,11 @@ namespace WCSTrainer.Data {
              .HasMany(s => s.Lessons)
              .WithMany();
 
+         builder.Entity<Skill>()
+          .HasMany(s => s.TrainingOrders)
+          .WithOne(to => to.ParentSkill)
+          .HasForeignKey(to => to.ParentSkillId);
+
          // TrainerGroup
          builder.Entity<TrainerGroup>()
              .HasMany(tg => tg.Trainers)

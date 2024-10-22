@@ -22,6 +22,7 @@ namespace WCSTrainer.Pages.Skills {
          var skill = await _context.Skills
             .Include(s => s.Lessons)
             .Include(s => s.Employees)
+               .ThenInclude(e => e.TrainingOrdersAsTrainee)
             .FirstOrDefaultAsync(m => m.Id == id);
          if (skill == null) {
             return NotFound();

@@ -25,10 +25,38 @@
                   </div>
                </div>
                <div class="text-group">
-                  <p class="title">Assigned To</p>
+                  <p class="title">Currently Learning</p>
                   <div class="info">
                      @foreach (var person in Model.Skill.Employees) {
-                        <a href="/Accounts/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
+                        bool isActive = false;
+                        foreach (var orderAsTrainee in person.TrainingOrdersAsTrainee) {
+                           if (orderAsTrainee.ParentSkillId == Model.Skill.Id) {
+                              if (orderAsTrainee.Status == "Active" || orderAsTrainee.Status == "Awaiting Approval") {
+                                 isActive = true;
+                              }
+                           }
+                        }
+                        if (isActive) {
+                           <a href="/Accounts/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
+                        }
+                     }
+                  </div>
+               </div>
+               <div class="text-group">
+                  <p class="title">Learning Completed</p>
+                  <div class="info">
+                     @foreach (var person in Model.Skill.Employees) {
+                        bool isActive = false;
+                        foreach (var orderAsTrainee in person.TrainingOrdersAsTrainee) {
+                           if (orderAsTrainee.ParentSkillId == Model.Skill.Id) {
+                              if (orderAsTrainee.Status == "Active" || orderAsTrainee.Status == "Awaiting Approval") {
+                                 isActive = true;
+                              }
+                           }
+                        }
+                        if (!isActive) {
+                           <a href="/Accounts/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
+                        }
                      }
                   </div>
                </div>
