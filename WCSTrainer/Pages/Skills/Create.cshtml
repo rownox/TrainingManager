@@ -37,9 +37,9 @@
                      <div class="form">
                         <div class="labels">
                            <p class="control-label">Lesson</p>
-                           <span asp-validation-for="@Model.LessonString" class="text-danger"></span>
+                           <span asp-validation-for="@Model.SelectedLessonList" class="text-danger"></span>
                         </div>
-                        <select asp-for="@Model.LessonString" class="form-control" asp-items="@Model.LessonSelectList"></select>
+                        <select asp-for="@Model.SelectedLessonList" multiple class="multi-select" asp-items="@Model.LessonSelectList"></select>
                      </div>
                   </div>
                   <div class="form-group">

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace WCSTrainer.Pages.Skills {
    [Authorize(Roles = "owner, admin")]
@@ -10,7 +11,7 @@ namespace WCSTrainer.Pages.Skills {
       [BindProperty]
       public Skill Skill { get; set; } = default!;
       [BindProperty]
-      public string? LessonString { get; set; }
+      public List<string> SelectedLessonList { get; set; } = new List<string>();
       public SelectList LessonSelectList { get; set; }
 
       public async Task<IActionResult> OnGetAsync() {
@@ -23,15 +24,18 @@ namespace WCSTrainer.Pages.Skills {
             return Page();
          }
 
+         if (SelectedLessonList == null) {
+            return Page();
+         }
+
          context.Skills.Add(Skill);
          await context.SaveChangesAsync();
-
-         if (LessonString != null) {
-            var lessonIds = LessonString.Split(", ").Select(int.Parse).ToList();
-
-            Skill.Lessons = await context.Lessons
-                .Where(e => lessonIds.Contains(e.Id))
-                .ToListAsync();
+         
+         foreach (var option in SelectedLessonList) {
+            var lesson = await context.Lessons.FirstOrDefaultAsync(l => l.Id.ToString() == option);
+            if (lesson != null) {
+               Skill.Lessons.Add(lesson);
+            }
          }
 
          context.Skills.Update(Skill);
