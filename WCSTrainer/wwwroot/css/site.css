@@ -677,6 +677,11 @@ nav {
 
 								.panel .body .properties .list-container .order-list li .info .sub .skill-name {
 									color: var(--textSub1);
+									text-decoration: none;
+								}
+
+								.panel .body .properties .list-container .order-list li .info .sub .skill-name:hover {
+									text-decoration: underline;
 								}
 
 								.panel .body .properties .list-container .order-list li .info .sub .btns {
