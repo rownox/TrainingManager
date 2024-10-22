@@ -420,20 +420,25 @@ nav {
 							display: flex;
 							gap: 5px;
 							flex-direction: column;
-							width: fit-content;
+							width: 120px;
+							background-color: black;
 							border: 1px solid var(--gray4);
 						}
 
 							.panel .body .properties .user-form .skill-box .title-container {
+								padding: 0;
 							}
 
 								.panel .body .properties .user-form .skill-box .title-container .skill-title {
+									text-decoration: none;
 									color: var(--textSub1);
 									font-size: 14px;
 									font-weight: 500;
 									display: flex;
-									justify-content: center;
-									padding: 0 10px;
+									padding: 0 2px;
+									padding-bottom: 2px;
+									border-bottom: 1px solid var(--gray4);
+				
 								}
 
 								.panel .body .properties .user-form .skill-box .title-container .skill-title:hover {
@@ -634,7 +639,6 @@ nav {
 							display: flex;
 							flex-direction: column;
 							text-decoration: none;
-							min-height: 55px;
 						}
 
 							.panel .body .properties .list-container .order-list li .info .title {
@@ -662,28 +666,29 @@ nav {
 
 							.panel .body .properties .list-container .order-list li .info .sub {
 								display: flex;
-								padding-top: 3px;
-								color: var(--textSub2);
 								flex-direction: row;
 								justify-content: space-between;
+								align-items: flex-start;
 							}
 
-								.panel .body .properties .list-container .order-list li .info .sub .sub-text {
-
+								.panel .body .properties .list-container .order-list li .info .sub .identifier {
+									color: var(--textSub2);
 								}
 
-									.panel .body .properties .list-container .order-list li .info .sub .sub-text p {
-										display: flex;
-									}
+								.panel .body .properties .list-container .order-list li .info .sub .skill-name {
+									color: var(--textSub1);
+								}
 
 								.panel .body .properties .list-container .order-list li .info .sub .btns {
 									display: flex;
 									gap: 5px;
+									align-self: flex-end;
 								}
 
 									.panel .body .properties .list-container .order-list li .info .sub .btns .btn {
 										padding: 4px 10px;
 										font-size: 13px;
+										height: fit-content;
 									}
 
 								

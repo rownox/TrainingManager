@@ -60,6 +60,7 @@
                               <div class="info">
                                  <div class="title">
                                     <a class="name" asp-page="./Details" asp-route-id="@item.Id">Training Order #@item.Id</a>
+
                                     @{
                                        var type = "awaiting";
                                        if (item.Status.Equals("Active")) {
@@ -77,10 +78,10 @@
                                  </div>
                                  <div class="sub">
                                     <div class="sub-text">
-                                       <p class="identifier">Trainee - @name</p>
                                        @if (item.ParentSkill != null) {
-                                          <p class="identifier">Skill - @item.ParentSkill.Name</p>
+                                          <p class="skill-name">@item.ParentSkill.Name</p>
                                        }
+                                       <p class="identifier">Trainee - @name</p>
                                     </div>
                                     <div class="btns">
                                        <a class="btn bg-btn btnWhite" asp-page="./Details" asp-route-id="@item.Id">View</a>

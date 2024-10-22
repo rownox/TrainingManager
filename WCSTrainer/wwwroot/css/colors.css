@@ -117,15 +117,16 @@
 }
 
 .awaiting {
-	color: var(--yellow1);
+	color: var(--red1);
+	
 }
 
 .completed {
-	color: var(--blue1);
+	color: var(--yellow1);
 }
 
 .verified {
-	color: var(--red1);
+	color: var(--blue1);
 }
 
 .archived {
