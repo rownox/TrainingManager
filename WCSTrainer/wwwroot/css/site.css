@@ -331,6 +331,8 @@ nav {
 						background: var(--black);
 						color: var(--textMain);
 						border: 1px solid var(--gray4);
+						min-height: fit-content;
+						height: auto;
 					}
 
 					.panel .body .properties .user-form .field-container .form-group .form-drop2 {
@@ -406,8 +408,16 @@ nav {
 						flex-wrap: wrap;
 						font-size: 16px;
 						width: 100%;
-						gap: 5px;
 					}
+
+						.panel .body .properties .user-form .field-container .text-group .info .description-container {
+							font-size: 16px;
+						}
+
+						.panel .body .properties .user-form .field-container .text-group .info .description-link {
+							color: var(--blue1);
+							width: fit-content;
+						}
 
 					.panel .body .properties .user-form .field-container .text-group .info .skills-container {
 						display: flex;

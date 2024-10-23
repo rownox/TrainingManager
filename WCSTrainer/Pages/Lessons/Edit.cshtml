@@ -26,7 +26,7 @@
                            <label asp-for="Lesson.Description" class="control-label"></label>
                            <span asp-validation-for="Lesson.Description" class="text-danger"></span>
                         </div>
-                        <textarea rows="5" asp-for="Lesson.Description" 
+                        <textarea class="desc-resize" rows="5" asp-for="Lesson.Description" 
                         placeholder="Describe the steps needed to complete this lesson.">
 
                         </textarea>
@@ -42,6 +42,7 @@
    </div>
 </div>
 
+<script src="~/js/description.js"></script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

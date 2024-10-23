@@ -1,5 +1,14 @@
 ﻿@page
 @model WCSTrainer.Pages.Lessons.DetailsModel
+@using System.Text.RegularExpressions
+
+@functions {
+   public string ConvertUrlsToLinks(string content) {
+      var urlRegex = new Regex(@"(http|https)://[^\s]+");
+      return urlRegex.Replace(content, "<a class=\"description-link\" href=\"$0\" target=\"_blank\">$0</a>");
+   }
+}
+
 
 <div class="panel">
    <div class="body">
@@ -14,7 +23,9 @@
                </div>
                <div class="text-group">
                   <p class="title">Description</p>
-                  <pre class="info">@Model.Lesson.Description</pre>
+                  <div class="info">
+                     <pre class="description-container">@Html.Raw(ConvertUrlsToLinks(Model.Lesson.Description))</pre>
+                  </div>
                </div>
             </div>
             <div class="btn-container">

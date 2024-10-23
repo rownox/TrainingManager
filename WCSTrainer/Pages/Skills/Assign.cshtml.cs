@@ -31,7 +31,6 @@ namespace WCSTrainer.Pages.Skills {
          }
 
          Skill = skill;
-
          Employees = await context.Employees.ToListAsync();
 
          return Page();
@@ -39,7 +38,7 @@ namespace WCSTrainer.Pages.Skills {
 
       public async Task<IActionResult> OnPostAsync() {
          if (!ModelState.IsValid) {
-            return Page();
+            return OnGetAsync(Skill.Id).Result;
          }
 
          var trainee = await context.Employees
@@ -49,7 +48,7 @@ namespace WCSTrainer.Pages.Skills {
 
          if (trainee == null) {
             ModelState.AddModelError("", "Selected trainee not found.");
-            return Page();
+            return OnGetAsync(Skill.Id).Result;
          }
 
          var skill = await context.Skills
@@ -59,12 +58,12 @@ namespace WCSTrainer.Pages.Skills {
 
          if (skill == null) {
             ModelState.AddModelError("", "Selected skill not found.");
-            return Page();
+            return OnGetAsync(Skill.Id).Result;
          }
 
          if (skill.Employees.Contains(trainee)) {
             ModelState.AddModelError("", "The skill was already assigned to this employee.");
-            return Page();
+            return OnGetAsync(Skill.Id).Result;
          }
 
          using var transaction = await context.Database.BeginTransactionAsync();
@@ -94,6 +93,7 @@ namespace WCSTrainer.Pages.Skills {
                skill.TrainingOrders.Add(newOrder);
             }
 
+            context.Skills.Update(skill);
             await context.SaveChangesAsync();
             await transaction.CommitAsync();
 
@@ -104,12 +104,12 @@ namespace WCSTrainer.Pages.Skills {
                return NotFound();
             } else {
                ModelState.AddModelError("", "Concurrency error occurred. Please try again.");
-               return Page();
+               return OnGetAsync(Skill.Id).Result;
             }
          } catch (Exception ex) {
             await transaction.RollbackAsync();
             ModelState.AddModelError("", $"An error occurred: {ex.Message}");
-            return Page();
+            return OnGetAsync(Skill.Id).Result;
          }
       }
    }
