@@ -12,7 +12,7 @@
 	--white2: #3b4042;
 	--red1: #ff4d4d;
 	--red2: #d81d1d;
-	--blue1: #00abf5;
+	--blue1: #0db4fc;
 	--blue2: #007ac1;
 	--green1: #81ff8f;
 	--green2: #0a8e19;
@@ -118,7 +118,6 @@
 
 .awaiting {
 	color: var(--red1);
-	
 }
 
 .completed {
@@ -131,6 +130,10 @@
 
 .archived {
 	color: var(--textSub1);
+}
+
+.unarchived {
+	color: var(--textMain);
 }
 
 .highlight {
