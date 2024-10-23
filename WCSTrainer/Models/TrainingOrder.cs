@@ -19,8 +19,8 @@
    public Location? Location { get; set; }
    public int? VerificationId { get; set; }
    public Verification? Verification { get; set; }
-   public ICollection<Employee> Trainers { get; set; } = new List<Employee>();
-   public ICollection<TrainerGroup> TrainerGroups { get; set; } = new List<TrainerGroup>();
+   public ICollection<Employee> Trainers { get; set; } = [];
+   public ICollection<TrainerGroup> TrainerGroups { get; set; } = [];
    public string? CreatedByUserId { get; set; }
    public bool Archived { get; set; }
 }

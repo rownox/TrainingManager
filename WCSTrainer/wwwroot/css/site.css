@@ -408,6 +408,7 @@ nav {
 						flex-wrap: wrap;
 						font-size: 16px;
 						width: 100%;
+						gap: 5px;
 					}
 
 						.panel .body .properties .user-form .field-container .text-group .info .description-container {
@@ -808,7 +809,7 @@ nav {
 
 						.panel .body .properties .scheduling .schedule .months .month {
 							width: 20%;
-							min-width: 90px;
+							min-width: 160px;
 							display: flex;
 							flex-direction: column;
 							cursor: pointer;

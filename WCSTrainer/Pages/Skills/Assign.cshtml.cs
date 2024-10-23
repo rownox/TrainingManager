@@ -90,7 +90,6 @@ namespace WCSTrainer.Pages.Skills {
 
                context.TrainingOrders.Add(newOrder);
                trainee.TrainingOrdersAsTrainee.Add(newOrder);
-               skill.TrainingOrders.Add(newOrder);
             }
 
             context.Skills.Update(skill);

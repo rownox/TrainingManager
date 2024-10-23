@@ -5,8 +5,8 @@
    public string Status { get; set; } = string.Empty;
    public string? UserAccountId { get; set; }
    public UserAccount? UserAccount { get; set; }
-   public ICollection<Skill> Skills { get; set; } = new List<Skill>();
-   public ICollection<TrainingOrder> TrainingOrdersAsTrainee { get; set; } = new List<TrainingOrder>();
-   public ICollection<TrainingOrder> TrainingOrdersAsTrainer { get; set; } = new List<TrainingOrder>();
-   public ICollection<TrainerGroup> Groups { get; set; } = new List<TrainerGroup>();
+   public ICollection<Skill> Skills { get; set; } = [];
+   public ICollection<TrainingOrder> TrainingOrdersAsTrainee { get; set; } = [];
+   public ICollection<TrainingOrder> TrainingOrdersAsTrainer { get; set; } = [];
+   public ICollection<TrainerGroup> Groups { get; set; } = [];
 }
