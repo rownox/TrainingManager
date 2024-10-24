@@ -15,20 +15,24 @@ namespace WCSTrainer.Pages.TrainingOrders {
       public int selectedMonth { get; set; }
       [BindProperty]
       public int searchFor { get; set; }
+      public int EarliestYear { get; set; }
 
-      public async Task OnGetAsync() {
+      public async Task<IActionResult> OnGetAsync() {
          Employees = await context.Employees
             .Include(e => e.TrainingOrdersAsTrainer)
             .ToListAsync();
          TrainingOrders = await context.TrainingOrders.ToListAsync();
+
+         EarliestYear = TrainingOrders
+            .Select(t => t.CreateDate.Year)
+            .DefaultIfEmpty(DateTime.Now.Year)
+            .Min();
+
+         return Page();
       }
 
-      public async Task<IActionResult> OnPostAsync() {
-         Employees = await context.Employees
-            .Include(e => e.TrainingOrdersAsTrainer)
-            .ToListAsync();
-         TrainingOrders = await context.TrainingOrders.ToListAsync();
-         return Page();
+      public IActionResult OnPost() {
+         return OnGetAsync().Result;
       }
 
       public int countOrders() {
@@ -64,7 +68,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             if (effectiveStart <= effectiveEnd) {
                if (employeeHasOrder(order)) {
-                  count += order.Duration;
+                  if (order.Status == "Active") {
+                     count += order.Duration;
+                  }
                }
             }
          }

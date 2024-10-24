@@ -115,6 +115,14 @@ img {
 	user-select: none;
 }
 
+.search-box {
+	height: 30px;
+	padding: 5px;
+	color: var(--textMain);
+	background-color: var(--gray1);
+	border: 1px solid var(--gray5);
+}
+
 @media print {
 	body * {
 		visibility: hidden;

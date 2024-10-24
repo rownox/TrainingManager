@@ -26,7 +26,6 @@ nav {
 	}
 
 		nav .nav-container .nav-buttons {
-
 		}
 
 			nav .nav-container .nav-buttons ul {
@@ -64,7 +63,6 @@ nav {
 					}
 
 					nav .nav-container .nav-buttons ul li .clickable {
-
 					}
 
 						nav .nav-container .nav-buttons ul li .clickable:hover {
@@ -169,12 +167,11 @@ nav {
 
 					.panel .body .side-bar .link-list .btn:hover {
 						background-color: var(--gray3);
-						
 					}
 
-					.panel .body .side-bar .link-list .btn:hover .icon {
-						filter: var(--svgHover);
-					}
+						.panel .body .side-bar .link-list .btn:hover .icon {
+							filter: var(--svgHover);
+						}
 
 			.panel .body .side-bar .selected {
 				background-color: var(--gray3);
@@ -296,8 +293,6 @@ nav {
 						}
 
 							.panel .body .properties .user-form .field-container .form-group .form .labels .control-label {
-
-
 							}
 
 							.panel .body .properties .user-form .field-container .form-group .form .labels .text-danger {
@@ -364,7 +359,6 @@ nav {
 
 
 				.panel .body .properties .user-form .field-container .form-group .selector {
-					
 				}
 
 				.panel .body .properties .user-form .field-container .btn {
@@ -424,62 +418,61 @@ nav {
 							display: flex;
 						}
 
-					.panel .body .properties .user-form .field-container .text-group .info .skills-container {
-						display: flex;
-						gap: 5px;
-						flex-wrap: wrap;
-					}
-
-						.panel .body .properties .user-form .skill-box {
-							padding: 5px;
+						.panel .body .properties .user-form .field-container .text-group .info .skills-container {
 							display: flex;
 							gap: 5px;
-							flex-direction: column;
-							width: 120px;
-							background-color: black;
-							border: 1px solid var(--gray4);
+							flex-wrap: wrap;
 						}
 
-							.panel .body .properties .user-form .skill-box .title-container {
-								padding: 0;
+				.panel .body .properties .user-form .skill-box {
+					padding: 5px;
+					display: flex;
+					gap: 5px;
+					flex-direction: column;
+					width: 120px;
+					background-color: black;
+					border: 1px solid var(--gray4);
+				}
+
+					.panel .body .properties .user-form .skill-box .title-container {
+						padding: 0;
+					}
+
+						.panel .body .properties .user-form .skill-box .title-container .skill-title {
+							text-decoration: none;
+							color: var(--textSub1);
+							font-size: 14px;
+							font-weight: 500;
+							display: flex;
+							padding: 0 2px;
+							padding-bottom: 2px;
+							border-bottom: 1px solid var(--gray4);
+						}
+
+							.panel .body .properties .user-form .skill-box .title-container .skill-title:hover {
+								color: var(--textMain);
 							}
 
-								.panel .body .properties .user-form .skill-box .title-container .skill-title {
-									text-decoration: none;
-									color: var(--textSub1);
-									font-size: 14px;
-									font-weight: 500;
-									display: flex;
-									padding: 0 2px;
-									padding-bottom: 2px;
-									border-bottom: 1px solid var(--gray4);
-				
-								}
+					.panel .body .properties .user-form .skill-box .order-list {
+						gap: 5px;
+					}
 
-								.panel .body .properties .user-form .skill-box .title-container .skill-title:hover {
-									color: var(--textMain);
-								}
+						.panel .body .properties .user-form .skill-box .order-list .pill {
+							font-size: 14px;
+							flex-grow: 1;
+						}
 
-							.panel .body .properties .user-form .skill-box .order-list {
-								gap: 5px;
+						.panel .body .properties .user-form .skill-box .order-list .order-block {
+							display: flex;
+							gap: 5px;
+						}
+
+							.panel .body .properties .user-form .skill-box .order-list .order-block .dot {
+								display: flex;
+								align-items: flex-start;
+								padding-top: 1px;
+								cursor: pointer;
 							}
-
-								.panel .body .properties .user-form .skill-box .order-list .pill {
-									font-size: 14px;
-									flex-grow: 1;
-								}
-
-								.panel .body .properties .user-form .skill-box .order-list .order-block {
-									display: flex;
-									gap: 5px;
-								}
-
-									.panel .body .properties .user-form .skill-box .order-list .order-block .dot {
-										display: flex;
-										align-items: flex-start;
-										padding-top: 1px;
-										cursor: pointer;
-									}
 
 			.panel .body .properties .tool-container {
 				width: 270px;
@@ -531,45 +524,51 @@ nav {
 						font-size: 17px;
 					}
 
+					.panel .body .properties .tool-container .tools .selectors .btn {
+						padding: 5px 10px;
+						display: flex;
+						font-size: 14px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					}
+
+
 					.panel .body .properties .tool-container .tools .btns {
 						flex-direction: column;
 						display: flex;
 					}
 
-						.panel .body .properties .tool-container .tools .btn {
-							padding: 5px 0;
-							display: flex;
-						}
+					.panel .body .properties .tool-container .tools .btn {
+						padding: 5px 0;
+						display: flex;
+					}
 
 					.panel .body .properties .tool-container .tools .search {
 						width: 100%;
 						display: flex;
 						flex-direction: column;
 						padding: 20px 0;
+						height: fit-content;
 					}
 
 						.panel .body .properties .tool-container .tools .search .side {
 							display: flex;
-							justify-content: space-between;
+							gap: 10px;
 						}
 
 							.panel .body .properties .tool-container .tools .search .side input {
-								width: 65%;
+								display: flex;
+								flex-grow: 1;
 							}
-
-						.panel .body .properties .tool-container .tools .search input {
-							height: 30px;
-							margin-top: 10px;
-						}
 
 						.panel .body .properties .tool-container .tools .search select {
 							height: 30px;
-							margin-top: 10px;
 							width: 30%;
 						}
 
 					.panel .body .properties .tool-container .tools .selections {
-						display: flex;	
+						display: flex;
 						flex-direction: column;
 						margin-bottom: 20px;
 						gap: 10px;
@@ -592,7 +591,6 @@ nav {
 						.panel .body .properties .tool-container .tools .selections .section-info {
 							display: flex;
 							flex-grow: 1;
-							
 						}
 
 					.panel .body .properties .tool-container .tools .info {
@@ -621,10 +619,8 @@ nav {
 			}
 
 				.panel .body .properties .list-container .top {
-					border: 1px solid var(--gray4);
 					background-color: var(--gray1);
-					border-radius: 5px;
-					padding: 8px;
+					padding-bottom: 10px;
 				}
 
 				.panel .body .properties .list-container .order-list {
@@ -648,6 +644,7 @@ nav {
 						border-left: 3px solid;
 						border-radius: 3px;
 						background: linear-gradient(to right, var(--gray2), var(--gray1));
+						border-bottom: 1px solid var(--gray3);
 					}
 
 						.panel .body .properties .list-container .order-list li:hover {
@@ -693,10 +690,10 @@ nav {
 									color: var(--textSub2);
 								}
 
-								.panel .body .properties .list-container .order-list li .info .skill-name {
-									color: var(--textSub1);
-									text-decoration: none;
-								}
+							.panel .body .properties .list-container .order-list li .info .skill-name {
+								color: var(--textSub1);
+								text-decoration: none;
+							}
 
 								.panel .body .properties .list-container .order-list li .info .skill-name:hover {
 									text-decoration: underline;
@@ -714,7 +711,7 @@ nav {
 								height: fit-content;
 							}
 
-								
+
 
 			.panel .body .properties .order-list2 {
 				overflow-y: scroll;
@@ -910,8 +907,8 @@ nav {
 								cursor: pointer;
 							}
 
-			
-			
+
+
 
 .modal {
 	display: flex;
@@ -1064,7 +1061,6 @@ nav {
 			padding: 0 5px;
 			display: flex;
 			color: var(--textMain);
-			
 		}
 
 			.people-component .people-container .item .photo {
@@ -1214,15 +1210,15 @@ nav {
 					gap: 5px;
 				}
 
-				.people-component .details .bottom .btn-container {
-					display: flex;
-				}
+			.people-component .details .bottom .btn-container {
+				display: flex;
+			}
 
-					.people-component .details .bottom .btn-container .btn {
-						font-size: 17px;
-						display: flex;
-						padding: 5px 10px;
-					}
+				.people-component .details .bottom .btn-container .btn {
+					font-size: 17px;
+					display: flex;
+					padding: 5px 10px;
+				}
 
 
 

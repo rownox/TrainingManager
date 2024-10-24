@@ -27,12 +27,10 @@
                         <div class="info">
                            <p>Orders:</p>
                            @if (Model.getMonthOrders(month).Count <= 0) {
-                              <div class="order gray"></div>
+                              <div class="pill none"></div>
                            } else {
                               foreach (var order in Model.getMonthOrders(month)) {
-                                 if (order != null) {
-                                    <div class="order live">Order #@order.Id - @order.BeginDate</div>
-                                 }
+                                 <a asp-page="/TrainingOrders/Details" asp-route-id="@order.Id" class="pill">Order #@order.Id - @order.BeginDate</a>
                               }
                            }
                         </div>
@@ -68,10 +66,9 @@
                   <div class="search">
                      <p>Year:</p>
                      <div class="side">
-                        <select asp-for="selectedYear" class="form-drop2">
-                           @for (int i = 0; i <= 10; i++) {
-                              int newYear = (DateTime.Now.Year - 5) + i;
-                              <option value="@newYear">@newYear</option>
+                        <select asp-for="selectedYear" class="form-drop2 search-box">
+                           @for (int year = Model.EarliestYear; year <= DateTime.Now.Year; year++) {
+                              <option value="@year">@year</option>
                            }
                         </select>
                         <input type="submit" value="Search" class="btn bg-btn btnGreen" />
@@ -101,37 +98,3 @@
       </div>
    </div>
 </div>
-
-<script>
-
-   function clearForm() {
-      document.getElementById("traineeInput").value = 0;
-      document.getElementById("scheduleForm").submit();
-   }
-
-   document.addEventListener("DOMContentLoaded", function () {
-      var monthElements = document.getElementsByClassName("month");
-      var months = document.getElementById("months");
-      var days = document.getElementById("days");
-
-      Array.prototype.slice.call(monthElements).forEach(item => {
-         item.addEventListener("click", event => {
-            clickMonth();
-         });
-      });
-
-      days.addEventListener("click", function () {
-         clickDay();
-      })
-
-      function clickMonth() {
-         months.style.display = "none";
-         days.style.display = "flex";
-      }
-
-      function clickDay() {
-         months.style.display = "flex";
-         days.style.display = "none";
-      }
-   });
-</script>
