@@ -580,7 +580,7 @@ nav {
 							justify-content: flex-start;
 							align-items: center;
 							justify-content: space-between;
-							border-bottom: 1px solid;
+							border-bottom: 1px solid var(--gray4);
 							font-size: 15px;
 						}
 
@@ -647,7 +647,7 @@ nav {
 						padding: 5px 10px;
 						border-left: 3px solid;
 						border-radius: 3px;
-						background-color: var(--gray2);
+						background: linear-gradient(to right, var(--gray2), var(--gray1));
 					}
 
 						.panel .body .properties .list-container .order-list li:hover {

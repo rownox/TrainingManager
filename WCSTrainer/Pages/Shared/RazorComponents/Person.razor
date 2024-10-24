@@ -10,12 +10,8 @@
       <p class="info">@employee.Id</p>
    </div>
    <div class="text-group">
-      <p class="title">First Name</p>
-      <p class="info">@employee.FirstName</p>
-   </div>
-   <div class="text-group">
-      <p class="title">Last Name</p>
-      <p class="info">@employee.LastName</p>
+      <p class="title">Full Name</p>
+      <p class="info">@employee.FirstName @employee.LastName</p>
    </div>
    <div class="text-group">
       <p class="title">Status</p>
@@ -57,20 +53,18 @@
       </div>
    </div>
    <div class="text-group">
-      <p class="title">Assigned Learning</p>
+      <p class="title">Assigned Learning <br /> (@countHours(employee.TrainingOrdersAsTrainee) Active Hours)</p>
       <div class="info">
-         @foreach (var order in employee.TrainingOrdersAsTrainee.OrderBy(o => o.Archived || o.Status != "Active")) {
+         @foreach (var order in employee.TrainingOrdersAsTrainee.OrderBy(o => o.Archived)) {
             var cssClass = order.Archived ? "pill inactive" : "pill";
-            if (order.ParentSkill == null) {
-               <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
-            }
+            <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
          }
       </div>
    </div>
    <div class="text-group">
-      <p class="title">Assigned Teaching</p>
+      <p class="title">Assigned Teaching <br /> (@countHours(employee.TrainingOrdersAsTrainer) Active Hours)</p>
       <div class="info">
-         @foreach (var order in employee.TrainingOrdersAsTrainer.OrderBy(o => o.Archived || o.Status != "Active")) {
+         @foreach (var order in employee.TrainingOrdersAsTrainer.OrderBy(o => o.Archived)) {
             var cssClass = order.Archived ? "pill inactive" : "pill";
             <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
          }
@@ -115,5 +109,15 @@
       if (tempEmployee != null) {
          employee = tempEmployee;
       }
+   }
+
+   public int countHours(ICollection<TrainingOrder> orders) {
+      var count = 0;
+      foreach (var order in orders) {
+         if (order.Status == "Active") {
+            count = count + order.Duration;
+         }
+      }
+      return count;
    }
 }

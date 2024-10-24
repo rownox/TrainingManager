@@ -9,21 +9,17 @@
          var url = match.Value;
 
          if (url.Contains("youtube.com/watch?v=") || url.Contains("youtu.be/")) {
-            // Extract YouTube video ID
             var videoId = ExtractYouTubeId(url);
             if (videoId != null) {
-               // Return YouTube embed iframe
                return $"<iframe class=\"description-video\" width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/{videoId}\" frameborder=\"0\" allowfullscreen></iframe>";
             }
          }
 
-         // Return as a normal clickable link for non-YouTube URLs
          return $"<a class=\"description-link\" href=\"{url}\" target=\"_blank\">{url}</a>";
       });
    }
 
    private string ExtractYouTubeId(string url) {
-      // Extract the video ID from the YouTube link (watch?v= or youtu.be/)
       var youtubeIdRegex = new Regex(@"(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})");
       var match = youtubeIdRegex.Match(url);
       return match.Success ? match.Groups[1].Value : null;
