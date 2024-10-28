@@ -1,5 +1,8 @@
 ﻿@page
 @model WCSTrainer.Pages.Skills.IndexModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<UserAccount> SignInManager
+@inject UserManager<UserAccount> UserManager
 
 <div class="panel">
    <div class="body">
@@ -31,8 +34,16 @@
                               </div>
                            </div>
                            <div class="btns">
-                              <a class="btn bg-btn btnGreen" asp-page="./Assign" asp-route-id="@item.Id">Assign</a>
-                              <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                              <a class="btn bg-btn btnBlue" asp-page="./Assign" asp-route-id="@item.Id">Assign</a>
+                              @if (SignInManager.IsSignedIn(User)) {
+                                 var user = await UserManager.GetUserAsync(User);
+                                 if (user != null) {
+                                    var isOwner = await UserManager.IsInRoleAsync(user, "owner");
+                                    if (isOwner) {
+                                       <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                    }
+                                 }
+                              }
                            </div>
                         </li>
                         Model.listCount++;

@@ -193,11 +193,15 @@ nav {
 			.panel .body .properties .title {
 				color: var(--textMain);
 				font-size: 30px;
+				font-weight: 500;
 			}
 
 			.panel .body .properties .subtitle {
 				color: var(--textSub1);
 				font-size: 18px;
+				display: flex;
+				gap: 7px;
+				font-weight: 500;
 			}
 
 			.panel .body .properties .archive-warning {
@@ -217,7 +221,7 @@ nav {
 				}
 
 				.panel .body .properties .archive-warning p {
-					color: var(--yellow1);
+					color: var(--yellow2);
 					padding: 5px 10px;
 				}
 
@@ -643,7 +647,7 @@ nav {
 						display: flex;
 						padding: 5px 10px;
 						border-left: 3px solid;
-						border-radius: 3px;
+						border-radius: 3px 0 0 3px;
 						background: linear-gradient(to right, var(--gray2), var(--gray1));
 						border-bottom: 1px solid var(--gray3);
 					}

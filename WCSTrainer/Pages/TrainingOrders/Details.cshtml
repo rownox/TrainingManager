@@ -19,7 +19,21 @@
             }
             <div id="contentToPrint" class="print-block">
                <p class="title">Training Order #@Model.TrainingOrder.Id</p>
-               <p class="subtitle">Status: @Model.TrainingOrder.Status</p>
+               @{
+                  var status = Model.TrainingOrder.Status;
+                  var type = "awaiting";
+                  if (status.Equals("Active")) {
+                     type = "active";
+                  } else if (status.Equals("Verified")) {
+                     type = "verified";
+                  } else if (status.Equals("Completed")) {
+                     type = "completed";
+                  }
+                  <div class="subtitle">
+                     <p>Status: </p>
+                     <p class="@type">@status</p>
+                  </div>
+               }
                <div class="field-container">
                   <component type="typeof(TrainingDetails)" 
                      render-mode="WebAssemblyPrerendered" 
