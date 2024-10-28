@@ -56,7 +56,7 @@
             <div class="tools">
                <p class="title">Options:</p>
                <div class="search">
-                  <input placeholder="Search Skills" type="search" onchange="update(this)" />
+                  <input class="search-box" id="searchInput" placeholder="Search Skills" type="search" oninput="update(this)" />
                </div>
                <div class="btns">
                   <a asp-page="Create" class="btn nbg-btn btnMenu">Create New Skill</a>

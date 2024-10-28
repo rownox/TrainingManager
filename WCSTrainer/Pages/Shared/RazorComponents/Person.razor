@@ -52,19 +52,41 @@
          </div>
       </div>
    </div>
+   
+   setOrders(employee.TrainingOrdersAsTrainee);
    <div class="text-group">
-      <p class="title">Assigned Learning <br /> (@countHours(employee.TrainingOrdersAsTrainee) Active Hours)</p>
+      <p class="title">Assigned Learning (@activeHours Hours)</p>
       <div class="info">
-         @foreach (var order in employee.TrainingOrdersAsTrainee.OrderBy(o => o.Archived)) {
+         @foreach (var order in activeOrders) {
             var cssClass = order.Archived ? "pill inactive" : "pill";
             <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
          }
       </div>
    </div>
    <div class="text-group">
-      <p class="title">Assigned Teaching <br /> (@countHours(employee.TrainingOrdersAsTrainer) Active Hours)</p>
+      <p class="title">Completed Learning (@completeHours Hours)</p>
       <div class="info">
-         @foreach (var order in employee.TrainingOrdersAsTrainer.OrderBy(o => o.Archived)) {
+         @foreach (var order in completeOrders) {
+            var cssClass = order.Archived ? "pill inactive" : "pill";
+            <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+         }
+      </div>
+   </div>
+
+   setOrders(employee.TrainingOrdersAsTrainer);
+   <div class="text-group">
+      <p class="title">Assigned Teaching (@activeHours Hours)</p>
+      <div class="info">
+         @foreach (var order in activeOrders) {
+            var cssClass = order.Archived ? "pill inactive" : "pill";
+            <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+         }
+      </div>
+   </div>
+   <div class="text-group">
+      <p class="title">Completed Teaching (@completeHours Hours)</p>
+      <div class="info">
+         @foreach (var order in completeOrders) {
             var cssClass = order.Archived ? "pill inactive" : "pill";
             <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
          }
@@ -89,6 +111,11 @@
 
    private Employee employee = default!;
 
+   List<TrainingOrder> completeOrders = new List<TrainingOrder>();
+   List<TrainingOrder> activeOrders = new List<TrainingOrder>();
+   int completeHours = 0;
+   int activeHours = 0;
+
    protected override async Task OnInitializedAsync() {
       await LoadTrainingOrderAsync();
    }
@@ -111,13 +138,24 @@
       }
    }
 
-   public int countHours(ICollection<TrainingOrder> orders) {
-      var count = 0;
-      foreach (var order in orders) {
-         if (order.Status == "Active") {
-            count = count + order.Duration;
+
+
+   public void setOrders(ICollection<TrainingOrder> orders) {
+      completeHours = 0;
+      activeHours = 0;
+      completeOrders.Clear();
+      activeOrders.Clear();
+
+      foreach (var order in orders.OrderBy(o => o.Archived)) {
+         if (order.Status == "Completed" || order.Status == "Verified") {
+            completeHours = completeHours + order.Duration;
+            completeOrders.Add(order);
+         } else {
+            if (!order.Archived) {
+               activeHours = activeHours + order.Duration;
+            }
+            activeOrders.Add(order);
          }
       }
-      return count;
    }
 }

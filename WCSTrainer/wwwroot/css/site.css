@@ -394,9 +394,10 @@ nav {
 
 					.panel .body .properties .user-form .field-container .text-group .title {
 						padding-left: 5px;
+						padding-right: 10px;
 						color: var(--textSub1);
 						font-size: 16px;
-						min-width: 200px;
+						min-width: 250px;
 						height: 100%;
 					}
 
@@ -639,8 +640,9 @@ nav {
 						list-style: none;
 						display: flex;
 						flex-direction: column;
-						gap: 5px;
+						gap: 3px;
 						background-color: var(--black);
+						padding-bottom: 3px;
 					}
 
 					.panel .body .properties .list-container .order-list li {
