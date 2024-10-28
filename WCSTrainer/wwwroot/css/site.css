@@ -488,6 +488,7 @@ nav {
 				.panel .body .properties .tool-container .section-title {
 					color: var(--textMain);
 					font-size: 15px;
+					font-weight: 500;
 				}
 
 				.panel .body .properties .tool-container .tools {
@@ -576,7 +577,7 @@ nav {
 						display: flex;
 						flex-direction: column;
 						margin-bottom: 20px;
-						gap: 10px;
+						gap: 5px;
 					}
 
 						.panel .body .properties .tool-container .tools .selections .section {
@@ -586,6 +587,7 @@ nav {
 							justify-content: space-between;
 							border-bottom: 1px solid var(--gray4);
 							font-size: 15px;
+							font-weight: 500;
 						}
 
 							.panel .body .properties .tool-container .tools .selections .section input {

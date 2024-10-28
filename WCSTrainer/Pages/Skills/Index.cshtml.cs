@@ -2,24 +2,42 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing.Printing;
+using WCSTrainer.Models;
 
 namespace WCSTrainer.Pages.Skills {
    [Authorize(Roles = "owner, admin, user")]
-   public class IndexModel : PageModel {
-      private readonly WCSTrainer.Data.WCSTrainerContext _context;
-
-      public IndexModel(WCSTrainer.Data.WCSTrainerContext context) {
-         _context = context;
-      }
-
+   public class IndexModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
       public IList<Skill> Skills { get; set; } = default!;
+      public List<ListItem> ListItems { get; set; } = new List<ListItem>();
 
-      public int listCount = 0;
+      public ListPartialModel ListPartial { get; set; }
+
       [BindProperty]
-      public int maxCount { get; set; } = 10;
+      public int MaxCount { get; set; } = 10;
 
       public async Task OnGetAsync() {
-         Skills = await _context.Skills.ToListAsync();
+         Skills = await context.Skills.ToListAsync();
+
+         MaxCount = MaxCount <= 0 ? 10 : MaxCount;
+
+         foreach (var skill in Skills) {
+            ListItems.Add(
+               new ListItem() {
+                  Id = skill.Id,
+                  Name = "Skill #" + skill.Id,
+                  Description = skill.Name
+               }
+            );
+         }
+
+         ListPartial = new ListPartialModel {
+            Items = ListItems,
+            MaxCount = MaxCount
+         };
+      }
+      public async Task OnPostAsync() {
+         Skills = await context.Skills.ToListAsync();
       }
    }
 }

@@ -8,50 +8,7 @@
    <div class="body">
       <partial name="_Sidebar" />
       <div class="properties">
-         <div class="list-container">
-            <div class="top">
-               <form method="post" id="maxCountForm">
-                  <select asp-for="maxCount" class="drop-main" onchange="submitForm()">
-                     <option value="10">10</option>
-                     <option value="50">50</option>
-                     <option value="@Model.Skills.Count()">Max</option>
-                  </select>
-               </form>
-            </div>
-            <div class="order-list">
-               <ul>
-                  @foreach (var item in Model.Skills.Reverse()) {
-                     if (Model.listCount < Model.maxCount) {
-                        <li id="@item.Id @item.Name" class="archived searchable">
-                           <div class="info">
-                              <div class="title">
-                                 <a class="name unarchived" asp-page="./Details" asp-route-id="@item.Id">Skill #@item.Id</a>
-                              </div>
-                              <div class="sub">
-                                 <div class="sub-text">
-                                    <p class="identifier">@item.Name</p>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="btns">
-                              <a class="btn bg-btn btnBlue" asp-page="./Assign" asp-route-id="@item.Id">Assign</a>
-                              @if (SignInManager.IsSignedIn(User)) {
-                                 var user = await UserManager.GetUserAsync(User);
-                                 if (user != null) {
-                                    var isOwner = await UserManager.IsInRoleAsync(user, "owner");
-                                    if (isOwner) {
-                                       <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                                    }
-                                 }
-                              }
-                           </div>
-                        </li>
-                        Model.listCount++;
-                     }
-                  }
-               </ul>
-            </div>
-         </div>
+         <partial name="_ListDisplay" model="Model.ListPartial" />
          <div class="tool-container">
             <div class="tools">
                <p class="title">Options:</p>
@@ -102,10 +59,6 @@
             }
          }
       }
-   }
-
-   function submitForm() {
-      document.getElementById('maxCountForm').submit();
    }
 </script>
 
