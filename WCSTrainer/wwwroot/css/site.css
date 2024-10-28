@@ -636,6 +636,7 @@ nav {
 						display: flex;
 						flex-direction: column;
 						gap: 5px;
+						background-color: var(--black);
 					}
 
 					.panel .body .properties .list-container .order-list li {

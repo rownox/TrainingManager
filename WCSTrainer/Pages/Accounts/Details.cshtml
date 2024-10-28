@@ -9,13 +9,17 @@
       <div class="properties">
          <div class="user-form">
             @if (Model.UserAccount != null) {
-               <p class="title">User Account @Model.UserAccount.Id</p>
+               <p class="title">@Model.UserAccount.UserName</p>
                @if (Model.Employee != null) {
                   <p class="subtitle">@Model.Employee.FirstName @Model.Employee.LastName</p>
                }
                <div class="field-container">
                   <div class="title-row">
                      <p class="title">Account Info</p>
+                  </div>
+                  <div class="text-group">
+                     <p class="title">User ID</p>
+                     <p class="info">@Model.UserAccount.Id</p>
                   </div>
                   <div class="text-group">
                      <p class="title">Username</p>
