@@ -21,7 +21,6 @@
                   var user = await UserManager.GetUserAsync(User);
                   if (user != null) {
                      <form method="post">
-
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <input hidden asp-for="Skill.Id" />
                         <input hidden asp-for="Skill.Name" />

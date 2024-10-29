@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Transactions;
 using WCSTrainer.Data;
 
 namespace WCSTrainer.Areas.Identity.Pages.Account {
@@ -90,6 +91,7 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
 
                   _context.Employees.Add(employee);
                   await _context.SaveChangesAsync();
+
 
                   user.EmployeeId = employee.Id;
                   await _userManager.UpdateAsync(user);

@@ -16,7 +16,7 @@ namespace WCSTrainer.Pages.Skills {
       [BindProperty]
       public int MaxCount { get; set; } = 10;
 
-      public async Task OnGetAsync() {
+      public async Task<IActionResult> OnGetAsync() {
          Skills = await context.Skills.ToListAsync();
 
          MaxCount = MaxCount <= 0 ? 10 : MaxCount;
@@ -35,9 +35,11 @@ namespace WCSTrainer.Pages.Skills {
             Items = ListItems,
             MaxCount = MaxCount
          };
+
+         return Page();
       }
-      public async Task OnPostAsync() {
-         Skills = await context.Skills.ToListAsync();
+      public async Task<IActionResult> OnPostAsync() {
+         return await OnGetAsync();
       }
    }
 }
