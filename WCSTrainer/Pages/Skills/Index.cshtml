@@ -20,6 +20,7 @@
             </div>
             <partial name="_ListDisplay" model="Model.ListPartial" />
          </div>
+         <script src="~/js/listdisplay.js"></script>
          <div class="tool-container">
             <div class="tools">
                <p class="title">Options:</p>
@@ -27,7 +28,7 @@
                   <input class="search-box" id="searchInput" placeholder="Search Skills" type="search" oninput="update(this)" />
                </div>
                <div class="btns">
-                  <a asp-page="Create" class="btn nbg-btn btnMenu">Create New Skill</a>
+                  <a asp-page="Create" class="btn nbg-btn btnMenu">Create Skill</a>
                   <a asp-page="DetailView" class="btn nbg-btn btnMenu">Detailed View</a>
                </div>
             </div>
@@ -35,4 +36,4 @@
       </div>
    </div>
 </div>
-<script src="~/js/listdisplay.js"></script>
+

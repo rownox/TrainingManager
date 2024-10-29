@@ -10,9 +10,7 @@ namespace WCSTrainer.Pages.Skills {
    public class IndexModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
       public IList<Skill> Skills { get; set; } = default!;
       public List<ListItem> ListItems { get; set; } = new List<ListItem>();
-
       public ListPartialModel ListPartial { get; set; }
-
       [BindProperty]
       public int MaxCount { get; set; } = 10;
 
