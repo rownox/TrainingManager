@@ -147,9 +147,9 @@ img {
 	}
 
 	.text-group {
-		border-bottom: 1px solid !important;
-		border-color: lightgray !important;
+		border: none !important;
 		align-self: center;
+		padding: 0 !important;
 	}
 
 	.title {
