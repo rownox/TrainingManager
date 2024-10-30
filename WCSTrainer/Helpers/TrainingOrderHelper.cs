@@ -11,7 +11,10 @@ namespace WCSTrainer.Helpers {
          if (user == null) {
             return false;
          }
-         var currentEmployee = await context.Employees.FirstOrDefaultAsync(e => e.Id == user.EmployeeId);
+         var currentEmployee = await context.Employees
+            .Include(e => e.TrainingOrdersAsTrainer)
+            .Include(e => e.TrainingOrdersAsTrainee)
+            .FirstOrDefaultAsync(e => e.Id == user.EmployeeId);
          if (currentEmployee == null) {
             return false;
          }

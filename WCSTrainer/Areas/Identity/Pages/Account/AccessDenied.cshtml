@@ -1,9 +1,14 @@
 ﻿@page
 @model AccessDeniedModel
 
-<header>
-   <div class="access flex-column flex-center">
-      <h1>Access denied</h1>
-      <p>You do not have access to this resource.</p>
+<div class="panel">
+   <div class="body">
+      <partial name="_Sidebar" />
+      <div class="properties">
+         <div class="field-container">
+            <p class="title">Access Denied</p>
+            <p class="subtitle">You do not have permission to view this page. <br /> Please contact an administrator to gain access.</p>
+         </div>
+      </div>
    </div>
-</header>
+</div>
