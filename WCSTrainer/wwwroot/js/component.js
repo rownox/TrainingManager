@@ -35,11 +35,11 @@ function closeComponent() {
    var peopleComponent = document.getElementById("people-component");
    var groupsComponent = document.getElementById("groups-component");
    var overlay = document.querySelector(".overlay");
-   if (groupsComponent) {
+   if (groupsComponent != null) {
       groupsComponent.classList.add("hidden");
       groupsTempList.innerHTML = '';
    }
-   if (peopleComponent) {
+   if (peopleComponent != null) {
       peopleComponent.classList.add("hidden");
       peopleTempList.innerHTML = '';
    }
@@ -79,4 +79,77 @@ function highlight(element, list) {
 
    element.classList.add('selected');
    lastSelected = element;
+}
+
+var groupsTempList = document.getElementById('groupTempList');
+
+function addItemToGroupPartial(id, Name) {
+   var exists = Array.from(groupsTempList.children).some(function (li) {
+      return li.dataset.id == id;
+   });
+
+   if (!exists) {
+      var li = document.createElement('li');
+      li.classList.add("pill");
+      li.addEventListener("click", function () {
+         removeItem(li, displayMode);
+      });
+      li.textContent = Name;
+      li.dataset.id = id;
+      li.dataset.Name = Name;
+      groupsTempList.appendChild(li);
+   } else {
+      alert(Name + " is already in the list.");
+   }
+}
+
+function confirmGroupSelection() {
+   var selectedItems = Array.from(groupsTempList.children).map(function (li) {
+      return {
+         Id: li.dataset.id,
+         Name: li.dataset.Name,
+      };
+   });
+
+   confirmSelectionFromPartial(selectedItems);
+   groupsTempList.innerHTML = '';
+}
+
+
+var peopleTempList = document.getElementById('peopleTempList');
+
+function addItemToPartial(id, personName) {
+   var exists = Array.from(peopleTempList.children).some(function (li) {
+      return li.dataset.id == id;
+   });
+
+   if (!exists) {
+      if (displayMode == "trainee") {
+         peopleTempList.innerHTML = '';
+      }
+      var li = document.createElement('li');
+      li.classList.add("pill");
+      li.addEventListener("click", function () {
+         removeItem(li, displayMode);
+      });
+      li.textContent = personName;
+      li.dataset.id = id;
+      li.dataset.Name = personName;
+      peopleTempList.appendChild(li);
+
+   } else {
+      alert(personName + " is already in the list.");
+   }
+}
+
+function confirmPeopleSelection() {
+   var selectedItems = Array.from(peopleTempList.children).map(function (li) {
+      return {
+         Id: li.dataset.id,
+         Name: li.dataset.Name,
+      };
+   });
+
+   confirmSelectionFromPartial(selectedItems);
+   peopleTempList.innerHTML = '';
 }

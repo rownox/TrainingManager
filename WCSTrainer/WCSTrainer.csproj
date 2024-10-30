@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\js\groups.js" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.4" />
     <PackageReference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform" Version="4.1.0" />
@@ -30,8 +26,6 @@
 
   <ItemGroup>
     <None Include="wwwroot\images\1N.png" />
-    <None Include="wwwroot\js\groups.js" />
-    <None Include="wwwroot\js\people.js" />
   </ItemGroup>
 
   <ItemGroup>

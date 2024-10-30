@@ -24,7 +24,7 @@
             @foreach (var skill in employee.Skills) {
                <div class="skill-box">
                   <div class="title-container">
-                     <a href="/Skills/Details?id=@skill.Id" class="skill-title">@skill.Name @skill.Id</a>
+                     <a href="/Skills/Details?id=@skill.Id" class="skill-title">@skill.Name</a>
                   </div>
                   <div class="order-list">
                      @foreach (var order in employee.TrainingOrdersAsTrainee) {
