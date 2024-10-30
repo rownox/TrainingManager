@@ -18,15 +18,15 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return NotFound();
          }
 
-         if (!TrainingOrderHelper.HasPerms(userManager, User, context, TrainingOrder).Result) {
-            return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
-         }
-
          var trainingorder = await context.TrainingOrders.FirstOrDefaultAsync(m => m.Id == id);
          if (trainingorder == null) {
             return NotFound();
          } else {
             TrainingOrder = trainingorder;
+         }
+
+         if (!TrainingOrderHelper.HasPerms(userManager, User, context, TrainingOrder).Result) {
+            return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
          }
 
          return Page();

@@ -30,11 +30,24 @@ namespace WCSTrainer.Helpers {
          if (EmployeeOwns(employee, trainingOrder)) {
             return true;
          }
+         if (OrderInvolves(employee, trainingOrder)) {
+            return true;
+         }
          return false;
       }
 
       public static bool EmployeeOwns(Employee employee, TrainingOrder order) {
          if (order.CreatedByUserId == employee.UserAccountId) {
+            return true;
+         }
+         return false;
+      }
+
+      public static bool OrderInvolves(Employee employee, TrainingOrder order) {
+         if (employee.TrainingOrdersAsTrainee.Contains(order)) {
+            return true;
+         }
+         if (employee.TrainingOrdersAsTrainer.Contains(order)) {
             return true;
          }
          return false;
