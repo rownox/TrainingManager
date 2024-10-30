@@ -524,8 +524,6 @@ nav {
 						}
 
 					.panel .body .properties .tool-container .tools .title {
-						border-bottom: 1px solid var(--gray4);
-						padding-bottom: 10px;
 						font-weight: bold;
 						font-size: 17px;
 					}
@@ -642,9 +640,7 @@ nav {
 						list-style: none;
 						display: flex;
 						flex-direction: column;
-						gap: 3px;
 						background-color: var(--black);
-						padding-bottom: 3px;
 					}
 
 					.panel .body .properties .list-container .order-list li {
@@ -654,6 +650,7 @@ nav {
 						border-radius: 3px 0 0 3px;
 						background: linear-gradient(to right, var(--gray2), var(--gray1));
 						border-bottom: 1px solid var(--gray3);
+						margin-bottom: 3px;
 					}
 
 						.panel .body .properties .list-container .order-list li:hover {

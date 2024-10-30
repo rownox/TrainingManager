@@ -48,7 +48,8 @@ namespace WCSTrainer.Data {
          builder.Entity<Location>()
              .HasMany(l => l.TrainingOrders)
              .WithOne(to => to.Location)
-             .HasForeignKey(to => to.LocationId);
+             .HasForeignKey(to => to.LocationId)
+             .OnDelete(DeleteBehavior.SetNull);
 
          // Skill
          builder.Entity<Skill>()
