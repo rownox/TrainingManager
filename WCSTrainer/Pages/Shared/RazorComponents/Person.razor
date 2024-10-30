@@ -73,22 +73,41 @@
       </div>
    </div>
 
-   setOrders(employee.TrainingOrdersAsTrainer);
    <div class="text-group">
       <p class="title">Assigned Teaching (@activeHours Hours)</p>
       <div class="info">
-         @foreach (var order in activeOrders) {
-            var cssClass = order.Archived ? "pill inactive" : "pill";
-            <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+         @{
+            setOrders(employee.TrainingOrdersAsTrainer);
+            foreach (var order in activeOrders) {
+               var cssClass = order.Archived ? "pill inactive" : "pill";
+               <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+            }
+            foreach (var group in employee.Groups) {
+               setOrders(group.TrainingOrders);
+               foreach (var order in activeOrders) {
+                  var cssClass = order.Archived ? "pill inactive" : "pill";
+                  <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+               }
+            }
          }
       </div>
    </div>
    <div class="text-group">
       <p class="title">Completed Teaching (@completeHours Hours)</p>
       <div class="info">
-         @foreach (var order in completeOrders) {
-            var cssClass = order.Archived ? "pill inactive" : "pill";
-            <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+         @{
+            setOrders(employee.TrainingOrdersAsTrainer);
+            foreach (var order in completeOrders) {
+               var cssClass = order.Archived ? "pill inactive" : "pill";
+               <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+            }
+            foreach (var group in employee.Groups) {
+               setOrders(group.TrainingOrders);
+               foreach (var order in completeOrders) {
+                  var cssClass = order.Archived ? "pill inactive" : "pill";
+                  <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+               }
+            }
          }
       </div>
    </div>
@@ -130,7 +149,8 @@
           .Include(e => e.TrainingOrdersAsTrainee)
             .ThenInclude(t => t.ParentSkill)
           .Include(e => e.Groups)
-          .Include(e => e.Skills)
+            .ThenInclude(g => g.TrainingOrders)
+       .Include(e => e.Skills)
           .FirstOrDefaultAsync(m => m.Id == EmployeeId);
 
       if (tempEmployee != null) {

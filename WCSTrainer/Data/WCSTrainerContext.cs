@@ -58,7 +58,8 @@ namespace WCSTrainer.Data {
          builder.Entity<Skill>()
           .HasMany(s => s.TrainingOrders)
           .WithOne(to => to.ParentSkill)
-          .HasForeignKey(to => to.ParentSkillId);
+          .HasForeignKey(to => to.ParentSkillId)
+          .OnDelete(DeleteBehavior.SetNull);
 
          // TrainerGroup
          builder.Entity<TrainerGroup>()
@@ -73,7 +74,8 @@ namespace WCSTrainer.Data {
          builder.Entity<TrainingOrder>()
              .HasOne(to => to.ParentSkill)
              .WithMany()
-             .HasForeignKey(to => to.ParentSkillId);
+             .HasForeignKey(to => to.ParentSkillId)
+             .OnDelete(DeleteBehavior.SetNull);
 
          builder.Entity<TrainingOrder>()
              .HasOne(to => to.Verification)
