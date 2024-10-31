@@ -123,6 +123,10 @@ img {
 	border: 1px solid var(--gray5);
 }
 
+.dot {
+	cursor: pointer;
+}
+
 @media print {
 	body * {
 		visibility: hidden;

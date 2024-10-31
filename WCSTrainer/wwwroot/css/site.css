@@ -476,7 +476,6 @@ nav {
 								display: flex;
 								align-items: flex-start;
 								padding-top: 1px;
-								cursor: pointer;
 							}
 
 			.panel .body .properties .tool-container {
@@ -746,6 +745,7 @@ nav {
 						}
 
 					.panel .body .properties .list-container .order-table tr td, .panel .body .properties .list-container table tr th {
+						color: var(--textSub1);
 						border-bottom: 1px solid var(--gray3);
 						text-align: start;
 						padding: 2px 5px;
@@ -861,7 +861,7 @@ nav {
 
 						.panel .body .properties .scheduling .schedule .months .month {
 							width: 20%;
-							min-width: 160px;
+							min-width: 210px;
 							display: flex;
 							flex-direction: column;
 							cursor: pointer;
