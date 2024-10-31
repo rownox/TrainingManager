@@ -4,54 +4,62 @@
 @inject SignInManager<UserAccount> SignInManager
 @inject UserManager<UserAccount> UserManager
 
-<section class="modal hidden">
-   <div class="one">
-      <button class="btn-close btn btnRed">⨉</button>
-   </div>
-   <div class="two">
-      <p class="title">Delete Training Order</p>
-      <p class="info" id="deleteText"></p>
-   </div>
-   <div class="three">
-      <form method="post">
-         <input hidden id="orderId" name="id" />
-         <button id="deleteBtn" class="btn bg-btn btnRed">Delete</button>
-      </form>
-   </div>
-</section>
+@{
+   var type = "";
+   string name = "";
+   var text = "";
+   var searchText = "";
 
-<div class="overlay hidden"></div>
+   void loadVars(TrainingOrder item) {
+      type = "awaiting";
+      name = "";
+      text = "";
+      searchText = "";
+
+      if (item.Trainee != null) {
+         name = item.Trainee.FirstName + " " + item.Trainee.LastName;
+      } else {
+         name = "N/A";
+      }
+      if (item.Status.Equals("Active")) {
+         type = "active";
+      } else if (item.Status.Equals("Verified")) {
+         type = "verified";
+      } else if (item.Status.Equals("Completed")) {
+         type = "completed";
+      }
+      if (item.Lesson != null) {
+         text = item.Lesson.Name;
+      }
+      searchText = text + name;
+   }
+}
 
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="list-container">
-            <div class="top">
-               <form method="post" id="maxCountForm">
-                  @if (!Model.Detailed) {
-                     <div class="left">
-                        <select asp-for="MaxCount" class="drop-main" onchange="updateMaxCount(this.value)">
-                           <option value="10">10</option>
-                           <option value="25">25</option>
-                           <option value="50">50</option>
-                        </select>
-                     </div>
-                  } else {
-                     <div class="left">
-                     </div>
+            <form method="post" id="maxCountForm" class="top">
+               <div class="left">
+                  <select asp-for="MaxCount" class="drop-main" onchange="updateMaxCount(this.value)">
+                     <option value="10">10</option>
+                     <option value="25">25</option>
+                     <option value="50">50</option>
+                  </select>
+                  @if (Model.Detailed) {
+
                   }
-                  <div class="right">
-                     <input asp-for="Detailed" value="@(Model.Detailed ? "False" : "True")" type="hidden" />
-                     <button type="submit" class="btn btnWhite">@(Model.Detailed ? "Simple View" : "Detailed View")</button>
-                  </div>
-               </form>
-            </div>
+               </div>
+               <div class="right">
+                  <input asp-for="Detailed" value="@(Model.Detailed ? "False" : "True")" type="hidden" />
+                  <button type="submit" class="btn btnWhite bg-btn">@(Model.Detailed ? "Simple View" : "Detailed View")</button>
+               </div>
+            </form>
             @if (SignInManager.IsSignedIn(User)) {
                var user = await UserManager.GetUserAsync(User);
                if (user != null) {
                   if (!Model.Detailed) {
-                     <script src="~/js/trainingOrderList.js"></script>
                      <div class="order-list">
                         <ul>
                            @{
@@ -60,25 +68,7 @@
                                  if (TrainingOrderHelper.OrderInvolves(UserManager, User, item).Result == false) {
                                     continue;
                                  }
-                                 string name;
-                                 if (item.Trainee != null) {
-                                    name = item.Trainee.FirstName + " " + item.Trainee.LastName;
-                                 } else {
-                                    name = "N/A";
-                                 }
-                                 var type = "awaiting";
-                                 if (item.Status.Equals("Active")) {
-                                    type = "active";
-                                 } else if (item.Status.Equals("Verified")) {
-                                    type = "verified";
-                                 } else if (item.Status.Equals("Completed")) {
-                                    type = "completed";
-                                 }
-                                 var text = "";
-                                 if (item.Lesson != null) {
-                                    text = item.Lesson.Name;
-                                 }
-                                 var searchText = text + name;
+                                 loadVars(item);
                                  <li id="@item.Id" class="@type @item.Status @(item.Archived ? "Archived" : "") searchable" data-name="@searchText">
                                     <div class="info">
                                        <div class="title">
@@ -117,7 +107,7 @@
                         </ul>
                      </div>
                   } else {
-                     <table id="dataTable">
+                     <table id="dataTable" class="order-table">
                         <tr>
                            <th>Order ID</th>
                            <th>Trainee</th>
@@ -125,21 +115,18 @@
                            <th></th>
                         </tr>
                         @foreach (var item in Model.TrainingOrder.Reverse()) {
-                           var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
-                           if (!isAdmin) {
-                              if (item.CreatedByUserId != user.Id) {
-                                 continue;
-                              }
+                           if (TrainingOrderHelper.OrderInvolves(UserManager, User, item).Result == false) {
+                              continue;
                            }
-
-                           <tr class="clickable">
-                              <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                           loadVars(item);
+                           <tr id="@item.Id" class="@type @item.Status searchable" data-name="@searchText">
+                              <td>@item.Id</td>
                               @foreach (var employee in Model.Employees) {
                                  if (employee.Id == item.TraineeId) {
                                     <td>@employee.FirstName @employee.LastName</td>
                                  }
                               }
-                              <td>@Html.DisplayFor(modelItem => item.Priority)</td>
+                              <td>@item.Priority</td>
                               <td>
                                  <a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnWhite">View</a>
                               </td>
@@ -154,11 +141,9 @@
          <div class="tool-container">
             <div class="tools">
                <p class="title">Options:</p>
-               @if (!Model.Detailed) {
-                  <div class="search">
-                     <input class="search-box" id="searchInput" placeholder="Search Training Orders" type="search" oninput="searchTrainingOrders()" />
-                  </div>
-               }
+               <div class="search">
+                  <input class="search-box" id="searchInput" placeholder="Search Training Orders" type="search" oninput="searchTrainingOrders()" />
+               </div>
                <div class="selections">
                   <p class="section-title">Show List Items:</p>
                   <div class="section">
@@ -192,3 +177,4 @@
    </div>
 </div>
 
+<script src="~/js/trainingOrderList.js"></script>

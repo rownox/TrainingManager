@@ -1,10 +1,4 @@
-﻿const closeModalBtn = document.querySelector(".btn-close");
-const deleteText = document.getElementById("deleteText");
-const deleteBtn = document.querySelector("#deleteBtn");
-const overlay = document.querySelector(".overlay");
-const modal = document.querySelector(".modal");
-
-function checkedBox(checkboxElem) {
+﻿function checkedBox(checkboxElem) {
    toggleDisplay(checkboxElem.id, checkboxElem.checked);
    localStorage.setItem(checkboxElem.id, checkboxElem.checked);
    searchTrainingOrders();
@@ -51,7 +45,7 @@ function toggleDisplay(className, show) {
             (isActive && activeCheckbox.checked) ||
             (isAwaiting && awaitingCheckbox.checked)
          ) {
-            item.style.display = "flex";
+            item.style.display = item.tagName === "TR" ? "table-row" : "flex";
          }
       } else if (!isArchived) {
          if (
@@ -60,11 +54,12 @@ function toggleDisplay(className, show) {
             (isActive && activeCheckbox.checked) ||
             (isAwaiting && awaitingCheckbox.checked)
          ) {
-            item.style.display = "flex";
+            item.style.display = item.tagName === "TR" ? "table-row" : "flex";
          }
       }
    }
 }
+
 
 function searchTrainingOrders() {
    var input = document.getElementById('searchInput');
@@ -82,7 +77,7 @@ function searchTrainingOrders() {
 
       if (matchesSearch && matchesCheckbox) {
          if (visibleCount < maxCount) {
-            item.style.display = "flex";
+            item.style.display = item.tagName === "TR" ? "table-row" : "flex";
             visibleCount++;
          } else {
             item.style.display = "none";
@@ -92,6 +87,7 @@ function searchTrainingOrders() {
       }
    }
 }
+
 
 function shouldDisplay(item) {
    var archivedCheckbox = document.getElementById("Archived");

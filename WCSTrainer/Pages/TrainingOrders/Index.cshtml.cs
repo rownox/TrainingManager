@@ -21,8 +21,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
          return Page();
       }
 
-      public async Task OnPostAsync() {
-         await LoadData();
+      public IActionResult OnPostAsync() {
+         return OnGetAsync().Result;
       }
 
       public async Task LoadData() {

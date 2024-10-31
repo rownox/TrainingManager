@@ -4,7 +4,7 @@
 	align-items: center;
 	max-width: 100%;
 	display: flex;
-	width: 1400px;
+	width: 1650px;
 }
 
 nav {
@@ -22,7 +22,7 @@ nav {
 		align-items: center;
 		max-width: 100%;
 		display: flex;
-		width: 1400px;
+		width: 1650px;
 	}
 
 		nav .nav-container .nav-buttons {
@@ -624,9 +624,24 @@ nav {
 			}
 
 				.panel .body .properties .list-container .top {
-					background-color: var(--gray1);
 					padding-bottom: 10px;
+					display: flex;
+					justify-content: space-between;
 				}
+
+					.panel .body .properties .list-container .top .left {
+						display: flex;
+						height: 100%;
+					}
+
+					.panel .body .properties .list-container .top .right {
+						display: flex;
+						height: 100%;
+					}
+
+					.panel .body .properties .list-container .top .btn {
+						padding: 6px 10px;
+					}
 
 				.panel .body .properties .list-container .order-list {
 					overflow-y: scroll;
@@ -716,6 +731,33 @@ nav {
 								font-size: 13px;
 								height: fit-content;
 							}
+
+				.panel .body .properties .list-container .order-table {
+					width: 100%;
+					border-collapse: collapse;
+				}
+
+					.panel .body .properties .list-container .order-table tr {
+						display: table-row;
+						height: 10px;
+					}
+
+						.panel .body .properties .list-container .order-table .clickable .btn {
+						}
+
+					.panel .body .properties .list-container .order-table tr td, .panel .body .properties .list-container table tr th {
+						border-bottom: 1px solid var(--gray3);
+						text-align: start;
+						padding: 2px 5px;
+					}
+
+					.panel .body .properties .list-container .order-table tr td {
+					}
+
+					.panel .body .properties .list-container .order-table tr th {
+						background-color: var(--gray3);
+						color: var(--textMain);
+					}
 
 
 
