@@ -31,7 +31,7 @@
                         var cssClass = order.Archived ? "pill inactive" : "pill";
                         if (order.ParentSkillId == skill.Id) {
                            <div class="order-block">
-                              <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+                              <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
                               @{
                                  var type = "awaiting";
                                  if (order.Status.Equals("Active")) {
@@ -52,14 +52,14 @@
          </div>
       </div>
    </div>
-   
+
    setOrders(employee.TrainingOrdersAsTrainee);
    <div class="text-group">
       <p class="title">Assigned Learning (@activeHours Hours)</p>
       <div class="info">
          @foreach (var order in activeOrders) {
             var cssClass = order.Archived ? "pill inactive" : "pill";
-            <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+            <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
          }
       </div>
    </div>
@@ -68,7 +68,7 @@
       <div class="info">
          @foreach (var order in completeOrders) {
             var cssClass = order.Archived ? "pill inactive" : "pill";
-            <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+            <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
          }
       </div>
    </div>
@@ -80,13 +80,13 @@
             setOrders(employee.TrainingOrdersAsTrainer);
             foreach (var order in activeOrders) {
                var cssClass = order.Archived ? "pill inactive" : "pill";
-               <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+               <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
             }
             foreach (var group in employee.Groups) {
                setOrders(group.TrainingOrders);
                foreach (var order in activeOrders) {
                   var cssClass = order.Archived ? "pill inactive" : "pill";
-                  <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+                  <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
                }
             }
          }
@@ -99,13 +99,13 @@
             setOrders(employee.TrainingOrdersAsTrainer);
             foreach (var order in completeOrders) {
                var cssClass = order.Archived ? "pill inactive" : "pill";
-               <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+               <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
             }
             foreach (var group in employee.Groups) {
                setOrders(group.TrainingOrders);
                foreach (var order in completeOrders) {
                   var cssClass = order.Archived ? "pill inactive" : "pill";
-                  <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id</a>
+                  <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
                }
             }
          }
@@ -145,11 +145,15 @@
 
    private async Task LoadTrainingOrderAsync() {
       var tempEmployee = await _context.Employees
-          .Include(e => e.TrainingOrdersAsTrainer)
-          .Include(e => e.TrainingOrdersAsTrainee)
+         .Include(e => e.TrainingOrdersAsTrainer)
+            .ThenInclude(t => t.Lesson)
+         .Include(e => e.TrainingOrdersAsTrainee)
             .ThenInclude(t => t.ParentSkill)
-          .Include(e => e.Groups)
+         .Include(e => e.TrainingOrdersAsTrainee)
+            .ThenInclude(t => t.Lesson)
+         .Include(e => e.Groups)
             .ThenInclude(g => g.TrainingOrders)
+               .ThenInclude(t => t.Lesson)
        .Include(e => e.Skills)
           .FirstOrDefaultAsync(m => m.Id == EmployeeId);
 

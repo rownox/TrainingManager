@@ -62,16 +62,22 @@
                            } else if (item.Status.Equals("Completed")) {
                               type = "completed";
                            }
+                           var text = "";
+                           if (item.Lesson != null) {
+                              text = item.Lesson.Name;
+                           }
+                           var searchText = text + name;
                            <li id="@item.Id" class="@type @item.Status @(item.Archived ? "Archived" : "") searchable"
                                data-name="@name" style="display: @(itemCount < Model.maxCount ? "flex" : "none");">
                               <div class="info">
                                  <div class="title">
                                     @{
-                                       if (item.Archived == true) {
-                                          <a class="name archived" asp-page="./Details" asp-route-id="@item.Id">Training Order #@item.Id</a>
-                                       } else {
-                                          <a class="name unarchived" asp-page="./Details" asp-route-id="@item.Id">Training Order #@item.Id</a>
+                                       var archived = "archived";
+                                       
+                                       if (item.Archived == false) {
+                                          archived = "unarchived";
                                        }
+                                       <a class="name @archived" asp-page="./Details" asp-route-id="@item.Id">TO #@item.Id - @text</a>
                                        
                                        if (item.ParentSkill != null) {
                                           <a class="skill-name black-pill" href="/Skills/Details?id=@item.ParentSkill.Id">@item.ParentSkill.Name</a>

@@ -9,43 +9,46 @@
       <div class="properties">
          <div class="user-form">
             @if (Model.UserAccount != null) {
-               <p class="title">@Model.UserAccount.UserName</p>
-               @if (Model.Employee != null) {
-                  <p class="subtitle">@Model.Employee.FirstName @Model.Employee.LastName</p>
-               }
-               <div class="field-container">
-                  <div class="title-row">
-                     <p class="title">Account Info</p>
-                  </div>
-                  <div class="text-group">
-                     <p class="title">User ID</p>
-                     <p class="info">@Model.UserAccount.Id</p>
-                  </div>
-                  <div class="text-group">
-                     <p class="title">Username</p>
-                     <p class="info">@Model.UserAccount.UserName</p>
-                  </div>
-                  <div class="text-group">
-                     <p class="title">Email</p>
-                     <p class="info">@Model.UserAccount.Email</p>
-                  </div>
-                  <div class="text-group">
-                     <p class="title">Phone Number</p>
-                     <p class="info">@Model.UserAccount.PhoneNumber</p>
-                  </div>
+               <div id="contentToPrint" class="print-block">
+                  <p class="title">@Model.UserAccount.UserName</p>
                   @if (Model.Employee != null) {
-                     <component type="typeof(Person)" render-mode="WebAssemblyPrerendered" param-EmployeeId="@Model.Employee.Id" />
-                     <div class="btn-container">
-                        <a class="btn bg-btn btnGreen" asp-page="/Employees/Edit" asp-route-id="@Model.UserAccount.EmployeeId">
-                           Edit Info
-                        </a>
-
-                        <div id="printButton" class="btn bg-btn btnWhite">
-                           <img class="hover-img" src="/images/print.svg">
-                        </div>
-                     </div>
+                     <p class="subtitle">@Model.Employee.FirstName @Model.Employee.LastName</p>
                   }
+                  <div class="field-container">
+                     <div class="title-row">
+                        <p class="title">Account Info</p>
+                     </div>
+                     <div class="text-group">
+                        <p class="title">User ID</p>
+                        <p class="info">@Model.UserAccount.Id</p>
+                     </div>
+                     <div class="text-group">
+                        <p class="title">Username</p>
+                        <p class="info">@Model.UserAccount.UserName</p>
+                     </div>
+                     <div class="text-group">
+                        <p class="title">Email</p>
+                        <p class="info">@Model.UserAccount.Email</p>
+                     </div>
+                     <div class="text-group">
+                        <p class="title">Phone Number</p>
+                        <p class="info">@Model.UserAccount.PhoneNumber</p>
+                     </div>
+                     @if (Model.Employee != null) {
+                        <component type="typeof(Person)" render-mode="WebAssemblyPrerendered" param-EmployeeId="@Model.Employee.Id" />
+                        <div class="btn-container">
+                           <a class="btn bg-btn btnGreen" asp-page="/Employees/Edit" asp-route-id="@Model.UserAccount.EmployeeId">
+                              Edit Info
+                           </a>
+
+                           <div id="printButton" class="btn bg-btn btnWhite">
+                              <img class="hover-img" src="/images/print.svg">
+                           </div>
+                        </div>
+                     }
+                  </div>
                </div>
+               
             }
          </div>
       </div>

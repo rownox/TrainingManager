@@ -24,19 +24,22 @@
                         <div class="title">
                            <p>@monthName</p>
                         </div>
+                        <div class="stats">
+                           <p>Training Orders: @Model.countMonthOrders(month)</p>
+                           <p>Training Hours: @Model.countOrderHours(month)</p>
+                        </div>
                         <div class="info">
-                           <p>Orders:</p>
                            @if (Model.getMonthOrders(month).Count <= 0) {
                               <div class="pill none"></div>
                            } else {
                               foreach (var order in Model.getMonthOrders(month)) {
-                                 <a asp-page="/TrainingOrders/Details" asp-route-id="@order.Id" class="pill">Order #@order.Id - @order.BeginDate</a>
+                                 var text = "";
+                                 if (order.Lesson != null) {
+                                    text = order.Lesson.Name;
+                                 }
+                                 <a asp-page="/TrainingOrders/Details" asp-route-id="@order.Id" class="pill">TO #@order.Id - @order.BeginDate - @text</a>
                               }
                            }
-                        </div>
-                        <div class="stats">
-                           <p>Training Orders: @Model.countMonthOrders(month)</p>
-                           <p>Training Hours: @Model.countOrderHours(month)</p>
                         </div>
                      </div>
                   }

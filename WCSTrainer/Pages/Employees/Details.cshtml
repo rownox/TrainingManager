@@ -8,13 +8,15 @@
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="user-form">
-            <p class="title">Employee #@Model.Employee.Id</p>
-            <div class="field-container">
-               <component type="typeof(Person)" render-mode="WebAssemblyPrerendered" param-EmployeeId="@Model.Employee.Id" />
-               <div class="btn-container">
-                  <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Employee.Id">
-                     Edit Info
-                  </a>
+            <div id="contentToPrint" class="print-block">
+               <p class="title">Employee #@Model.Employee.Id</p>
+               <div class="field-container">
+                  <component type="typeof(Person)" render-mode="WebAssemblyPrerendered" param-EmployeeId="@Model.Employee.Id" />
+                  <div class="btn-container">
+                     <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Employee.Id">
+                        Edit Info
+                     </a>
+                  </div>
                </div>
             </div>
          </div>

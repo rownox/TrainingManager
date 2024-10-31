@@ -6,58 +6,60 @@
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="user-form">
-            <p class="title">Skill #@Model.Skill.Id</p>
-            <div class="field-container">
-               <div class="text-group">
-                  <p class="title">Name</p>
-                  <p class="info">@Model.Skill.Name</p>
-               </div>
-               <div class="text-group">
-                  <p class="title">Description</p>
-                  <p class="info">@Model.Skill.Description</p>
-               </div>
-               <div class="text-group">
-                  <p class="title">Included Lessons</p>
-                  <div class="info">
-                     @foreach (var lesson in Model.Skill.Lessons) {
-                        <a href="/Lessons/Details?id=@lesson.Id" class="pill">@lesson.Name</a>
-                     }
+            <div id="contentToPrint" class="print-block">
+               <p class="title">Skill #@Model.Skill.Id</p>
+               <div class="field-container">
+                  <div class="text-group">
+                     <p class="title">Name</p>
+                     <p class="info">@Model.Skill.Name</p>
                   </div>
-               </div>
-               <div class="text-group">
-                  <p class="title">Currently Learning</p>
-                  <div class="info">
-                     @foreach (var person in Model.Skill.Employees) {
-                        bool isActive = false;
-                        foreach (var orderAsTrainee in person.TrainingOrdersAsTrainee) {
-                           if (orderAsTrainee.ParentSkillId == Model.Skill.Id) {
-                              if (orderAsTrainee.Status == "Active" || orderAsTrainee.Status == "Awaiting Approval") {
-                                 isActive = true;
+                  <div class="text-group">
+                     <p class="title">Description</p>
+                     <p class="info">@Model.Skill.Description</p>
+                  </div>
+                  <div class="text-group">
+                     <p class="title">Included Lessons</p>
+                     <div class="info">
+                        @foreach (var lesson in Model.Skill.Lessons) {
+                           <a href="/Lessons/Details?id=@lesson.Id" class="pill">@lesson.Name</a>
+                        }
+                     </div>
+                  </div>
+                  <div class="text-group">
+                     <p class="title">Currently Learning</p>
+                     <div class="info">
+                        @foreach (var person in Model.Skill.Employees) {
+                           bool isActive = false;
+                           foreach (var orderAsTrainee in person.TrainingOrdersAsTrainee) {
+                              if (orderAsTrainee.ParentSkillId == Model.Skill.Id) {
+                                 if (orderAsTrainee.Status == "Active" || orderAsTrainee.Status == "Awaiting Approval") {
+                                    isActive = true;
+                                 }
                               }
                            }
-                        }
-                        if (isActive) {
-                           <a href="/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
-                        }
-                     }
-                  </div>
-               </div>
-               <div class="text-group">
-                  <p class="title">Learning Completed</p>
-                  <div class="info">
-                     @foreach (var person in Model.Skill.Employees) {
-                        bool isActive = false;
-                        foreach (var orderAsTrainee in person.TrainingOrdersAsTrainee) {
-                           if (orderAsTrainee.ParentSkillId == Model.Skill.Id) {
-                              if (orderAsTrainee.Status == "Active" || orderAsTrainee.Status == "Awaiting Approval") {
-                                 isActive = true;
-                              }
+                           if (isActive) {
+                              <a href="/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
                            }
                         }
-                        if (!isActive) {
-                           <a href="/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
+                     </div>
+                  </div>
+                  <div class="text-group">
+                     <p class="title">Learning Completed</p>
+                     <div class="info">
+                        @foreach (var person in Model.Skill.Employees) {
+                           bool isActive = false;
+                           foreach (var orderAsTrainee in person.TrainingOrdersAsTrainee) {
+                              if (orderAsTrainee.ParentSkillId == Model.Skill.Id) {
+                                 if (orderAsTrainee.Status == "Active" || orderAsTrainee.Status == "Awaiting Approval") {
+                                    isActive = true;
+                                 }
+                              }
+                           }
+                           if (!isActive) {
+                              <a href="/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
+                           }
                         }
-                     }
+                     </div>
                   </div>
                </div>
             </div>

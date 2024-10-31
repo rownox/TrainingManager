@@ -19,6 +19,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          TrainingOrder = await context.TrainingOrders
             .Include(t => t.Trainers)
             .Include(t => t.ParentSkill)
+            .Include(t => t.Lesson)
             .ToListAsync();
       }
 

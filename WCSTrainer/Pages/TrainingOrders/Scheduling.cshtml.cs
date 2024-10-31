@@ -21,7 +21,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
          Employees = await context.Employees
             .Include(e => e.TrainingOrdersAsTrainer)
             .ToListAsync();
-         TrainingOrders = await context.TrainingOrders.ToListAsync();
+         TrainingOrders = await context.TrainingOrders
+            .Include(o => o.Lesson)
+            .ToListAsync();
 
          EarliestYear = TrainingOrders
             .Select(t => t.CreateDate.Year)
@@ -87,7 +89,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             if (orderStart.HasValue && orderStart.Value.Month == month && orderStart.Value.Year == selectedYear) {
                if (employeeHasOrder(order)) {
-                  count += order.Duration;
+                  if (order.Status == "Active") {
+                     count += order.Duration;
+                  }
                }
             }
          }
@@ -104,7 +108,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             if (orderStart.HasValue && orderStart.Value.Month == month && orderStart.Value.Year == selectedYear) {
                if (employeeHasOrder(order)) {
-                  count++;
+                  if (order.Status == "Active") {
+                     count++;
+                  }
                }
             }
          }

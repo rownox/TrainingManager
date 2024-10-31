@@ -434,7 +434,7 @@ nav {
 					display: flex;
 					gap: 5px;
 					flex-direction: column;
-					width: 120px;
+					width: 180px;
 					background-color: black;
 					border: 1px solid var(--gray4);
 				}
@@ -846,7 +846,6 @@ nav {
 
 						.panel .body .properties .scheduling .schedule .months .month .title {
 							font-weight: bold;
-							margin-bottom: 10px;
 							border-bottom: 1px solid var(--gray4);
 							padding: 5px;
 							font-size: 17px;
