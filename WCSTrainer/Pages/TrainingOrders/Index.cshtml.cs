@@ -32,7 +32,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          public string? Priority { get; set; }
       }
 
-      public async Task<IActionResult> OnGetAsync() {
+      public IActionResult OnGet() {
          return Page();
       }
 
@@ -59,10 +59,14 @@ namespace WCSTrainer.Pages.TrainingOrders {
          if (statuses.Any())
             query = query.Where(t => statuses.Contains(t.Status));
 
-         if (!string.IsNullOrEmpty(filter.SearchTerm))
-            query = query.Where(t =>
-                (t.Trainee.FirstName + " " + t.Trainee.LastName).Contains(filter.SearchTerm) ||
-                t.Lesson.Name.Contains(filter.SearchTerm));
+         if (!string.IsNullOrEmpty(filter.SearchTerm)) {
+            query = query.Where(t => (
+                  t.Trainee.FirstName + " " + t.Trainee.LastName).Contains(filter.SearchTerm) ||
+                  t.Lesson.Name.Contains(filter.SearchTerm) ||
+                  t.ParentSkill.Name.Contains(filter.SearchTerm) ||
+                  t.Id.ToString().Contains(filter.SearchTerm)
+            );
+         }
 
          var take = filter.MaxCount == -1
              ? await query.CountAsync()
