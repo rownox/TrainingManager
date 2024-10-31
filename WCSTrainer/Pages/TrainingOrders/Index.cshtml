@@ -40,26 +40,21 @@
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="list-container">
-            <div class="top">
+            <form id="orderTools" method="post" class="top">
                <div class="left">
-                  <form method="post">
-                     <select asp-for="MaxCount" class="drop-main" onchange="this.form.submit()">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                     </select>
-                  </form>
+                  <select asp-for="MaxCount" class="drop-main" onchange="this.form.submit()">
+                     <option value="10">10</option>
+                     <option value="30">30</option>
+                     <option value="@Model.TrainingOrders.Count()">Max</option>
+                  </select>
                </div>
                <div class="right">
-                  <form method="post">
-                     <input asp-for="Detailed" value="@(Model.Detailed ? "False" : "True")" type="hidden" />
-                     <button type="submit" class="btn btnWhite bg-btn">
-                        @(Model.Detailed ? "Simple View" : "Detailed View")
-                     </button>
-                  </form>
+                  <input id="detailedInput" asp-for="Detailed" type="hidden" />
+                  <button class="btn btnWhite bg-btn" onclick="switchDetailed()">
+                     @(Model.Detailed ? "Simple View" : "Detailed View")
+                  </button>
                </div>
-            </div>
-            
+            </form>
 
             @if (SignInManager.IsSignedIn(User)) {
                var user = await UserManager.GetUserAsync(User);
@@ -69,7 +64,8 @@
                         <ul>
                            @{
                               int itemCount = 0;
-                              foreach (var item in Model.TrainingOrder.Reverse()) {
+                              int maxCount = Model.MaxCount;
+                              foreach (var item in Model.TrainingOrders.Reverse()) {
                                  if (TrainingOrderHelper.OrderInvolves(UserManager, User, item).Result == false) {
                                     continue;
                                  }
@@ -122,12 +118,12 @@
                            <th>Priority</th>
                            <th></th>
                         </tr>
-                        @foreach (var item in Model.TrainingOrder.Reverse()) {
+                        @foreach (var item in Model.TrainingOrders.Reverse()) {
                            if (TrainingOrderHelper.OrderInvolves(UserManager, User, item).Result == false) {
                               continue;
                            }
                            loadVars(item);
-                           <tr id="@item.Id" class="@type @item.Status searchable" data-name="@searchText">
+                           <tr id="@item.Id" class="@type @item.Status @(item.Archived ? "Archived" : "") searchable" data-name="@searchText">
                               <td><p class="@type dot" title="@item.Status">@item.Id ⬤</p></td>
                               @foreach (var employee in Model.Employees) {
                                  if (employee.Id == item.TraineeId) {
@@ -165,7 +161,7 @@
                </div>
                <div class="selections">
                   <p class="section-title">Show List Items:</p>
-                  <div class="section">
+                  <div class="section" style="background-color: @(Model.Detailed ? "var(--red3)" : "none");">
                      <p class="section-info archived">Archived</p>
                      <input type="checkbox" id="Archived" onchange="checkedBox(this)" />
                   </div>

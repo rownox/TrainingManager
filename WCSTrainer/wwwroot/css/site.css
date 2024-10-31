@@ -741,6 +741,10 @@ nav {
 						height: 10px;
 					}
 
+					.panel .body .properties .list-container .order-table tr.Archived {
+						background-color: var(--red3);
+					}
+
 						.panel .body .properties .list-container .order-table .clickable .btn {
 						}
 

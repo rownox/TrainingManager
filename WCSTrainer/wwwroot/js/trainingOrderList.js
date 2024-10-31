@@ -115,8 +115,14 @@ function updateMaxCount(value) {
    searchTrainingOrders();
 }
 
-function submitForm() {
-   document.getElementById('maxCountForm').submit();
+function switchDetailed() {
+   var value = document.getElementById("detailedInput");
+   if (value.value == "true") {
+      value.value = "false";
+   } else {
+      value.value = "true";
+   }
+   document.getElementById('orderTools').submit();
 }
 
 window.onload = function () {
