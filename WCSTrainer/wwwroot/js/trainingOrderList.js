@@ -1,131 +1,139 @@
-﻿function checkedBox(checkboxElem) {
-   toggleDisplay(checkboxElem.id, checkboxElem.checked);
-   localStorage.setItem(checkboxElem.id, checkboxElem.checked);
-   searchTrainingOrders();
-}
-
-function loadCheckboxStates() {
-   var checkboxes = document.querySelectorAll(".selections input[type='checkbox']");
-   var archivedItems = document.getElementsByClassName("Archived");
-   Array.from(archivedItems).forEach(item => {
-      item.style.display = "none";
-   });
-
-   checkboxes.forEach(checkbox => {
-      var storedState = localStorage.getItem(checkbox.id);
-      if (storedState !== null) {
-         checkbox.checked = (storedState === "true");
-         toggleDisplay(checkbox.id, checkbox.checked);
-      }
-   });
-}
-
-function toggleDisplay(className, show) {
-   var elements = document.getElementsByClassName(className);
-   var archivedCheckbox = document.getElementById("Archived");
-   var verifiedCheckbox = document.getElementById("Verified");
-   var completedCheckbox = document.getElementById("Completed");
-   var activeCheckbox = document.getElementById("Active");
-   var awaitingCheckbox = document.getElementById("Awaiting Approval");
-
-   for (var i = 0; i < elements.length; i++) {
-      var item = elements[i];
-      var isArchived = item.classList.contains("Archived");
-      var isVerified = item.classList.contains("Verified");
-      var isCompleted = item.classList.contains("Completed");
-      var isActive = item.classList.contains("Active");
-      var isAwaiting = item.classList.contains("Awaiting");
-
-      item.style.display = "none";
-
-      if (isArchived && archivedCheckbox.checked) {
-         if (
-            (isVerified && verifiedCheckbox.checked) ||
-            (isCompleted && completedCheckbox.checked) ||
-            (isActive && activeCheckbox.checked) ||
-            (isAwaiting && awaitingCheckbox.checked)
-         ) {
-            item.style.display = item.tagName === "TR" ? "table-row" : "flex";
-         }
-      } else if (!isArchived) {
-         if (
-            (isVerified && verifiedCheckbox.checked) ||
-            (isCompleted && completedCheckbox.checked) ||
-            (isActive && activeCheckbox.checked) ||
-            (isAwaiting && awaitingCheckbox.checked)
-         ) {
-            item.style.display = item.tagName === "TR" ? "table-row" : "flex";
-         }
-      }
-   }
-}
-
-
-function searchTrainingOrders() {
-   var input = document.getElementById('searchInput');
-   var filter = input.value.toLowerCase();
-   var elements = document.getElementsByClassName("searchable");
-   var maxCount = parseInt(document.querySelector('.drop-main').value);
-   var visibleCount = 0;
-
-   for (var i = 0; i < elements.length; i++) {
-      var item = elements[i];
-      var id = item.id.toLowerCase();
-      var name = item.getAttribute('data-name').toLowerCase();
-      var matchesSearch = id.includes(filter) || name.includes(filter);
-      var matchesCheckbox = shouldDisplay(item);
-
-      if (matchesSearch && matchesCheckbox) {
-         if (visibleCount < maxCount) {
-            item.style.display = item.tagName === "TR" ? "table-row" : "flex";
-            visibleCount++;
-         } else {
-            item.style.display = "none";
-         }
-      } else {
-         item.style.display = "none";
-      }
-   }
-}
-
-
-function shouldDisplay(item) {
-   var archivedCheckbox = document.getElementById("Archived");
-   var verifiedCheckbox = document.getElementById("Verified");
-   var completedCheckbox = document.getElementById("Completed");
-   var activeCheckbox = document.getElementById("Active");
-   var awaitingCheckbox = document.getElementById("Awaiting Approval");
-
-   var isArchived = item.classList.contains("Archived");
-   var isVerified = item.classList.contains("Verified");
-   var isCompleted = item.classList.contains("Completed");
-   var isActive = item.classList.contains("Active");
-   var isAwaiting = item.classList.contains("Awaiting");
-
-   if (isArchived && !archivedCheckbox.checked) return false;
-   if (isVerified && !verifiedCheckbox.checked) return false;
-   if (isCompleted && !completedCheckbox.checked) return false;
-   if (isActive && !activeCheckbox.checked) return false;
-   if (isAwaiting && !awaitingCheckbox.checked) return false;
-
-   return true;
-}
-
-function updateMaxCount(value) {
-   searchTrainingOrders();
-}
-
-function switchDetailed() {
-   var value = document.getElementById("detailedInput");
-   if (value.value == "true") {
-      value.value = "false";
-   } else {
-      value.value = "true";
-   }
-   document.getElementById('orderTools').submit();
-}
-
-window.onload = function () {
-   loadCheckboxStates();
-   searchTrainingOrders();
+﻿let currentFilters = {
+   maxCount: 10,
+   searchTerm: '',
+   showArchived: false,
+   showVerified: true,
+   showCompleted: true,
+   showActive: true,
+   showAwaiting: true,
+   detailed: false
 };
+
+let debounceTimeout;
+
+function debounce(func, wait) {
+   return function executedFunction(...args) {
+      const later = () => {
+         clearTimeout(debounceTimeout);
+         func(...args);
+      };
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(later, wait);
+   };
+}
+
+function loadOrders() {
+   const queryString = new URLSearchParams(currentFilters).toString();
+   fetch(`?handler=Orders&${queryString}`)
+      .then(response => response.json())
+      .then(renderOrders);
+}
+
+function renderOrders(orders) {
+   const container = document.getElementById('orderListContainer');
+   if (currentFilters.detailed) {
+      container.innerHTML = `
+                          <table id="dataTable" class="order-table">
+                              <tr>
+                                  <th>ID</th>
+                                  <th>Trainee</th>
+                                  <th>Begin Date</th>
+                                  <th>Lesson</th>
+                                  <th>Skill</th>
+                                  <th>Priority</th>
+                                  <th></th>
+                              </tr>
+                              ${orders.map(order => `
+                                  <tr class="${getOrderClasses(order)}">
+                                      <td><p class="${getTypeClass(order.status)} dot" title="${order.status}">${order.id} ⬤</p></td>
+                                      <td>${order.traineeName}</td>
+                                      <td>${new Date(order.beginDate).toLocaleDateString()}</td>
+                                      <td>${order.lessonName}</td>
+                                      <td>${order.skillName}</td>
+                                      <td>${order.priority}</td>
+                                      <td>
+                                          <a href="./TrainingOrders/Details?id=${order.id}" class="btn nbg-btn btnWhite">View</a>
+                                      </td>
+                                  </tr>
+                              `).join('')}
+                          </table>
+                      `;
+   } else {
+      container.innerHTML = `
+                          <div class="order-list">
+                              <ul>
+                                  ${orders.map(order => `
+                                      <li class="${getOrderClasses(order)}">
+                                          <div class="info">
+                                              <div class="title">
+                                                  <a class="name ${order.archived ? 'archived' : 'unarchived'}"
+                                                     href="./TrainingOrders/Details?id=${order.id}">
+                                                     TO #${order.id} - ${order.lessonName}
+                                                  </a>
+                                                  ${order.skillName ? `
+                                                      <a class="skill-name black-pill"
+                                                         href="/Skills/Details?id=${order.skillId}">
+                                                         ${order.skillName}
+                                                      </a>
+                                                  ` : ''}
+                                              </div>
+                                              <div class="sub">
+                                                  <div class="sub-text">
+                                                      <p class="identifier">Trainee - ${order.traineeName}</p>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </li>
+                                  `).join('')}
+                              </ul>
+                          </div>
+                      `;
+   }
+}
+
+function getOrderClasses(order) {
+   const type = getTypeClass(order.status);
+   return `${type} ${order.status} ${order.archived ? 'Archived' : ''}`;
+}
+
+function getTypeClass(status) {
+   switch (status) {
+      case 'Active': return 'active';
+      case 'Verified': return 'verified';
+      case 'Completed': return 'completed';
+      default: return 'awaiting';
+   }
+}
+
+document.getElementById('maxCount').addEventListener('change', function (e) {
+   const value = parseInt(e.target.value);
+   currentFilters.maxCount = value;
+
+   if (value === -1) {
+      const container = document.getElementById('orderListContainer');
+      container.innerHTML = '<div class="loading">Loading all records...</div>';
+   }
+
+   loadOrders();
+});
+
+document.getElementById('viewToggle').addEventListener('click', function () {
+   currentFilters.detailed = !currentFilters.detailed;
+   this.textContent = currentFilters.detailed ? 'Simple View' : 'Detailed View';
+   loadOrders();
+});
+
+document.getElementById('searchInput').addEventListener('input', debounce(function (e) {
+   currentFilters.searchTerm = e.target.value;
+   loadOrders();
+}, 300));
+
+['Archived', 'Verified', 'Completed', 'Active', 'Awaiting'].forEach(status => {
+   const checkbox = document.getElementById(`show${status}`);
+   checkbox.addEventListener('change', function () {
+      currentFilters[`show${status}`] = this.checked;
+      loadOrders();
+   });
+});
+
+document.addEventListener('DOMContentLoaded', loadOrders);

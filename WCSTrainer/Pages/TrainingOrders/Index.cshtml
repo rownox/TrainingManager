@@ -4,182 +4,58 @@
 @inject SignInManager<UserAccount> SignInManager
 @inject UserManager<UserAccount> UserManager
 
-@{
-   var type = "";
-   string name = "";
-   var text = "";
-   var searchText = "";
-
-   void loadVars(TrainingOrder item) {
-      type = "awaiting";
-      name = "";
-      text = "";
-      searchText = "";
-
-      if (item.Trainee != null) {
-         name = item.Trainee.FirstName + " " + item.Trainee.LastName;
-      } else {
-         name = "N/A";
-      }
-      if (item.Status.Equals("Active")) {
-         type = "active";
-      } else if (item.Status.Equals("Verified")) {
-         type = "verified";
-      } else if (item.Status.Equals("Completed")) {
-         type = "completed";
-      }
-      if (item.Lesson != null) {
-         text = item.Lesson.Name;
-      }
-      searchText = text + name;
-   }
-}
-
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="list-container">
-            <form id="orderTools" method="post" class="top">
+            <div class="top">
                <div class="left">
-                  <select asp-for="MaxCount" class="drop-main" onchange="this.form.submit()">
+                  <select id="maxCount" class="drop-main">
                      <option value="10">10</option>
                      <option value="30">30</option>
-                     <option value="@Model.TrainingOrders.Count()">Max</option>
+                     <option value="50">50</option>
+                     <option value="-1">Max</option>
                   </select>
                </div>
                <div class="right">
-                  <input id="detailedInput" asp-for="Detailed" type="hidden" />
-                  <button class="btn btnWhite bg-btn" onclick="switchDetailed()">
-                     @(Model.Detailed ? "Simple View" : "Detailed View")
+                  <button class="btn btnWhite bg-btn" id="viewToggle">
+                     Simple View
                   </button>
                </div>
-            </form>
+            </div>
 
-            @if (SignInManager.IsSignedIn(User)) {
-               var user = await UserManager.GetUserAsync(User);
-               if (user != null) {
-                  if (!Model.Detailed) {
-                     <div class="order-list">
-                        <ul>
-                           @{
-                              int itemCount = 0;
-                              int maxCount = Model.MaxCount;
-                              foreach (var item in Model.TrainingOrders.Reverse()) {
-                                 if (TrainingOrderHelper.OrderInvolves(UserManager, User, item).Result == false) {
-                                    continue;
-                                 }
-                                 loadVars(item);
-                                 <li id="@item.Id" class="@type @item.Status @(item.Archived ? "Archived" : "") searchable" data-name="@searchText">
-                                    <div class="info">
-                                       <div class="title">
-                                          @{
-                                             var archived = "archived";
-
-                                             if (item.Archived == false) {
-                                                archived = "unarchived";
-                                             }
-                                             <a class="name @archived" asp-page="./Details" asp-route-id="@item.Id">TO #@item.Id - @text</a>
-
-                                             if (item.ParentSkill != null) {
-                                                <a class="skill-name black-pill" href="/Skills/Details?id=@item.ParentSkill.Id">@item.ParentSkill.Name</a>
-                                             }
-                                          }
-                                       </div>
-                                       <div class="sub">
-                                          <div class="sub-text">
-                                             <p class="identifier">Trainee - @name</p>
-                                          </div>
-
-                                       </div>
-                                    </div>
-                                    <div class="btns">
-                                       @{
-                                          var isOwner = await UserManager.IsInRoleAsync(user, "owner");
-                                          if (isOwner) {
-                                             <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                                          }
-                                       }
-                                    </div>
-                                 </li>
-                                 itemCount++;
-                              }
-                           }
-                        </ul>
-                     </div>
-                  } else {
-                     <table id="dataTable" class="order-table">
-                        <tr>
-                           <th>ID</th>
-                           <th>Trainee</th>
-                           <th>Begin Date</th>
-                           <th>Lesson</th>
-                           <th>Skill</th>
-                           <th>Priority</th>
-                           <th></th>
-                        </tr>
-                        @foreach (var item in Model.TrainingOrders.Reverse()) {
-                           if (TrainingOrderHelper.OrderInvolves(UserManager, User, item).Result == false) {
-                              continue;
-                           }
-                           loadVars(item);
-                           <tr id="@item.Id" class="@type @item.Status @(item.Archived ? "Archived" : "") searchable" data-name="@searchText">
-                              <td><p class="@type dot" title="@item.Status">@item.Id ⬤</p></td>
-                              @foreach (var employee in Model.Employees) {
-                                 if (employee.Id == item.TraineeId) {
-                                    <td>@employee.FirstName @employee.LastName</td>
-                                 }
-                              }
-                              <td>@item.BeginDate</td>
-                              <td>
-                                 @if (item.Lesson != null) {
-                                    @item.Lesson.Name
-                                 }
-                              </td>
-                              <td>
-                                 @if (item.ParentSkill != null) {
-                                    @item.ParentSkill.Name
-                                 }
-                              </td>
-                              <td>@item.Priority</td>
-                              <td>
-                                 <a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnWhite">View</a>
-                              </td>
-                           </tr>
-                        }
-                     </table>
-                  }
-               }
-            }
+            <div id="orderListContainer" class="order-list">
+            </div>
          </div>
 
          <div class="tool-container">
             <div class="tools">
                <p class="title">Options:</p>
                <div class="search">
-                  <input class="search-box" id="searchInput" placeholder="Search Training Orders" type="search" oninput="searchTrainingOrders()" />
+                  <input class="search-box" id="searchInput" placeholder="Search Training Orders" type="search" />
                </div>
                <div class="selections">
                   <p class="section-title">Show List Items:</p>
-                  <div class="section" style="background-color: @(Model.Detailed ? "var(--red3)" : "none");">
+                  <div class="section">
                      <p class="section-info archived">Archived</p>
-                     <input type="checkbox" id="Archived" onchange="checkedBox(this)" />
+                     <input type="checkbox" id="showArchived" />
                   </div>
                   <div class="section">
                      <p class="section-info verified">Verified</p>
-                     <input type="checkbox" checked id="Verified" onchange="checkedBox(this)" />
+                     <input type="checkbox" id="showVerified" checked />
                   </div>
                   <div class="section">
                      <p class="section-info completed">Completed</p>
-                     <input type="checkbox" checked id="Completed" onchange="checkedBox(this)" />
+                     <input type="checkbox" id="showCompleted" checked />
                   </div>
                   <div class="section">
                      <p class="section-info active">Active</p>
-                     <input type="checkbox" checked id="Active" onchange="checkedBox(this)" />
+                     <input type="checkbox" id="showActive" checked />
                   </div>
                   <div class="section">
                      <p class="section-info awaiting">Awaiting Approval</p>
-                     <input type="checkbox" checked id="Awaiting Approval" onchange="checkedBox(this)" />
+                     <input type="checkbox" id="showAwaiting" checked />
                   </div>
                </div>
                <div class="btns">
@@ -192,4 +68,6 @@
    </div>
 </div>
 
-<script src="~/js/trainingOrderList.js"></script>
+@section Scripts {
+   <script src="~/js/trainingOrderList.js" ></script>
+}
