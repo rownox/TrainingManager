@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace WCSTrainer.Pages.Skills {
    [Authorize(Roles = "owner, admin")]
@@ -30,7 +29,7 @@ namespace WCSTrainer.Pages.Skills {
 
          context.Skills.Add(Skill);
          await context.SaveChangesAsync();
-         
+
          foreach (var option in SelectedLessonList) {
             var lesson = await context.Lessons.FirstOrDefaultAsync(l => l.Id.ToString() == option);
             if (lesson != null) {

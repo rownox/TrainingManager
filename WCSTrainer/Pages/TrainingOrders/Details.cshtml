@@ -43,25 +43,17 @@
             </div>
             <br />
             <div class="btn-container">
-               @if (!Model.TrainingOrder.Status.Equals("Completed") && !Model.TrainingOrder.Status.Equals("Verified")) {
-                  <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">
-                     Edit Order
-                  </a>
-               }
-               @if (Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
-                  <a class="btn bg-btn btnRed" asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">
-                     Approve Order
-                  </a>
-               } else if (Model.TrainingOrder.Status.Equals("Active")) {
-                  <a class="btn bg-btn btnRed" asp-page="./Conclude" asp-route-id="@Model.TrainingOrder.Id">
-                     Conclude Order
-                  </a>
-               } else if (Model.TrainingOrder.Status.Equals("Completed")) {
-                  <a class="btn bg-btn btnRed" asp-page="./Verification" asp-route-id="@Model.TrainingOrder.Id">
-                     Verify Order
-                  </a>
-               }
                @{
+                  if (!Model.TrainingOrder.Status.Equals("Completed") && !Model.TrainingOrder.Status.Equals("Verified")) {
+                     <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">Edit Order</a>
+                  }
+                  if (Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
+                     <a class="btn bg-btn btnRed" asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">Approve Order</a>
+                  } else if (Model.TrainingOrder.Status.Equals("Active")) {
+                     <a class="btn bg-btn btnRed" asp-page="./Conclude" asp-route-id="@Model.TrainingOrder.Id">Conclude Order</a>
+                  } else if (Model.TrainingOrder.Status.Equals("Completed")) {
+                     <a class="btn bg-btn btnRed" asp-page="./Verification" asp-route-id="@Model.TrainingOrder.Id">Verify Order</a>
+                  }
                   string text = "";
                   <form method="post" id="archiveForm">
                      @if (Model.TrainingOrder.Archived) {
@@ -77,6 +69,15 @@
                <div id="printButton" class="btn bg-btn btnWhite">
                   <img class="hover-img" src="/images/print.svg">
                </div>
+               @if (SignInManager.IsSignedIn(User)) {
+                  var user = await UserManager.GetUserAsync(User);
+                  if (user != null) {
+                     var isOwner = await UserManager.IsInRoleAsync(user, "owner");
+                     if (isOwner) {
+                        <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.TrainingOrder.Id"> Delete</a>
+                     }
+                  }
+               }
             </div>
          </div>
       </div>

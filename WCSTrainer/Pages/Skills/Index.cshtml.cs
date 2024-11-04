@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Drawing.Printing;
 using WCSTrainer.Models;
 
 namespace WCSTrainer.Pages.Skills {
