@@ -11,6 +11,17 @@
 
 let debounceTimeout;
 
+function loadSavedFilters() {
+   const savedFilters = localStorage.getItem('trainingOrderFilters');
+   if (savedFilters) {
+      currentFilters = { ...currentFilters, ...JSON.parse(savedFilters) };
+   }
+}
+
+function saveFilters() {
+   localStorage.setItem('trainingOrderFilters', JSON.stringify(currentFilters));
+}
+
 function debounce(func, wait) {
    return function executedFunction(...args) {
       const later = () => {
@@ -33,61 +44,61 @@ function renderOrders(orders) {
    const container = document.getElementById('orderListContainer');
    if (currentFilters.detailed) {
       container.innerHTML = `
-                          <table id="dataTable" class="order-table">
-                              <tr>
-                                  <th>ID</th>
-                                  <th>Trainee</th>
-                                  <th>Begin Date</th>
-                                  <th>Lesson</th>
-                                  <th>Skill</th>
-                                  <th>Priority</th>
-                                  <th></th>
-                              </tr>
-                              ${orders.map(order => `
-                                  <tr class="${getOrderClasses(order)}">
-                                      <td><p class="${getTypeClass(order.status)} dot" title="${order.status}">${order.id} ⬤</p></td>
-                                      <td>${order.traineeName}</td>
-                                      <td>${new Date(order.beginDate).toLocaleDateString()}</td>
-                                      <td>${order.lessonName}</td>
-                                      <td>${order.skillName}</td>
-                                      <td>${order.priority}</td>
-                                      <td>
-                                          <a href="./TrainingOrders/Details?id=${order.id}" class="btn nbg-btn btnWhite">View</a>
-                                      </td>
-                                  </tr>
-                              `).join('')}
-                          </table>
-                      `;
+         <table id="dataTable" class="order-table">
+            <tr>
+               <th>ID</th>
+               <th>Trainee</th>
+               <th>Begin Date</th>
+               <th>Lesson</th>
+               <th>Skill</th>
+               <th>Priority</th>
+               <th></th>
+            </tr>
+            ${orders.map(order => `
+               <tr class="${getOrderClasses(order)}">
+                  <td><p class="${getTypeClass(order.status)} dot" title="${order.status}">${order.id} ⬤</p></td>
+                  <td>${order.traineeName}</td>
+                  <td>${new Date(order.beginDate).toLocaleDateString()}</td>
+                  <td>${order.lessonName}</td>
+                  <td>${order.skillName}</td>
+                  <td>${order.priority}</td>
+                  <td>
+                     <a href="./TrainingOrders/Details?id=${order.id}" class="btn nbg-btn btnWhite">View</a>
+                  </td>
+               </tr>
+            `).join('')}
+         </table>
+      `;
    } else {
       container.innerHTML = `
-                          <div class="order-list">
-                              <ul>
-                                  ${orders.map(order => `
-                                      <li class="${getOrderClasses(order)}">
-                                          <div class="info">
-                                              <div class="title">
-                                                  <a class="name ${order.archived ? 'archived' : 'unarchived'}"
-                                                     href="./TrainingOrders/Details?id=${order.id}">
-                                                     TO #${order.id} - ${order.lessonName}
-                                                  </a>
-                                                  ${order.skillName ? `
-                                                      <a class="skill-name black-pill"
-                                                         href="/Skills/Details?id=${order.skillId}">
-                                                         ${order.skillName}
-                                                      </a>
-                                                  ` : ''}
-                                              </div>
-                                              <div class="sub">
-                                                  <div class="sub-text">
-                                                      <p class="identifier">Trainee - ${order.traineeName}</p>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </li>
-                                  `).join('')}
-                              </ul>
-                          </div>
-                      `;
+         <div class="order-list">
+            <ul>
+               ${orders.map(order => `
+                  <li class="${getOrderClasses(order)}">
+                     <div class="info">
+                        <div class="title">
+                           <a class="name ${order.archived ? 'archived' : 'unarchived'}"
+                              href="./TrainingOrders/Details?id=${order.id}">
+                              TO #${order.id} - ${order.lessonName}
+                           </a>
+                           ${order.skillName ? `
+                              <a class="skill-name black-pill"
+                                 href="/Skills/Details?id=${order.skillId}">
+                                 ${order.skillName}
+                              </a>
+                           ` : ''}
+                        </div>
+                        <div class="sub">
+                           <div class="sub-text">
+                              <p class="identifier">Trainee - ${order.traineeName}</p>
+                           </div>
+                        </div>
+                     </div>
+                  </li>
+               `).join('')}
+            </ul>
+         </div>
+      `;
    }
 }
 
@@ -105,9 +116,21 @@ function getTypeClass(status) {
    }
 }
 
+function initializeUI() {
+   document.getElementById('maxCount').value = currentFilters.maxCount.toString();
+   document.getElementById('searchInput').value = currentFilters.searchTerm;
+   document.getElementById('viewToggle').textContent = currentFilters.detailed ? 'Simple View' : 'Detailed View';
+
+   ['Archived', 'Verified', 'Completed', 'Active', 'Awaiting'].forEach(status => {
+      const checkbox = document.getElementById(`show${status}`);
+      checkbox.checked = currentFilters[`show${status}`];
+   });
+}
+
 document.getElementById('maxCount').addEventListener('change', function (e) {
    const value = parseInt(e.target.value);
    currentFilters.maxCount = value;
+   saveFilters();
 
    if (value === -1) {
       const container = document.getElementById('orderListContainer');
@@ -120,11 +143,13 @@ document.getElementById('maxCount').addEventListener('change', function (e) {
 document.getElementById('viewToggle').addEventListener('click', function () {
    currentFilters.detailed = !currentFilters.detailed;
    this.textContent = currentFilters.detailed ? 'Simple View' : 'Detailed View';
+   saveFilters();
    loadOrders();
 });
 
 document.getElementById('searchInput').addEventListener('input', debounce(function (e) {
    currentFilters.searchTerm = e.target.value;
+   saveFilters();
    loadOrders();
 }, 300));
 
@@ -132,8 +157,13 @@ document.getElementById('searchInput').addEventListener('input', debounce(functi
    const checkbox = document.getElementById(`show${status}`);
    checkbox.addEventListener('change', function () {
       currentFilters[`show${status}`] = this.checked;
+      saveFilters();
       loadOrders();
    });
 });
 
-document.addEventListener('DOMContentLoaded', loadOrders);
+document.addEventListener('DOMContentLoaded', () => {
+   loadSavedFilters();
+   initializeUI();
+   loadOrders();
+});
