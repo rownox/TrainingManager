@@ -29,7 +29,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          public string Status { get; set; } = "";
          public bool Archived { get; set; }
          public DateOnly? BeginDate { get; set; }
-         public string? Priority { get; set; }
+         public string Priority { get; set; } = "";
       }
 
       public IActionResult OnGet() {
@@ -85,7 +85,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 Status = t.Status,
                 Archived = t.Archived,
                 BeginDate = t.BeginDate,
-                Priority = t.Priority
+                Priority = t.Priority != null ? t.Priority : ""
              })
              .ToListAsync();
 
