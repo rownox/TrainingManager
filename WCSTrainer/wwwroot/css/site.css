@@ -1484,3 +1484,14 @@ nav {
 				.login-container form .login-links a:hover {
 					color: var(--textMain);
 				}
+
+.pagination {
+	display: flex;
+	gap: 10px;
+	color: var(--textSub1);
+}
+
+.pagination .btn {
+	padding: 5px 10px;
+}
+

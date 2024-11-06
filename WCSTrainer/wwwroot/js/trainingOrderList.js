@@ -1,5 +1,6 @@
 ﻿let currentFilters = {
-   maxCount: 10,
+   pageSize: 10,
+   currentPage: 1,
    searchTerm: '',
    showArchived: false,
    showVerified: true,
@@ -37,10 +38,13 @@ function loadOrders() {
    const queryString = new URLSearchParams(currentFilters).toString();
    fetch(`?handler=Orders&${queryString}`)
       .then(response => response.json())
-      .then(renderOrders);
+      .then(data => {
+         renderOrders(data);
+         renderPagination(data.totalCount);
+      });
 }
 
-function renderOrders(orders) {
+function renderOrders(data) {
    const container = document.getElementById('orderListContainer');
    if (currentFilters.detailed) {
       container.innerHTML = `
@@ -54,7 +58,7 @@ function renderOrders(orders) {
                <th>Priority</th>
                <th></th>
             </tr>
-            ${orders.map(order => `
+            ${data.orders.map(order => `
                <tr class="${getOrderClasses(order)}">
                   <td><p class="${getTypeClass(order.status)} dot" title="${order.status}">${order.id} ⬤</p></td>
                   <td>${order.traineeName}</td>
@@ -73,7 +77,7 @@ function renderOrders(orders) {
       container.innerHTML = `
          <div class="order-list">
             <ul>
-               ${orders.map(order => `
+               ${data.orders.map(order => `
                   <li class="${getOrderClasses(order)}">
                      <div class="info">
                         <div class="title">
@@ -102,6 +106,21 @@ function renderOrders(orders) {
    }
 }
 
+function renderPagination(totalCount) {
+   const totalPages = Math.ceil(totalCount / currentFilters.pageSize);
+   const pagination = document.getElementById('pagination');
+
+   let html = '';
+   if (totalPages > 1) {
+      html += `<button class="btn bg-btn btnWhite" onclick="changePage(1)" ${currentFilters.currentPage === 1 ? 'disabled' : ''}>First</button>`;
+      html += `<button class="btn bg-btn btnWhite" onclick="changePage(${currentFilters.currentPage - 1})" ${currentFilters.currentPage === 1 ? 'disabled' : ''}>Previous</button>`;
+      html += `<span>Page ${currentFilters.currentPage} of ${totalPages}</span>`;
+      html += `<button class="btn bg-btn btnWhite" onclick="changePage(${currentFilters.currentPage + 1})" ${currentFilters.currentPage === totalPages ? 'disabled' : ''}>Next</button>`;
+      html += `<button class="btn bg-btn btnWhite" onclick="changePage(${totalPages})" ${currentFilters.currentPage === totalPages ? 'disabled' : ''}>Last</button>`;
+   }
+   pagination.innerHTML = html;
+}
+
 function getOrderClasses(order) {
    const type = getTypeClass(order.status);
    return `${type} ${order.status} ${order.archived ? 'Archived' : ''}`;
@@ -117,7 +136,7 @@ function getTypeClass(status) {
 }
 
 function initializeUI() {
-   document.getElementById('maxCount').value = currentFilters.maxCount.toString();
+   document.getElementById('pageSize').value = currentFilters.pageSize.toString();
    document.getElementById('searchInput').value = currentFilters.searchTerm;
    document.getElementById('viewToggle').textContent = currentFilters.detailed ? 'Simple View' : 'Detailed View';
 
@@ -127,16 +146,17 @@ function initializeUI() {
    });
 }
 
-document.getElementById('maxCount').addEventListener('change', function (e) {
+document.getElementById('pageSize').addEventListener('change', function (e) {
    const value = parseInt(e.target.value);
-   currentFilters.maxCount = value;
-   saveFilters();
+   currentFilters.pageSize = value;
+   currentFilters.currentPage = 1;
 
    if (value === -1) {
       const container = document.getElementById('orderListContainer');
       container.innerHTML = '<div class="loading">Loading all records...</div>';
    }
 
+   saveFilters();
    loadOrders();
 });
 
@@ -149,6 +169,7 @@ document.getElementById('viewToggle').addEventListener('click', function () {
 
 document.getElementById('searchInput').addEventListener('input', debounce(function (e) {
    currentFilters.searchTerm = e.target.value;
+   currentFilters.currentPage = 1;
    saveFilters();
    loadOrders();
 }, 300));
@@ -157,10 +178,17 @@ document.getElementById('searchInput').addEventListener('input', debounce(functi
    const checkbox = document.getElementById(`show${status}`);
    checkbox.addEventListener('change', function () {
       currentFilters[`show${status}`] = this.checked;
+      currentFilters.currentPage = 1;
       saveFilters();
       loadOrders();
    });
 });
+
+function changePage(page) {
+   currentFilters.currentPage = page;
+   saveFilters();
+   loadOrders();
+}
 
 document.addEventListener('DOMContentLoaded', () => {
    loadSavedFilters();

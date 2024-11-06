@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿// IndexModel.cs
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using WCSTrainer.Data;
+using WCSTrainer.Helpers;
 
 namespace WCSTrainer.Pages.TrainingOrders {
    [Authorize(Roles = "owner, admin, user, guest")]
@@ -11,7 +15,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
       public TrainingOrderFilterModel Filter { get; set; } = new();
 
       public class TrainingOrderFilterModel {
-         public int MaxCount { get; set; } = 10;
+         public int PageSize { get; set; } = 10;
+         public int CurrentPage { get; set; } = 1;
          public string? SearchTerm { get; set; }
          public bool ShowArchived { get; set; }
          public bool ShowVerified { get; set; } = true;
@@ -19,6 +24,11 @@ namespace WCSTrainer.Pages.TrainingOrders {
          public bool ShowActive { get; set; } = true;
          public bool ShowAwaiting { get; set; } = true;
          public bool Detailed { get; set; }
+      }
+
+      public class TrainingOrderViewModel {
+         public int TotalCount { get; set; }
+         public List<TrainingOrderDto> Orders { get; set; } = new();
       }
 
       public class TrainingOrderDto {
@@ -29,28 +39,67 @@ namespace WCSTrainer.Pages.TrainingOrders {
          public string Status { get; set; } = "";
          public bool Archived { get; set; }
          public DateOnly? BeginDate { get; set; }
-         public string Priority { get; set; } = "";
+         public string? Priority { get; set; }
       }
 
-      public IActionResult OnGet() {
+      [BindProperty]
+      public TrainingOrderViewModel ViewModel { get; set; } = new();
+
+      public async Task<IActionResult> OnGetAsync() {
          return Page();
+      }
+
+      public bool HasPerms(UserManager<UserAccount> userManager, UserAccount user, Employee employee, TrainingOrder trainingOrder) {
+         var isOwner = userManager.IsInRoleAsync(user, "owner").Result;
+         var isAdmin = userManager.IsInRoleAsync(user, "admin").Result;
+         if (isAdmin || isOwner) return true;
+
+         if (TrainingOrderHelper.EmployeeOwns(employee, trainingOrder)) {
+            return true;
+         }
+         if (TrainingOrderHelper.OrderInvolves(employee, trainingOrder)) {
+            return true;
+         }
+         return false;
+      }
+
+      private async Task<IQueryable<TrainingOrder>> FilterOrdersByPermissions(IQueryable<TrainingOrder> query) {
+         var user = await userManager.GetUserAsync(User);
+         if (user == null)
+            return query.Where(t => false);
+
+         var currentEmployee = await context.Employees
+             .Include(e => e.TrainingOrdersAsTrainer)
+             .Include(e => e.TrainingOrdersAsTrainee)
+             .FirstOrDefaultAsync(e => e.Id == user.EmployeeId);
+
+         if (currentEmployee == null)
+            return query.Where(t => false);
+
+         return query.Where(t => HasPerms(userManager, user, currentEmployee, t));
       }
 
       public async Task<JsonResult> OnGetOrdersAsync([FromQuery] TrainingOrderFilterModel filter) {
          var user = await userManager.GetUserAsync(User);
-         if (user == null) return new JsonResult(Array.Empty<TrainingOrderDto>());
+         if (user == null) return new JsonResult(new TrainingOrderViewModel());
 
          var query = context.TrainingOrders
-             .Include(t => t.Trainers)
-             .Include(t => t.ParentSkill)
-             .Include(t => t.Lesson)
-             .Include(t => t.Trainee)
+             .Include(t => t.Trainers)     
+             .Include(t => t.ParentSkill)  
+             .Include(t => t.Lesson)       
+             .Include(t => t.Trainee)      
              .AsQueryable();
 
-         if (!filter.ShowArchived)
-            query = query.Where(t => !t.Archived);
+         //query = await FilterOrdersByPermissions(query);
+
+         var take = filter.PageSize == -1
+             ? await query.CountAsync()
+             : filter.PageSize;
+
+         take = Math.Min(take, 1000);
 
          var statuses = new List<string>();
+
          if (filter.ShowVerified) statuses.Add("Verified");
          if (filter.ShowCompleted) statuses.Add("Completed");
          if (filter.ShowActive) statuses.Add("Active");
@@ -61,22 +110,19 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          if (!string.IsNullOrEmpty(filter.SearchTerm)) {
             query = query.Where(t => (
-                  t.Trainee.FirstName + " " + t.Trainee.LastName).Contains(filter.SearchTerm) ||
-                  t.Lesson.Name.Contains(filter.SearchTerm) ||
-                  t.ParentSkill.Name.Contains(filter.SearchTerm) ||
-                  t.Id.ToString().Contains(filter.SearchTerm)
+                t.Trainee.FirstName + " " + t.Trainee.LastName).Contains(filter.SearchTerm) ||
+                t.Lesson.Name.Contains(filter.SearchTerm) ||
+                t.ParentSkill.Name.Contains(filter.SearchTerm) ||
+                t.Id.ToString().Contains(filter.SearchTerm)
             );
          }
 
-         var take = filter.MaxCount == -1
-             ? await query.CountAsync()
-             : filter.MaxCount;
-
-         take = Math.Min(take, 1000);
+         var totalCount = await query.CountAsync();
 
          var orders = await query
              .OrderByDescending(t => t.Id)
-             .Take(take)
+             .Skip((filter.CurrentPage - 1) * filter.PageSize)
+             .Take(filter.PageSize)
              .Select(t => new TrainingOrderDto {
                 Id = t.Id,
                 TraineeName = t.Trainee != null ? t.Trainee.FirstName + " " + t.Trainee.LastName : "N/A",
@@ -89,7 +135,11 @@ namespace WCSTrainer.Pages.TrainingOrders {
              })
              .ToListAsync();
 
-         return new JsonResult(orders);
+         return new JsonResult(new TrainingOrderViewModel {
+            TotalCount = totalCount,
+            Orders = orders
+         });
+
       }
    }
 }
