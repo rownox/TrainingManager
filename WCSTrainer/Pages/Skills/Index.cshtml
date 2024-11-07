@@ -27,6 +27,13 @@
                <div class="search">
                   <input class="search-box" id="searchInput" placeholder="Search Skills" type="search" oninput="update(this)" />
                </div>
+               <div class="categories">
+                  <button class="btn bg-btn btnWhite">Add Category</button>
+
+                  @foreach(var category in Model.SkillCategories) {
+                     <input type="checkbox" checked name="test"/>
+                  }
+               </div>
                <div class="btns">
                   <a asp-page="Create" class="btn nbg-btn btnMenu">Create Skill</a>
                   <a asp-page="DetailView" class="btn nbg-btn btnMenu">Detailed View</a>
@@ -36,4 +43,3 @@
       </div>
    </div>
 </div>
-

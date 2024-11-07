@@ -13,8 +13,13 @@ namespace WCSTrainer.Pages.Skills {
       public List<string> SelectedLessonList { get; set; } = new List<string>();
       public SelectList LessonSelectList { get; set; }
 
+      public string SelectedCategory { get; set; }
+      public SelectList CategroySelectList { get; set; }
+
       public async Task<IActionResult> OnGetAsync() {
          LessonSelectList = new SelectList(await context.Lessons.ToListAsync(), "Id", "Name");
+         CategroySelectList = new SelectList(await context.SkillCategories.ToListAsync(), "Id", "Name");
+
          return Page();
       }
 

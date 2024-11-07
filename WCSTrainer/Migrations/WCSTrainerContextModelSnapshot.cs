@@ -111,13 +111,35 @@ namespace WCSTrainer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("LessonCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LessonCategoryId");
+
                     b.ToTable("Lessons");
+                });
+
+            modelBuilder.Entity("LessonCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LessonCategories");
                 });
 
             modelBuilder.Entity("LessonSkill", b =>
@@ -181,25 +203,25 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9dbbb657-e0ef-4428-83a9-32a21d138819",
+                            Id = "a12383c7-2936-44f3-88ad-c006065fe8de",
                             Name = "owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "69d1cbb2-21a7-4a09-8c89-7e4d3b0e229a",
+                            Id = "b1fc36af-d903-4543-a5d2-f6bca3070bf9",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a93f0e9c-e81d-4f33-9da4-3577aae37642",
+                            Id = "eaaf10bf-3bd8-4148-9739-179cae63f301",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "66005c92-8796-4788-979d-0e12f5b4e03c",
+                            Id = "a7d49518-2ebf-408e-ad21-f9fc2d1326e0",
                             Name = "guest",
                             NormalizedName = "GUEST"
                         });
@@ -331,9 +353,31 @@ namespace WCSTrainer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SkillCategoryId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("SkillCategoryId");
+
                     b.ToTable("Skills");
+                });
+
+            modelBuilder.Entity("SkillCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SkillCategories");
                 });
 
             modelBuilder.Entity("TrainerGroup", b =>
@@ -607,6 +651,17 @@ namespace WCSTrainer.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Lesson", b =>
+                {
+                    b.HasOne("LessonCategory", "LessonCategory")
+                        .WithMany("Lessons")
+                        .HasForeignKey("LessonCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LessonCategory");
+                });
+
             modelBuilder.Entity("LessonSkill", b =>
                 {
                     b.HasOne("Lesson", null)
@@ -671,6 +726,17 @@ namespace WCSTrainer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Skill", b =>
+                {
+                    b.HasOne("SkillCategory", "SkillCategory")
+                        .WithMany("Skills")
+                        .HasForeignKey("SkillCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SkillCategory");
                 });
 
             modelBuilder.Entity("TrainerGroupTrainingOrder", b =>
@@ -752,6 +818,11 @@ namespace WCSTrainer.Migrations
                     b.Navigation("TrainingOrders");
                 });
 
+            modelBuilder.Entity("LessonCategory", b =>
+                {
+                    b.Navigation("Lessons");
+                });
+
             modelBuilder.Entity("Location", b =>
                 {
                     b.Navigation("TrainingOrders");
@@ -760,6 +831,11 @@ namespace WCSTrainer.Migrations
             modelBuilder.Entity("Skill", b =>
                 {
                     b.Navigation("TrainingOrders");
+                });
+
+            modelBuilder.Entity("SkillCategory", b =>
+                {
+                    b.Navigation("Skills");
                 });
 
             modelBuilder.Entity("TrainingOrder", b =>
