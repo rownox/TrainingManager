@@ -10,9 +10,7 @@ namespace WCSTrainer.Data {
 
             foreach (var user in allUsers) {
                var roles = await userManager.GetRolesAsync(user);
-               if (roles.Count == 0) {
-                  await userManager.AddToRoleAsync(user, "owner");
-               }
+               await userManager.AddToRoleAsync(user, "owner");
             }
          }
       }

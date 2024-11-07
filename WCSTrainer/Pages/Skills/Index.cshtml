@@ -28,7 +28,13 @@
                   <input class="search-box" id="searchInput" placeholder="Search Skills" type="search" oninput="update(this)" />
                </div>
                <div class="categories">
-                  <button class="btn bg-btn btnWhite">Add Category</button>
+
+                  <form id="createCategory">
+                     <div asp-validation-summary="All" class="text-danger"></div>
+                     <span asp-validation-for="@Model.CategoryName" class="text-danger"></span>
+                     <input type="text" asp-for="@Model.CategoryName"/>
+                     <button type="submit" class="btn bg-btn btnWhite">Add Category</button>
+                  </form>
 
                   @foreach(var category in Model.SkillCategories) {
                      <input type="checkbox" checked name="test"/>

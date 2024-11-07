@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using WCSTrainer.Models;
 
 namespace WCSTrainer.Pages.Skills {
@@ -13,6 +14,8 @@ namespace WCSTrainer.Pages.Skills {
       public ListPartialModel ListPartial { get; set; }
       [BindProperty]
       public int MaxCount { get; set; } = 10;
+
+      public string? CategoryName { get; set; }
 
       public async Task<IActionResult> OnGetAsync() {
          Skills = await context.Skills.ToListAsync();
@@ -37,7 +40,22 @@ namespace WCSTrainer.Pages.Skills {
 
          return Page();
       }
+
       public async Task<IActionResult> OnPostAsync() {
+         if (!ModelState.IsValid) {
+            return Page();
+         }
+
+         if (CategoryName.IsNullOrEmpty()) {
+            return Page();
+         } else {
+            var skillCategory = new SkillCategory() {
+               Name = CategoryName
+            };
+            context.SkillCategories.Add(skillCategory);
+            await context.SaveChangesAsync();
+         }
+         
          return await OnGetAsync();
       }
    }
