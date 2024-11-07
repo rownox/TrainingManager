@@ -110,21 +110,38 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          var totalCount = await query.CountAsync();
 
-         var orders = await query
-             .OrderByDescending(t => t.Id)
-             .Skip((filter.CurrentPage - 1) * filter.PageSize)
-             .Take(filter.PageSize)
-             .Select(t => new TrainingOrderDto {
-                Id = t.Id,
-                TraineeName = t.Trainee != null ? t.Trainee.FirstName + " " + t.Trainee.LastName : "N/A",
-                LessonName = t.Lesson != null ? t.Lesson.Name : "",
-                SkillName = t.ParentSkill != null ? t.ParentSkill.Name : "",
-                Status = t.Status,
-                Archived = t.Archived,
-                BeginDate = t.BeginDate != null ? t.BeginDate.Value.ToString("MM/dd/yyyy") : "",
-                Priority = t.Priority != null ? t.Priority : ""
-             })
-             .ToListAsync();
+         List<TrainingOrderDto> orders;
+         if (filter.PageSize == -1) {
+            orders = await query
+                .OrderByDescending(t => t.Id)
+                .Select(t => new TrainingOrderDto {
+                   Id = t.Id,
+                   TraineeName = t.Trainee != null ? t.Trainee.FirstName + " " + t.Trainee.LastName : "N/A",
+                   LessonName = t.Lesson != null ? t.Lesson.Name : "",
+                   SkillName = t.ParentSkill != null ? t.ParentSkill.Name : "",
+                   Status = t.Status,
+                   Archived = t.Archived,
+                   BeginDate = t.BeginDate != null ? t.BeginDate.Value.ToString("MM/dd/yyyy") : "",
+                   Priority = t.Priority != null ? t.Priority : ""
+                })
+                .ToListAsync();
+         } else {
+            orders = await query
+                .OrderByDescending(t => t.Id)
+                .Skip((filter.CurrentPage - 1) * filter.PageSize)
+                .Take(filter.PageSize)
+                .Select(t => new TrainingOrderDto {
+                   Id = t.Id,
+                   TraineeName = t.Trainee != null ? t.Trainee.FirstName + " " + t.Trainee.LastName : "N/A",
+                   LessonName = t.Lesson != null ? t.Lesson.Name : "",
+                   SkillName = t.ParentSkill != null ? t.ParentSkill.Name : "",
+                   Status = t.Status,
+                   Archived = t.Archived,
+                   BeginDate = t.BeginDate != null ? t.BeginDate.Value.ToString("MM/dd/yyyy") : "",
+                   Priority = t.Priority != null ? t.Priority : ""
+                })
+                .ToListAsync();
+         }
 
          return new JsonResult(new TrainingOrderViewModel {
             TotalCount = totalCount,
