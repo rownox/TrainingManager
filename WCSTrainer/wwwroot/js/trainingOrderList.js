@@ -62,7 +62,7 @@ function renderOrders(data) {
                <tr class="${getOrderClasses(order)}">
                   <td><p class="${getTypeClass(order.status)} dot" title="${order.status}">${order.id} ⬤</p></td>
                   <td>${order.traineeName}</td>
-                  <td>${new Date(order.beginDate).toLocaleDateString()}</td>
+                  <td>${order.beginDate}</td>
                   <td>${order.lessonName}</td>
                   <td>${order.skillName}</td>
                   <td>${order.priority}</td>
@@ -107,7 +107,7 @@ function renderOrders(data) {
 }
 
 function renderPagination(totalCount) {
-   const totalPages = Math.ceil(totalCount / currentFilters.pageSize);
+   const totalPages = currentFilters.pageSize === -1 ? 1 : Math.ceil(totalCount / currentFilters.pageSize);
    const pagination = document.getElementById('pagination');
 
    let html = '';
@@ -117,6 +117,8 @@ function renderPagination(totalCount) {
       html += `<span>Page ${currentFilters.currentPage} of ${totalPages}</span>`;
       html += `<button class="btn bg-btn btnWhite" onclick="changePage(${currentFilters.currentPage + 1})" ${currentFilters.currentPage === totalPages ? 'disabled' : ''}>Next</button>`;
       html += `<button class="btn bg-btn btnWhite" onclick="changePage(${totalPages})" ${currentFilters.currentPage === totalPages ? 'disabled' : ''}>Last</button>`;
+   } else {
+      html += `<span>Showing all ${totalCount} records</span>`;
    }
    pagination.innerHTML = html;
 }

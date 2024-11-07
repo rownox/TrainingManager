@@ -1485,6 +1485,13 @@ nav {
 					color: var(--textMain);
 				}
 
+.pagination-container {
+	min-height: 35px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
 .pagination {
 	display: flex;
 	gap: 10px;

@@ -28,24 +28,19 @@ namespace WCSTrainer.Helpers {
          var isOwner = await userManager.IsInRoleAsync(user, "owner");
          var isAdmin = await userManager.IsInRoleAsync(user, "admin");
          if (isAdmin || isOwner) return true;
-
-         if (EmployeeOwns(employee, trainingOrder)) {
-            return true;
-         }
+         
          if (OrderInvolves(employee, trainingOrder)) {
             return true;
          }
          return false;
       }
 
-      public static bool EmployeeOwns(Employee employee, TrainingOrder order) {
+      public static bool OrderInvolves(Employee employee, TrainingOrder order) {
+         Console.WriteLine(order.Id);
+
          if (order.CreatedByUserId == employee.UserAccountId) {
             return true;
          }
-         return false;
-      }
-
-      public static bool OrderInvolves(Employee employee, TrainingOrder order) {
          if (employee.TrainingOrdersAsTrainee.Contains(order)) {
             return true;
          }

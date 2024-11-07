@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Security.Claims;
 using WCSTrainer.Data;
 using WCSTrainer.Helpers;
@@ -38,7 +39,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          public string SkillName { get; set; } = "";
          public string Status { get; set; } = "";
          public bool Archived { get; set; }
-         public DateOnly? BeginDate { get; set; }
+         public string? BeginDate { get; set; }
          public string? Priority { get; set; }
       }
 
@@ -49,24 +50,21 @@ namespace WCSTrainer.Pages.TrainingOrders {
          return Page();
       }
 
-      public bool HasPerms(UserManager<UserAccount> userManager, UserAccount user, Employee employee, TrainingOrder trainingOrder) {
-         var isOwner = userManager.IsInRoleAsync(user, "owner").Result;
-         var isAdmin = userManager.IsInRoleAsync(user, "admin").Result;
-         if (isAdmin || isOwner) return true;
+      private async Task<IQueryable<TrainingOrder>> FilterOrdersByPermissions(IQueryable<TrainingOrder> query, UserAccount user, Employee currentEmployee) {
+         if (await userManager.IsInRoleAsync(user, "owner") || await userManager.IsInRoleAsync(user, "admin"))
+            return query;
 
-         if (TrainingOrderHelper.EmployeeOwns(employee, trainingOrder)) {
-            return true;
-         }
-         if (TrainingOrderHelper.OrderInvolves(employee, trainingOrder)) {
-            return true;
-         }
-         return false;
+         var currentEmployeeId = currentEmployee.Id;
+
+         return query.Where(t =>
+           t.CreatedByUserId == user.Id ||
+           t.Trainers.Any(tr => tr.Id == currentEmployeeId) ||
+           (t.Trainee != null && t.Trainee.Id == currentEmployeeId));
       }
 
-      private async Task<IQueryable<TrainingOrder>> FilterOrdersByPermissions(IQueryable<TrainingOrder> query) {
+      public async Task<JsonResult> OnGetOrdersAsync([FromQuery] TrainingOrderFilterModel filter) {
          var user = await userManager.GetUserAsync(User);
-         if (user == null)
-            return query.Where(t => false);
+         if (user == null) return new JsonResult(new TrainingOrderViewModel());
 
          var currentEmployee = await context.Employees
              .Include(e => e.TrainingOrdersAsTrainer)
@@ -74,23 +72,16 @@ namespace WCSTrainer.Pages.TrainingOrders {
              .FirstOrDefaultAsync(e => e.Id == user.EmployeeId);
 
          if (currentEmployee == null)
-            return query.Where(t => false);
-
-         return query.Where(t => HasPerms(userManager, user, currentEmployee, t));
-      }
-
-      public async Task<JsonResult> OnGetOrdersAsync([FromQuery] TrainingOrderFilterModel filter) {
-         var user = await userManager.GetUserAsync(User);
-         if (user == null) return new JsonResult(new TrainingOrderViewModel());
+            return new JsonResult(new TrainingOrderViewModel());
 
          var query = context.TrainingOrders
-             .Include(t => t.Trainers)     
-             .Include(t => t.ParentSkill)  
-             .Include(t => t.Lesson)       
-             .Include(t => t.Trainee)      
+             .Include(t => t.Trainers)
+             .Include(t => t.ParentSkill)
+             .Include(t => t.Lesson)
+             .Include(t => t.Trainee)
              .AsQueryable();
 
-         //query = await FilterOrdersByPermissions(query);
+         query = await FilterOrdersByPermissions(query, user, currentEmployee);
 
          var take = filter.PageSize == -1
              ? await query.CountAsync()
@@ -130,7 +121,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 SkillName = t.ParentSkill != null ? t.ParentSkill.Name : "",
                 Status = t.Status,
                 Archived = t.Archived,
-                BeginDate = t.BeginDate,
+                BeginDate = t.BeginDate != null ? t.BeginDate.Value.ToString("MM/dd/yyyy") : "",
                 Priority = t.Priority != null ? t.Priority : ""
              })
              .ToListAsync();
@@ -139,7 +130,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
             TotalCount = totalCount,
             Orders = orders
          });
-
       }
    }
 }
