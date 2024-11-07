@@ -435,7 +435,7 @@ nav {
 					gap: 5px;
 					flex-direction: column;
 					width: 180px;
-					background-color: black;
+					background-color: var(--black);
 					border: 1px solid var(--gray4);
 				}
 
