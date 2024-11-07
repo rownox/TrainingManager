@@ -83,6 +83,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          query = await FilterOrdersByPermissions(query, user, currentEmployee);
 
+         if(!filter.ShowArchived)
+            query = query.Where(t => !t.Archived);
+
          var take = filter.PageSize == -1
              ? await query.CountAsync()
              : filter.PageSize;
