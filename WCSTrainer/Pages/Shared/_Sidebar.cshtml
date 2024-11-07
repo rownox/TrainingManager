@@ -3,14 +3,14 @@
 <script src="~/js/sidebar.js"></script>
 
 @{
-   var links = new List<(string, string)> {
-      ("TrainingOrders", "Training Orders"),
-      ("Skills", "Skills"),
-      ("Lessons", "Lessons"),
-      ("TrainerGroups", "Trainer Groups"),
-      ("Locations", "Locations"),
-      ("Employees", "Employees"),
-      ("Accounts", "User Accounts"),
+   var links = new List<(string, string, string)> {
+      ("TrainingOrders", "Training Orders", "1"),
+      ("Skills", "Skills", "2"),
+      ("Lessons", "Lessons", "1"),
+      ("TrainerGroups", "Trainer Groups", "2"),
+      ("Locations", "Locations", "2"),
+      ("Employees", "Employees", "3"),
+      ("Accounts", "User Accounts", "3"),
    };
 }
 
@@ -18,14 +18,18 @@
    <div class="link-list">
       <button id="condenser" onclick="toggleExpand()" class="btn btnWhite bg-btn condenser">⯇⯈</button>
       @foreach (var link in links) {
-         var source = "/images/" + link.Item1 + ".svg";
-         <a href="/@link.Item1"
-            class="@(Context.Request.Path.ToString().Contains(link.Item1) ? "selected" : "") btn btnMenu">
-            <img class="icon @(Context.Request.Path.ToString().Contains(link.Item1) ? "selected-img" : "")" src="@source" />
-            <p class="text">@link.Item2</p>
-         </a>
+         var roleRequired = int.Parse(link.Item3);
+         if ((roleRequired <= 3 && User.IsInRole("admin")) ||
+         (roleRequired <= 3 && User.IsInRole("owner")) ||
+         (roleRequired <= 2 && User.IsInRole("user")) ||
+         (roleRequired == 1 && User.IsInRole("guest"))) {
+            var source = "/images/" + link.Item1 + ".svg";
+            <a href="/@link.Item1"
+               class="@(Context.Request.Path.ToString().Contains(link.Item1) ? "selected" : "") btn btnMenu">
+               <img class="icon @(Context.Request.Path.ToString().Contains(link.Item1) ? "selected-img" : "")" src="@source" />
+               <p class="text">@link.Item2</p>
+            </a>
+         }
       }
    </div>
 </div>
-
-

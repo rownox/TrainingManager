@@ -112,11 +112,11 @@ function renderPagination(totalCount) {
 
    let html = '';
    if (totalPages > 1) {
-      html += `<button class="btn bg-btn btnWhite" onclick="changePage(1)" ${currentFilters.currentPage === 1 ? 'disabled' : ''}>First</button>`;
-      html += `<button class="btn bg-btn btnWhite" onclick="changePage(${currentFilters.currentPage - 1})" ${currentFilters.currentPage === 1 ? 'disabled' : ''}>Previous</button>`;
+      html += `<button class="btn bg-btn btnWhite" onclick="changePage(1)" ${currentFilters.currentPage === 1 ? 'disabled' : ''}>|<</button>`;
+      html += `<button class="btn bg-btn btnWhite" onclick="changePage(${currentFilters.currentPage - 1})" ${currentFilters.currentPage === 1 ? 'disabled' : ''}><</button>`;
       html += `<span>Page ${currentFilters.currentPage} of ${totalPages}</span>`;
-      html += `<button class="btn bg-btn btnWhite" onclick="changePage(${currentFilters.currentPage + 1})" ${currentFilters.currentPage === totalPages ? 'disabled' : ''}>Next</button>`;
-      html += `<button class="btn bg-btn btnWhite" onclick="changePage(${totalPages})" ${currentFilters.currentPage === totalPages ? 'disabled' : ''}>Last</button>`;
+      html += `<button class="btn bg-btn btnWhite" onclick="changePage(${currentFilters.currentPage + 1})" ${currentFilters.currentPage === totalPages ? 'disabled' : ''}>></button>`;
+      html += `<button class="btn bg-btn btnWhite" onclick="changePage(${totalPages})" ${currentFilters.currentPage === totalPages ? 'disabled' : ''}>>|</button>`;
    } else {
       html += `<span>Showing all ${totalCount} records</span>`;
    }

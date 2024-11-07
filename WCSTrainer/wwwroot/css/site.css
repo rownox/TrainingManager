@@ -120,9 +120,7 @@ nav {
 
 	.panel .body {
 		flex-direction: row;
-		min-height: 800px;
 		display: flex;
-		height: 100%;
 		width: 100%;
 		gap: 30px;
 		padding: 10px;
@@ -131,6 +129,7 @@ nav {
 		.panel .body .side-bar {
 			flex-direction: column;
 			display: flex;
+			height: fit-content;
 		}
 
 			.panel .body .side-bar .link-list {
@@ -188,6 +187,7 @@ nav {
 			display: flex;
 			flex-grow: 1;
 			gap: 30px;
+			height: fit-content;
 		}
 
 			.panel .body .properties .title {
@@ -482,6 +482,7 @@ nav {
 				width: 270px;
 				min-width: 270px;
 				display: flex;
+				height: fit-content;
 			}
 
 				.panel .body .properties .tool-container .section-title {
@@ -618,8 +619,7 @@ nav {
 				display: flex;
 				flex-direction: column;
 				flex-grow: 1;
-				max-height: 750px;
-				gap: 10px;
+				height: fit-content;
 			}
 
 				.panel .body .properties .list-container .top {
@@ -642,12 +642,15 @@ nav {
 						padding: 6px 10px;
 					}
 
+				.panel .body .properties .list-container .order-list-container {
+				}
+
 				.panel .body .properties .list-container .order-list {
 					overflow-y: scroll;
-					scrollbar-width: none;
 					scroll-behavior: smooth;
-					height: 100%;
+					max-height: 65vh;
 					width: 100%;
+					scrollbar-color: var(--gray5) var(--gray3);
 				}
 
 					.panel .body .properties .list-container .order-list ul {
@@ -1489,12 +1492,12 @@ nav {
 	min-height: 35px;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 }
 
 .pagination {
 	display: flex;
-	gap: 10px;
+	gap: 5px;
 	color: var(--textSub1);
 }
 
