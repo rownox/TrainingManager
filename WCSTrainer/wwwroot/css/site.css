@@ -615,6 +615,20 @@ nav {
 						justify-content: space-between;
 					}
 
+
+			.panel .body .properties .categories {
+			}
+
+				.panel .body .properties .categories .category {
+					display: flex;
+					justify-content: space-between;
+				}
+
+					.panel .body .properties .categories .category .name {
+					}
+
+				
+
 			.panel .body .properties .list-container {
 				display: flex;
 				flex-direction: column;

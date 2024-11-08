@@ -37,7 +37,10 @@
                   </form>
 
                   @foreach(var category in Model.SkillCategories) {
-                     <input type="checkbox" checked name="test"/>
+                     <div class="category">
+                        <p class="name">@category.Name</p>
+                        <input type="checkbox" checked />
+                     </div>
                   }
                </div>
                <div class="btns">
