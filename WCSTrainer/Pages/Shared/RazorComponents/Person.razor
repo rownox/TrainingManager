@@ -33,14 +33,7 @@
                            <div class="order-block">
                               <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
                               @{
-                                 var type = "awaiting";
-                                 if (order.Status.Equals("Active")) {
-                                    type = "active";
-                                 } else if (order.Status.Equals("Verified")) {
-                                    type = "verified";
-                                 } else if (order.Status.Equals("Completed")) {
-                                    type = "completed";
-                                 }
+                                 var type = order.Status.ToLower();
                                  <p class="@type dot" title="@order.Status">⬤</p>
                               }
                            </div>

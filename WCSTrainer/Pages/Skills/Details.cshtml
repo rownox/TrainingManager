@@ -50,7 +50,7 @@
                            bool isActive = false;
                            foreach (var orderAsTrainee in person.TrainingOrdersAsTrainee) {
                               if (orderAsTrainee.ParentSkillId == Model.Skill.Id) {
-                                 if (orderAsTrainee.Status == "Active" || orderAsTrainee.Status == "Awaiting Approval") {
+                                 if (orderAsTrainee.Status == "Active" || orderAsTrainee.Status == "Approval") {
                                     isActive = true;
                                  }
                               }

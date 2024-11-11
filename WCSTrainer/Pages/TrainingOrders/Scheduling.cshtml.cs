@@ -1,13 +1,11 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace WCSTrainer.Pages.TrainingOrders {
-
-   [Authorize(Roles = "owner, admin")]
-   public class ApprovalModel(Data.WCSTrainerContext context) : PageModel {
+namespace WCSTrainer.Pages.TrainingOrders
+{
+    public class SchedulingModel(Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;
       [BindProperty]
@@ -23,8 +21,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
       public SelectList Locations { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
-         await initJson();
-
          if (id == null) {
             return NotFound();
          }
@@ -35,20 +31,16 @@ namespace WCSTrainer.Pages.TrainingOrders {
          }
 
          TrainingOrder = trainingorder;
-
          return Page();
       }
 
       public async Task<IActionResult> OnPostAsync() {
-
-         if (string.IsNullOrWhiteSpace(SelectedTrainerGroupString) & string.IsNullOrWhiteSpace(SelectedTrainerString)) {
-            ModelState.AddModelError("SelectedTrainerString", "At least one trainer or trainer group must be selected.");
-            await initJson();
+         if (TrainingOrder.BeginDate == null) {
+            ModelState.AddModelError("BeginDate", "Please select a beginning date.");
             return Page();
          }
 
          if (!ModelState.IsValid) {
-            await initJson();
             return Page();
          }
 
@@ -64,30 +56,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
          }
 
-         if (SelectedTrainerGroupString != null) {
-            SelectedTrainerGroupIds = SelectedTrainerGroupString.Split(", ").Select(int.Parse).ToList();
-            var groups = await context.TrainerGroups
-               .Where(e => SelectedTrainerGroupIds.Contains(e.Id))
-               .Include(g => g.Trainers)
-               .ToListAsync();
-            TrainingOrder.TrainerGroups = groups;
-            foreach (var group in groups) {
-               var employees = group.Trainers;
-               foreach (var employee in employees) {
-                  TrainingOrder.Trainers.Add(employee);
-               }
-            }
-         }
-
-         if (SelectedTrainerString != null) {
-            SelectedTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
-            TrainingOrder.Trainers = await context.Employees
-               .Where(e => SelectedTrainerIds.Contains(e.Id))
-               .ToListAsync();
-         }
-
-         TrainingOrder.Status = "Scheduling";
-         TrainingOrder.ApprovalDate = DateOnly.FromDateTime(DateTime.Now);
+         TrainingOrder.Status = "Active";
+         TrainingOrder.ScheduleDate = DateOnly.FromDateTime(DateTime.Now);
 
          context.TrainingOrders.Update(TrainingOrder);
          await context.SaveChangesAsync();
@@ -96,13 +66,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
       private bool TrainingOrderExists(int id) {
          return context.TrainingOrders.Any(e => e.Id == id);
-      }
-
-      private async Task initJson() {
-         Employees = await context.Employees.ToListAsync();
-         TrainerGroups = await context.TrainerGroups.ToListAsync();
-
-         Locations = new SelectList(await context.Locations.ToListAsync(), "Id", "Name");
       }
    }
 }

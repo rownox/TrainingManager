@@ -24,7 +24,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          public bool ShowCompleted { get; set; } = true;
          public bool ShowActive { get; set; } = true;
          public bool ShowScheduling { get; set; } = true;
-         public bool ShowAwaiting { get; set; } = true;
+         public bool ShowApproval { get; set; } = true;
          public bool Detailed { get; set; }
       }
 
@@ -99,7 +99,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          if (filter.ShowCompleted) statuses.Add("Completed");
          if (filter.ShowActive) statuses.Add("Active");
          if (filter.ShowScheduling) statuses.Add("Scheduling");
-         if (filter.ShowAwaiting) statuses.Add("Approval");
+         if (filter.ShowApproval) statuses.Add("Approval");
 
          if (statuses.Any())
             query = query.Where(t => statuses.Contains(t.Status));

@@ -10,7 +10,7 @@
             <div class="field-container">
                @if (Model.TrainingOrder.Status == "Active") {
                   <form method="post">
-                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                     <div asp-validation-summary="All" class="text-danger"></div>
                      <input hidden asp-for="TrainingOrder.Id" />
 
                      <input asp-for="TrainingOrder.BeginDate" hidden />
@@ -20,6 +20,7 @@
                      }
                      <input asp-for="TrainingOrder.CreateDate" hidden />
                      <input asp-for="TrainingOrder.ApprovalDate" hidden />
+                     <input asp-for="TrainingOrder.ScheduleDate" hidden />
                      <input asp-for="TrainingOrder.Medium" hidden />
                      <input asp-for="TrainingOrder.Status" type="hidden" value="Completed" />
                      <input asp-for="TrainingOrder.Duration" hidden />

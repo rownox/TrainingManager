@@ -49,13 +49,8 @@
                   } else if (Model.TrainingOrder.Status.Equals("Completed")) {
                      <a class="btn bg-btn btnRed" asp-page="./Verification" asp-route-id="@Model.TrainingOrder.Id">Verify Order</a>
                   }
-                  string text = "";
+                  string text = Model.TrainingOrder.Archived ? "Archive" : "Unarchive";
                   <form method="post" id="archiveForm">
-                     @if (Model.TrainingOrder.Archived) {
-                        text = "Unarchive";
-                     } else {
-                        text = "Archive";
-                     }
                      <a class="btn bg-btn btnWhite" href="#" onclick="document.getElementById('archiveForm').submit();">
                         @text Document
                      </a>

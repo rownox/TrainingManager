@@ -5,13 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.TrainingOrders {
    [Authorize(Roles = "owner, admin, user")]
-   public class ConcludeModel : PageModel {
-      private readonly WCSTrainer.Data.WCSTrainerContext _context;
-
-      public ConcludeModel(WCSTrainer.Data.WCSTrainerContext context) {
-         _context = context;
-      }
-
+   public class ConcludeModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;
       public string TrainerList;
@@ -21,7 +15,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return NotFound();
          }
 
-         var trainingorder = await _context.TrainingOrders
+         var trainingorder = await context.TrainingOrders
              .Include(tr => tr.Trainee)
              .Include(tr => tr.Trainers)
              .FirstOrDefaultAsync(m => m.Id == id);
@@ -47,25 +41,13 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return Page();
          }
 
-         var existingTrainingOrder = await _context.TrainingOrders.FindAsync(TrainingOrder.Id);
+         var existingTrainingOrder = await context.TrainingOrders.FindAsync(TrainingOrder.Id);
          if (existingTrainingOrder == null) {
             return NotFound();
          }
 
-         existingTrainingOrder.CompletionDate = TrainingOrder.CompletionDate;
-         existingTrainingOrder.ClosingNotes = TrainingOrder.ClosingNotes;
-         existingTrainingOrder.LocationId = TrainingOrder.LocationId;
-         existingTrainingOrder.CreateDate = TrainingOrder.CreateDate;
-         existingTrainingOrder.TraineeId = TrainingOrder.TraineeId;
-         existingTrainingOrder.BeginDate = TrainingOrder.BeginDate;
-         existingTrainingOrder.Duration = TrainingOrder.Duration;
-         existingTrainingOrder.Medium = TrainingOrder.Medium;
-         existingTrainingOrder.Status = TrainingOrder.Status;
-
-         _context.Entry(existingTrainingOrder).State = EntityState.Modified;
-
          try {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
          } catch (DbUpdateConcurrencyException) {
             if (!TrainingOrderExists(TrainingOrder.Id)) {
                return NotFound();
@@ -75,11 +57,10 @@ namespace WCSTrainer.Pages.TrainingOrders {
          }
 
          return RedirectToPage("./Index");
-
       }
 
       private bool TrainingOrderExists(int id) {
-         return _context.TrainingOrders.Any(e => e.Id == id);
+         return context.TrainingOrders.Any(e => e.Id == id);
       }
    }
 }
