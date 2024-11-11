@@ -27,11 +27,9 @@
                <div class="search">
                   <input class="search-box" id="searchInput" placeholder="Search Skills" type="search" oninput="update(this)" />
                </div>
-               <div class="categories">
 
-                  <form id="createCategory">
-                     <div asp-validation-summary="All" class="text-danger"></div>
-                     <span asp-validation-for="@Model.CategoryName" class="text-danger"></span>
+               <div class="categories">
+                  <form method="post" id="createCategory">
                      <input type="text" asp-for="@Model.CategoryName"/>
                      <button type="submit" class="btn bg-btn btnWhite">Add Category</button>
                   </form>

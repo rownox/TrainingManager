@@ -81,7 +81,7 @@ namespace WCSTrainer.Pages.Skills {
             foreach (var lesson in skill.Lessons) {
                var newOrder = new TrainingOrder {
                   CreateDate = DateOnly.FromDateTime(DateTime.Now),
-                  Status = "Awaiting Approval",
+                  Status = "Approval",
                   LessonId = lesson.Id,
                   TraineeId = trainee.Id,
                   ParentSkillId = Skill.Id,

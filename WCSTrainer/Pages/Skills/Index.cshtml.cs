@@ -14,14 +14,17 @@ namespace WCSTrainer.Pages.Skills {
       public ListPartialModel ListPartial { get; set; }
       [BindProperty]
       public int MaxCount { get; set; } = 10;
-
-      public string? CategoryName { get; set; }
+      [BindProperty]
+      public string CategoryName { get; set; }
 
       public async Task<IActionResult> OnGetAsync() {
          Skills = await context.Skills.ToListAsync();
-         SkillCategories = await context.SkillCategories.ToListAsync();
+         SkillCategories = await context.SkillCategories
+            .Include(sc => sc.Skills)
+            .ToListAsync();
 
          MaxCount = MaxCount <= 0 ? 10 : MaxCount;
+         CategoryName = String.Empty;
 
          foreach (var skill in Skills) {
             ListItems.Add(
@@ -37,25 +40,18 @@ namespace WCSTrainer.Pages.Skills {
             Items = ListItems,
             MaxCount = MaxCount
          };
-
          return Page();
       }
 
       public async Task<IActionResult> OnPostAsync() {
-         if (!ModelState.IsValid) {
-            return Page();
-         }
-
-         if (CategoryName.IsNullOrEmpty()) {
-            return Page();
-         } else {
+         if (!CategoryName.IsNullOrEmpty()) {
             var skillCategory = new SkillCategory() {
                Name = CategoryName
             };
             context.SkillCategories.Add(skillCategory);
             await context.SaveChangesAsync();
          }
-         
+
          return await OnGetAsync();
       }
    }

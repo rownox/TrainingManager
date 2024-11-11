@@ -23,7 +23,7 @@
                   <div class="field-container">
                      <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input asp-for="TrainingOrder.Status" hidden value="Awaiting Approval" />
+                        <input asp-for="TrainingOrder.Status" hidden value="Approval" />
                         @{
                            var date = DateOnly.FromDateTime(DateTime.Now);
                            <input asp-for="TrainingOrder.CreateDate" type="hidden" value="@date" />
