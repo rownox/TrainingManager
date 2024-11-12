@@ -38,6 +38,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          public string TraineeName { get; set; } = "";
          public string LessonName { get; set; } = "";
          public string SkillName { get; set; } = "";
+         public int? SkillId { get; set; }
          public string Status { get; set; } = "";
          public bool Archived { get; set; }
          public string? BeginDate { get; set; }
@@ -57,10 +58,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          var currentEmployeeId = currentEmployee.Id;
 
-         return query.Where(t =>
-           t.CreatedByUserId == user.Id ||
-           t.Trainers.Any(tr => tr.Id == currentEmployeeId) ||
-           (t.Trainee != null && t.Trainee.Id == currentEmployeeId));
+         return query.Where(t => t.CreatedByUserId == user.Id || t.Trainers.Any(tr => tr.Id == currentEmployeeId) || (t.Trainee != null && t.Trainee.Id == currentEmployeeId));
       }
 
       public async Task<JsonResult> OnGetOrdersAsync([FromQuery] TrainingOrderFilterModel filter) {
@@ -68,19 +66,19 @@ namespace WCSTrainer.Pages.TrainingOrders {
          if (user == null) return new JsonResult(new TrainingOrderViewModel());
 
          var currentEmployee = await context.Employees
-             .Include(e => e.TrainingOrdersAsTrainer)
-             .Include(e => e.TrainingOrdersAsTrainee)
-             .FirstOrDefaultAsync(e => e.Id == user.EmployeeId);
+            .Include(e => e.TrainingOrdersAsTrainer)
+            .Include(e => e.TrainingOrdersAsTrainee)
+            .FirstOrDefaultAsync(e => e.Id == user.EmployeeId);
 
          if (currentEmployee == null)
             return new JsonResult(new TrainingOrderViewModel());
 
          var query = context.TrainingOrders
-             .Include(t => t.Trainers)
-             .Include(t => t.ParentSkill)
-             .Include(t => t.Lesson)
-             .Include(t => t.Trainee)
-             .AsQueryable();
+            .Include(t => t.Trainers)
+            .Include(t => t.ParentSkill)
+            .Include(t => t.Lesson)
+            .Include(t => t.Trainee)
+            .AsQueryable();
 
          query = await FilterOrdersByPermissions(query, user, currentEmployee);
 
@@ -88,8 +86,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
             query = query.Where(t => !t.Archived);
 
          var take = filter.PageSize == -1
-             ? await query.CountAsync()
-             : filter.PageSize;
+            ? await query.CountAsync()
+            : filter.PageSize;
 
          take = Math.Min(take, 1000);
 
@@ -118,34 +116,36 @@ namespace WCSTrainer.Pages.TrainingOrders {
          List<TrainingOrderDto> orders;
          if (filter.PageSize == -1) {
             orders = await query
-                .OrderByDescending(t => t.Id)
-                .Select(t => new TrainingOrderDto {
-                   Id = t.Id,
-                   TraineeName = t.Trainee != null ? t.Trainee.FirstName + " " + t.Trainee.LastName : "N/A",
-                   LessonName = t.Lesson != null ? t.Lesson.Name : "",
-                   SkillName = t.ParentSkill != null ? t.ParentSkill.Name : "",
-                   Status = t.Status,
-                   Archived = t.Archived,
-                   BeginDate = t.BeginDate != null ? t.BeginDate.Value.ToString("MM/dd/yyyy") : "",
-                   Priority = t.Priority != null ? t.Priority : ""
-                })
-                .ToListAsync();
+               .OrderByDescending(t => t.Id)
+               .Select(t => new TrainingOrderDto {
+                  Id = t.Id,
+                  TraineeName = t.Trainee != null ? t.Trainee.FirstName + " " + t.Trainee.LastName : "N/A",
+                  LessonName = t.Lesson != null ? t.Lesson.Name : "",
+                  SkillName = t.ParentSkill != null ? t.ParentSkill.Name : "",
+                  SkillId = t.ParentSkillId,
+                  Status = t.Status,
+                  Archived = t.Archived,
+                  BeginDate = t.BeginDate != null ? t.BeginDate.Value.ToString("MM/dd/yyyy") : "",
+                  Priority = t.Priority != null ? t.Priority : ""
+               })
+               .ToListAsync();
          } else {
             orders = await query
-                .OrderByDescending(t => t.Id)
-                .Skip((filter.CurrentPage - 1) * filter.PageSize)
-                .Take(filter.PageSize)
-                .Select(t => new TrainingOrderDto {
-                   Id = t.Id,
-                   TraineeName = t.Trainee != null ? t.Trainee.FirstName + " " + t.Trainee.LastName : "N/A",
-                   LessonName = t.Lesson != null ? t.Lesson.Name : "",
-                   SkillName = t.ParentSkill != null ? t.ParentSkill.Name : "",
-                   Status = t.Status,
-                   Archived = t.Archived,
-                   BeginDate = t.BeginDate != null ? t.BeginDate.Value.ToString("MM/dd/yyyy") : "",
-                   Priority = t.Priority != null ? t.Priority : ""
-                })
-                .ToListAsync();
+               .OrderByDescending(t => t.Id)
+               .Skip((filter.CurrentPage - 1) * filter.PageSize)
+               .Take(filter.PageSize)
+               .Select(t => new TrainingOrderDto {
+                  Id = t.Id,
+                  TraineeName = t.Trainee != null ? t.Trainee.FirstName + " " + t.Trainee.LastName : "N/A",
+                  LessonName = t.Lesson != null ? t.Lesson.Name : "",
+                  SkillName = t.ParentSkill != null ? t.ParentSkill.Name : "",
+                  SkillId = t.ParentSkillId,
+                  Status = t.Status,
+                  Archived = t.Archived,
+                  BeginDate = t.BeginDate != null ? t.BeginDate.Value.ToString("MM/dd/yyyy") : "",
+                  Priority = t.Priority != null ? t.Priority : ""
+               })
+               .ToListAsync();
          }
 
          return new JsonResult(new TrainingOrderViewModel {

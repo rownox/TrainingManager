@@ -15,9 +15,9 @@
    </div>
    @{
       var jsonOptions = new JsonSerializerOptions {
-            ReferenceHandler = ReferenceHandler.Preserve,
-            WriteIndented = false
-         };
+         ReferenceHandler = ReferenceHandler.Preserve,
+         WriteIndented = false
+      };
    }
    <ul id="groupsList" class="item-container">
       @foreach (var item in Model) {

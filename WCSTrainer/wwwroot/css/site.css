@@ -209,7 +209,6 @@ nav {
 				border: 1px solid var(--gray4);
 				background-color: var(--gray2);
 				border-radius: 5px;
-				max-width: 798px;
 				display: flex;
 				align-items: center;
 			}
@@ -221,7 +220,7 @@ nav {
 				}
 
 				.panel .body .properties .archive-warning p {
-					color: var(--yellow2);
+					color: var(--red2);
 					padding: 5px 10px;
 				}
 
@@ -361,8 +360,8 @@ nav {
 						background-color: var(--black);
 					}
 
-
 				.panel .body .properties .user-form .field-container .form-group .selector {
+
 				}
 
 				.panel .body .properties .user-form .field-container .btn {
@@ -398,7 +397,7 @@ nav {
 						color: var(--textSub1);
 						font-size: 16px;
 						min-width: 250px;
-						height: 100%;
+						flex-grow: 1;
 					}
 
 					.panel .body .properties .user-form .field-container .text-group .info {
@@ -537,7 +536,6 @@ nav {
 						align-items: center;
 					}
 
-
 					.panel .body .properties .tool-container .tools .btns {
 						flex-direction: column;
 						display: flex;
@@ -615,7 +613,6 @@ nav {
 						justify-content: space-between;
 					}
 
-
 			.panel .body .properties .categories {
 			}
 
@@ -626,8 +623,6 @@ nav {
 
 					.panel .body .properties .categories .category .name {
 					}
-
-				
 
 			.panel .body .properties .list-container {
 				display: flex;
@@ -715,7 +710,6 @@ nav {
 										text-decoration: underline;
 									}
 
-
 							.panel .body .properties .list-container .order-list li .info .sub {
 								display: flex;
 								flex-direction: row;
@@ -779,8 +773,6 @@ nav {
 						background-color: var(--gray3);
 						color: var(--textMain);
 					}
-
-
 
 			.panel .body .properties .order-list2 {
 				overflow-y: scroll;
@@ -1287,8 +1279,6 @@ nav {
 					display: flex;
 					padding: 5px 10px;
 				}
-
-
 
 .drop-main {
 	background-color: var(--gray3);

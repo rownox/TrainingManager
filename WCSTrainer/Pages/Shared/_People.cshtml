@@ -61,9 +61,6 @@
             };
             var employeeJson = JsonSerializer.Serialize(newPerson, jsonOptions);
             <li onclick="selectTrainer('@employeeJson', this)" class="item" data-name="@newPerson.Name">
-               <div class="photo">
-                  <div class="frame"></div>
-               </div>
                <div class="info">
                   <p>@newPerson.Name</p>
                   <div class="sub">

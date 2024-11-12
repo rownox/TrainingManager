@@ -59,7 +59,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
       public async Task<IActionResult> OnPostAsync() {
 
-         if (TrainingOrder.Status != "Approval") {
+         if (TrainingOrder.Status != "Approving") {
             if (string.IsNullOrWhiteSpace(SelectedTrainerGroupString) && string.IsNullOrWhiteSpace(SelectedTrainerString)) {
                ModelState.AddModelError("SelectedTrainerString", "At least one trainer or trainer group must be selected.");
                await initJson();
