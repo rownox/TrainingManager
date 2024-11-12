@@ -42,30 +42,29 @@ namespace WCSTrainer.Pages.TrainerGroups {
             return Page();
          }
 
-         var trainerGroupToUpdate = await context.TrainerGroups
-             .Include(t => t.Trainers)
-             .FirstOrDefaultAsync(t => t.Id == TrainerGroup.Id);
+         context.Attach(TrainerGroup).State = EntityState.Modified;
 
-         if (trainerGroupToUpdate != null) {
-            if (SelectedTrainerString != null) {
-               List<int> newTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
-               var newTrainers = await context.Employees
-                   .Where(e => newTrainerIds.Contains(e.Id))
-                   .ToListAsync();
-               trainerGroupToUpdate.Trainers = newTrainers;
-            } else {
-               trainerGroupToUpdate.Trainers.Clear();
-            }
+         var currentTrainers = await context.Entry(TrainerGroup)
+             .Collection(tg => tg.Trainers)
+             .Query()
+             .ToListAsync();
+         TrainerGroup.Trainers.Clear();
 
-            try {
-               await context.SaveChangesAsync();
-            } catch (DbUpdateConcurrencyException) {
-               return NotFound();
-            }
-
-            return RedirectToPage("./Index");
+         if (SelectedTrainerString != null) {
+            List<int> newTrainerIds = SelectedTrainerString.Split(", ").Select(int.Parse).ToList();
+            var newTrainers = await context.Employees
+                .Where(e => newTrainerIds.Contains(e.Id))
+                .ToListAsync();
+            TrainerGroup.Trainers = newTrainers;
          }
-         return Page();
+
+         try {
+            await context.SaveChangesAsync();
+         } catch (DbUpdateConcurrencyException) {
+            return NotFound();
+         }
+         return RedirectToPage("./Index");
       }
+
    }
 }

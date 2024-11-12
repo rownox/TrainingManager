@@ -13,8 +13,6 @@
 	--white2: #3b4042;
 	--red1: #ff3d3d;
 	--red2: #c62e2e;
-	--orange1: #ff7500;
-	--orange2: #ca5d00;
 	--red3: #311313;
 	--blue1: #30b9ff;
 	--blue2: #007ac1;
@@ -30,6 +28,7 @@
 	--archived: #787f87;
 	--svg: invert(75%);
 	--svgHover: invert(100%);
+	--orderBack: #000000;
 }
 
 .light-mode {
@@ -54,14 +53,15 @@
 	--green2: #0a8e19;
 	--yellow1: #cc9000;
 	--yellow2: #f6af06;
-	--purple1: #818fff;
-	--purple2: #3d2d81;
-	--pill1: #cdc1ff;
-	--pill2: #886bff;
-	--pill3: #613df7;
+	--purple1: #a58eff;
+	--purple2: #7050f8;
+	--pill1: #7859fb;
+	--pill2: #3d2d81;
+	--pill3: #886cff;
 	--archived: #9a0000;
 	--svg: invert(20%);
 	--svgHover: invert(0%);
+	--orderBack: #f0f0f0;
 }
 
 .btn {
