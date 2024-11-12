@@ -6,7 +6,8 @@
    showVerified: true,
    showCompleted: true,
    showActive: true,
-   showAwaiting: true,
+   showScheduling: true,
+   showApproving: true,
    detailed: false
 };
 
@@ -133,7 +134,8 @@ function getTypeClass(status) {
       case 'Active': return 'active';
       case 'Verified': return 'verified';
       case 'Completed': return 'completed';
-      default: return 'awaiting';
+      case 'Scheduling': return 'scheduling';
+      default: return 'approving';
    }
 }
 
@@ -142,7 +144,7 @@ function initializeUI() {
    document.getElementById('searchInput').value = currentFilters.searchTerm;
    document.getElementById('viewToggle').textContent = currentFilters.detailed ? 'Simple View' : 'Detailed View';
 
-   ['Archived', 'Verified', 'Completed', 'Active', 'Awaiting'].forEach(status => {
+   ['Archived', 'Verified', 'Completed', 'Active', 'Scheduling', 'Approving'].forEach(status => {
       const checkbox = document.getElementById(`show${status}`);
       checkbox.checked = currentFilters[`show${status}`];
    });
@@ -176,7 +178,7 @@ document.getElementById('searchInput').addEventListener('input', debounce(functi
    loadOrders();
 }, 300));
 
-['Archived', 'Verified', 'Completed', 'Active', 'Awaiting'].forEach(status => {
+['Archived', 'Verified', 'Completed', 'Active', 'Scheduling', 'Approving'].forEach(status => {
    const checkbox = document.getElementById(`show${status}`);
    checkbox.addEventListener('change', function () {
       currentFilters[`show${status}`] = this.checked;

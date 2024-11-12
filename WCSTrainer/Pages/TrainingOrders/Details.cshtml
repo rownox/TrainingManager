@@ -21,14 +21,7 @@
                <p class="title">Training Order #@Model.TrainingOrder.Id</p>
                @{
                   var status = Model.TrainingOrder.Status;
-                  var type = "awaiting";
-                  if (status.Equals("Active")) {
-                     type = "active";
-                  } else if (status.Equals("Verified")) {
-                     type = "verified";
-                  } else if (status.Equals("Completed")) {
-                     type = "completed";
-                  }
+                  var type = status.ToLower();
                   <div class="subtitle">
                      <p>Status: </p>
                      <p class="@type">@status</p>
@@ -47,20 +40,17 @@
                   if (!Model.TrainingOrder.Status.Equals("Completed") && !Model.TrainingOrder.Status.Equals("Verified")) {
                      <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">Edit Order</a>
                   }
-                  if (Model.TrainingOrder.Status.Equals("Awaiting Approval")) {
+                  if (Model.TrainingOrder.Status.Equals("Approving")) {
                      <a class="btn bg-btn btnRed" asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">Approve Order</a>
+                  } else if (Model.TrainingOrder.Status.Equals("Scheduling")) {
+                     <a class="btn bg-btn btnRed" asp-page="./Scheduling" asp-route-id="@Model.TrainingOrder.Id">Schedule Order</a>
                   } else if (Model.TrainingOrder.Status.Equals("Active")) {
                      <a class="btn bg-btn btnRed" asp-page="./Conclude" asp-route-id="@Model.TrainingOrder.Id">Conclude Order</a>
                   } else if (Model.TrainingOrder.Status.Equals("Completed")) {
                      <a class="btn bg-btn btnRed" asp-page="./Verification" asp-route-id="@Model.TrainingOrder.Id">Verify Order</a>
                   }
-                  string text = "";
+                  string text = Model.TrainingOrder.Archived ? "Unarchive" : "Archive";
                   <form method="post" id="archiveForm">
-                     @if (Model.TrainingOrder.Archived) {
-                        text = "Unarchive";
-                     } else {
-                        text = "Archive";
-                     }
                      <a class="btn bg-btn btnWhite" href="#" onclick="document.getElementById('archiveForm').submit();">
                         @text Document
                      </a>

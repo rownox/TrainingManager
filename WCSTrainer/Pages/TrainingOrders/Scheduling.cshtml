@@ -1,101 +1,75 @@
 ﻿@page
 @model WCSTrainer.Pages.TrainingOrders.SchedulingModel
 
-<div id="people-component" class="people-component hidden">
-   <partial name="_People" model="Model.Employees" />
-</div>
-<div class="overlay hidden" onclick="closeComponent()"></div>
-
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
       <div class="properties">
-         <div class="scheduling">
-            <div class="schedule">
-               <div class="months" id="months">
-                  @for (int month = 1; month <= 12; month++) {
-                     DateTime date = new DateTime(Model.selectedYear, month, 1);
-                     string monthName = date.ToString("MMMM");
-                     string type = "month-inactive";
-                     if (DateTime.Now.Month == month && DateTime.Now.Year == Model.selectedYear) {
-                        type = "month-active";
+         <div class="user-form">
+            <p class="title">Schedule Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
+            <div class="field-container">
+               @if (Model.TrainingOrder.Status == "Scheduling") {
+                  <form method="post">
+                     <input asp-for="TrainingOrder.Id" hidden />
+                     <div asp-validation-summary="All" class="text-danger"></div>
+
+                     @{
+                        var date = DateOnly.FromDateTime(DateTime.Now);
+                        <input asp-for="TrainingOrder.ScheduleDate" hidden value="@date" />
                      }
-                     <div class="month @type">
-                        <div class="title">
-                           <p>@monthName</p>
+                     <input asp-for="TrainingOrder.CreateDate" hidden />
+                     <input asp-for="TrainingOrder.ApprovalDate" hidden />
+                     <input asp-for="TrainingOrder.Medium" hidden />
+                     <input asp-for="TrainingOrder.Status" type="hidden" value="Active" />
+                     <input asp-for="TrainingOrder.LessonId" type="hidden" />
+                     <input asp-for="TrainingOrder.TraineeId" hidden />
+                     <input asp-for="TrainingOrder.LocationId" hidden />
+                     <input asp-for="TrainingOrder.ParentSkillId" hidden />
+                     <input asp-for="TrainingOrder.CreatedByUserId" hidden />
+
+                     <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
+                     <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
+
+                     <div class="form-group">
+                        <div class="form">
+                           <div class="labels">
+                              <p class="control-label">Req. Training Hours</p>
+                              <span asp-validation-for="TrainingOrder.Duration" class="text-danger"></span>
+                           </div>
+                           <input type="text" asp-for="TrainingOrder.Duration" class="form-control" />
                         </div>
-                        <div class="stats">
-                           <p>Training Orders: @Model.countMonthOrders(month)</p>
-                           <p>Training Hours: @Model.countOrderHours(month)</p>
-                        </div>
-                        <div class="info">
-                           @if (Model.getMonthOrders(month).Count <= 0) {
-                              <div class="pill none"></div>
-                           } else {
-                              foreach (var order in Model.getMonthOrders(month)) {
-                                 var text = "";
-                                 if (order.Lesson != null) {
-                                    text = order.Lesson.Name;
-                                 }
-                                 <a asp-page="/TrainingOrders/Details" asp-route-id="@order.Id" class="pill">TO #@order.Id - @order.BeginDate - @text</a>
-                              }
-                           }
+                        <div class="form">
+                           <div class="labels">
+                              <p class="control-label">Priority Level</p>
+                              <span asp-validation-for="TrainingOrder.Priority" class="text-danger"></span>
+                           </div>
+                           <select asp-for="TrainingOrder.Priority" class="form-drop2">
+                              <option value="High">High</option>
+                              <option value="Medium">Medium</option>
+                              <option value="Low">Low</option>
+                           </select>
                         </div>
                      </div>
-                  }
-               </div>
-               <div class="days" id="days" style="display: none;">
-                  @for (int day = 0; day < 30; day++) {
-                     <div class="day">@day</div>
-                  }
-               </div>
-            </div>
-         </div>
-         <div class="tool-container">
-            <div class="tools">
-               <p class="title">Options: </p>
-               <form id="scheduleForm" method="post">
-                  <div class="selectors-container">
-                     <p class="label">Search by Trainer</p>
-                     <div class="selectors">
-                        <ul id="traineeList" class="pill-container"></ul>
-                        <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')">
-                           <p>Select</p>
+
+                     <div class="form-group">
+                        <div class="form">
+                           <div class="labels">
+                              <p class="control-label">Begin Date</p>
+                              <span asp-validation-for="TrainingOrder.BeginDate" class="text-danger"></span>
+                           </div>
+                           <input type="date" asp-for="TrainingOrder.BeginDate" class="form-control" />
                         </div>
-                        <button class="btn bg-btn btnRed" onclick="clearForm()">Clear</button>
-                        <input id="traineeInput" asp-for="searchFor" hidden/>
                      </div>
-                  </div>
-                  <div class="search">
-                     <p>Year:</p>
-                     <div class="side">
-                        <select asp-for="selectedYear" class="form-drop2 search-box">
-                           @for (int year = Model.EarliestYear; year <= DateTime.Now.Year; year++) {
-                              <option value="@year">@year</option>
-                           }
-                        </select>
-                        <input type="submit" value="Search" class="btn bg-btn btnGreen" />
+                     
+                     <div class="form-group">
+                        <div class="btn-container">
+                           <input type="submit" value="Approve" class="btn bg-btn btnGreen" />
+                        </div>
                      </div>
-                  </div>
-               </form>
-               <div class="info">
-                  <div class="info-section">
-                     <p>Training Orders For:</p>
-                     <p>@Model.searchFor</p>
-                  </div>
-                  <div class="info-section">
-                     <p>Year:</p>
-                     <p>@Model.selectedYear</p>
-                  </div>
-                  <div class="info-section">
-                     <p>Total Training Orders:</p>
-                     <p>@Model.countOrders()</p>
-                  </div>
-                  <div class="info-section">
-                     <p>Total Training Hours: </p>
-                     <p>@Model.countTotalOrderHours()</p>
-                  </div>
-               </div>
+                  </form>
+               } else {
+                  <p>No.</p>
+               }
             </div>
          </div>
       </div>

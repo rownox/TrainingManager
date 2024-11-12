@@ -2,32 +2,28 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Lessons {
    [Authorize(Roles = "owner, admin")]
-   public class CreateModel : PageModel {
-      private readonly WCSTrainer.Data.WCSTrainerContext _context;
-
-      public CreateModel(WCSTrainer.Data.WCSTrainerContext context) {
-         _context = context;
-      }
-
-      public IActionResult OnGet() {
-         ViewData["TrainingOrderId"] = new SelectList(_context.TrainingOrders, "Id", "Id");
-         return Page();
-      }
-
+   public class CreateModel(Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public Lesson Lesson { get; set; } = default!;
 
-      // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+      public SelectList CategroySelectList { get; set; }
+
+      public async Task<IActionResult> OnGetAsync() {
+         CategroySelectList = new SelectList(await context.LessonCategories.ToListAsync(), "Id", "Name");
+         return Page();
+      }
+
       public async Task<IActionResult> OnPostAsync() {
          if (!ModelState.IsValid) {
             return Page();
          }
 
-         _context.Lessons.Add(Lesson);
-         await _context.SaveChangesAsync();
+         context.Lessons.Add(Lesson);
+         await context.SaveChangesAsync();
 
          return RedirectToPage("./Index");
       }

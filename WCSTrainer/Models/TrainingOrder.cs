@@ -3,6 +3,7 @@
    public DateOnly? BeginDate { get; set; }
    public DateOnly? CompletionDate { get; set; }
    public DateOnly? ApprovalDate { get; set; }
+   public DateOnly? ScheduleDate { get; set; }
    public DateOnly CreateDate { get; set; }
    public string Medium { get; set; } = string.Empty;
    public string Status { get; set; } = string.Empty;

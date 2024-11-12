@@ -47,12 +47,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return Page();
          }
 
-         if (TrainingOrder.BeginDate == null) {
-            ModelState.AddModelError("BeginDate", "Please select a beginning date.");
-            await initJson();
-            return Page();
-         }
-
          if (!ModelState.IsValid) {
             await initJson();
             return Page();
@@ -92,7 +86,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                .ToListAsync();
          }
 
-         TrainingOrder.Status = "Active";
+         TrainingOrder.Status = "Scheduling";
          TrainingOrder.ApprovalDate = DateOnly.FromDateTime(DateTime.Now);
 
          context.TrainingOrders.Update(TrainingOrder);

@@ -15,6 +15,8 @@ namespace WCSTrainer.Data {
       public DbSet<TrainingOrder> TrainingOrders { get; set; }
       public DbSet<Verification> Verifications { get; set; }
       public DbSet<Lesson> Lessons { get; set; }
+      public DbSet<LessonCategory> LessonCategories { get; set; }
+      public DbSet<SkillCategory> SkillCategories { get; set; }
 
       protected override void OnModelCreating(ModelBuilder builder) {
          base.OnModelCreating(builder);
@@ -88,6 +90,16 @@ namespace WCSTrainer.Data {
              .HasOne(v => v.Verifier)
              .WithMany()
              .HasForeignKey(v => v.VerifierId);
+
+         //SkillCategory
+         builder.Entity<SkillCategory>()
+            .HasMany(sc => sc.Skills)
+            .WithOne(s => s.SkillCategory);
+
+         //LessonCategory
+         builder.Entity<LessonCategory>()
+            .HasMany(lc => lc.Lessons)
+            .WithOne(l => l.LessonCategory);
 
          var ownerRole = new IdentityRole("owner") { NormalizedName = "OWNER" };
          var adminRole = new IdentityRole("admin") { NormalizedName = "ADMIN" };

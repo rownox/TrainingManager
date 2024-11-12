@@ -5,4 +5,6 @@
    public ICollection<Lesson> Lessons { get; set; } = [];
    public ICollection<Employee> Employees { get; set; } = [];
    public ICollection<TrainingOrder> TrainingOrders { get; set; } = [];
+   public int SkillCategoryId { get; set; }
+   public SkillCategory? SkillCategory { get; set; }
 }
