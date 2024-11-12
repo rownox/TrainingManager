@@ -28,7 +28,6 @@ namespace WCSTrainer.Pages.Locations {
             ListItems.Add(
                new ListItem() {
                   Id = item.Id,
-                  Name = "Location #" + item.Id,
                   Description = item.Name
                }
             );

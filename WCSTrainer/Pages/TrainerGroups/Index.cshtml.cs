@@ -22,7 +22,6 @@ namespace WCSTrainer.Pages.TrainerGroups {
             ListItems.Add(
                new ListItem() {
                   Id = item.Id,
-                  Name = "Trainer Group #" + item.Id,
                   Description = item.Name
                }
             );

@@ -22,7 +22,6 @@ namespace WCSTrainer.Pages.Skills {
             ListItems.Add(
                new ListItem() {
                   Id = skill.Id,
-                  Name = "Skill #" + skill.Id,
                   Description = skill.Name
                }
             );

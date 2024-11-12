@@ -24,7 +24,6 @@ namespace WCSTrainer.Pages.Lessons {
             ListItems.Add(
                new ListItem() {
                   Id = item.Id,
-                  Name = "Lesson #" + item.Id,
                   Description = item.Name
                }
             );
