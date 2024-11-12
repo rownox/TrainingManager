@@ -6,25 +6,11 @@ using Microsoft.EntityFrameworkCore;
 namespace WCSTrainer.Pages.TrainingOrders
 {
     public class SchedulingModel(Data.WCSTrainerContext context) : PageModel {
+
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;
-      [BindProperty]
-      public IList<Employee>? Employees { get; set; }
-      [BindProperty]
-      public IList<TrainerGroup>? TrainerGroups { get; set; }
-      [BindProperty]
-      public string? SelectedTrainerString { get; set; }
-      public List<int>? SelectedTrainerIds { get; set; }
-      [BindProperty]
-      public string? SelectedTrainerGroupString { get; set; }
-      public List<int>? SelectedTrainerGroupIds { get; set; }
-      public SelectList Locations { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
-         if (id == null) {
-            return NotFound();
-         }
-
          var trainingorder = await context.TrainingOrders.FirstOrDefaultAsync(m => m.Id == id);
          if (trainingorder == null) {
             return NotFound();
@@ -44,8 +30,6 @@ namespace WCSTrainer.Pages.TrainingOrders
             return Page();
          }
 
-         context.Attach(TrainingOrder).State = EntityState.Modified;
-
          try {
             await context.SaveChangesAsync();
          } catch (DbUpdateConcurrencyException) {
@@ -55,9 +39,6 @@ namespace WCSTrainer.Pages.TrainingOrders
                throw;
             }
          }
-
-         TrainingOrder.Status = "Active";
-         TrainingOrder.ScheduleDate = DateOnly.FromDateTime(DateTime.Now);
 
          context.TrainingOrders.Update(TrainingOrder);
          await context.SaveChangesAsync();

@@ -24,12 +24,10 @@ namespace WCSTrainer.Pages.TrainingOrders {
          TrainingOrders = await context.TrainingOrders
             .Include(o => o.Lesson)
             .ToListAsync();
-
          EarliestYear = TrainingOrders
             .Select(t => t.CreateDate.Year)
             .DefaultIfEmpty(DateTime.Now.Year)
             .Min();
-
          return Page();
       }
 

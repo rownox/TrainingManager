@@ -16,7 +16,7 @@
          <div class="user-form">
             <p class="title">Approve Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
             <div class="field-container">
-               @if (Model.TrainingOrder.Status == "Approval") {
+               @if (Model.TrainingOrder.Status == "Approving") {
                   <form method="post">
                      <input asp-for="TrainingOrder.Id" hidden />
                      <div asp-validation-summary="All" class="text-danger"></div>

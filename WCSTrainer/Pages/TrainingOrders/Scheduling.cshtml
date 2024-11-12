@@ -13,18 +13,14 @@
                      <input asp-for="TrainingOrder.Id" hidden />
                      <div asp-validation-summary="All" class="text-danger"></div>
 
-                     <input asp-for="TrainingOrder.BeginDate" hidden />
                      @{
                         var date = DateOnly.FromDateTime(DateTime.Now);
                         <input asp-for="TrainingOrder.ScheduleDate" hidden value="@date" />
                      }
                      <input asp-for="TrainingOrder.CreateDate" hidden />
                      <input asp-for="TrainingOrder.ApprovalDate" hidden />
-                     <input asp-for="TrainingOrder.ScheduleDate" hidden />
                      <input asp-for="TrainingOrder.Medium" hidden />
                      <input asp-for="TrainingOrder.Status" type="hidden" value="Active" />
-                     <input asp-for="TrainingOrder.Duration" hidden />
-                     <input asp-for="TrainingOrder.Priority" hidden />
                      <input asp-for="TrainingOrder.LessonId" type="hidden" />
                      <input asp-for="TrainingOrder.TraineeId" hidden />
                      <input asp-for="TrainingOrder.LocationId" hidden />

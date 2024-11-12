@@ -40,7 +40,7 @@
                   if (!Model.TrainingOrder.Status.Equals("Completed") && !Model.TrainingOrder.Status.Equals("Verified")) {
                      <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainingOrder.Id">Edit Order</a>
                   }
-                  if (Model.TrainingOrder.Status.Equals("Approval")) {
+                  if (Model.TrainingOrder.Status.Equals("Approving")) {
                      <a class="btn bg-btn btnRed" asp-page="./Approval" asp-route-id="@Model.TrainingOrder.Id">Approve Order</a>
                   } else if (Model.TrainingOrder.Status.Equals("Scheduling")) {
                      <a class="btn bg-btn btnRed" asp-page="./Scheduling" asp-route-id="@Model.TrainingOrder.Id">Schedule Order</a>
@@ -49,7 +49,7 @@
                   } else if (Model.TrainingOrder.Status.Equals("Completed")) {
                      <a class="btn bg-btn btnRed" asp-page="./Verification" asp-route-id="@Model.TrainingOrder.Id">Verify Order</a>
                   }
-                  string text = Model.TrainingOrder.Archived ? "Archive" : "Unarchive";
+                  string text = Model.TrainingOrder.Archived ? "Unarchive" : "Archive";
                   <form method="post" id="archiveForm">
                      <a class="btn bg-btn btnWhite" href="#" onclick="document.getElementById('archiveForm').submit();">
                         @text Document

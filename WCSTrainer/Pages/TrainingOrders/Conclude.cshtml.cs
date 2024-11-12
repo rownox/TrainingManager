@@ -8,7 +8,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
    public class ConcludeModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;
-      public string TrainerList;
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          if (id == null) {
@@ -24,29 +23,16 @@ namespace WCSTrainer.Pages.TrainingOrders {
          }
          TrainingOrder = trainingorder;
 
-         List<string> trainerNames = new List<string>();
-
-         foreach (var trainer in TrainingOrder.Trainers) {
-            trainerNames.Add(trainer.FirstName + " " + trainer.LastName);
-         }
-
-         TrainerList = string.Join(", ", trainerNames);
-
          return Page();
       }
 
       public async Task<IActionResult> OnPostAsync() {
-
          if (!ModelState.IsValid) {
             return Page();
          }
 
-         var existingTrainingOrder = await context.TrainingOrders.FindAsync(TrainingOrder.Id);
-         if (existingTrainingOrder == null) {
-            return NotFound();
-         }
-
          try {
+            context.TrainingOrders.Update(TrainingOrder);
             await context.SaveChangesAsync();
          } catch (DbUpdateConcurrencyException) {
             if (!TrainingOrderExists(TrainingOrder.Id)) {

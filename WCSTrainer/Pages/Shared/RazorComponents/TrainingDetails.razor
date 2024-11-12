@@ -46,7 +46,7 @@
       }
    </div>
    
-   @if (!TrainingOrder.Status.Equals("Approval")) {
+   @if (!TrainingOrder.Status.Equals("Approving")) {
       <div class="title-row">
          <p class="title">Approved - @TrainingOrder.ApprovalDate</p>
       </div>
@@ -93,7 +93,7 @@
          <p class="info">@TrainingOrder.Medium</p>
       </div>
    }
-   @if (!TrainingOrder.Status.Equals("Approval") && !TrainingOrder.Status.Equals("Scheduling")) {
+   @if (!TrainingOrder.Status.Equals("Approving") && !TrainingOrder.Status.Equals("Scheduling")) {
       <div class="title-row">
          <p class="title">Scheduled - @TrainingOrder.ScheduleDate</p>
       </div>

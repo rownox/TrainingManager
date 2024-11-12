@@ -18,17 +18,19 @@
                         var date = DateOnly.FromDateTime(DateTime.Now);
                         <input asp-for="TrainingOrder.CompletionDate" hidden value="@date" />
                      }
-                     <input asp-for="TrainingOrder.CreateDate" hidden />
                      <input asp-for="TrainingOrder.ApprovalDate" hidden />
                      <input asp-for="TrainingOrder.ScheduleDate" hidden />
+                     <input asp-for="TrainingOrder.CreateDate" hidden />
+
                      <input asp-for="TrainingOrder.Medium" hidden />
                      <input asp-for="TrainingOrder.Status" type="hidden" value="Completed" />
                      <input asp-for="TrainingOrder.Duration" hidden />
                      <input asp-for="TrainingOrder.Priority" hidden />
+
+                     <input asp-for="TrainingOrder.ParentSkillId" hidden />
                      <input asp-for="TrainingOrder.LessonId" type="hidden" />
                      <input asp-for="TrainingOrder.TraineeId" hidden />
                      <input asp-for="TrainingOrder.LocationId" hidden />
-                     <input asp-for="TrainingOrder.ParentSkillId" hidden />
                      <input asp-for="TrainingOrder.CreatedByUserId" hidden />
 
                      <component type="typeof(TrainingDetails)"
