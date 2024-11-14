@@ -1,6 +1,10 @@
 ﻿@page
 @model WCSTrainer.Pages.Skills.DetailsModel
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<UserAccount> SignInManager
+@inject UserManager<UserAccount> UserManager
+
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
@@ -70,6 +74,15 @@
             <div class="btn-container">
                <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Skill.Id">Edit Skill</a>
                <a class="btn bg-btn btnBlue" asp-page="./Assign" asp-route-id="@Model.Skill.Id">Assign</a>
+               @if (SignInManager.IsSignedIn(User)) {
+                  var user = await UserManager.GetUserAsync(User);
+                  if (user != null) {
+                     var isOwner = await UserManager.IsInRoleAsync(user, "owner");
+                     if (isOwner) {
+                        <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.Skill.Id">Delete</a>
+                     }
+                  }
+               }
             </div>
          </div>
       </div>
