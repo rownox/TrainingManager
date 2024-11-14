@@ -8,6 +8,9 @@
          <div class="user-form">
             <p class="title">Trainer Group #@Model.TrainerGroup.Id</p>
             <div class="field-container">
+               <div class="title-row">
+                  <p class="title">Details</p>
+               </div>
                <div class="text-group">
                   <p class="title">Name</p>
                   <p class="info">@Model.TrainerGroup.Name</p>
@@ -22,9 +25,7 @@
                </div>
             </div>
             <div class="btn-container">
-               <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainerGroup.Id">
-                  Edit
-               </a>
+               <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainerGroup.Id">Edit</a>
             </div>
          </div>
       </div>

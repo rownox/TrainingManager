@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Models;
 
@@ -12,9 +13,13 @@ namespace WCSTrainer.Pages.Skills {
       public ListPartialModel ListPartial { get; set; }
       [BindProperty]
       public int MaxCount { get; set; } = 10;
+      public List<SkillCategory> CategoryList { get; set; }
 
       public async Task<IActionResult> OnGetAsync() {
          Skills = await context.Skills.ToListAsync();
+         CategoryList = await context.SkillCategories
+            .Include(c => c.Skills)
+            .ToListAsync();
 
          MaxCount = MaxCount <= 0 ? 10 : MaxCount;
 

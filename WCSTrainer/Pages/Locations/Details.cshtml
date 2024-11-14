@@ -8,15 +8,16 @@
          <div class="user-form">
             <p class="title">Location #@Model.Location.Id</p>
             <div class="field-container">
+               <div class="title-row">
+                  <p class="title">Details</p>
+               </div>
                <div class="text-group">
                   <p class="title">Name</p>
                   <p class="info">@Model.Location.Name</p>
                </div>
             </div>
             <div class="btn-container">
-               <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Location.Id">
-                  Edit
-               </a>
+               <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Location.Id">Edit</a>
             </div>
          </div>
       </div>

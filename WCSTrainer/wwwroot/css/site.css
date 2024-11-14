@@ -205,7 +205,6 @@ nav {
 			}
 
 			.panel .body .properties .archive-warning {
-				margin-top: 10px;
 				border: 1px solid var(--gray4);
 				background-color: var(--gray2);
 				border-radius: 5px;
@@ -373,10 +372,9 @@ nav {
 				}
 
 				.panel .body .properties .user-form .field-container .title-row {
-					margin-top: 20px;
 					background-color: var(--gray3);
-					padding: 5px;
-					border-bottom: 1px solid var(--gray4);
+					padding: 3px 5px;
+					border: 1px solid var(--gray4);
 				}
 
 					.panel .body .properties .user-form .field-container .title-row .title {
@@ -387,12 +385,12 @@ nav {
 					border-bottom: 1px solid var(--gray3);
 					flex-direction: row;
 					display: flex;
-					padding: 4px 0;
+					padding: 3px 0;
 					width: 100%;
 				}
 
 					.panel .body .properties .user-form .field-container .text-group .title {
-						padding-left: 5px;
+						padding-left: 15px;
 						padding-right: 10px;
 						color: var(--textSub1);
 						font-size: 16px;
@@ -405,7 +403,7 @@ nav {
 						flex-wrap: wrap;
 						font-size: 16px;
 						width: 100%;
-						gap: 5px;
+						gap: 1px;
 					}
 
 						.panel .body .properties .user-form .field-container .text-group .info .description-container {
@@ -660,6 +658,7 @@ nav {
 					max-height: 65vh;
 					width: 100%;
 					scrollbar-color: var(--gray5) var(--gray3);
+					scrollbar-width: thin;
 				}
 
 					.panel .body .properties .list-container .order-list ul {
@@ -1510,3 +1509,42 @@ nav {
 	font-weight: bold;
 }
 
+
+
+.category-container {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+	.category-container .category {
+		list-style: none;
+		padding: 3px 10px;
+		background-color: var(--gray2);
+		border-radius: 3px;
+		border-left: 3px solid var(--gray5);
+	}
+
+		.category-container .category .category-title {
+			color: var(--textMain);
+			font-size: 16px;
+			font-weight: bold;
+		}
+
+		.category-container .category .skill-list {
+			padding-left: 10px;
+		}
+
+			.category-container .category .skill-list .skill {
+				list-style: none;
+			}
+
+				.category-container .category .skill-list .skill a {
+					color: var(--textSub1);
+					font-size: 15px;
+					text-decoration: none;
+				}
+
+					.category-container .category .skill-list .skill a:hover {
+						color: var(--textMain);
+					}
