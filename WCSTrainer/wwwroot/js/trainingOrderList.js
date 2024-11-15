@@ -61,14 +61,14 @@ function renderOrders(data) {
             </tr>
             ${data.orders.map(order => `
                <tr class="${getOrderClasses(order)}">
-                  <td><p class="${getTypeClass(order.status)} dot" title="${order.status}">${order.id} ⬤</p></td>
+                  <td><p class="${getTypeClass(order.status)}" title="${order.status}">${order.id}</p></td>
                   <td>${order.traineeName}</td>
                   <td>${order.beginDate}</td>
                   <td>${order.lessonName}</td>
                   <td>${order.skillName}</td>
                   <td>${order.priority}</td>
                   <td>
-                     <a href="./TrainingOrders/Details?id=${order.id}" class="btn nbg-btn btnWhite">View</a>
+                     <a href="./TrainingOrders/Details?id=${order.id}" class="table-btn">View</a>
                   </td>
                </tr>
             `).join('')}

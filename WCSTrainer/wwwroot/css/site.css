@@ -756,6 +756,7 @@ nav {
 					}
 
 						.panel .body .properties .list-container .order-table .clickable .btn {
+
 						}
 
 					.panel .body .properties .list-container .order-table tr td, .panel .body .properties .list-container table tr th {
@@ -766,12 +767,22 @@ nav {
 					}
 
 					.panel .body .properties .list-container .order-table tr td {
+
 					}
 
 					.panel .body .properties .list-container .order-table tr th {
 						background-color: var(--gray3);
 						color: var(--textMain);
 					}
+
+					.panel .body .properties .list-container .order-table .table-btn {
+						color: var(--textMain);
+						text-decoration: none;
+					}
+
+						.panel .body .properties .list-container .order-table .table-btn:hover {
+							text-decoration: underline;
+						}
 
 			.panel .body .properties .order-list2 {
 				overflow-y: scroll;
