@@ -11,7 +11,6 @@
                <form method="post">
                   <div asp-validation-summary="All" class="text-danger"></div>
                   <input hidden asp-for="Lesson.Id" />
-                  <input hidden asp-for="Lesson.LessonCategoryId"/>
                   <div class="form-group">
                      <div class="form">
                         <div class="labels">
@@ -19,6 +18,13 @@
                            <span asp-validation-for="Lesson.Name" class="text-danger"></span>
                         </div>
                         <input asp-for="Lesson.Name" class="form-control" />
+                     </div>
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Lesson Category</p>
+                           <span asp-validation-for="Lesson.LessonCategoryId" class="text-danger"></span>
+                        </div>
+                        <select asp-for="Lesson.LessonCategoryId" class="form-drop2" asp-items="@Model.CategorySelectList"></select>
                      </div>
                   </div>
                   <div class="form-group">

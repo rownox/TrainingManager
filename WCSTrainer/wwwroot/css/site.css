@@ -1509,12 +1509,10 @@ nav {
 	font-weight: bold;
 }
 
-
-
 .category-container {
 	display: flex;
 	flex-direction: column;
-	gap: 5px;
+	gap: 3px;
 }
 
 	.category-container .category {

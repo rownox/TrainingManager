@@ -13,10 +13,14 @@ namespace WCSTrainer.Pages.Lessons {
       public ListPartialModel? ListPartial { get; set; }
       [BindProperty]
       public int MaxCount { get; set; } = 10;
+      public List<LessonCategory> CategoryList { get; set; }
 
       public async Task<IActionResult> OnGetAsync() {
          Lessons = await context.Lessons
             .Include(l => l.TrainingOrders)
+            .ToListAsync();
+         CategoryList = await context.LessonCategories
+            .Include(c => c.Lessons)
             .ToListAsync();
 
          MaxCount = MaxCount <= 0 ? 10 : MaxCount;
