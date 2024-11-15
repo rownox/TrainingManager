@@ -1,26 +1,25 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Skills {
    [Authorize(Roles = "owner, admin")]
-   public class EditModel : PageModel {
-      private readonly WCSTrainer.Data.WCSTrainerContext _context;
-
-      public EditModel(WCSTrainer.Data.WCSTrainerContext context) {
-         _context = context;
-      }
-
+   public class EditModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public Skill Skill { get; set; } = default!;
 
+      public SelectList CategorySelectList { get; set; }
+
       public async Task<IActionResult> OnGetAsync(int? id) {
+         CategorySelectList = new SelectList(await context.SkillCategories.ToListAsync(), "Id", "Name");
+
          if (id == null) {
             return NotFound();
          }
 
-         var skill = await _context.Skills.FirstOrDefaultAsync(m => m.Id == id);
+         var skill = await context.Skills.FirstOrDefaultAsync(m => m.Id == id);
          if (skill == null) {
             return NotFound();
          }
@@ -33,10 +32,10 @@ namespace WCSTrainer.Pages.Skills {
             return Page();
          }
 
-         _context.Attach(Skill).State = EntityState.Modified;
+         context.Attach(Skill).State = EntityState.Modified;
 
          try {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
          } catch (DbUpdateConcurrencyException) {
             if (!SkillExists(Skill.Id)) {
                return NotFound();
@@ -49,7 +48,7 @@ namespace WCSTrainer.Pages.Skills {
       }
 
       private bool SkillExists(int id) {
-         return _context.Skills.Any(e => e.Id == id);
+         return context.Skills.Any(e => e.Id == id);
       }
    }
 }

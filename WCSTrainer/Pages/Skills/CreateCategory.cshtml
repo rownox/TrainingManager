@@ -1,0 +1,34 @@
+﻿@page
+@model WCSTrainer.Pages.Skills.CreateCategoryModel
+@{
+}
+
+
+<div class="panel">
+   <div class="body">
+      <partial name="_Sidebar" />
+      <div class="properties">
+         <div class="user-form">
+            <p class="title">Create New Skill Category</p>
+            <p class="description">Fill out each required field.</p>
+            <div class="field-container">
+               <form method="post">
+                  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <label asp-for="SkillCategory.Name" class="control-label"></label>
+                           <span asp-validation-for="SkillCategory.Name" class="text-danger"></span>
+                        </div>
+                        <input asp-for="SkillCategory.Name" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <input type="submit" value="Create" class="btn bg-btn btnGreen" />
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
