@@ -75,13 +75,6 @@
                var cssClass = order.Archived ? "pill inactive" : "pill";
                <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
             }
-            foreach (var group in employee.Groups) {
-               setOrders(group.TrainingOrders);
-               foreach (var order in activeOrders) {
-                  var cssClass = order.Archived ? "pill inactive" : "pill";
-                  <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
-               }
-            }
          }
       </div>
    </div>
@@ -93,13 +86,6 @@
             foreach (var order in completeOrders) {
                var cssClass = order.Archived ? "pill inactive" : "pill";
                <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
-            }
-            foreach (var group in employee.Groups) {
-               setOrders(group.TrainingOrders);
-               foreach (var order in completeOrders) {
-                  var cssClass = order.Archived ? "pill inactive" : "pill";
-                  <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
-               }
             }
          }
       </div>
@@ -145,10 +131,8 @@
          .Include(e => e.TrainingOrdersAsTrainee)
             .ThenInclude(t => t.Lesson)
          .Include(e => e.Groups)
-            .ThenInclude(g => g.TrainingOrders)
-               .ThenInclude(t => t.Lesson)
-       .Include(e => e.Skills)
-          .FirstOrDefaultAsync(m => m.Id == EmployeeId);
+         .Include(e => e.Skills)
+         .FirstOrDefaultAsync(m => m.Id == EmployeeId);
 
       if (tempEmployee != null) {
          employee = tempEmployee;
