@@ -12,7 +12,6 @@
 };
 
 let debounceTimeout;
-
 function loadSavedFilters() {
    const savedFilters = localStorage.getItem('trainingOrderFilters');
    if (savedFilters) {

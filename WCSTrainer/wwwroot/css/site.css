@@ -1533,7 +1533,7 @@ nav {
 				}
 
 .pagination-container {
-	min-height: 35px;
+	padding-bottom: 5px;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
