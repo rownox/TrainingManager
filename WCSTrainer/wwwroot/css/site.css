@@ -482,6 +482,11 @@ nav {
 				height: fit-content;
 			}
 
+				.panel .body .properties .tool-container .btn {
+					padding: 6px 10px;
+					height: fit-content;
+				}
+
 				.panel .body .properties .tool-container .section-title {
 					color: var(--textMain);
 					font-size: 15px;
@@ -629,25 +634,50 @@ nav {
 				height: fit-content;
 			}
 
+				.panel .body .properties .list-container .title {
+					font-weight: bold;
+					font-size: 17px;
+				}
+
 				.panel .body .properties .list-container .top {
 					padding-bottom: 10px;
 					display: flex;
 					justify-content: space-between;
+					gap: 10px;
 				}
 
 					.panel .body .properties .list-container .top .left {
 						display: flex;
 						height: 100%;
+						color: var(--textSub1);
+						gap: 10px;
+					}
+
+						.panel .body .properties .list-container .top .left .select-cont {
+							min-width: fit-content;
+						}
+
+						.panel .body .properties .list-container .top .left p {
+							margin-bottom: 5px;
+						}
+
+
+					.panel .body .properties .list-container .top .left .drop-form {
+						height: 33px;
+						background-color: var(--black);
+						border: 1px solid var(--gray5);
+						border-radius: 5px;
+						color: var(--textMain);
+						width: 100%;
 					}
 
 					.panel .body .properties .list-container .top .right {
 						display: flex;
 						height: 100%;
+						min-width: fit-content;
 					}
 
-					.panel .body .properties .list-container .top .btn {
-						padding: 6px 10px;
-					}
+					
 
 				.panel .body .properties .list-container .order-list-container {
 				}

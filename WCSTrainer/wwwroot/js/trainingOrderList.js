@@ -142,7 +142,7 @@ function getTypeClass(status) {
 function initializeUI() {
    document.getElementById('pageSize').value = currentFilters.pageSize.toString();
    document.getElementById('searchInput').value = currentFilters.searchTerm;
-   document.getElementById('viewToggle').textContent = currentFilters.detailed ? 'Simple View' : 'Detailed View';
+   document.getElementById('viewToggle').textContent = currentFilters.detailed ? 'Switch to Simple View' : 'Switch to Detailed View';
 
    ['Archived', 'Verified', 'Completed', 'Active', 'Scheduling', 'Approving'].forEach(status => {
       const checkbox = document.getElementById(`show${status}`);
@@ -166,7 +166,7 @@ document.getElementById('pageSize').addEventListener('change', function (e) {
 
 document.getElementById('viewToggle').addEventListener('click', function () {
    currentFilters.detailed = !currentFilters.detailed;
-   this.textContent = currentFilters.detailed ? 'Simple View' : 'Detailed View';
+   this.textContent = currentFilters.detailed ? 'Switch to Simple View' : 'Switch to Detailed View';
    saveFilters();
    loadOrders();
 });

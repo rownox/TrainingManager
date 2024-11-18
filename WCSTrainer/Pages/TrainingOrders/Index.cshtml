@@ -9,39 +9,43 @@
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="list-container">
+            <p class="title">Filters:</p>
             <div class="top">
                <div class="left">
-                  <select id="pageSize" class="drop-main">
-                     <option value="10">10</option>
-                     <option value="30">30</option>
-                     <option value="60">60</option>
-                     <option value="-1">Max</option>
-                  </select>
-               </div>
-               <div class="right">
-                  <select id="sortBy" class="drop-main">
-                     <option value="All">All</option>
-                     <option value="High">High</option>
-                     <option value="Medium">Medium</option>
-                     <option value="Low">Low</option>
-                  </select>
-                  <select id="month" class="drop-main">
-                     <option value="January">January</option>
-                     <option value="February">February</option>
-                     <option value="March">March</option>
-                     <option value="April">April</option>
-                     <option value="May">May</option>
-                     <option value="June">June</option>
-                     <option value="July">July</option>
-                     <option value="August">August</option>
-                     <option value="September">September</option>
-                     <option value="October">October</option>
-                     <option value="November">November</option>
-                     <option value="December">December</option>
-                  </select>
-                  <button class="btn btnWhite bg-btn" id="viewToggle">
-                     Simple View
-                  </button>
+                  <div class="select-cont">
+                     <p class="label">Page Size</p>
+                     <select id="pageSize" class="drop-form">
+                        <option value="10">10</option>
+                        <option value="30">30</option>
+                        <option value="60">60</option>
+                        <option value="-1">All</option>
+                     </select>
+                  </div>
+                  <div class="multi-select-wrapper">
+                     <p class="label">Priority</p>
+                     <select multiple class="multi-select-comp" size="3">
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                     </select>
+                  </div>
+                  <div class="multi-select-wrapper">
+                     <p class="label">Months</p>
+                     <select multiple class="multi-select-comp" size="12">
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                     </select>
+                  </div>
                </div>
             </div>
             <div class="pagination-container">
@@ -85,6 +89,7 @@
                <div class="btns">
                   <a asp-page="Create" class="btn btnMenu">Create Training Order</a>
                   <a asp-page="Schedule" class="btn btnMenu">Schedule</a>
+                  <a class="btn btnMenu" id="viewToggle"></a>
                </div>
             </div>
          </div>
@@ -93,3 +98,4 @@
 </div>
 
 <script src="~/js/trainingOrderList.js"></script>
+<script src="~/js/pillMenu.js"></script>
