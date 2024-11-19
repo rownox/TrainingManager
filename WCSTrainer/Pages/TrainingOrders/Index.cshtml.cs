@@ -63,6 +63,13 @@ namespace WCSTrainer.Pages.TrainingOrders {
       }
 
       public async Task<JsonResult> OnGetOrdersAsync([FromQuery] TrainingOrderFilterModel filter) {
+         var query = context.TrainingOrders
+            .Include(t => t.Trainers)
+            .Include(t => t.ParentSkill)
+            .Include(t => t.Lesson)
+            .Include(t => t.Trainee)
+            .AsQueryable();
+
          var user = await userManager.GetUserAsync(User);
          if (user == null) return new JsonResult(new TrainingOrderViewModel());
 
@@ -74,16 +81,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
          if (currentEmployee == null)
             return new JsonResult(new TrainingOrderViewModel());
 
-         var query = context.TrainingOrders
-            .Include(t => t.Trainers)
-            .Include(t => t.ParentSkill)
-            .Include(t => t.Lesson)
-            .Include(t => t.Trainee)
-            .AsQueryable();
-
          query = await FilterOrdersByPermissions(query, user, currentEmployee);
 
-         if(!filter.ShowArchived)
+         if (!filter.ShowArchived)
             query = query.Where(t => !t.Archived);
 
          var take = filter.PageSize == -1
@@ -112,49 +112,58 @@ namespace WCSTrainer.Pages.TrainingOrders {
             );
          }
 
-
+         // Priority filtering with explicit null checks
          if (filter.PriorityIds != null && filter.PriorityIds.Length > 0) {
             var priorityMap = new Dictionary<int, string> {
                { 1, "High" },
                { 2, "Medium" },
                { 3, "Low" }
-
             };
 
-            var priorityNames = filter.PriorityIds
+            var validPriorityNames = filter.PriorityIds
                .Select(id => priorityMap.TryGetValue(id, out var name) ? name : null)
                .Where(name => name != null)
                .ToList();
 
-            query = query.Where(t => t.Priority != null && priorityNames.Contains(t.Priority));
+            // Log for debugging
+            Console.WriteLine($"Valid Priority Names: {string.Join(", ", validPriorityNames)}");
+
+            if (validPriorityNames.Any()) {
+               query = query.Where(t =>
+                  t.Priority != null &&
+                  validPriorityNames.Contains(t.Priority)
+               );
+               foreach(var order in query) {
+                  if (validPriorityNames.Contains(order.Priority)) {
+                     Console.WriteLine(order.Id.ToString());
+                  }
+               }
+            }
          }
 
-         // Month filter using numeric IDs
+         // Month filtering with explicit null checks
          if (filter.MonthIds != null && filter.MonthIds.Length > 0) {
             var monthMap = new Dictionary<int, string> {
-               { 1, "January" },
-               { 2, "February" },
-               { 3, "March" },
-               { 4, "April" },
-               { 5, "May" },
-               { 6, "June" },
-               { 7, "July" },
-               { 8, "August" },
-               { 9, "September" },
-               { 10, "October" },
-               { 11, "November" },
-               { 12, "December" }
+               { 1, "January" }, { 2, "February" }, { 3, "March" },
+               { 4, "April" }, { 5, "May" }, { 6, "June" },
+               { 7, "July" }, { 8, "August" }, { 9, "September" },
+               { 10, "October" }, { 11, "November" }, { 12, "December" }
             };
 
-            var monthNames = filter.MonthIds
+            var validMonthNames = filter.MonthIds
                .Select(id => monthMap.TryGetValue(id, out var name) ? name : null)
                .Where(name => name != null)
                .ToList();
 
-            query = query.Where(t =>
-               t.BeginDate != null &&
-               monthNames.Contains(t.BeginDate.Value.ToString("MMMM"))
-            );
+            // Log for debugging
+            Console.WriteLine($"Valid Month Names: {string.Join(", ", validMonthNames)}");
+
+            if (validMonthNames.Any()) {
+               query = query.Where(t =>
+                  t.BeginDate != null &&
+                  validMonthNames.Contains(t.BeginDate.Value.ToString("MMMM"))
+               );
+            }
          }
 
          var totalCount = await query.CountAsync();

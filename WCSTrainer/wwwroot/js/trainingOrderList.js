@@ -37,17 +37,29 @@ function debounce(func, wait) {
 }
 
 function loadOrders() {
+   // Add more detailed logging
+   console.log('Loading orders with current filters:', currentFilters);
+
+   // Explicitly handle null or empty arrays
    const queryParams = new URLSearchParams({
       ...currentFilters,
       priorityIds: currentFilters.priorityIds ? currentFilters.priorityIds.join(',') : '',
       monthIds: currentFilters.monthIds ? currentFilters.monthIds.join(',') : ''
    });
 
+   console.log('Query parameters:', queryParams.toString());
+
    fetch(`?handler=Orders&${queryParams.toString()}`)
       .then(response => response.json())
       .then(data => {
+         console.log('Received order data:', data);
          renderOrders(data);
          renderPagination(data.totalCount);
+      })
+      .catch(error => {
+         console.error('Error loading orders:', error);
+         const container = document.getElementById('orderListContainer');
+         container.innerHTML = `<div class="error">Failed to load orders: ${error.message}</div>`;
       });
 }
 

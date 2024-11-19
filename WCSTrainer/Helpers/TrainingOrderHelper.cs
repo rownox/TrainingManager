@@ -36,8 +36,6 @@ namespace WCSTrainer.Helpers {
       }
 
       public static bool OrderInvolves(Employee employee, TrainingOrder order) {
-         Console.WriteLine(order.Id);
-
          if (order.CreatedByUserId == employee.UserAccountId) {
             return true;
          }
