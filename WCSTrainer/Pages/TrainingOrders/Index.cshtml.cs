@@ -25,6 +25,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
          public bool ShowScheduling { get; set; } = true;
          public bool ShowApproving { get; set; } = true;
          public bool Detailed { get; set; }
+         public int[]? PriorityIds { get; set; }
+         public int[]? MonthIds { get; set; }
       }
 
       public class TrainingOrderViewModel {
@@ -107,6 +109,51 @@ namespace WCSTrainer.Pages.TrainingOrders {
                 t.Lesson.Name.Contains(filter.SearchTerm) ||
                 t.ParentSkill.Name.Contains(filter.SearchTerm) ||
                 t.Id.ToString().Contains(filter.SearchTerm)
+            );
+         }
+
+
+         if (filter.PriorityIds != null && filter.PriorityIds.Length > 0) {
+            var priorityMap = new Dictionary<int, string> {
+               { 1, "High" },
+               { 2, "Medium" },
+               { 3, "Low" }
+
+            };
+
+            var priorityNames = filter.PriorityIds
+               .Select(id => priorityMap.TryGetValue(id, out var name) ? name : null)
+               .Where(name => name != null)
+               .ToList();
+
+            query = query.Where(t => t.Priority != null && priorityNames.Contains(t.Priority));
+         }
+
+         // Month filter using numeric IDs
+         if (filter.MonthIds != null && filter.MonthIds.Length > 0) {
+            var monthMap = new Dictionary<int, string> {
+               { 1, "January" },
+               { 2, "February" },
+               { 3, "March" },
+               { 4, "April" },
+               { 5, "May" },
+               { 6, "June" },
+               { 7, "July" },
+               { 8, "August" },
+               { 9, "September" },
+               { 10, "October" },
+               { 11, "November" },
+               { 12, "December" }
+            };
+
+            var monthNames = filter.MonthIds
+               .Select(id => monthMap.TryGetValue(id, out var name) ? name : null)
+               .Where(name => name != null)
+               .ToList();
+
+            query = query.Where(t =>
+               t.BeginDate != null &&
+               monthNames.Contains(t.BeginDate.Value.ToString("MMMM"))
             );
          }
 

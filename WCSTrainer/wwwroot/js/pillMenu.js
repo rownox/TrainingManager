@@ -1,7 +1,9 @@
 ﻿class MultiSelectComponent {
-   constructor(wrapper) {
+   constructor(wrapper, onUpdateFilters) {
       this.wrapper = wrapper;
       this.selectElement = wrapper.querySelector(".multi-select-comp");
+      this.onUpdateFilters = onUpdateFilters;
+      this.selectedValues = new Set(); // Use Set to track selected values
       this.init();
    }
 
@@ -25,11 +27,13 @@
 
    handleSelection() {
       Array.from(this.selectElement.selectedOptions).forEach(option => {
-         if (!this.pillContainer.querySelector(`.pill[data-value="${option.value}"]`)) {
+         if (!this.selectedValues.has(option.value)) {
+            this.selectedValues.add(option.value);
             this.addPill(option);
          }
       });
 
+      this.updateFilters();
       this.selectElement.selectedIndex = -1;
       this.selectElement.style.display = "none";
    }
@@ -41,7 +45,7 @@
       pill.textContent = option.text;
 
       pill.addEventListener("click", (event) => {
-         event.stopPropagation(); // Prevents the click from triggering the showDropdown
+         event.stopPropagation();
          this.removePill(option.value);
       });
 
@@ -54,9 +58,33 @@
 
       const option = this.selectElement.querySelector(`option[value="${value}"]`);
       if (option) option.selected = false;
+
+      this.selectedValues.delete(value);
+      this.updateFilters();
+   }
+
+   updateFilters() {
+      const selectedValues = Array.from(this.selectedValues).map(value => parseInt(value));
+      if (this.onUpdateFilters) this.onUpdateFilters(selectedValues);
    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-   document.querySelectorAll(".multi-select-wrapper").forEach(wrapper => new MultiSelectComponent(wrapper));
+   const updateFilters = (selectedValues, type) => {
+      if (type === "priority") {
+         currentFilters.priorityIds = selectedValues;
+      } else if (type === "month") {
+         currentFilters.monthIds = selectedValues;
+      }
+      currentFilters.currentPage = 1;
+      saveFilters();
+      loadOrders();
+   };
+
+   document.querySelectorAll(".multi-select-wrapper").forEach((wrapper, index) => {
+      new MultiSelectComponent(wrapper, (selectedValues) => {
+         const type = index === 0 ? "priority" : "month";
+         updateFilters(selectedValues, type);
+      });
+   });
 });

@@ -8,7 +8,9 @@
    showActive: true,
    showScheduling: true,
    showApproving: true,
-   detailed: false
+   detailed: false,
+   priorityIds: [],
+   monthIds: []
 };
 
 let debounceTimeout;
@@ -35,8 +37,13 @@ function debounce(func, wait) {
 }
 
 function loadOrders() {
-   const queryString = new URLSearchParams(currentFilters).toString();
-   fetch(`?handler=Orders&${queryString}`)
+   const queryParams = new URLSearchParams({
+      ...currentFilters,
+      priorityIds: currentFilters.priorityIds ? currentFilters.priorityIds.join(',') : '',
+      monthIds: currentFilters.monthIds ? currentFilters.monthIds.join(',') : ''
+   });
+
+   fetch(`?handler=Orders&${queryParams.toString()}`)
       .then(response => response.json())
       .then(data => {
          renderOrders(data);
@@ -146,6 +153,20 @@ function initializeUI() {
    ['Archived', 'Verified', 'Completed', 'Active', 'Scheduling', 'Approving'].forEach(status => {
       const checkbox = document.getElementById(`show${status}`);
       checkbox.checked = currentFilters[`show${status}`];
+   });
+
+   // Update priorities multi-select
+   const prioritiesSelect = document.querySelector('.multi-select-wrapper select[multiple]');
+   currentFilters.priorities.forEach(priority => {
+      const option = prioritiesSelect.querySelector(`option[value="${priority}"]`);
+      if (option) option.selected = true;
+   });
+
+   // Update months multi-select
+   const monthsSelect = document.querySelectorAll('.multi-select-wrapper select[multiple]')[1];
+   currentFilters.months.forEach(month => {
+      const option = monthsSelect.querySelector(`option[value="${month}"]`);
+      if (option) option.selected = true;
    });
 }
 
