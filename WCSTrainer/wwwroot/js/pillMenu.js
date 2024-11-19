@@ -98,10 +98,8 @@
 
 document.addEventListener("DOMContentLoaded", () => {
    const updateFilters = (selectedValues, type) => {
-      console.log(`Raw selected values for ${type}:`, selectedValues);
       console.log(`Current filters before update:`, currentFilters);
 
-      // Explicitly handle each type of filter
       if (type === "priority") {
          currentFilters.priorityIds = selectedValues.length > 0 ? selectedValues : null;
          console.log(`Updated priority filters:`, currentFilters.priorityIds);
@@ -110,13 +108,11 @@ document.addEventListener("DOMContentLoaded", () => {
          console.log(`Updated month filters:`, currentFilters.monthIds);
       }
 
-      // Reset to first page and reload orders
       currentFilters.currentPage = 1;
       saveFilters();
       loadOrders();
    };
 
-   // Create multi-select components for priorities and months
    const multiSelectWrappers = document.querySelectorAll(".multi-select-wrapper");
    multiSelectWrappers.forEach((wrapper, index) => {
       const type = index === 0 ? "priority" : "month";

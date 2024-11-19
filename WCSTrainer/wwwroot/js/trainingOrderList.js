@@ -37,22 +37,16 @@ function debounce(func, wait) {
 }
 
 function loadOrders() {
-   // Add more detailed logging
-   console.log('Loading orders with current filters:', currentFilters);
-
-   // Explicitly handle null or empty arrays
    const queryParams = new URLSearchParams({
       ...currentFilters,
       priorityIds: currentFilters.priorityIds ? currentFilters.priorityIds.join(',') : '',
       monthIds: currentFilters.monthIds ? currentFilters.monthIds.join(',') : ''
    });
 
-   console.log('Query parameters:', queryParams.toString());
 
    fetch(`?handler=Orders&${queryParams.toString()}`)
       .then(response => response.json())
       .then(data => {
-         console.log('Received order data:', data);
          renderOrders(data);
          renderPagination(data.totalCount);
       })
@@ -167,19 +161,16 @@ function initializeUI() {
       checkbox.checked = currentFilters[`show${status}`];
    });
 
-   // Update priorities multi-select
-   const prioritiesSelect = document.querySelector('.multi-select-wrapper select[multiple]');
-   currentFilters.priorities.forEach(priority => {
-      const option = prioritiesSelect.querySelector(`option[value="${priority}"]`);
-      if (option) option.selected = true;
-   });
-
-   // Update months multi-select
-   const monthsSelect = document.querySelectorAll('.multi-select-wrapper select[multiple]')[1];
-   currentFilters.months.forEach(month => {
-      const option = monthsSelect.querySelector(`option[value="${month}"]`);
-      if (option) option.selected = true;
-   });
+   //const prioritiesSelect = document.querySelector('.multi-select-wrapper select[multiple]');
+   //currentFilters.priorityIds.forEach(priority => {
+   //   const option = prioritiesSelect.querySelector(`option[value="${priority}"]`);
+   //   if (option) option.selected = true;
+   //});
+   //const monthsSelect = document.querySelectorAll('.multi-select-wrapper select[multiple]')[1];
+   //currentFilters.monthIds.forEach(month => {
+   //   const option = monthsSelect.querySelector(`option[value="${month}"]`);
+   //   if (option) option.selected = true;
+   //});
 }
 
 document.getElementById('pageSize').addEventListener('change', function (e) {

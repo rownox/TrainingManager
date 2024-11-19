@@ -3,14 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Security.Claims;
 using WCSTrainer.Data;
-using WCSTrainer.Helpers;
 
 namespace WCSTrainer.Pages.TrainingOrders {
    [Authorize(Roles = "owner, admin, user, guest")]
-   public class IndexModel(Data.WCSTrainerContext context, UserManager<UserAccount> userManager) : PageModel {
+   public class IndexModel(WCSTrainerContext context, UserManager<UserAccount> userManager) : PageModel {
       [BindProperty(SupportsGet = true)]
       public TrainingOrderFilterModel Filter { get; set; } = new();
 
@@ -49,7 +46,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
       [BindProperty]
       public TrainingOrderViewModel ViewModel { get; set; } = new();
 
-      public async Task<IActionResult> OnGetAsync() {
+      public IActionResult OnGet() {
          return Page();
       }
 
@@ -62,7 +59,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          return query.Where(t => t.CreatedByUserId == user.Id || t.Trainers.Any(tr => tr.Id == currentEmployeeId) || (t.Trainee != null && t.Trainee.Id == currentEmployeeId));
       }
 
-      public async Task<JsonResult> OnGetOrdersAsync([FromQuery] TrainingOrderFilterModel filter) {
+      public async Task<JsonResult> OnGetOrdersAsync([FromQuery] string priorityIds, [FromQuery] string monthIds, [FromQuery] TrainingOrderFilterModel filter) {
          var query = context.TrainingOrders
             .Include(t => t.Trainers)
             .Include(t => t.ParentSkill)
@@ -112,7 +109,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
             );
          }
 
-         // Priority filtering with explicit null checks
+         filter.PriorityIds = string.IsNullOrEmpty(priorityIds) ? null : priorityIds.Split(',').Select(int.Parse).ToArray();
+
          if (filter.PriorityIds != null && filter.PriorityIds.Length > 0) {
             var priorityMap = new Dictionary<int, string> {
                { 1, "High" },
@@ -125,23 +123,16 @@ namespace WCSTrainer.Pages.TrainingOrders {
                .Where(name => name != null)
                .ToList();
 
-            // Log for debugging
-            Console.WriteLine($"Valid Priority Names: {string.Join(", ", validPriorityNames)}");
-
             if (validPriorityNames.Any()) {
                query = query.Where(t =>
                   t.Priority != null &&
                   validPriorityNames.Contains(t.Priority)
                );
-               foreach(var order in query) {
-                  if (validPriorityNames.Contains(order.Priority)) {
-                     Console.WriteLine(order.Id.ToString());
-                  }
-               }
             }
          }
 
-         // Month filtering with explicit null checks
+         filter.MonthIds = string.IsNullOrEmpty(monthIds) ? null : monthIds.Split(',').Select(int.Parse).ToArray();
+
          if (filter.MonthIds != null && filter.MonthIds.Length > 0) {
             var monthMap = new Dictionary<int, string> {
                { 1, "January" }, { 2, "February" }, { 3, "March" },
@@ -155,7 +146,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
                .Where(name => name != null)
                .ToList();
 
-            // Log for debugging
             Console.WriteLine($"Valid Month Names: {string.Join(", ", validMonthNames)}");
 
             if (validMonthNames.Any()) {
