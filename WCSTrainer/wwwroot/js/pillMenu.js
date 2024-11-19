@@ -2,9 +2,9 @@
    constructor(wrapper, onUpdateFilters, type) {
       this.wrapper = wrapper;
       this.selectElement = wrapper.querySelector(".multi-select-comp");
-      this.type = type; // 'priority' or 'month'
+      this.type = type;
       this.onUpdateFilters = onUpdateFilters;
-      this.selectedValues = new Set(); // Use Set to track selected values
+      this.selectedValues = new Set();
       this.init();
    }
 
@@ -14,14 +14,12 @@
       this.wrapper.insertBefore(this.pillContainer, this.selectElement);
       this.selectElement.style.display = "none";
 
-      // Add click event to pill container to show dropdown
       this.pillContainer.addEventListener("click", (e) => {
          if (e.target === this.pillContainer) {
             this.showDropdown();
          }
       });
 
-      // Add change event to select element
       this.selectElement.addEventListener("change", () => this.handleSelection());
    }
 
@@ -29,7 +27,6 @@
       this.selectElement.style.display = "block";
       this.selectElement.focus();
 
-      // Hide dropdown when clicked outside
       const hideDropdown = (e) => {
          if (!this.wrapper.contains(e.target)) {
             this.selectElement.style.display = "none";
@@ -37,18 +34,15 @@
          }
       };
 
-      // Add a small delay to prevent immediate closure
       setTimeout(() => {
          document.addEventListener('click', hideDropdown);
       }, 0);
    }
 
    handleSelection() {
-      // Clear existing selection
       this.pillContainer.innerHTML = '';
       this.selectedValues.clear();
 
-      // Add new selections
       Array.from(this.selectElement.selectedOptions).forEach(option => {
          this.selectedValues.add(option.value);
          this.addPill(option);
@@ -72,24 +66,19 @@
    }
 
    removePill(value) {
-      // Remove pill from DOM
       const pill = this.pillContainer.querySelector(`.pill[data-value="${value}"]`);
       if (pill) pill.remove();
 
-      // Deselect corresponding option
       const option = this.selectElement.querySelector(`option[value="${value}"]`);
       if (option) option.selected = false;
 
-      // Remove from selected values
       this.selectedValues.delete(value);
       this.updateFilters();
    }
 
    updateFilters() {
-      // Convert selected values to array of integers
       const selectedValues = Array.from(this.selectedValues).map(value => parseInt(value));
 
-      // Call the update filters callback with selected values
       if (this.onUpdateFilters) {
          this.onUpdateFilters(selectedValues, this.type);
       }
@@ -109,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       currentFilters.currentPage = 1;
-      saveFilters();
       loadOrders();
    };
 

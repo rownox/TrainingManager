@@ -149,6 +149,11 @@ namespace WCSTrainer.Pages.TrainingOrders {
             Console.WriteLine($"Valid Month Names: {string.Join(", ", validMonthNames)}");
 
             if (validMonthNames.Any()) {
+               foreach(var order in query) {
+                  if (order.BeginDate != null) {
+                     Console.WriteLine(order.BeginDate.Value.ToString("MMMM"));
+                  }
+               }
                query = query.Where(t =>
                   t.BeginDate != null &&
                   validMonthNames.Contains(t.BeginDate.Value.ToString("MMMM"))

@@ -17,12 +17,32 @@ let debounceTimeout;
 function loadSavedFilters() {
    const savedFilters = localStorage.getItem('trainingOrderFilters');
    if (savedFilters) {
-      currentFilters = { ...currentFilters, ...JSON.parse(savedFilters) };
+      const parsedFilters = JSON.parse(savedFilters);
+      ['showArchived', 'showVerified', 'showCompleted', 'showActive', 'showScheduling', 'showApproving', 'detailed', 'currentPage'].forEach(key => {
+         if (parsedFilters.hasOwnProperty(key)) {
+            currentFilters[key] = parsedFilters[key];
+         }
+      });
    }
 }
 
+
 function saveFilters() {
-   localStorage.setItem('trainingOrderFilters', JSON.stringify(currentFilters));
+   const checkboxes = [
+      'currentPage',
+      'detailed',
+      'showArchived',
+      'showVerified',
+      'showCompleted',
+      'showActive',
+      'showScheduling',
+      'showApproving'
+   ];
+   const filteredFilters = {};
+   checkboxes.forEach(key => {
+      filteredFilters[key] = currentFilters[key];
+   });
+   localStorage.setItem('trainingOrderFilters', JSON.stringify(filteredFilters));
 }
 
 function debounce(func, wait) {
@@ -161,16 +181,6 @@ function initializeUI() {
       checkbox.checked = currentFilters[`show${status}`];
    });
 
-   //const prioritiesSelect = document.querySelector('.multi-select-wrapper select[multiple]');
-   //currentFilters.priorityIds.forEach(priority => {
-   //   const option = prioritiesSelect.querySelector(`option[value="${priority}"]`);
-   //   if (option) option.selected = true;
-   //});
-   //const monthsSelect = document.querySelectorAll('.multi-select-wrapper select[multiple]')[1];
-   //currentFilters.monthIds.forEach(month => {
-   //   const option = monthsSelect.querySelector(`option[value="${month}"]`);
-   //   if (option) option.selected = true;
-   //});
 }
 
 document.getElementById('pageSize').addEventListener('change', function (e) {
@@ -182,8 +192,6 @@ document.getElementById('pageSize').addEventListener('change', function (e) {
       const container = document.getElementById('orderListContainer');
       container.innerHTML = '<div class="loading">Loading all records...</div>';
    }
-
-   saveFilters();
    loadOrders();
 });
 
@@ -197,7 +205,6 @@ document.getElementById('viewToggle').addEventListener('click', function () {
 document.getElementById('searchInput').addEventListener('input', debounce(function (e) {
    currentFilters.searchTerm = e.target.value;
    currentFilters.currentPage = 1;
-   saveFilters();
    loadOrders();
 }, 300));
 
@@ -205,7 +212,6 @@ document.getElementById('searchInput').addEventListener('input', debounce(functi
    const checkbox = document.getElementById(`show${status}`);
    checkbox.addEventListener('change', function () {
       currentFilters[`show${status}`] = this.checked;
-      currentFilters.currentPage = 1;
       saveFilters();
       loadOrders();
    });
