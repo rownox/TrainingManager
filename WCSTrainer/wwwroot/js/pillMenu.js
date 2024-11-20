@@ -49,7 +49,6 @@
       });
 
       this.updateFilters();
-      this.selectElement.style.display = "none";
    }
 
    addPill(option) {
