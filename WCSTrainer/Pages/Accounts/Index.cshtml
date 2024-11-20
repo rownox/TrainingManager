@@ -17,21 +17,23 @@
                      <th>Role</th>
                      <th></th>
                   </tr>
-                  @foreach (var item in Model.Users) {
+                  @foreach (var user in Model.Users) {
                      <tr class="clickable">
-                        <td>@item.UserName</td>
+                        <td>@user.UserName</td>
                         <td>
                            @{
-                              var roles = await UserManager.GetRolesAsync(item);
-                              foreach (var role in roles) {
-                                 @role
-                              }
+                              var isOwner = await UserManager.IsInRoleAsync(user, "owner");
+                              var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
+                              var isUser = await UserManager.IsInRoleAsync(user, "user");
+
+                              if (isOwner) { <p>Owner</p> } 
+                              else if (isAdmin) { <p>Admin</p> } 
+                              else if (isUser) { <p>User</p> } 
+                              else { <p>Guest</p> }
                            }
                         </td>
                         <td>
-                           <a asp-page="./Details" asp-route-id="@item.Id" class="btn nbg-btn btnWhite">
-                              View
-                           </a>
+                           <a asp-page="./Details" asp-route-id="@user.Id" class="btn nbg-btn btnWhite">View</a>
                         </td>
                      </tr>
                   }

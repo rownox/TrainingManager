@@ -110,6 +110,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          }
 
          filter.PriorityIds = string.IsNullOrEmpty(priorityIds) ? null : priorityIds.Split(',').Select(int.Parse).ToArray();
+         filter.MonthIds = string.IsNullOrEmpty(monthIds) ? null : monthIds.Split(',').Select(int.Parse).ToArray();
 
          if (filter.PriorityIds != null && filter.PriorityIds.Length > 0) {
             var priorityMap = new Dictionary<int, string> {
@@ -131,12 +132,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
          }
 
-         filter.MonthIds = string.IsNullOrEmpty(monthIds) ? null : monthIds.Split(',').Select(int.Parse).ToArray();
-
          if (filter.MonthIds != null && filter.MonthIds.Length > 0) {
             var validMonthNumbers = filter.MonthIds.ToList();
-
-            Console.WriteLine($"Valid Month Numbers: {string.Join(", ", validMonthNumbers)}");
 
             if (validMonthNumbers.Any()) {
                query = query.Where(t =>
@@ -145,7 +142,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
                );
             }
          }
-
 
          var totalCount = await query.CountAsync();
 

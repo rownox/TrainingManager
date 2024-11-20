@@ -1,11 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WCSTrainer.Data;
 
-namespace WCSTrainer.Pages.Lessons
-{
-    public class CreateCategoryModel(WCSTrainerContext context) : PageModel
-    {
+namespace WCSTrainer.Pages.Lessons {
+   [Authorize(Roles = "owner, admin")]
+   public class CreateCategoryModel(WCSTrainerContext context) : PageModel {
       [BindProperty]
       public LessonCategory LessonCategory { get; set; } = default!;
 

@@ -61,9 +61,7 @@ function loadOrders() {
       ...currentFilters,
       priorityIds: currentFilters.priorityIds && currentFilters.priorityIds.length > 0 ? currentFilters.priorityIds.join(',') : '',
       monthIds: currentFilters.monthIds && currentFilters.monthIds.length > 0 ? currentFilters.monthIds.join(',') : ''
-
    });
-
 
    fetch(`?handler=Orders&${queryParams.toString()}`)
       .then(response => response.json())

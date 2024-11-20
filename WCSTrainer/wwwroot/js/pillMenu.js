@@ -86,14 +86,11 @@
 
 document.addEventListener("DOMContentLoaded", () => {
    const updateFilters = (selectedValues, type) => {
-      console.log(`Current filters before update:`, currentFilters);
 
       if (type === "priority") {
          currentFilters.priorityIds = selectedValues.length > 0 ? selectedValues : null;
-         console.log(`Updated priority filters:`, currentFilters.priorityIds);
       } else if (type === "month") {
          currentFilters.monthIds = selectedValues.length > 0 ? selectedValues : null;
-         console.log(`Updated month filters:`, currentFilters.monthIds);
       }
 
       currentFilters.currentPage = 1;

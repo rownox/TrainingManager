@@ -203,25 +203,25 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fc596f17-69bd-4dde-bebe-32823ca1464f",
+                            Id = "50774c3d-6ae1-4aa5-aec9-557c52063300",
                             Name = "owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "a19bbb47-4632-43e1-8fb0-407bf51e1b5b",
+                            Id = "a3271203-1894-4d0f-9b2a-83c8ef0b8169",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "0ca18724-838e-4439-a71c-656833aa4471",
+                            Id = "38fb6c99-8df9-49ea-b086-d641d2880920",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "f2a1f15c-4312-47fb-8068-191cfdf7ce61",
+                            Id = "762c9d67-eb46-4625-9e07-6ebfe2829f99",
                             Name = "guest",
                             NormalizedName = "GUEST"
                         });
