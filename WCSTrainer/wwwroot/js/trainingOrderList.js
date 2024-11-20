@@ -59,8 +59,9 @@ function debounce(func, wait) {
 function loadOrders() {
    const queryParams = new URLSearchParams({
       ...currentFilters,
-      priorityIds: currentFilters.priorityIds ? currentFilters.priorityIds.join(',') : '',
-      monthIds: currentFilters.monthIds ? currentFilters.monthIds.join(',') : ''
+      priorityIds: currentFilters.priorityIds && currentFilters.priorityIds.length > 0 ? currentFilters.priorityIds.join(',') : undefined,
+      monthIds: currentFilters.monthIds && currentFilters.monthIds.length > 0 ? currentFilters.monthIds.join(',') : undefined
+
    });
 
 

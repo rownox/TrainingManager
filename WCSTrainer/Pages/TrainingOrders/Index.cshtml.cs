@@ -134,32 +134,18 @@ namespace WCSTrainer.Pages.TrainingOrders {
          filter.MonthIds = string.IsNullOrEmpty(monthIds) ? null : monthIds.Split(',').Select(int.Parse).ToArray();
 
          if (filter.MonthIds != null && filter.MonthIds.Length > 0) {
-            var monthMap = new Dictionary<int, string> {
-               { 1, "January" }, { 2, "February" }, { 3, "March" },
-               { 4, "April" }, { 5, "May" }, { 6, "June" },
-               { 7, "July" }, { 8, "August" }, { 9, "September" },
-               { 10, "October" }, { 11, "November" }, { 12, "December" }
-            };
+            var validMonthNumbers = filter.MonthIds.ToList();
 
-            var validMonthNames = filter.MonthIds
-               .Select(id => monthMap.TryGetValue(id, out var name) ? name : null)
-               .Where(name => name != null)
-               .ToList();
+            Console.WriteLine($"Valid Month Numbers: {string.Join(", ", validMonthNumbers)}");
 
-            Console.WriteLine($"Valid Month Names: {string.Join(", ", validMonthNames)}");
-
-            if (validMonthNames.Any()) {
-               foreach(var order in query) {
-                  if (order.BeginDate != null) {
-                     Console.WriteLine(order.BeginDate.Value.ToString("MMMM"));
-                  }
-               }
+            if (validMonthNumbers.Any()) {
                query = query.Where(t =>
                   t.BeginDate != null &&
-                  validMonthNames.Contains(t.BeginDate.Value.ToString("MMMM"))
+                  validMonthNumbers.Contains(t.BeginDate.Value.Month)
                );
             }
          }
+
 
          var totalCount = await query.CountAsync();
 
