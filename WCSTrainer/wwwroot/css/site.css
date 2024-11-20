@@ -246,11 +246,11 @@ nav {
 					padding-top: 10px;
 					display: flex;
 					width: 100%;
-					gap: 10px;
+					gap: 5px;
 				}
 
 					.panel .body .properties .user-form .btn-container .btn {
-						padding: 6px 10px;
+						padding: 5px 10px;
 						font-size: 15px;
 						display: flex;
 					}
