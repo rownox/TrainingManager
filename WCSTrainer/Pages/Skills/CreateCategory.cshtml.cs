@@ -16,6 +16,7 @@ namespace WCSTrainer.Pages.Skills {
 
          context.SkillCategories.Add(SkillCategory);
          await context.SaveChangesAsync();
+
          return RedirectToPage("./Index");
       }
    }

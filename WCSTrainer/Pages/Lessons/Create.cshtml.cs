@@ -8,7 +8,7 @@ namespace WCSTrainer.Pages.Lessons {
    [Authorize(Roles = "owner, admin")]
    public class CreateModel(Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
-      public Lesson Lesson { get; set; } = default!;
+      public Lesson Lesson { get; set; } = new Lesson();
       public SelectList? CategroySelectList { get; set; }
 
       public async Task<IActionResult> OnGetAsync() {

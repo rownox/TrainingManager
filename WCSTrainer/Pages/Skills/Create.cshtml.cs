@@ -8,7 +8,7 @@ namespace WCSTrainer.Pages.Skills {
    [Authorize(Roles = "owner, admin")]
    public class CreateModel(Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
-      public Skill? Skill { get; set; } = default;
+      public Skill Skill { get; set; } = new Skill();
       [BindProperty]
       public List<string> SelectedLessonList { get; set; } = new List<string>();
       public SelectList? LessonSelectList { get; set; }
@@ -27,9 +27,9 @@ namespace WCSTrainer.Pages.Skills {
             return Page();
          }
 
-         //if (SelectedLessonList == null) {
-         //   return Page();
-         //}
+         if (SelectedLessonList == null) {
+            return Page();
+         }
 
          context.Skills.Add(Skill);
          await context.SaveChangesAsync();
