@@ -8,18 +8,18 @@ namespace WCSTrainer.Pages.Skills {
    [Authorize(Roles = "owner, admin")]
    public class CreateModel(Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
-      public Skill Skill { get; set; } = default!;
+      public Skill? Skill { get; set; } = default;
       [BindProperty]
       public List<string> SelectedLessonList { get; set; } = new List<string>();
-      public SelectList LessonSelectList { get; set; }
+      public SelectList? LessonSelectList { get; set; }
+      public SelectList? CategorySelectList { get; set; }
 
-      public SelectList CategorySelectList { get; set; }
+      public async Task OnGetAsync() {
+         var lessons = await context.Lessons.ToListAsync();
+         var skillCategories = await context.SkillCategories.ToListAsync();
 
-      public async Task<IActionResult> OnGetAsync() {
-         LessonSelectList = new SelectList(await context.Lessons.ToListAsync(), "Id", "Name");
-         CategorySelectList = new SelectList(await context.SkillCategories.ToListAsync(), "Id", "Name");
-
-         return Page();
+         LessonSelectList = new SelectList(lessons, "Id", "Name");
+         CategorySelectList = new SelectList(skillCategories, "Id", "Name");
       }
 
       public async Task<IActionResult> OnPostAsync() {
@@ -27,9 +27,9 @@ namespace WCSTrainer.Pages.Skills {
             return Page();
          }
 
-         if (SelectedLessonList == null) {
-            return Page();
-         }
+         //if (SelectedLessonList == null) {
+         //   return Page();
+         //}
 
          context.Skills.Add(Skill);
          await context.SaveChangesAsync();

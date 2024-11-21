@@ -8,15 +8,15 @@ namespace WCSTrainer.Data {
           : base(options) {
       }
 
-      public DbSet<Employee> Employees { get; set; }
-      public DbSet<Location> Locations { get; set; }
-      public DbSet<Skill> Skills { get; set; }
-      public DbSet<TrainerGroup> TrainerGroups { get; set; }
-      public DbSet<TrainingOrder> TrainingOrders { get; set; }
-      public DbSet<Verification> Verifications { get; set; }
-      public DbSet<Lesson> Lessons { get; set; }
-      public DbSet<LessonCategory> LessonCategories { get; set; }
-      public DbSet<SkillCategory> SkillCategories { get; set; }
+      public DbSet<Employee> Employees { get; set; } = default!;
+      public DbSet<Location> Locations { get; set; } = default!;
+      public DbSet<Skill> Skills { get; set; } = default!;
+      public DbSet<TrainerGroup> TrainerGroups { get; set; } = default!;
+      public DbSet<TrainingOrder> TrainingOrders { get; set; } = default!;
+      public DbSet<Verification> Verifications { get; set; } = default!;
+      public DbSet<Lesson> Lessons { get; set; } = default!;
+      public DbSet<LessonCategory> LessonCategories { get; set; } = default!;
+      public DbSet<SkillCategory> SkillCategories { get; set; } = default!;
 
       protected override void OnModelCreating(ModelBuilder builder) {
          base.OnModelCreating(builder);

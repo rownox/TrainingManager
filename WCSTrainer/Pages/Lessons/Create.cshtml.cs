@@ -9,8 +9,7 @@ namespace WCSTrainer.Pages.Lessons {
    public class CreateModel(Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public Lesson Lesson { get; set; } = default!;
-
-      public SelectList CategroySelectList { get; set; }
+      public SelectList? CategroySelectList { get; set; }
 
       public async Task<IActionResult> OnGetAsync() {
          CategroySelectList = new SelectList(await context.LessonCategories.ToListAsync(), "Id", "Name");
