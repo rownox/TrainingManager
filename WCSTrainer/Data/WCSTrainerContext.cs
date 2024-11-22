@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WCSTrainer.Models;
 
 namespace WCSTrainer.Data {
    public class WCSTrainerContext : IdentityDbContext<UserAccount> {
@@ -17,6 +18,8 @@ namespace WCSTrainer.Data {
       public DbSet<Lesson> Lessons { get; set; } = default!;
       public DbSet<LessonCategory> LessonCategories { get; set; } = default!;
       public DbSet<SkillCategory> SkillCategories { get; set; } = default!;
+      public DbSet<Description> Descriptions { get; set; } = default!;
+
 
       protected override void OnModelCreating(ModelBuilder builder) {
          base.OnModelCreating(builder);
@@ -100,6 +103,13 @@ namespace WCSTrainer.Data {
          builder.Entity<LessonCategory>()
             .HasMany(lc => lc.Lessons)
             .WithOne(l => l.LessonCategory);
+
+         //Description
+         builder.Entity<Description>()
+            .HasOne(d => d.Page)
+            .WithOne(p => p.Description)
+            .HasForeignKey<Lesson>(l => l.DescriptionId)
+            .OnDelete(DeleteBehavior.SetNull);
 
          var ownerRole = new IdentityRole("owner") { NormalizedName = "OWNER" };
          var adminRole = new IdentityRole("admin") { NormalizedName = "ADMIN" };

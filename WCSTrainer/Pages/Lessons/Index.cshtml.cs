@@ -6,9 +6,8 @@ using WCSTrainer.Models;
 
 namespace WCSTrainer.Pages.Lessons {
    [Authorize(Roles = "owner, admin, user, guest")]
-   public class IndexModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
+   public class IndexModel(Data.WCSTrainerContext context) : PageModel {
       public IList<Lesson> Lessons { get; set; } = default!;
-
       public List<ListItem> ListItems { get; set; } = new List<ListItem>();
       public ListPartialModel? ListPartial { get; set; }
       [BindProperty]

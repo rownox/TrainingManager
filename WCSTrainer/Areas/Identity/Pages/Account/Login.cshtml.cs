@@ -43,11 +43,8 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
          }
 
          returnUrl ??= Url.Content("~/");
-
          await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
          ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
          ReturnUrl = returnUrl;
       }
 
@@ -73,7 +70,6 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
                return Page();
             }
          }
-
          return Page();
       }
    }

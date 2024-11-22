@@ -31,8 +31,6 @@
    }
 }
 
-
-
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
@@ -50,23 +48,21 @@
                <div class="text-group">
                   <p class="title">Description</p>
                   <div class="info">
-                     <pre class="description-container">@Html.Raw(ConvertContent(Model.Lesson.Description))</pre>
+                     <pre class="description-container">@Html.Raw(ConvertContent(Model.Lesson.Description.Content))</pre>
                   </div>
                </div>
             </div>
             <div class="btn-container">
                <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Lesson.Id">Edit</a>
-					@if (SignInManager.IsSignedIn(User)) {
-						var user = await UserManager.GetUserAsync(User);
-						if (user != null)
-						{
-							var isOwner = await UserManager.IsInRoleAsync(user, "owner");
-							if (isOwner)
-							{
-								<a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.Lesson.Id">Delete</a>
-							}
-						}
-					}
+               @if (SignInManager.IsSignedIn(User)) {
+                  var user = await UserManager.GetUserAsync(User);
+                  if (user != null) {
+                     var isOwner = await UserManager.IsInRoleAsync(user, "owner");
+                     if (isOwner) {
+                        <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.Lesson.Id">Delete</a>
+                     }
+                  }
+               }
             </div>
          </div>
       </div>

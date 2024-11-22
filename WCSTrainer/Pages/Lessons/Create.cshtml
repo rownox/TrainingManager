@@ -18,7 +18,6 @@
                   <div class="field-container">
                      <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
                         <div class="form-group">
                            <div class="form">
                               <div class="labels">
@@ -39,9 +38,9 @@
                            <div class="form">
                               <div class="labels">
                                  <p class="control-label">Description</p>
-                                 <span asp-validation-for="Lesson.Description" class="text-danger"></span>
+                                 <span asp-validation-for="Lesson.Description.Content" class="text-danger"></span>
                               </div>
-                              <textarea rows="5" asp-for="Lesson.Description" placeholder="Describe the steps needed to complete this lesson." >
+                              <textarea rows="5" asp-for="Lesson.Description.Content" placeholder="Describe the steps needed to complete this lesson." >
                               </textarea>
                            </div>
                         </div>

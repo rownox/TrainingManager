@@ -17,7 +17,7 @@ namespace WCSTrainer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -51,7 +51,7 @@ namespace WCSTrainer.Migrations
                     b.HasIndex("UserAccountId")
                         .IsUnique();
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("EmployeeSkill", b =>
@@ -66,7 +66,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasIndex("SkillsId");
 
-                    b.ToTable("EmployeeSkill");
+                    b.ToTable("EmployeeSkill", (string)null);
                 });
 
             modelBuilder.Entity("EmployeeTrainerGroup", b =>
@@ -81,7 +81,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasIndex("TrainersId");
 
-                    b.ToTable("EmployeeTrainerGroup");
+                    b.ToTable("EmployeeTrainerGroup", (string)null);
                 });
 
             modelBuilder.Entity("EmployeeTrainingOrder", b =>
@@ -96,7 +96,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasIndex("TrainingOrdersAsTrainerId");
 
-                    b.ToTable("EmployeeTrainingOrder");
+                    b.ToTable("EmployeeTrainingOrder", (string)null);
                 });
 
             modelBuilder.Entity("Lesson", b =>
@@ -122,7 +122,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasIndex("LessonCategoryId");
 
-                    b.ToTable("Lessons");
+                    b.ToTable("Lessons", (string)null);
                 });
 
             modelBuilder.Entity("LessonCategory", b =>
@@ -139,7 +139,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LessonCategories");
+                    b.ToTable("LessonCategories", (string)null);
                 });
 
             modelBuilder.Entity("LessonSkill", b =>
@@ -154,7 +154,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasIndex("SkillId");
 
-                    b.ToTable("LessonSkill");
+                    b.ToTable("LessonSkill", (string)null);
                 });
 
             modelBuilder.Entity("Location", b =>
@@ -171,7 +171,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Locations");
+                    b.ToTable("Locations", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -360,7 +360,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasIndex("SkillCategoryId");
 
-                    b.ToTable("Skills");
+                    b.ToTable("Skills", (string)null);
                 });
 
             modelBuilder.Entity("SkillCategory", b =>
@@ -377,7 +377,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SkillCategories");
+                    b.ToTable("SkillCategories", (string)null);
                 });
 
             modelBuilder.Entity("TrainerGroup", b =>
@@ -394,7 +394,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TrainerGroups");
+                    b.ToTable("TrainerGroups", (string)null);
                 });
 
             modelBuilder.Entity("TrainerGroupTrainingOrder", b =>
@@ -409,7 +409,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasIndex("TrainingOrdersId");
 
-                    b.ToTable("TrainerGroupTrainingOrder");
+                    b.ToTable("TrainerGroupTrainingOrder", (string)null);
                 });
 
             modelBuilder.Entity("TrainingOrder", b =>
@@ -489,7 +489,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasIndex("TraineeId");
 
-                    b.ToTable("TrainingOrders");
+                    b.ToTable("TrainingOrders", (string)null);
                 });
 
             modelBuilder.Entity("UserAccount", b =>
@@ -595,7 +595,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasIndex("VerifierId");
 
-                    b.ToTable("Verifications");
+                    b.ToTable("Verifications", (string)null);
                 });
 
             modelBuilder.Entity("Employee", b =>
