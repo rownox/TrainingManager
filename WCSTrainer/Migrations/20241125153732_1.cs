@@ -55,6 +55,25 @@ namespace WCSTrainer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Descriptions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PageId = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Row = table.Column<int>(type: "int", nullable: false),
+                    Column = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Descriptions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LessonCategories",
                 columns: table => new
                 {
@@ -241,12 +260,18 @@ namespace WCSTrainer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LessonCategoryId = table.Column<int>(type: "int", nullable: false)
+                    LessonCategoryId = table.Column<int>(type: "int", nullable: false),
+                    DescriptionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Lessons", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Lessons_Descriptions_DescriptionId",
+                        column: x => x.DescriptionId,
+                        principalTable: "Descriptions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Lessons_LessonCategories_LessonCategoryId",
                         column: x => x.LessonCategoryId,
@@ -488,10 +513,10 @@ namespace WCSTrainer.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "38fb6c99-8df9-49ea-b086-d641d2880920", null, "user", "USER" },
-                    { "50774c3d-6ae1-4aa5-aec9-557c52063300", null, "owner", "OWNER" },
-                    { "762c9d67-eb46-4625-9e07-6ebfe2829f99", null, "guest", "GUEST" },
-                    { "a3271203-1894-4d0f-9b2a-83c8ef0b8169", null, "admin", "ADMIN" }
+                    { "273b8e15-8e4f-4834-a4fa-95c2127ffc64", null, "user", "USER" },
+                    { "2ea5e590-f1cf-4ae6-bb79-387ad205ee79", null, "admin", "ADMIN" },
+                    { "360eb5e7-8621-4bf9-97b2-5cab85f22d4a", null, "guest", "GUEST" },
+                    { "fb08da74-74d7-451a-8c24-6a578d9f5e57", null, "owner", "OWNER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -553,6 +578,13 @@ namespace WCSTrainer.Migrations
                 name: "IX_EmployeeTrainingOrder_TrainingOrdersAsTrainerId",
                 table: "EmployeeTrainingOrder",
                 column: "TrainingOrdersAsTrainerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lessons_DescriptionId",
+                table: "Lessons",
+                column: "DescriptionId",
+                unique: true,
+                filter: "[DescriptionId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lessons_LessonCategoryId",
@@ -670,6 +702,9 @@ namespace WCSTrainer.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Descriptions");
 
             migrationBuilder.DropTable(
                 name: "LessonCategories");

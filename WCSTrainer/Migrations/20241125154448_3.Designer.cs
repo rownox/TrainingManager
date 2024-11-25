@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WCSTrainer.Data;
 
@@ -11,9 +12,11 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Migrations
 {
     [DbContext(typeof(WCSTrainerContext))]
-    partial class WCSTrainerContextModelSnapshot : ModelSnapshot
+    [Migration("20241125154448_3")]
+    partial class _3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,19 +33,29 @@ namespace WCSTrainer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Column")
+                        .HasColumnType("int");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ContentType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LessonId")
+                    b.Property<byte[]>("Data")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("PageId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Row")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LessonId");
 
                     b.ToTable("Descriptions");
                 });
@@ -132,6 +145,9 @@ namespace WCSTrainer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("DescriptionId")
+                        .HasColumnType("int");
+
                     b.Property<int>("LessonCategoryId")
                         .HasColumnType("int");
 
@@ -140,6 +156,10 @@ namespace WCSTrainer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DescriptionId")
+                        .IsUnique()
+                        .HasFilter("[DescriptionId] IS NOT NULL");
 
                     b.HasIndex("LessonCategoryId");
 
@@ -224,25 +244,25 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "329bacd2-0528-488f-8831-4a534ffc09f7",
+                            Id = "bc60c116-8b65-459f-8eaf-0d4ba2112c6d",
                             Name = "owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "2df59cca-1702-4a9d-a19f-6ca2134ccbd5",
+                            Id = "06988f7e-8e55-405c-b14d-93fcbcfca878",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9eeee3dd-1e52-44bb-97b7-9e50a694715a",
+                            Id = "6c46252c-a235-4249-95e5-4b06c5c11727",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "ebc03303-165d-45d7-bbcc-3d4ab2ff0947",
+                            Id = "f5eb4779-0694-4412-a52c-f69a84d30999",
                             Name = "guest",
                             NormalizedName = "GUEST"
                         });
@@ -619,17 +639,6 @@ namespace WCSTrainer.Migrations
                     b.ToTable("Verifications");
                 });
 
-            modelBuilder.Entity("Description", b =>
-                {
-                    b.HasOne("Lesson", "Lesson")
-                        .WithMany("Descriptions")
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lesson");
-                });
-
             modelBuilder.Entity("Employee", b =>
                 {
                     b.HasOne("UserAccount", "UserAccount")
@@ -688,11 +697,18 @@ namespace WCSTrainer.Migrations
 
             modelBuilder.Entity("Lesson", b =>
                 {
+                    b.HasOne("Description", "Description")
+                        .WithOne("Lesson")
+                        .HasForeignKey("Lesson", "DescriptionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("LessonCategory", "LessonCategory")
                         .WithMany("Lessons")
                         .HasForeignKey("LessonCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Description");
 
                     b.Navigation("LessonCategory");
                 });
@@ -843,6 +859,11 @@ namespace WCSTrainer.Migrations
                     b.Navigation("Verifier");
                 });
 
+            modelBuilder.Entity("Description", b =>
+                {
+                    b.Navigation("Lesson");
+                });
+
             modelBuilder.Entity("Employee", b =>
                 {
                     b.Navigation("TrainingOrdersAsTrainee");
@@ -850,8 +871,6 @@ namespace WCSTrainer.Migrations
 
             modelBuilder.Entity("Lesson", b =>
                 {
-                    b.Navigation("Descriptions");
-
                     b.Navigation("TrainingOrders");
                 });
 

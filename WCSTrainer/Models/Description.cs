@@ -1,21 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WCSTrainer.Models {
-   public class Description {
-      public int Id { get; set; }
-      public int PageId { get; set; }
-      public Lesson? Page { get; set; }
-      public ContentType Type { get; set; }
-      public string Content { get; set; } = string.Empty;
-      public byte[]? Data { get; set; }
-      public string? ContentType { get; set; } 
-      public int Row { get; set; }
-      public int Column { get; set; }
-   }
-}
+public class Description {
+   public int Id { get; set; }
+   public int LessonId { get; set; }
+   public Lesson? Lesson { get; set; }
 
-public enum ContentType {
-   Text,
-   Image,
-   Video
+   public string Content { get; set; } = string.Empty;
+   public string? FilePath { get; set; }
+   [NotMapped]
+   public IFormFile? ImageFile { get; set; }
 }

@@ -1,33 +1,25 @@
 ﻿@page
 @model WCSTrainer.Pages.Lessons.DetailsModel
-@using System.Text.RegularExpressions
 
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<UserAccount> SignInManager
 @inject UserManager<UserAccount> UserManager
 
-
 @functions {
-   public string ConvertContent(string content) {
-      var urlRegex = new Regex(@"(http|https)://[^\s]+");
-      return urlRegex.Replace(content, match => {
-         var url = match.Value;
-
-         if (url.Contains("youtube.com/watch?v=") || url.Contains("youtu.be/")) {
-            var videoId = ExtractYouTubeId(url);
-            if (videoId != null) {
-               return $"<iframe class=\"description-video\" width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/{videoId}\" frameborder=\"0\" allowfullscreen></iframe>";
-            }
-         }
-
-         return $"<a class=\"description-link\" href=\"{url}\" target=\"_blank\">{url}</a>";
-      });
-   }
-
-   private string ExtractYouTubeId(string url) {
-      var youtubeIdRegex = new Regex(@"(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})");
-      var match = youtubeIdRegex.Match(url);
-      return match.Success ? match.Groups[1].Value : null;
+   public string ConvertContent(Description description)
+   {
+      if (!string.IsNullOrEmpty(description.Content))
+      {
+         // If Content exists, it's text
+         return $"<p>{description.Content}</p>";
+      }
+      else if (!string.IsNullOrEmpty(description.FilePath))
+      {
+         // If FilePath exists, it's an image
+         var imageUrl = Url.Content($"~/images/{description.FilePath}");
+         return $"<img src=\"{imageUrl}\" alt=\"image\" class=\"description-image\" />";
+      }
+      return string.Empty;
    }
 }
 
@@ -45,20 +37,28 @@
                   <p class="title">Name</p>
                   <p class="info">@Model.Lesson.Name</p>
                </div>
-               <div class="text-group">
-                  <p class="title">Description</p>
-                  <div class="info">
-                     <pre class="description-container">@Html.Raw(ConvertContent(Model.Lesson.Description.Content))</pre>
-                  </div>
+
+               <!-- Loop through all descriptions -->
+               <div class="descriptions">
+                  @foreach (var description in Model.Lesson.Descriptions)
+                  {
+                     <div class="description-item">
+                        @Html.Raw(ConvertContent(description))
+                     </div>
+                  }
                </div>
             </div>
+
             <div class="btn-container">
                <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Lesson.Id">Edit</a>
-               @if (SignInManager.IsSignedIn(User)) {
+               @if (SignInManager.IsSignedIn(User))
+               {
                   var user = await UserManager.GetUserAsync(User);
-                  if (user != null) {
+                  if (user != null)
+                  {
                      var isOwner = await UserManager.IsInRoleAsync(user, "owner");
-                     if (isOwner) {
+                     if (isOwner)
+                     {
                         <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.Lesson.Id">Delete</a>
                      }
                   }

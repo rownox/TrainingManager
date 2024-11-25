@@ -1,9 +1,10 @@
 ﻿@page
 @model WCSTrainer.Pages.Lessons.CreateModel
 
-@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<UserAccount> SignInManager
 @inject UserManager<UserAccount> UserManager
+@inject IWebHostEnvironment WebHostEnvironment
 
 <div class="panel">
    <div class="body">
@@ -12,12 +13,15 @@
          <div class="user-form">
             <p class="title">Create New Lesson</p>
             <p class="description">Fill out each required field.</p>
-            @if (SignInManager.IsSignedIn(User)) {
+            @if (SignInManager.IsSignedIn(User))
+            {
                var user = await UserManager.GetUserAsync(User);
-               if (user != null) {
+               if (user != null)
+               {
                   <div class="field-container">
-                     <form method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                     <form method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+
                         <div class="form-group">
                            <div class="form">
                               <div class="labels">
@@ -31,39 +35,56 @@
                                  <p class="control-label">Lesson Category</p>
                                  <span asp-validation-for="@Model.Lesson.LessonCategoryId" class="text-danger"></span>
                               </div>
-                              <select asp-for="@Model.Lesson.LessonCategoryId" class="form-drop2" asp-items="@Model.CategroySelectList"></select>
+                              <select asp-for="@Model.Lesson.LessonCategoryId" class="form-drop2" asp-items="@Model.CategorySelectList"></select>
                            </div>
                         </div>
+
                         <div class="form-group">
                            <div class="form">
                               <div class="labels">
-                                 <p class="control-label">Description</p>
-                                 <span asp-validation-for="Lesson.Description.Content" class="text-danger"></span>
+                                 <p class="control-label">Description Type</p>
                               </div>
-                              <textarea rows="5" asp-for="Lesson.Description.Content" placeholder="Describe the steps needed to complete this lesson." >
-                              </textarea>
+                              <select id="descriptionType" class="form-drop2" name="descriptionType">
+                                 <option value="Text" selected>Text</option>
+                                 <option value="Image">Image</option>
+                              </select>
+                           </div>
+
+                           <!-- Text Description -->
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Text Content</p>
+                              </div>
+                              <textarea id="textContent" name="Description.Content" rows="5" placeholder="Describe the lesson steps"></textarea>
+                           </div>
+
+                           <!-- Image Description -->
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Upload Image</p>
+                                 <input type="file" id="imageContent" name="Description.ImageFile" accept="image/*" />
+                              </div>
                            </div>
                         </div>
+
                         <div class="form-group">
-                           <div class="form">
-                              <div class="btn-container">
-                                 <input type="submit" value="Create" class="btn bg-btn btnGreen" />
-                              </div>
+                           <div class="btn-container">
+                              <input type="submit" value="Create" class="btn bg-btn btnGreen" />
                            </div>
                         </div>
                      </form>
                   </div>
-               } else {
+               }
+               else
+               {
                   <p>User invalid.</p>
                }
-            } else {
+            }
+            else
+            {
                <p>Not signed in.</p>
             }
          </div>
       </div>
    </div>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

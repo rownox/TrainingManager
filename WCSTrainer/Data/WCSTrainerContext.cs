@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using WCSTrainer.Models;
 
 namespace WCSTrainer.Data {
@@ -13,17 +14,23 @@ namespace WCSTrainer.Data {
       public DbSet<Location> Locations { get; set; } = default!;
       public DbSet<Skill> Skills { get; set; } = default!;
       public DbSet<TrainerGroup> TrainerGroups { get; set; } = default!;
-      public DbSet<TrainingOrder> TrainingOrders { get; set; } = default!;
+      public DbSet<TrainingOrder> TrainingOrders { get; set; } = default!;    
       public DbSet<Verification> Verifications { get; set; } = default!;
-      public DbSet<Lesson> Lessons { get; set; } = default!;
-      public DbSet<LessonCategory> LessonCategories { get; set; } = default!;
-      public DbSet<SkillCategory> SkillCategories { get; set; } = default!;
-      public DbSet<Description> Descriptions { get; set; } = default!;
+      public DbSet<Lesson> Lessons { get; set; } = default!;         
+      public DbSet<LessonCategory> LessonCategories { get; set; } = default!; 
+      public DbSet<SkillCategory> SkillCategories { get; set; } = default!;      
+      public DbSet<Description> Descriptions { get; set; } = default!;  
 
+      protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+         optionsBuilder.ConfigureWarnings(warnings =>
+             warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+         base.OnConfiguring(optionsBuilder);
+      }
 
       protected override void OnModelCreating(ModelBuilder builder) {
          base.OnModelCreating(builder);
 
+         //Employee
          builder.Entity<Employee>()
                 .HasOne(u => u.UserAccount)
                 .WithOne(e => e.Employee)
@@ -48,6 +55,11 @@ namespace WCSTrainer.Data {
              .HasMany(l => l.TrainingOrders)
              .WithOne(to => to.Lesson)
              .HasForeignKey(to => to.LessonId);
+
+         builder.Entity<Lesson>()
+            .HasMany(l => l.Descriptions)
+            .WithOne(d => d.Lesson)
+            .HasForeignKey(d => d.LessonId);
 
          // Location
          builder.Entity<Location>()
@@ -104,12 +116,7 @@ namespace WCSTrainer.Data {
             .HasMany(lc => lc.Lessons)
             .WithOne(l => l.LessonCategory);
 
-         //Description
-         builder.Entity<Description>()
-            .HasOne(d => d.Page)
-            .WithOne(p => p.Description)
-            .HasForeignKey<Lesson>(l => l.DescriptionId)
-            .OnDelete(DeleteBehavior.SetNull);
+         
 
          var ownerRole = new IdentityRole("owner") { NormalizedName = "OWNER" };
          var adminRole = new IdentityRole("admin") { NormalizedName = "ADMIN" };

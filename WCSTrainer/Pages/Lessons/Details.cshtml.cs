@@ -19,12 +19,17 @@ namespace WCSTrainer.Pages.Lessons {
             return NotFound();
          }
 
-         var lesson = await _context.Lessons.FirstOrDefaultAsync(m => m.Id == id);
+         // Load the lesson with its associated descriptions
+         var lesson = await _context.Lessons
+            .Include(l => l.Descriptions) // Include Descriptions
+            .FirstOrDefaultAsync(m => m.Id == id);
+
          if (lesson == null) {
             return NotFound();
          } else {
             Lesson = lesson;
          }
+
          return Page();
       }
    }

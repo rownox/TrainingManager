@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WCSTrainer.Data;
 
@@ -11,9 +12,11 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Migrations
 {
     [DbContext(typeof(WCSTrainerContext))]
-    partial class WCSTrainerContextModelSnapshot : ModelSnapshot
+    [Migration("20241125153847_2")]
+    partial class _2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,19 +33,29 @@ namespace WCSTrainer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Column")
+                        .HasColumnType("int");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("ContentType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LessonId")
+                    b.Property<byte[]>("Data")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("PageId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Row")
+                        .HasColumnType("int");
 
-                    b.HasIndex("LessonId");
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Descriptions");
                 });
@@ -132,6 +145,9 @@ namespace WCSTrainer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("DescriptionId")
+                        .HasColumnType("int");
+
                     b.Property<int>("LessonCategoryId")
                         .HasColumnType("int");
 
@@ -140,6 +156,10 @@ namespace WCSTrainer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DescriptionId")
+                        .IsUnique()
+                        .HasFilter("[DescriptionId] IS NOT NULL");
 
                     b.HasIndex("LessonCategoryId");
 
@@ -224,25 +244,25 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "329bacd2-0528-488f-8831-4a534ffc09f7",
+                            Id = "a42eb97a-d4ce-464f-a3a5-e68260a94670",
                             Name = "owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "2df59cca-1702-4a9d-a19f-6ca2134ccbd5",
+                            Id = "1ff2a0a9-614d-4684-a465-d29c47bbb91d",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9eeee3dd-1e52-44bb-97b7-9e50a694715a",
+                            Id = "5bc36e81-a28d-4c32-b122-69ff6a198712",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "ebc03303-165d-45d7-bbcc-3d4ab2ff0947",
+                            Id = "db289f93-20f6-4c5d-b0c4-a54bc2d379f1",
                             Name = "guest",
                             NormalizedName = "GUEST"
                         });
@@ -619,17 +639,6 @@ namespace WCSTrainer.Migrations
                     b.ToTable("Verifications");
                 });
 
-            modelBuilder.Entity("Description", b =>
-                {
-                    b.HasOne("Lesson", "Lesson")
-                        .WithMany("Descriptions")
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lesson");
-                });
-
             modelBuilder.Entity("Employee", b =>
                 {
                     b.HasOne("UserAccount", "UserAccount")
@@ -688,11 +697,18 @@ namespace WCSTrainer.Migrations
 
             modelBuilder.Entity("Lesson", b =>
                 {
+                    b.HasOne("Description", "Description")
+                        .WithOne("Lesson")
+                        .HasForeignKey("Lesson", "DescriptionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("LessonCategory", "LessonCategory")
                         .WithMany("Lessons")
                         .HasForeignKey("LessonCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Description");
 
                     b.Navigation("LessonCategory");
                 });
@@ -843,6 +859,11 @@ namespace WCSTrainer.Migrations
                     b.Navigation("Verifier");
                 });
 
+            modelBuilder.Entity("Description", b =>
+                {
+                    b.Navigation("Lesson");
+                });
+
             modelBuilder.Entity("Employee", b =>
                 {
                     b.Navigation("TrainingOrdersAsTrainee");
@@ -850,8 +871,6 @@ namespace WCSTrainer.Migrations
 
             modelBuilder.Entity("Lesson", b =>
                 {
-                    b.Navigation("Descriptions");
-
                     b.Navigation("TrainingOrders");
                 });
 
