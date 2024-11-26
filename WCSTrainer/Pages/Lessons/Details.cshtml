@@ -8,17 +8,6 @@
 @functions {
    public string ConvertContent(Description description)
    {
-      if (!string.IsNullOrEmpty(description.Content))
-      {
-         // If Content exists, it's text
-         return $"<p>{description.Content}</p>";
-      }
-      else if (!string.IsNullOrEmpty(description.FilePath))
-      {
-         // If FilePath exists, it's an image
-         var imageUrl = Url.Content($"~/images/{description.FilePath}");
-         return $"<img src=\"{imageUrl}\" alt=\"image\" class=\"description-image\" />";
-      }
       return string.Empty;
    }
 }

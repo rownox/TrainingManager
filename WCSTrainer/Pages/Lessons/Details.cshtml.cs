@@ -2,16 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WCSTrainer.Pages.Lessons {
    [Authorize(Roles = "owner, admin, user, guest")]
-   public class DetailsModel : PageModel {
-      private readonly WCSTrainer.Data.WCSTrainerContext _context;
-
-      public DetailsModel(WCSTrainer.Data.WCSTrainerContext context) {
-         _context = context;
-      }
-
+   public class DetailsModel(Data.WCSTrainerContext context) : PageModel {
       public Lesson Lesson { get; set; } = default!;
 
       public async Task<IActionResult> OnGetAsync(int? id) {
@@ -19,9 +14,8 @@ namespace WCSTrainer.Pages.Lessons {
             return NotFound();
          }
 
-         // Load the lesson with its associated descriptions
-         var lesson = await _context.Lessons
-            .Include(l => l.Descriptions) // Include Descriptions
+         var lesson = await context.Lessons
+            .Include(l => l.Descriptions)
             .FirstOrDefaultAsync(m => m.Id == id);
 
          if (lesson == null) {
@@ -32,5 +26,7 @@ namespace WCSTrainer.Pages.Lessons {
 
          return Page();
       }
+
+
    }
 }

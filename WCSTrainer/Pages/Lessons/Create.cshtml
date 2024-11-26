@@ -1,11 +1,5 @@
 ﻿@page
 @model WCSTrainer.Pages.Lessons.CreateModel
-
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<UserAccount> SignInManager
-@inject UserManager<UserAccount> UserManager
-@inject IWebHostEnvironment WebHostEnvironment
-
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
@@ -13,78 +7,88 @@
          <div class="user-form">
             <p class="title">Create New Lesson</p>
             <p class="description">Fill out each required field.</p>
-            @if (SignInManager.IsSignedIn(User))
-            {
-               var user = await UserManager.GetUserAsync(User);
-               if (user != null)
-               {
-                  <div class="field-container">
-                     <form method="post" enctype="multipart/form-data">
-                        <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="field-container">
+               <form method="post" enctype="multipart/form-data">
+                  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                        <div class="form-group">
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Name</p>
-                                 <span asp-validation-for="Lesson.Name" class="text-danger"></span>
-                              </div>
-                              <input asp-for="Lesson.Name" class="form-control" />
-                           </div>
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Lesson Category</p>
-                                 <span asp-validation-for="@Model.Lesson.LessonCategoryId" class="text-danger"></span>
-                              </div>
-                              <select asp-for="@Model.Lesson.LessonCategoryId" class="form-drop2" asp-items="@Model.CategorySelectList"></select>
-                           </div>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <label asp-for="Lesson.Name" class="control-label">Lesson Name</label>
+                           <span asp-validation-for="Lesson.Name" class="text-danger"></span>
                         </div>
+                        <input asp-for="Lesson.Name" class="form-control" />
+                     </div>
 
-                        <div class="form-group">
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Description Type</p>
-                              </div>
-                              <select id="descriptionType" class="form-drop2" name="descriptionType">
-                                 <option value="Text" selected>Text</option>
-                                 <option value="Image">Image</option>
-                              </select>
-                           </div>
-
-                           <!-- Text Description -->
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Text Content</p>
-                              </div>
-                              <textarea id="textContent" name="Description.Content" rows="5" placeholder="Describe the lesson steps"></textarea>
-                           </div>
-
-                           <!-- Image Description -->
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Upload Image</p>
-                                 <input type="file" id="imageContent" name="Description.ImageFile" accept="image/*" />
-                              </div>
-                           </div>
+                     <div class="form">
+                        <div class="labels">
+                           <label class="control-label">Lesson Category</label>
+                           <span asp-validation-for="Lesson.LessonCategoryId" class="text-danger"></span>
                         </div>
-
-                        <div class="form-group">
-                           <div class="btn-container">
-                              <input type="submit" value="Create" class="btn bg-btn btnGreen" />
-                           </div>
-                        </div>
-                     </form>
+                        <select asp-for="Lesson.LessonCategoryId" class="form-drop2" asp-items="@Model.CategorySelectList"></select>
+                     </div>
                   </div>
-               }
-               else
-               {
-                  <p>User invalid.</p>
-               }
-            }
-            else
-            {
-               <p>Not signed in.</p>
-            }
+
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <label class="control-label">Description</label>
+                        </div>
+                        <textarea asp-for="Description.TextContent" class="form-control" rows="5" placeholder="Describe the lesson steps"></textarea>
+                     </div>
+                  </div>
+
+                  <div class="form-group" id="imageUploadContainer">
+                     <div class="form">
+                        <div class="labels">
+                           <label class="control-label">Upload Images</label>
+                        </div>
+                        <div class="image-upload-row">
+                           <div class="form">
+                              <input type="file" name="ImageUploads" accept=".jpg,.jpeg,.png,.gif" class="form-control-file" />
+                           </div>
+                           <div class="form">
+                              <input type="text" name="ImageCaptions" class="form-control" placeholder="Optional image caption" />
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="form-group">
+                     <div class="btn-container">
+                        <button type="button" id="addImageUpload" class="btn bg-btn btnBlue">Add Another Image</button>
+                     </div>
+                  </div>
+
+                  <div class="form-group">
+                     <div class="btn-container">
+                        <input type="submit" value="Create" class="btn bg-btn btnGreen" />
+                     </div>
+                  </div>
+               </form>
+            </div>
          </div>
       </div>
    </div>
 </div>
+
+@section Scripts {
+   <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const container = document.getElementById('imageUploadContainer');
+          const addButton = document.getElementById('addImageUpload');
+
+          addButton.addEventListener('click', function() {
+              // Clone the first image upload row
+              const newRow = container.querySelector('.image-upload-row').cloneNode(true);
+
+              // Clear previous values
+              newRow.querySelector('input[type="file"]').value = '';
+              newRow.querySelector('input[type="text"]').value = '';
+
+              // Add to container
+              container.appendChild(newRow);
+          });
+      });
+   </script>
+}
