@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
+using WCSTrainer.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
@@ -16,6 +17,8 @@ builder.Services.AddDbContext<WCSTrainerContext>(options =>
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddScoped<IImageUploadService, ImageUploadService>();
 
 var app = builder.Build();
 

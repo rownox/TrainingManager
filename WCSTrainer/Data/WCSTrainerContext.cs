@@ -20,7 +20,6 @@ namespace WCSTrainer.Data {
       public DbSet<LessonCategory> LessonCategories { get; set; } = default!; 
       public DbSet<SkillCategory> SkillCategories { get; set; } = default!;      
       public DbSet<Description> Descriptions { get; set; } = default!;
-      public DbSet<ImageUpload> ImageUploads { get; set; } = default!;
 
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
          optionsBuilder.ConfigureWarnings(warnings =>

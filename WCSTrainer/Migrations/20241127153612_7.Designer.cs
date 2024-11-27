@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WCSTrainer.Data;
 
@@ -11,9 +12,11 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Migrations
 {
     [DbContext(typeof(WCSTrainerContext))]
-    partial class WCSTrainerContextModelSnapshot : ModelSnapshot
+    [Migration("20241127153612_7")]
+    partial class _7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,9 +36,6 @@ namespace WCSTrainer.Migrations
                     b.Property<int>("DescriptionType")
                         .HasColumnType("int");
 
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ImageUploadId")
                         .HasColumnType("int");
 
@@ -46,8 +46,6 @@ namespace WCSTrainer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ImageUploadId");
 
                     b.HasIndex("LessonId");
 
@@ -139,6 +137,9 @@ namespace WCSTrainer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("DescriptionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FileName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -159,7 +160,10 @@ namespace WCSTrainer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ImageUpload");
+                    b.HasIndex("DescriptionId")
+                        .IsUnique();
+
+                    b.ToTable("ImageUploads");
                 });
 
             modelBuilder.Entity("Lesson", b =>
@@ -262,25 +266,25 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d17372bc-1354-4b70-94e8-8c888e5d07c8",
+                            Id = "98fad56d-8806-4d97-bf6d-abe02ca36cc5",
                             Name = "owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "5e4f46cb-ee4f-4f70-a990-0f6657499dea",
+                            Id = "b1479489-3a6c-498b-8b7b-0d6854c2ff82",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "3237ab2a-91a8-4142-9071-54493b13c219",
+                            Id = "dcbad8c5-ccea-40ae-b738-5c4f8b82e4b5",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "5c8831ae-c175-411d-9dd8-f7176b82b451",
+                            Id = "46de173c-378f-4f57-9456-18941690dc9a",
                             Name = "guest",
                             NormalizedName = "GUEST"
                         });
@@ -659,17 +663,11 @@ namespace WCSTrainer.Migrations
 
             modelBuilder.Entity("Description", b =>
                 {
-                    b.HasOne("ImageUpload", "ImageUpload")
-                        .WithMany()
-                        .HasForeignKey("ImageUploadId");
-
                     b.HasOne("Lesson", "Lesson")
                         .WithMany("Descriptions")
                         .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ImageUpload");
 
                     b.Navigation("Lesson");
                 });
@@ -728,6 +726,17 @@ namespace WCSTrainer.Migrations
                         .HasForeignKey("TrainingOrdersAsTrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ImageUpload", b =>
+                {
+                    b.HasOne("Description", "Description")
+                        .WithOne("ImageUpload")
+                        .HasForeignKey("ImageUpload", "DescriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Description");
                 });
 
             modelBuilder.Entity("Lesson", b =>
@@ -885,6 +894,11 @@ namespace WCSTrainer.Migrations
                     b.Navigation("TrainingOrder");
 
                     b.Navigation("Verifier");
+                });
+
+            modelBuilder.Entity("Description", b =>
+                {
+                    b.Navigation("ImageUpload");
                 });
 
             modelBuilder.Entity("Employee", b =>
