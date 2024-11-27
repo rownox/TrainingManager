@@ -391,7 +391,6 @@ nav {
 
 					.panel .body .properties .user-form .field-container .text-group .title {
 						padding-left: 15px;
-						padding-right: 10px;
 						color: var(--textSub1);
 						font-size: 16px;
 						min-width: 250px;
@@ -1597,4 +1596,20 @@ nav {
 	display: flex;
 	flex-direction: column;
 	margin-top: 10px;
+	gap: 10px;
+	background-color: var(--gray2);
+	padding: 5px;
+	border: 1px solid var(--gray4);
 }
+
+.image-upload-row .description-row {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: space-between;
+}
+
+	.image-upload-row .description-row .desc-content {
+		display: flex;
+		flex-grow: 1;
+	}

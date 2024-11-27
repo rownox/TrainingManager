@@ -9,13 +9,10 @@ namespace WCSTrainer.Pages.Lessons {
    public class CreateModel(WCSTrainerContext context, IImageUploadService imageUploadService) : PageModel {
       [BindProperty]
       public Lesson Lesson { get; set; } = new Lesson();
-
       [BindProperty]
       public List<IFormFile> ImageUploads { get; set; } = new List<IFormFile>();
-
       [BindProperty]
       public List<string> ImageCaptions { get; set; } = new List<string>();
-
       public SelectList CategorySelectList { get; set; }
 
       public async Task<IActionResult> OnGetAsync() {
@@ -28,7 +25,6 @@ namespace WCSTrainer.Pages.Lessons {
             CategorySelectList = new SelectList(await context.LessonCategories.ToListAsync(), "Id", "Name");
             return Page();
          }
-
          context.Lessons.Add(Lesson);
          await context.SaveChangesAsync();
 
@@ -41,7 +37,6 @@ namespace WCSTrainer.Pages.Lessons {
                DisplayOrder = i,
                TextContent = caption
             };
-
             if (imageFile != null && imageFile.Length > 0) {
                var uploadResult = await imageUploadService.UploadImageAsync(imageFile, "uploads/lessons");
                if (uploadResult != null) {
@@ -49,10 +44,8 @@ namespace WCSTrainer.Pages.Lessons {
                   description.ImageUpload = uploadResult;
                }
             }
-
             context.Descriptions.Add(description);
          }
-
          await context.SaveChangesAsync();
          return RedirectToPage("./Index");
       }
