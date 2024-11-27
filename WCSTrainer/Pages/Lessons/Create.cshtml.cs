@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc;
-using WCSTrainer.Data;
-using WCSTrainer.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using WCSTrainer.Data;
+using WCSTrainer.Services;
 
 namespace WCSTrainer.Pages.Lessons {
    public class CreateModel(WCSTrainerContext context, IImageUploadService imageUploadService) : PageModel {
@@ -32,27 +32,28 @@ namespace WCSTrainer.Pages.Lessons {
          context.Lessons.Add(Lesson);
          await context.SaveChangesAsync();
 
-         for (int i = 0; i < ImageUploads.Count; i++) {
-            var imageFile = ImageUploads[i];
+         for (int i = 0; i < Math.Max(ImageUploads.Count, ImageCaptions.Count); i++) {
+            var imageFile = i < ImageUploads.Count ? ImageUploads[i] : null;
+            var caption = i < ImageCaptions.Count ? ImageCaptions[i] : null;
+
+            var description = new Description() {
+               LessonId = Lesson.Id,
+               DisplayOrder = i,
+               TextContent = caption
+            };
+
             if (imageFile != null && imageFile.Length > 0) {
                var uploadResult = await imageUploadService.UploadImageAsync(imageFile, "uploads/lessons");
                if (uploadResult != null) {
-                  var description = new Description() {
-                     LessonId = Lesson.Id,
-                     ImageUploadId = uploadResult.Id,
-                     ImageUpload = uploadResult,
-                     DisplayOrder = i,
-                     TextContent = i < ImageCaptions.Count ? ImageCaptions[i] : null
-                  };
-
-                  context.Descriptions.Add(description);
-                  await context.SaveChangesAsync();
+                  description.ImageUploadId = uploadResult.Id;
+                  description.ImageUpload = uploadResult;
                }
             }
+
+            context.Descriptions.Add(description);
          }
 
          await context.SaveChangesAsync();
-
          return RedirectToPage("./Index");
       }
    }

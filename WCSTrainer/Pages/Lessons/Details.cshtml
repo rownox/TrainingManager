@@ -5,6 +5,38 @@
 @inject SignInManager<UserAccount> SignInManager
 @inject UserManager<UserAccount> UserManager
 
+@using System.Text.RegularExpressions
+
+@functions {
+   public string ConvertContent(string content)
+   {
+      var urlRegex = new Regex(@"(http|https)://[^\s]+");
+      return urlRegex.Replace(content, match =>
+      {
+         var url = match.Value;
+
+         if (url.Contains("youtube.com/watch?v=") || url.Contains("youtu.be/"))
+         {
+            var videoId = ExtractYouTubeId(url);
+            if (videoId != null)
+            {
+               return $"<iframe class=\"description-video\" width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/{videoId}\" frameborder=\"0\" allowfullscreen></iframe>";
+            }
+         }
+
+         return $"<a class=\"description-link\" href=\"{url}\" target=\"_blank\">{url}</a>";
+      });
+   }
+
+   private string ExtractYouTubeId(string url)
+   {
+      var youtubeIdRegex = new Regex(@"(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})");
+      var match = youtubeIdRegex.Match(url);
+      return match.Success ? match.Groups[1].Value : null;
+   }
+}
+
+
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
@@ -12,41 +44,34 @@
          <div class="user-form">
             <p class="title">Lesson #@Model.Lesson.Id</p>
             <div class="field-container">
-               <div class="lesson-details">
-                  <h1>@Model.Lesson.Name</h1>
-                  @if (Model.Lesson.Descriptions.Any()) {
-                     <div class="lesson-images">
-                        <div id="lessonImageCarousel" class="carousel slide" data-ride="carousel">
-                           <div class="carousel-inner">
-                              @foreach (var description in Model.Lesson.Descriptions) {
-                                 if (description != null) {
-                                    <div class="carousel-item">
-                                       <img src="~/@description.ImageUpload.FilePath"
-                                            class="d-block w-100"
-                                            alt="Lesson Image" />
-                                       @if (!string.IsNullOrWhiteSpace(description.TextContent))
-                                       {
-                                          <div class="carousel-caption d-none d-md-block">
-                                             <p>@description.TextContent</p>
-                                          </div>
-                                       }
-                                    </div>
-                                 }
+               <div class="title-row">
+                  <p class="title">Details</p>
+               </div>
+               <div class="text-group">
+                  <p class="title">Name</p>
+                  <p class="info">@Model.Lesson.Name</p>
+               </div>
+               <div class="text-group">
+                  <p class="title">Description</p>
+                  <div class="info">
+                     @if (Model.Lesson.Descriptions.Any())
+                     {
+                        @foreach (var description in Model.Lesson.Descriptions.Reverse())
+                        {
+                           if (description != null)
+                           {
+                              @if (!string.IsNullOrWhiteSpace(description.TextContent))
+                              {
+                                 <pre class="description-container">@Html.Raw(ConvertContent(description.TextContent))</pre>
                               }
-                           </div>
-                           @if (Model.Lesson.Descriptions.Count > 1) {
-                              <a class="carousel-control-prev" href="#lessonImageCarousel" role="button" data-slide="prev">
-                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                 <span class="sr-only">Previous</span>
-                              </a>
-                              <a class="carousel-control-next" href="#lessonImageCarousel" role="button" data-slide="next">
-                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                 <span class="sr-only">Next</span>
-                              </a>
+                              @if (description.ImageUpload != null)
+                              {
+                                 <img src="~/@description.ImageUpload.FilePath" alt="[Could not load image.]" />
+                              }
                            }
-                        </div>
-                     </div>
-                  }
+                        }
+                     }
+                  </div>
                </div>
             </div>
             <div class="btn-container">

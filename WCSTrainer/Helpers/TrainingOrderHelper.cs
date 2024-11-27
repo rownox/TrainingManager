@@ -6,7 +6,7 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Helpers {
    public class TrainingOrderHelper {
 
-      
+
 
       public static async Task<bool> HasPerms(UserManager<UserAccount> userManager, ClaimsPrincipal claim, WCSTrainerContext context, TrainingOrder trainingOrder) {
          var user = await userManager.GetUserAsync(claim);
@@ -28,7 +28,7 @@ namespace WCSTrainer.Helpers {
          var isOwner = await userManager.IsInRoleAsync(user, "owner");
          var isAdmin = await userManager.IsInRoleAsync(user, "admin");
          if (isAdmin || isOwner) return true;
-         
+
          if (OrderInvolves(employee, trainingOrder)) {
             return true;
          }

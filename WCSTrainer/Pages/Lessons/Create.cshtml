@@ -10,7 +10,6 @@
             <div class="field-container">
                <form method="post" enctype="multipart/form-data">
                   <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
                   <div class="form-group">
                      <div class="form">
                         <div class="labels">
@@ -19,7 +18,6 @@
                         </div>
                         <input asp-for="Lesson.Name" class="form-control" />
                      </div>
-
                      <div class="form">
                         <div class="labels">
                            <label class="control-label">Lesson Category</label>
@@ -28,29 +26,23 @@
                         <select asp-for="Lesson.LessonCategoryId" class="form-drop2" asp-items="@Model.CategorySelectList"></select>
                      </div>
                   </div>
-
-                  <div class="form-group" id="imageUploadContainer">
-                     <div class="form">
+                  <div class="form-group">
+                     <div class="form" id="imageUploadContainer">
                         <div class="labels">
-                           <label class="control-label">Upload Images</label>
+                           <label class="control-label">Description Section</label>
                         </div>
                         <div class="image-upload-row">
-                           <div class="form">
-                              <input type="file" name="ImageUploads" accept=".jpg,.jpeg,.png,.gif" class="form-control-file" />
-                           </div>
-                           <div class="form">
-                              <input type="text" name="ImageCaptions" class="form-control" placeholder="Optional image caption" />
-                           </div>
+                           <textarea name="ImageCaptions" placeholder="Optional description text"></textarea>
+                           <label class="control-label">Upload Image (Optional)</label>
+                           <input type="file" name="ImageUploads" accept=".jpg,.jpeg,.png,.gif" class="form-control-file" />
                         </div>
                      </div>
                   </div>
-
                   <div class="form-group">
                      <div class="btn-container">
-                        <button type="button" id="addImageUpload" class="btn bg-btn btnBlue">Add Another Image</button>
+                        <button type="button" id="addImageUpload" class="btn bg-btn btnBlue">Add Another Section</button>
                      </div>
                   </div>
-
                   <div class="form-group">
                      <div class="btn-container">
                         <input type="submit" value="Create" class="btn bg-btn btnGreen" />
@@ -62,22 +54,18 @@
       </div>
    </div>
 </div>
-
 @section Scripts {
    <script>
       document.addEventListener('DOMContentLoaded', function() {
           const container = document.getElementById('imageUploadContainer');
           const addButton = document.getElementById('addImageUpload');
-
           addButton.addEventListener('click', function() {
-              // Clone the first image upload row
               const newRow = container.querySelector('.image-upload-row').cloneNode(true);
-
-              // Clear previous values
+              // Clear the file input value
               newRow.querySelector('input[type="file"]').value = '';
-              newRow.querySelector('input[type="text"]').value = '';
-
-              // Add to container
+              // Clear the textarea content
+              newRow.querySelector('textarea').value = '';
+              // Add the cloned row to the container
               container.appendChild(newRow);
           });
       });

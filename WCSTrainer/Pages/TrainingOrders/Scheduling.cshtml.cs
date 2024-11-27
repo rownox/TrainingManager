@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace WCSTrainer.Pages.TrainingOrders
-{
-    public class SchedulingModel(Data.WCSTrainerContext context) : PageModel {
+namespace WCSTrainer.Pages.TrainingOrders {
+   public class SchedulingModel(Data.WCSTrainerContext context) : PageModel {
 
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;

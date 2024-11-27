@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
-
-using Microsoft.AspNetCore.Identity;
 using WCSTrainer.Helpers;
 
 namespace WCSTrainer.Pages.Accounts.Employees {

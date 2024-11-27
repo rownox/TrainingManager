@@ -263,12 +263,12 @@ nav {
 							filter: var(--svgHover);
 						}
 
-				.panel .body .properties .user-form img {
-					height: 20px;
-					max-width: 20px;
-					filter: var(--svg);
-					user-select: none;
-				}
+						.panel .body .properties .user-form .btn-container .btn img {
+							height: 20px;
+							max-width: 20px;
+							filter: var(--svg);
+							user-select: none;
+						}
 
 				.panel .body .properties .user-form .field-container .form-group {
 					flex-direction: row;
@@ -404,6 +404,7 @@ nav {
 						font-size: 16px;
 						width: 100%;
 						gap: 1px;
+						flex-direction: column;
 					}
 
 						.panel .body .properties .user-form .field-container .text-group .info .description-container {
@@ -426,6 +427,10 @@ nav {
 							flex-wrap: wrap;
 						}
 
+						.panel .body .properties .user-form .field-container .text-group .info img {
+							display: flex;
+							width: fit-content;
+						}
 				.panel .body .properties .user-form .skill-box {
 					padding: 5px;
 					display: flex;
@@ -1586,3 +1591,10 @@ nav {
 					.category-container .category .skill-list .skill a:hover {
 						color: var(--textMain);
 					}
+
+
+.image-upload-row {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+}
