@@ -7,43 +7,47 @@
 
 
 <div class="panel">
-   <div class="body">
-      <partial name="_Sidebar" />
-      <div class="properties">
-         <div class="user-form">
-            <p class="title">Trainer Group #@Model.TrainerGroup.Id</p>
-            <div class="field-container">
-               <div class="title-row">
-                  <p class="title">Details</p>
-               </div>
-               <div class="text-group">
-                  <p class="title">Name</p>
-                  <p class="info">@Model.TrainerGroup.Name</p>
-               </div>
-               <div class="text-group">
-                  <p class="title">Members</p>
-                  <div class="info">
-                     @foreach (var member in Model.TrainerGroup.Trainers) {
-                        <a href="/Employees/Details?id=@member.Id" class="pill">@member.FirstName @member.LastName</a>
-                     }
-                  </div>
-               </div>
+  <div class="body">
+    <partial name="_Sidebar" />
+    <div class="properties">
+      <div class="user-form">
+        <p class="title">Trainer Group #@Model.TrainerGroup.Id</p>
+        <div class="field-container">
+          <div class="title-row">
+            <p class="title">Details</p>
+          </div>
+          <div class="text-group">
+            <p class="title">Name</p>
+            <p class="info">@Model.TrainerGroup.Name</p>
+          </div>
+          <div class="text-group">
+            <p class="title">Members</p>
+            <div class="info">
+              <div class="pills-container">
+                @foreach (var member in Model.TrainerGroup.Trainers)
+                {
+                  <a href="/Employees/Details?id=@member.Id" class="pill">@member.FirstName @member.LastName</a>
+                }
+              </div>
             </div>
-            <div class="btn-container">
-               <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainerGroup.Id">Edit</a>
-					@if (SignInManager.IsSignedIn(User)) {
-						var user = await UserManager.GetUserAsync(User);
-						if (user != null)
-						{
-							var isOwner = await UserManager.IsInRoleAsync(user, "owner");
-							if (isOwner)
-							{
-								<a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.TrainerGroup.Id">Delete</a>
-							}
-						}
-					}
-            </div>
-         </div>
+          </div>
+        </div>
+        <div class="btn-container">
+          <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainerGroup.Id">Edit</a>
+          @if (SignInManager.IsSignedIn(User))
+          {
+            var user = await UserManager.GetUserAsync(User);
+            if (user != null)
+            {
+              var isOwner = await UserManager.IsInRoleAsync(user, "owner");
+              if (isOwner)
+              {
+                <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.TrainerGroup.Id">Delete</a>
+              }
+            }
+          }
+        </div>
       </div>
-   </div>
+    </div>
+  </div>
 </div>

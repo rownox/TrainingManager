@@ -12,8 +12,8 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Migrations
 {
     [DbContext(typeof(WCSTrainerContext))]
-    [Migration("20241127160615_8")]
-    partial class _8
+    [Migration("20241202153319_1")]
+    partial class _1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,8 @@ namespace WCSTrainer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageUploadId");
 
                     b.HasIndex("LessonId");
 
@@ -140,9 +142,6 @@ namespace WCSTrainer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DescriptionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("FileName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -163,10 +162,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DescriptionId")
-                        .IsUnique();
-
-                    b.ToTable("ImageUploads");
+                    b.ToTable("ImageUpload");
                 });
 
             modelBuilder.Entity("Lesson", b =>
@@ -269,25 +265,25 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5df5929e-990d-4432-9257-08a9951356b2",
+                            Id = "42b0d42e-24b8-41e4-a514-80debd381207",
                             Name = "owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "9693aa2c-72ee-4ace-9d48-5d1fdf6c9867",
+                            Id = "1675084b-3218-486c-9858-7b2f12e7d73d",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "0eaf5a21-9307-4fc9-911d-f3216d8e1dbc",
+                            Id = "36f6ca3a-7246-46cd-960d-0cfccda96ea7",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "4d0e87cf-c434-43d3-a635-644f920ca6bc",
+                            Id = "95f32185-93bc-45bd-a6c1-445040f8c328",
                             Name = "guest",
                             NormalizedName = "GUEST"
                         });
@@ -666,11 +662,17 @@ namespace WCSTrainer.Migrations
 
             modelBuilder.Entity("Description", b =>
                 {
+                    b.HasOne("ImageUpload", "ImageUpload")
+                        .WithMany()
+                        .HasForeignKey("ImageUploadId");
+
                     b.HasOne("Lesson", "Lesson")
                         .WithMany("Descriptions")
                         .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ImageUpload");
 
                     b.Navigation("Lesson");
                 });
@@ -729,17 +731,6 @@ namespace WCSTrainer.Migrations
                         .HasForeignKey("TrainingOrdersAsTrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ImageUpload", b =>
-                {
-                    b.HasOne("Description", "Description")
-                        .WithOne("ImageUpload")
-                        .HasForeignKey("ImageUpload", "DescriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Description");
                 });
 
             modelBuilder.Entity("Lesson", b =>
@@ -897,11 +888,6 @@ namespace WCSTrainer.Migrations
                     b.Navigation("TrainingOrder");
 
                     b.Navigation("Verifier");
-                });
-
-            modelBuilder.Entity("Description", b =>
-                {
-                    b.Navigation("ImageUpload");
                 });
 
             modelBuilder.Entity("Employee", b =>
