@@ -27,10 +27,12 @@
             <div class="text-group">
               <p class="title">Included Lessons</p>
               <div class="info">
-                @foreach (var lesson in Model.Skill.Lessons)
-                {
-                  <a href="/Lessons/Details?id=@lesson.Id" class="pill">@lesson.Name</a>
-                }
+                <div class="pills-container">
+                  @foreach (var lesson in Model.Skill.Lessons)
+                  {
+                      <a href="/Lessons/Details?id=@lesson.Id" class="pill">@lesson.Name</a>
+                  }
+                </div>
               </div>
             </div>
             <div class="text-group">
@@ -52,7 +54,7 @@
                     }
                     if (isActive)
                     {
-                      <a href="/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
+                          <a href="/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
                     }
                   }
                 </div>
@@ -77,7 +79,7 @@
                     }
                     if (!isActive)
                     {
-                      <a href="/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
+                          <a href="/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
                     }
                   }
                 </div>
@@ -97,7 +99,7 @@
               var isOwner = await UserManager.IsInRoleAsync(user, "owner");
               if (isOwner)
               {
-                <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.Skill.Id">Delete</a>
+                      <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.Skill.Id">Delete</a>
               }
             }
           }
