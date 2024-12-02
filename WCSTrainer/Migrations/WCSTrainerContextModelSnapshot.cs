@@ -170,6 +170,9 @@ namespace WCSTrainer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
                     b.Property<int>("LessonCategoryId")
                         .HasColumnType("int");
 
@@ -262,25 +265,25 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "42b0d42e-24b8-41e4-a514-80debd381207",
+                            Id = "34a347db-234a-4d96-9c80-a35ea92cef16",
                             Name = "owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "1675084b-3218-486c-9858-7b2f12e7d73d",
+                            Id = "a4346e92-0975-4047-8f79-cb3168a1defe",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "36f6ca3a-7246-46cd-960d-0cfccda96ea7",
+                            Id = "e83e680b-d8b5-4075-bbed-6dc4d6ba7310",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "95f32185-93bc-45bd-a6c1-445040f8c328",
+                            Id = "a7c9c3b2-9b98-42ac-a302-1f4654f245fc",
                             Name = "guest",
                             NormalizedName = "GUEST"
                         });
@@ -500,9 +503,6 @@ namespace WCSTrainer.Migrations
 
                     b.Property<string>("CreatedByUserId")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
 
                     b.Property<int>("LessonId")
                         .HasColumnType("int");

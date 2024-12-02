@@ -179,14 +179,14 @@ else
     {
       if (order.Status == "Completed" || order.Status == "Verified")
       {
-        completeHours = completeHours + order.Duration;
+        completeHours = completeHours + order.Lesson.Duration;
         completeOrders.Add(order);
       }
       else
       {
         if (!order.Archived)
         {
-          activeHours = activeHours + order.Duration;
+          activeHours = activeHours + order.Lesson.Duration;
         }
         activeOrders.Add(order);
       }

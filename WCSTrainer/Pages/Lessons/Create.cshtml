@@ -1,89 +1,96 @@
 ﻿@page
 @model WCSTrainer.Pages.Lessons.CreateModel
 <div class="panel">
-  <div class="body">
-    <partial name="_Sidebar" />
-    <div class="properties">
-      <div class="user-form">
-        <p class="title">Create New Lesson</p>
-        <p class="description">Fill out each required field.</p>
-        <div class="field-container">
-          <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-              <div class="form">
-                <div class="labels">
-                  <label asp-for="Lesson.Name" class="control-label">Lesson Name</label>
-                  <span asp-validation-for="Lesson.Name" class="text-danger"></span>
-                </div>
-                <input asp-for="Lesson.Name" class="form-control" />
-              </div>
-              <div class="form">
-                <div class="labels">
-                  <label class="control-label">Lesson Category</label>
-                  <span asp-validation-for="Lesson.LessonCategoryId" class="text-danger"></span>
-                </div>
-                <select asp-for="Lesson.LessonCategoryId" class="form-drop2" asp-items="@Model.CategorySelectList"></select>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form" id="imageUploadContainer">
-                <div class="labels">
-                  <label class="control-label">Description Section</label>
-                </div>
-                <div class="image-upload-row">
-                  <div class="description-row">
-                    <textarea class="desc-content" name="ImageCaptions" placeholder="Type lesson description here."></textarea>
+   <div class="body">
+      <partial name="_Sidebar" />
+      <div class="properties">
+         <div class="user-form">
+            <p class="title">Create New Lesson</p>
+            <p class="description">Fill out each required field.</p>
+            <div class="field-container">
+               <form method="post" enctype="multipart/form-data">
+                  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <label asp-for="Lesson.Name" class="control-label">Lesson Name</label>
+                           <span asp-validation-for="Lesson.Name" class="text-danger"></span>
+                        </div>
+                        <input asp-for="Lesson.Name" class="form-control" />
+                     </div>
+                     <div class="form">
+                        <div class="labels">
+                           <label class="control-label">Lesson Category</label>
+                           <span asp-validation-for="Lesson.LessonCategoryId" class="text-danger"></span>
+                        </div>
+                        <select asp-for="Lesson.LessonCategoryId" class="form-drop2" asp-items="@Model.CategorySelectList"></select>
+                     </div>
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Req. Training Hours</p>
+                           <span asp-validation-for="Lesson.Duration" class="text-danger"></span>
+                        </div>
+                        <input type="text" asp-for="Lesson.Duration" class="form-control" />
+                     </div>
                   </div>
-                  <div class="description-row">
-                    <label class="control-label">Upload Image (Optional)</label>
-                    <input type="file" name="ImageUploads" accept=".jpg,.jpeg,.png,.gif" class="form-control-file" />
-                    <button type="button" class="btn remove-section-btn bg-btn btnRed">Remove Section</button>
+                  <div class="form-group">
+                     <div class="form" id="imageUploadContainer">
+                        <div class="labels">
+                           <label class="control-label">Description Section</label>
+                        </div>
+                        <div class="image-upload-row">
+                           <div class="description-row">
+                              <textarea class="desc-content" name="ImageCaptions" placeholder="Type lesson description here."></textarea>
+                           </div>
+                           <div class="description-row">
+                              <label class="control-label">Upload Image (Optional)</label>
+                              <input type="file" name="ImageUploads" accept=".jpg,.jpeg,.png,.gif" class="form-control-file" />
+                              <button type="button" class="btn remove-section-btn bg-btn btnRed">Remove Section</button>
+                           </div>
+                        </div>
+                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="btn-container">
-                <button type="button" id="addImageUpload" class="btn bg-btn btnBlue">Add Another Section</button>
-              </div>
-            </div>
+                  <div class="form-group">
+                     <div class="btn-container">
+                        <button type="button" id="addImageUpload" class="btn bg-btn btnBlue">Add Another Section</button>
+                     </div>
+                  </div>
 
-            <div class="form-group">
-              <div class="btn-container">
-                <input type="submit" value="Create" class="btn bg-btn btnGreen" />
-              </div>
+                  <div class="form-group">
+                     <div class="btn-container">
+                        <input type="submit" value="Create" class="btn bg-btn btnGreen" />
+                     </div>
+                  </div>
+               </form>
             </div>
-          </form>
-        </div>
+         </div>
       </div>
-    </div>
-  </div>
+   </div>
 </div>
 @section Scripts {
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const container = document.getElementById('imageUploadContainer');
-        const addButton = document.getElementById('addImageUpload');
+   <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const container = document.getElementById('imageUploadContainer');
+          const addButton = document.getElementById('addImageUpload');
 
-        addButton.addEventListener('click', function() {
-            const newRow = container.querySelector('.image-upload-row').cloneNode(true);
-            newRow.querySelector('input[type="file"]').value = '';
-            newRow.querySelector('textarea').value = '';
-            newRow.querySelector('.remove-section-btn').addEventListener('click', function() {
-                newRow.remove();
-            });
-            container.appendChild(newRow);
-        });
+          addButton.addEventListener('click', function() {
+              const newRow = container.querySelector('.image-upload-row').cloneNode(true);
+              newRow.querySelector('input[type="file"]').value = '';
+              newRow.querySelector('textarea').value = '';
+              newRow.querySelector('.remove-section-btn').addEventListener('click', function() {
+                  newRow.remove();
+              });
+              container.appendChild(newRow);
+          });
 
-        container.addEventListener('click', function(event) {
-            if (event.target.classList.contains('remove-section-btn')) {
-                const row = event.target.closest('.image-upload-row');
-                if (row) {
-                    row.remove();
-                }
-            }
-        });
-    });
-  </script>
+          container.addEventListener('click', function(event) {
+              if (event.target.classList.contains('remove-section-btn')) {
+                  const row = event.target.closest('.image-upload-row');
+                  if (row) {
+                      row.remove();
+                  }
+              }
+          });
+      });
+   </script>
 }

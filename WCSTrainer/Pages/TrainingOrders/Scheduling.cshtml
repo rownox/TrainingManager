@@ -2,76 +2,69 @@
 @model WCSTrainer.Pages.TrainingOrders.SchedulingModel
 
 <div class="panel">
-   <div class="body">
-      <partial name="_Sidebar" />
-      <div class="properties">
-         <div class="user-form">
-            <p class="title">Schedule Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
-            <div class="field-container">
-               @if (Model.TrainingOrder.Status == "Scheduling") {
-                  <form method="post">
-                     <input asp-for="TrainingOrder.Id" hidden />
-                     <div asp-validation-summary="All" class="text-danger"></div>
+  <div class="body">
+    <partial name="_Sidebar" />
+    <div class="properties">
+      <div class="user-form">
+        <p class="title">Schedule Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
+        <div class="field-container">
+          @if (Model.TrainingOrder.Status == "Scheduling")
+          {
+            <form method="post">
+              <input asp-for="TrainingOrder.Id" hidden />
+              <div asp-validation-summary="All" class="text-danger"></div>
 
-                     @{
-                        var date = DateOnly.FromDateTime(DateTime.Now);
-                        <input asp-for="TrainingOrder.ScheduleDate" hidden value="@date" />
-                     }
-                     <input asp-for="TrainingOrder.CreateDate" hidden />
-                     <input asp-for="TrainingOrder.ApprovalDate" hidden />
-                     <input asp-for="TrainingOrder.Medium" hidden />
-                     <input asp-for="TrainingOrder.Status" type="hidden" value="Active" />
-                     <input asp-for="TrainingOrder.LessonId" type="hidden" />
-                     <input asp-for="TrainingOrder.TraineeId" hidden />
-                     <input asp-for="TrainingOrder.LocationId" hidden />
-                     <input asp-for="TrainingOrder.ParentSkillId" hidden />
-                     <input asp-for="TrainingOrder.CreatedByUserId" hidden />
+              @{
+                var date = DateOnly.FromDateTime(DateTime.Now);
+                <input asp-for="TrainingOrder.ScheduleDate" hidden value="@date" />
+              }
+              <input asp-for="TrainingOrder.CreateDate" hidden />
+              <input asp-for="TrainingOrder.ApprovalDate" hidden />
+              <input asp-for="TrainingOrder.Medium" hidden />
+              <input asp-for="TrainingOrder.Status" type="hidden" value="Active" />
+              <input asp-for="TrainingOrder.LessonId" type="hidden" />
+              <input asp-for="TrainingOrder.TraineeId" hidden />
+              <input asp-for="TrainingOrder.LocationId" hidden />
+              <input asp-for="TrainingOrder.ParentSkillId" hidden />
+              <input asp-for="TrainingOrder.CreatedByUserId" hidden />
 
-                     <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
-                     <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
+              <input hidden id="employeesData" value="@ViewData["EmployeesJson"]" />
+              <input hidden id="trainergroupsData" value="@ViewData["TrainerGroupsJson"]" />
 
-                     <div class="form-group">
-                        <div class="form">
-                           <div class="labels">
-                              <p class="control-label">Req. Training Hours</p>
-                              <span asp-validation-for="TrainingOrder.Duration" class="text-danger"></span>
-                           </div>
-                           <input type="text" asp-for="TrainingOrder.Duration" class="form-control" />
-                        </div>
-                        <div class="form">
-                           <div class="labels">
-                              <p class="control-label">Priority Level</p>
-                              <span asp-validation-for="TrainingOrder.Priority" class="text-danger"></span>
-                           </div>
-                           <select asp-for="TrainingOrder.Priority" class="form-drop2">
-                              <option value="High">High</option>
-                              <option value="Medium">Medium</option>
-                              <option value="Low">Low</option>
-                           </select>
-                        </div>
-                     </div>
+              <div class="form-group">
+                <div class="form">
+                  <div class="labels">
+                    <p class="control-label">Priority Level</p>
+                    <span asp-validation-for="TrainingOrder.Priority" class="text-danger"></span>
+                  </div>
+                  <select asp-for="TrainingOrder.Priority" class="form-drop2">
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                  </select>
+                </div>
+                <div class="form">
+                  <div class="labels">
+                    <p class="control-label">Begin Date</p>
+                    <span asp-validation-for="TrainingOrder.BeginDate" class="text-danger"></span>
+                  </div>
+                  <input type="date" asp-for="TrainingOrder.BeginDate" class="form-control" />
+                </div>
+              </div>
 
-                     <div class="form-group">
-                        <div class="form">
-                           <div class="labels">
-                              <p class="control-label">Begin Date</p>
-                              <span asp-validation-for="TrainingOrder.BeginDate" class="text-danger"></span>
-                           </div>
-                           <input type="date" asp-for="TrainingOrder.BeginDate" class="form-control" />
-                        </div>
-                     </div>
-                     
-                     <div class="form-group">
-                        <div class="btn-container">
-                           <input type="submit" value="Approve" class="btn bg-btn btnGreen" />
-                        </div>
-                     </div>
-                  </form>
-               } else {
-                  <p>No.</p>
-               }
-            </div>
-         </div>
+              <div class="form-group">
+                <div class="btn-container">
+                  <input type="submit" value="Approve" class="btn bg-btn btnGreen" />
+                </div>
+              </div>
+            </form>
+          }
+          else
+          {
+            <p>No.</p>
+          }
+        </div>
       </div>
-   </div>
+    </div>
+  </div>
 </div>

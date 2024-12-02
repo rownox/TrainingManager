@@ -2,171 +2,181 @@
 @model Pages.TrainingOrders.EditModel
 
 <div id="groups-component" class="people-component hidden">
-   <partial name="_Groups" model="Model.TrainerGroups" />
+	<partial name="_Groups" model="Model.TrainerGroups" />
 </div>
 <div id="people-component" class="people-component hidden">
-   <partial name="_People" model="Model.Employees" />
+	<partial name="_People" model="Model.Employees" />
 </div>
 <div class="overlay hidden" onclick="closeComponent()"></div>
 
 <div class="panel">
-   <div class="body">
-      <partial name="_Sidebar" />
-      <div class="properties">
-         <div class="user-form">
-            <p class="title">Edit Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
-            <div class="field-container">
-               @if (Model.TrainingOrder.Status != "Completed" && Model.TrainingOrder.Status != "Verified") {
-                  <form method="post">
+	<div class="body">
+		<partial name="_Sidebar" />
+		<div class="properties">
+			<div class="user-form">
+				<p class="title">Edit Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
+				<div class="field-container">
+					@if (Model.TrainingOrder.Status != "Completed" && Model.TrainingOrder.Status != "Verified")
+					{
+						<form method="post">
 
-                     <div asp-validation-summary="All" class="text-danger"></div>
-                     <input hidden asp-for="TrainingOrder.Id" />
+							<div asp-validation-summary="All" class="text-danger"></div>
+							<input hidden asp-for="TrainingOrder.Id" />
 
-                     <input asp-for="TrainingOrder.CompletionDate" hidden />
-                     <input asp-for="TrainingOrder.CreateDate" hidden />
-                     <input asp-for="TrainingOrder.ApprovalDate" hidden />
-                     <input asp-for="TrainingOrder.Status" hidden />
-                     <input asp-for="TrainingOrder.ParentSkillId" hidden />
-                     <input asp-for="TrainingOrder.CreatedByUserId" hidden />
+							<input asp-for="TrainingOrder.CompletionDate" hidden />
+							<input asp-for="TrainingOrder.CreateDate" hidden />
+							<input asp-for="TrainingOrder.ApprovalDate" hidden />
+							<input asp-for="TrainingOrder.Status" hidden />
+							<input asp-for="TrainingOrder.ParentSkillId" hidden />
+							<input asp-for="TrainingOrder.CreatedByUserId" hidden />
 
-                     @if (!Model.TrainingOrder.Status.Equals("Approving")) {
-                        <div class="form-group">
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Trainers</p>
-                                 <span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
-                              </div>
-                              <div class="selections">
-                                 <ul id="trainerList" class="pill-container">
-                                    @foreach (var trainer in Model.TrainingOrder.Trainers) {
-                                       <li class="pill person" onclick="removeItem(this, 'trainer')" value="@trainer.Id">
-                                          @trainer.FirstName @trainer.LastName
-                                       </li>
-                                    }
-                                 </ul>
-                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainer')">
-                                    <p>Select</p>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="form-group">
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Trainer Groups</p>
-                                 <span asp-validation-for="@Model.SelectedTrainerGroupString" class="text-danger"></span>
-                              </div>
-                              <div class="selections">
-                                 <ul id="groupList" class="pill-container">
-                                    @foreach (var trainerGroup in Model.TrainingOrder.TrainerGroups) {
-                                       <li class="pill removable" onclick="removeItem(this, 'group')" value="@trainerGroup.Id">@trainerGroup.Name</li>
-                                    }
-                                 </ul>
-                                 <div class="btn bg-btn btnWhite" onclick="openComponent('group')">Select</div>
-                              </div>
-                           </div>
-                        </div>
-                        <input id="trainerInput" asp-for="@Model.SelectedTrainerString" hidden />
-                        <input id="groupInput" asp-for="@Model.SelectedTrainerGroupString" hidden />
-                     }
-                     <div class="form-group">
-                        <div class="form">
-                           <div class="labels">
-                              <p class="control-label">Trainee</p>
-                              <span asp-validation-for="TrainingOrder.TraineeId" class="text-danger"></span>
-                           </div>
-                           <div class="selections">
-                              <ul id="traineeList" class="pill-container">
-                                 @{
-                                    var trainee = Model.TrainingOrder.Trainee;
-                                    if (trainee != null) {
-                                       <li value="@Model.TrainingOrder.TraineeId" class="pill removable" onclick="removeItem(this, 'trainee')">@trainee.FirstName @trainee.LastName</li>
-                                    }
-                                 }
-                              </ul>
-                              <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')"><p>Select</p></div>
-                              <input id="traineeInput" asp-for="TrainingOrder.TraineeId" hidden />
-                           </div>
-                        </div>
-                     </div>
-                     @if (!Model.TrainingOrder.Status.Equals("Approving")) {
-                        <div class="form-group">
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Training Hours Needed</p>
-                                 <span asp-validation-for="TrainingOrder.Duration" class="text-danger"></span>
-                              </div>
-                              <input asp-for="TrainingOrder.Duration" class="form-control" />
-                           </div>
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Priority Level</p>
-                                 <span asp-validation-for="TrainingOrder.Priority" class="text-danger"></span>
-                              </div>
-                              <select asp-for="TrainingOrder.Priority" class="form-drop2">
-                                 <option value="High">High</option>
-                                 <option value="Medium">Medium</option>
-                                 <option value="Low">Low</option>
-                              </select>
-                           </div>
-                        </div>
-                        <div class="form-group">
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Learning Medium</p>
-                                 <span asp-validation-for="TrainingOrder.Medium" class="text-danger"></span>
-                              </div>
-                              <input asp-for="TrainingOrder.Medium" class="form-control" />
-                           </div>
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Location</p>
-                                 <span asp-validation-for="TrainingOrder.LocationId" class="text-danger"></span>
-                              </div>
-                              <select asp-for="TrainingOrder.LocationId" class="form-drop2" asp-items="@Model.Locations">
-                              </select>
-                           </div>
-                        </div>
-                     }
-                     <div class="form-group">
-                        @if (Model.TrainingOrder.Status == "Approving" || Model.TrainingOrder.Status == "Active") {
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Lesson</p>
-                                 <span asp-validation-for="TrainingOrder.LessonId" class="text-danger"></span>
-                              </div>
-                              <select asp-for="TrainingOrder.LessonId" class="form-control" asp-items="@Model.LessonSelectList"></select>
-                           </div>
-                        }
-                        @if (!Model.TrainingOrder.Status.Equals("Approving")) {
-                           <div class="form">
-                              <div class="labels">
-                                 <p class="control-label">Begin Date</p>
-                                 <span asp-validation-for="TrainingOrder.BeginDate" class="text-danger"></span>
-                              </div>
-                              <input type="date" asp-for="TrainingOrder.BeginDate" class="form-control" />
-                           </div>
-                        }
-                     </div>
-                     <div class="form-group">
-                        <div class="form">
-                           <div class="btn-container">
-                              <input type="submit" value="Save" class="btn bg-btn btnGreen" />
-                           </div>
-                        </div>
-                     </div>
-                  </form>
-               } else {
-                  <p>No.</p>
-               }
-            </div>
-         </div>
-      </div>
-   </div>
+							@if (!Model.TrainingOrder.Status.Equals("Approving"))
+							{
+								<div class="form-group">
+									<div class="form">
+										<div class="labels">
+											<p class="control-label">Trainers</p>
+											<span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
+										</div>
+										<div class="selections">
+											<ul id="trainerList" class="pill-container">
+												@foreach (var trainer in Model.TrainingOrder.Trainers)
+												{
+													<li class="pill person" onclick="removeItem(this, 'trainer')" value="@trainer.Id">
+														@trainer.FirstName @trainer.LastName
+													</li>
+												}
+											</ul>
+											<div class="btn bg-btn btnWhite" onclick="openComponent('trainer')">
+												<p>Select</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="form">
+										<div class="labels">
+											<p class="control-label">Trainer Groups</p>
+											<span asp-validation-for="@Model.SelectedTrainerGroupString" class="text-danger"></span>
+										</div>
+										<div class="selections">
+											<ul id="groupList" class="pill-container">
+												@foreach (var trainerGroup in Model.TrainingOrder.TrainerGroups)
+												{
+													<li class="pill removable" onclick="removeItem(this, 'group')" value="@trainerGroup.Id">@trainerGroup.Name</li>
+												}
+											</ul>
+											<div class="btn bg-btn btnWhite" onclick="openComponent('group')">Select</div>
+										</div>
+									</div>
+								</div>
+								<input id="trainerInput" asp-for="@Model.SelectedTrainerString" hidden />
+								<input id="groupInput" asp-for="@Model.SelectedTrainerGroupString" hidden />
+							}
+							<div class="form-group">
+								<div class="form">
+									<div class="labels">
+										<p class="control-label">Trainee</p>
+										<span asp-validation-for="TrainingOrder.TraineeId" class="text-danger"></span>
+									</div>
+									<div class="selections">
+										<ul id="traineeList" class="pill-container">
+											@{
+												var trainee = Model.TrainingOrder.Trainee;
+												if (trainee != null)
+												{
+													<li value="@Model.TrainingOrder.TraineeId" class="pill removable" onclick="removeItem(this, 'trainee')">@trainee.FirstName @trainee.LastName</li>
+												}
+											}
+										</ul>
+										<div class="btn bg-btn btnWhite" onclick="openComponent('trainee')"><p>Select</p></div>
+										<input id="traineeInput" asp-for="TrainingOrder.TraineeId" hidden />
+									</div>
+								</div>
+							</div>
+							@if (!Model.TrainingOrder.Status.Equals("Approving"))
+							{
+								<div class="form-group">
+									<div class="form">
+										<div class="labels">
+											<p class="control-label">Training Hours Needed</p>
+											<span asp-validation-for="TrainingOrder.Lesson.Duration" class="text-danger"></span>
+										</div>
+										<input asp-for="TrainingOrder.Lesson.Duration" class="form-control" />
+									</div>
+									<div class="form">
+										<div class="labels">
+											<p class="control-label">Priority Level</p>
+											<span asp-validation-for="TrainingOrder.Priority" class="text-danger"></span>
+										</div>
+										<select asp-for="TrainingOrder.Priority" class="form-drop2">
+											<option value="High">High</option>
+											<option value="Medium">Medium</option>
+											<option value="Low">Low</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="form">
+										<div class="labels">
+											<p class="control-label">Learning Medium</p>
+											<span asp-validation-for="TrainingOrder.Medium" class="text-danger"></span>
+										</div>
+										<input asp-for="TrainingOrder.Medium" class="form-control" />
+									</div>
+									<div class="form">
+										<div class="labels">
+											<p class="control-label">Location</p>
+											<span asp-validation-for="TrainingOrder.LocationId" class="text-danger"></span>
+										</div>
+										<select asp-for="TrainingOrder.LocationId" class="form-drop2" asp-items="@Model.Locations">
+										</select>
+									</div>
+								</div>
+							}
+							<div class="form-group">
+								@if (Model.TrainingOrder.Status == "Approving" || Model.TrainingOrder.Status == "Active")
+								{
+									<div class="form">
+										<div class="labels">
+											<p class="control-label">Lesson</p>
+											<span asp-validation-for="TrainingOrder.LessonId" class="text-danger"></span>
+										</div>
+										<select asp-for="TrainingOrder.LessonId" class="form-control" asp-items="@Model.LessonSelectList"></select>
+									</div>
+								}
+								@if (!Model.TrainingOrder.Status.Equals("Approving"))
+								{
+									<div class="form">
+										<div class="labels">
+											<p class="control-label">Begin Date</p>
+											<span asp-validation-for="TrainingOrder.BeginDate" class="text-danger"></span>
+										</div>
+										<input type="date" asp-for="TrainingOrder.BeginDate" class="form-control" />
+									</div>
+								}
+							</div>
+							<div class="form-group">
+								<div class="form">
+									<div class="btn-container">
+										<input type="submit" value="Save" class="btn bg-btn btnGreen" />
+									</div>
+								</div>
+							</div>
+						</form>
+					}
+					else
+					{
+						<p>No.</p>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 @section Scripts {
-   @{
-      await Html.RenderPartialAsync("_ValidationScriptsPartial");
-   }
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
 }

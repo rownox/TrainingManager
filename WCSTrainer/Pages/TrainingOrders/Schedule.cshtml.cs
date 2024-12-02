@@ -69,7 +69,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             if (effectiveStart <= effectiveEnd) {
                if (employeeHasOrder(order)) {
                   if (order.Status == "Active") {
-                     count += order.Duration;
+                     count += order.Lesson.Duration;
                   }
                }
             }
@@ -88,7 +88,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             if (orderStart.HasValue && orderStart.Value.Month == month && orderStart.Value.Year == selectedYear) {
                if (employeeHasOrder(order)) {
                   if (order.Status == "Active") {
-                     count += order.Duration;
+                     count += order.Lesson.Duration;
                   }
                }
             }

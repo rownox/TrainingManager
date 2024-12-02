@@ -18,7 +18,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
       public async Task OnGetAsync() {
          Employees = await context.Employees.ToListAsync();
-         TrainingOrders = await context.TrainingOrders.ToListAsync();
+         TrainingOrders = await context.TrainingOrders
+                .Include(t => t.Lesson)
+                .ToListAsync();
       }
 
       public async Task<IActionResult> OnPostAsync() {
@@ -60,7 +62,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             if (effectiveStart <= effectiveEnd) {
                if (employeeHasOrder(order)) {
-                  count += order.Duration;
+                  count += order.Lesson.Duration;
                }
             }
          }
@@ -80,7 +82,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
             if (effectiveStart <= effectiveEnd) {
                if (employeeHasOrder(order)) {
-                  count += order.Duration;
+                  count += order.Lesson.Duration;
                }
             }
          }
