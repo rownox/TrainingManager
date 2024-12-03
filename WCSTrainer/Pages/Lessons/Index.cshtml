@@ -17,7 +17,7 @@
             </div>
             <ul class="category-container">
                @foreach (var category in Model.CategoryList) {
-                  <li id="@category.Name @category.Id" class="category">
+                  <li id="@category.Name @category.Id" class="category searchable">
                      <p class="category-title">@category.Name</p>
                      <ul class="skill-list">
                         @foreach (var lesson in category.Lessons) {
@@ -35,7 +35,7 @@
             <div class="tools">
                <p class="title">Options:</p>
                <div class="search">
-                  <input class="search-box" id="searchInput" placeholder="Search Skills" type="search" oninput="update(this)" />
+                  <input class="search-box" id="searchInput" placeholder="Search Categories" type="search" oninput="update(this)" />
                </div>
                <div class="btns">
                   <a asp-page="Create" class="btn nbg-btn btnMenu">Create Lesson</a>

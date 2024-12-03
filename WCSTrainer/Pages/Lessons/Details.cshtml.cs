@@ -16,7 +16,7 @@ namespace WCSTrainer.Pages.Lessons {
 
          var lesson = await context.Lessons
             .Include(l => l.Descriptions)
-               .ThenInclude(d => d.ImageUpload)
+               .ThenInclude(d => d.FileUpload)
             .FirstOrDefaultAsync(m => m.Id == id);
 
          if (lesson == null) {

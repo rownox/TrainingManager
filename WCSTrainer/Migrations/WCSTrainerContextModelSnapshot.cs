@@ -8,927 +8,955 @@ using WCSTrainer.Data;
 
 #nullable disable
 
-namespace WCSTrainer.Migrations
-{
-    [DbContext(typeof(WCSTrainerContext))]
-    partial class WCSTrainerContextModelSnapshot : ModelSnapshot
-    {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
+namespace WCSTrainer.Migrations {
+   [DbContext(typeof(WCSTrainerContext))]
+   partial class WCSTrainerContextModelSnapshot : ModelSnapshot {
+      protected override void BuildModel(ModelBuilder modelBuilder) {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+         modelBuilder
+             .HasAnnotation("ProductVersion", "9.0.0")
+             .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+         SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Description", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+         modelBuilder.Entity("Description", b =>
+         {
+            b.Property<int>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DescriptionType")
-                        .HasColumnType("int");
+            b.Property<int>("DisplayOrder")
+                .HasColumnType("int");
 
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
+            b.Property<int?>("FileUploadId")
+                .HasColumnType("int");
 
-                    b.Property<int?>("ImageUploadId")
-                        .HasColumnType("int");
+            b.Property<int>("LessonId")
+                .HasColumnType("int");
 
-                    b.Property<int>("LessonId")
-                        .HasColumnType("int");
+            b.Property<string>("TextContent")
+                .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TextContent")
-                        .HasColumnType("nvarchar(max)");
+            b.HasKey("Id");
 
-                    b.HasKey("Id");
+            b.HasIndex("FileUploadId");
 
-                    b.HasIndex("ImageUploadId");
+            b.HasIndex("LessonId");
 
-                    b.HasIndex("LessonId");
+            b.ToTable("Descriptions");
+         });
 
-                    b.ToTable("Descriptions");
+         modelBuilder.Entity("Employee", b =>
+         {
+            b.Property<int>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
+
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+            b.Property<string>("FirstName")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
+
+            b.Property<string>("LastName")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
+
+            b.Property<string>("Status")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
+
+            b.Property<string>("UserAccountId")
+                .IsRequired()
+                .HasColumnType("nvarchar(450)");
+
+            b.HasKey("Id");
+
+            b.HasIndex("UserAccountId")
+                .IsUnique();
+
+            b.ToTable("Employees");
+         });
+
+         modelBuilder.Entity("EmployeeSkill", b =>
+         {
+            b.Property<int>("EmployeesId")
+                .HasColumnType("int");
+
+            b.Property<int>("SkillsId")
+                .HasColumnType("int");
+
+            b.HasKey("EmployeesId", "SkillsId");
+
+            b.HasIndex("SkillsId");
+
+            b.ToTable("EmployeeSkill");
+         });
+
+         modelBuilder.Entity("EmployeeTrainerGroup", b =>
+         {
+            b.Property<int>("GroupsId")
+                .HasColumnType("int");
+
+            b.Property<int>("TrainersId")
+                .HasColumnType("int");
+
+            b.HasKey("GroupsId", "TrainersId");
+
+            b.HasIndex("TrainersId");
+
+            b.ToTable("EmployeeTrainerGroup");
+         });
+
+         modelBuilder.Entity("EmployeeTrainingOrder", b =>
+         {
+            b.Property<int>("TrainersId")
+                .HasColumnType("int");
+
+            b.Property<int>("TrainingOrdersAsTrainerId")
+                .HasColumnType("int");
+
+            b.HasKey("TrainersId", "TrainingOrdersAsTrainerId");
+
+            b.HasIndex("TrainingOrdersAsTrainerId");
+
+            b.ToTable("EmployeeTrainingOrder");
+         });
+
+         modelBuilder.Entity("FileUpload", b =>
+         {
+            b.Property<int>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
+
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+            b.Property<string>("FileName")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
+
+            b.Property<string>("FilePath")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
+
+            b.Property<long>("FileSize")
+                .HasColumnType("bigint");
+
+            b.Property<string>("FileType")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
+
+            b.Property<DateTime>("UploadDate")
+                .HasColumnType("datetime2");
+
+            b.HasKey("Id");
+
+            b.ToTable("FileUpload");
+         });
+
+         modelBuilder.Entity("Lesson", b =>
+         {
+            b.Property<int>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
+
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+            b.Property<int>("Duration")
+                .HasColumnType("int");
+
+            b.Property<int>("LessonCategoryId")
+                .HasColumnType("int");
+
+            b.Property<string>("Name")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
+
+            b.HasKey("Id");
+
+            b.HasIndex("LessonCategoryId");
+
+            b.ToTable("Lessons");
+         });
+
+         modelBuilder.Entity("LessonCategory", b =>
+         {
+            b.Property<int>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
+
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+            b.Property<string>("Name")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
+
+            b.HasKey("Id");
+
+            b.ToTable("LessonCategories");
+         });
+
+         modelBuilder.Entity("LessonSkill", b =>
+         {
+            b.Property<int>("LessonsId")
+                .HasColumnType("int");
+
+            b.Property<int>("SkillId")
+                .HasColumnType("int");
+
+            b.HasKey("LessonsId", "SkillId");
+
+            b.HasIndex("SkillId");
+
+            b.ToTable("LessonSkill");
+         });
+
+         modelBuilder.Entity("Location", b =>
+         {
+            b.Property<int>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
+
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+            b.Property<int>("CategoryId")
+                .HasColumnType("int");
+
+            b.Property<string>("Name")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
+
+            b.HasKey("Id");
+
+            b.HasIndex("CategoryId");
+
+            b.ToTable("Locations");
+         });
+
+         modelBuilder.Entity("LocationCategory", b =>
+         {
+            b.Property<int>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
+
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+            b.Property<string>("Name")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
+
+            b.HasKey("Id");
+
+            b.ToTable("LocationCategories");
+         });
+
+         modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+         {
+            b.Property<string>("Id")
+                .HasColumnType("nvarchar(450)");
+
+            b.Property<string>("ConcurrencyStamp")
+                .IsConcurrencyToken()
+                .HasColumnType("nvarchar(max)");
+
+            b.Property<string>("Name")
+                .HasMaxLength(256)
+                .HasColumnType("nvarchar(256)");
+
+            b.Property<string>("NormalizedName")
+                .HasMaxLength(256)
+                .HasColumnType("nvarchar(256)");
+
+            b.HasKey("Id");
+
+            b.HasIndex("NormalizedName")
+                .IsUnique()
+                .HasDatabaseName("RoleNameIndex")
+                .HasFilter("[NormalizedName] IS NOT NULL");
+
+            b.ToTable("AspNetRoles", (string)null);
+
+            b.HasData(
+                new {
+                   Id = "6c6439c8-84ad-4ca3-a2a7-39b90caedfeb",
+                   Name = "owner",
+                   NormalizedName = "OWNER"
+                },
+                new {
+                   Id = "77e5bc33-4c30-4b8d-84d1-2c3ac56f01fe",
+                   Name = "admin",
+                   NormalizedName = "ADMIN"
+                },
+                new {
+                   Id = "299b83e3-3a82-4200-a7a1-83f60af72013",
+                   Name = "user",
+                   NormalizedName = "USER"
+                },
+                new {
+                   Id = "a2d52380-a009-4fa4-979a-989f794bea11",
+                   Name = "guest",
+                   NormalizedName = "GUEST"
                 });
+         });
 
-            modelBuilder.Entity("Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+         modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+         {
+            b.Property<int>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("ClaimType")
+                .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("ClaimValue")
+                .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("RoleId")
+                .IsRequired()
+                .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserAccountId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+            b.HasKey("Id");
 
-                    b.HasKey("Id");
+            b.HasIndex("RoleId");
 
-                    b.HasIndex("UserAccountId")
-                        .IsUnique();
+            b.ToTable("AspNetRoleClaims", (string)null);
+         });
 
-                    b.ToTable("Employees");
-                });
+         modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+         {
+            b.Property<int>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
 
-            modelBuilder.Entity("EmployeeSkill", b =>
-                {
-                    b.Property<int>("EmployeesId")
-                        .HasColumnType("int");
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("SkillsId")
-                        .HasColumnType("int");
+            b.Property<string>("ClaimType")
+                .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("EmployeesId", "SkillsId");
+            b.Property<string>("ClaimValue")
+                .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("SkillsId");
+            b.Property<string>("UserId")
+                .IsRequired()
+                .HasColumnType("nvarchar(450)");
 
-                    b.ToTable("EmployeeSkill");
-                });
+            b.HasKey("Id");
 
-            modelBuilder.Entity("EmployeeTrainerGroup", b =>
-                {
-                    b.Property<int>("GroupsId")
-                        .HasColumnType("int");
+            b.HasIndex("UserId");
 
-                    b.Property<int>("TrainersId")
-                        .HasColumnType("int");
+            b.ToTable("AspNetUserClaims", (string)null);
+         });
 
-                    b.HasKey("GroupsId", "TrainersId");
+         modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+         {
+            b.Property<string>("LoginProvider")
+                .HasMaxLength(128)
+                .HasColumnType("nvarchar(128)");
 
-                    b.HasIndex("TrainersId");
+            b.Property<string>("ProviderKey")
+                .HasMaxLength(128)
+                .HasColumnType("nvarchar(128)");
 
-                    b.ToTable("EmployeeTrainerGroup");
-                });
+            b.Property<string>("ProviderDisplayName")
+                .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("EmployeeTrainingOrder", b =>
-                {
-                    b.Property<int>("TrainersId")
-                        .HasColumnType("int");
+            b.Property<string>("UserId")
+                .IsRequired()
+                .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("TrainingOrdersAsTrainerId")
-                        .HasColumnType("int");
+            b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasKey("TrainersId", "TrainingOrdersAsTrainerId");
+            b.HasIndex("UserId");
 
-                    b.HasIndex("TrainingOrdersAsTrainerId");
+            b.ToTable("AspNetUserLogins", (string)null);
+         });
 
-                    b.ToTable("EmployeeTrainingOrder");
-                });
+         modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+         {
+            b.Property<string>("UserId")
+                .HasColumnType("nvarchar(450)");
 
-            modelBuilder.Entity("ImageUpload", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            b.Property<string>("RoleId")
+                .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+            b.HasKey("UserId", "RoleId");
 
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.HasIndex("RoleId");
 
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.ToTable("AspNetUserRoles", (string)null);
+         });
 
-                    b.Property<long>("FileSize")
-                        .HasColumnType("bigint");
+         modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+         {
+            b.Property<string>("UserId")
+                .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FileType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("LoginProvider")
+                .HasMaxLength(128)
+                .HasColumnType("nvarchar(128)");
 
-                    b.Property<DateTime>("UploadDate")
-                        .HasColumnType("datetime2");
+            b.Property<string>("Name")
+                .HasMaxLength(128)
+                .HasColumnType("nvarchar(128)");
 
-                    b.HasKey("Id");
+            b.Property<string>("Value")
+                .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("ImageUpload");
-                });
+            b.HasKey("UserId", "LoginProvider", "Name");
 
-            modelBuilder.Entity("Lesson", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            b.ToTable("AspNetUserTokens", (string)null);
+         });
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+         modelBuilder.Entity("Skill", b =>
+         {
+            b.Property<int>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
 
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("LessonCategoryId")
-                        .HasColumnType("int");
+            b.Property<string>("Description")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("Name")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+            b.Property<int>("SkillCategoryId")
+                .HasColumnType("int");
 
-                    b.HasIndex("LessonCategoryId");
+            b.HasKey("Id");
 
-                    b.ToTable("Lessons");
-                });
+            b.HasIndex("SkillCategoryId");
 
-            modelBuilder.Entity("LessonCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            b.ToTable("Skills");
+         });
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+         modelBuilder.Entity("SkillCategory", b =>
+         {
+            b.Property<int>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
 
-                    b.HasKey("Id");
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.ToTable("LessonCategories");
-                });
+            b.Property<string>("Name")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("LessonSkill", b =>
-                {
-                    b.Property<int>("LessonsId")
-                        .HasColumnType("int");
+            b.HasKey("Id");
 
-                    b.Property<int>("SkillId")
-                        .HasColumnType("int");
+            b.ToTable("SkillCategories");
+         });
 
-                    b.HasKey("LessonsId", "SkillId");
+         modelBuilder.Entity("TrainerGroup", b =>
+         {
+            b.Property<int>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
 
-                    b.HasIndex("SkillId");
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.ToTable("LessonSkill");
-                });
+            b.Property<string>("Name")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("Location", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            b.HasKey("Id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+            b.ToTable("TrainerGroups");
+         });
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+         modelBuilder.Entity("TrainerGroupTrainingOrder", b =>
+         {
+            b.Property<int>("TrainerGroupsId")
+                .HasColumnType("int");
 
-                    b.HasKey("Id");
+            b.Property<int>("TrainingOrdersId")
+                .HasColumnType("int");
 
-                    b.ToTable("Locations");
-                });
+            b.HasKey("TrainerGroupsId", "TrainingOrdersId");
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+            b.HasIndex("TrainingOrdersId");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+            b.ToTable("TrainerGroupTrainingOrder");
+         });
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+         modelBuilder.Entity("TrainingOrder", b =>
+         {
+            b.Property<int>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
 
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.HasKey("Id");
+            b.Property<DateOnly?>("ApprovalDate")
+                .HasColumnType("date");
 
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+            b.Property<bool>("Archived")
+                .HasColumnType("bit");
 
-                    b.ToTable("AspNetRoles", (string)null);
+            b.Property<DateOnly?>("BeginDate")
+                .HasColumnType("date");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = "34a347db-234a-4d96-9c80-a35ea92cef16",
-                            Name = "owner",
-                            NormalizedName = "OWNER"
-                        },
-                        new
-                        {
-                            Id = "a4346e92-0975-4047-8f79-cb3168a1defe",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "e83e680b-d8b5-4075-bbed-6dc4d6ba7310",
-                            Name = "user",
-                            NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = "a7c9c3b2-9b98-42ac-a302-1f4654f245fc",
-                            Name = "guest",
-                            NormalizedName = "GUEST"
-                        });
-                });
+            b.Property<string>("ClosingNotes")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            b.Property<DateOnly?>("CompletionDate")
+                .HasColumnType("date");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+            b.Property<DateOnly>("CreateDate")
+                .HasColumnType("date");
 
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("CreatedByUserId")
+                .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<int>("LessonId")
+                .HasColumnType("int");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+            b.Property<int?>("LocationId")
+                .HasColumnType("int");
 
-                    b.HasKey("Id");
+            b.Property<string>("Medium")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("RoleId");
+            b.Property<int?>("ParentSkillId")
+                .HasColumnType("int");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
+            b.Property<string>("Priority")
+                .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            b.Property<DateOnly?>("ScheduleDate")
+                .HasColumnType("date");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+            b.Property<int?>("SkillId")
+                .HasColumnType("int");
 
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("Status")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<int>("TraineeId")
+                .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+            b.Property<int?>("VerificationId")
+                .HasColumnType("int");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+            b.HasIndex("LessonId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
+            b.HasIndex("LocationId");
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+            b.HasIndex("ParentSkillId");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+            b.HasIndex("SkillId");
 
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
+            b.HasIndex("TraineeId");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+            b.ToTable("TrainingOrders");
+         });
 
-                    b.HasKey("LoginProvider", "ProviderKey");
+         modelBuilder.Entity("UserAccount", b =>
+         {
+            b.Property<string>("Id")
+                .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("UserId");
+            b.Property<int>("AccessFailedCount")
+                .HasColumnType("int");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
+            b.Property<string>("ConcurrencyStamp")
+                .IsConcurrencyToken()
+                .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+            b.Property<DateTime>("DateCreated")
+                .HasColumnType("datetime2");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+            b.Property<string>("Email")
+                .HasMaxLength(256)
+                .HasColumnType("nvarchar(256)");
 
-                    b.HasKey("UserId", "RoleId");
+            b.Property<bool>("EmailConfirmed")
+                .HasColumnType("bit");
 
-                    b.HasIndex("RoleId");
+            b.Property<int>("EmployeeId")
+                .HasColumnType("int");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
+            b.Property<bool>("LockoutEnabled")
+                .HasColumnType("bit");
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+            b.Property<DateTimeOffset?>("LockoutEnd")
+                .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+            b.Property<string>("NormalizedEmail")
+                .HasMaxLength(256)
+                .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+            b.Property<string>("NormalizedUserName")
+                .HasMaxLength(256)
+                .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("PasswordHash")
+                .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+            b.Property<string>("PhoneNumber")
+                .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
-                });
+            b.Property<bool>("PhoneNumberConfirmed")
+                .HasColumnType("bit");
 
-            modelBuilder.Entity("Skill", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            b.Property<string>("SecurityStamp")
+                .HasColumnType("nvarchar(max)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+            b.Property<bool>("TwoFactorEnabled")
+                .HasColumnType("bit");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("UserName")
+                .HasMaxLength(256)
+                .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.HasKey("Id");
 
-                    b.Property<int>("SkillCategoryId")
-                        .HasColumnType("int");
+            b.HasIndex("NormalizedEmail")
+                .HasDatabaseName("EmailIndex");
 
-                    b.HasKey("Id");
+            b.HasIndex("NormalizedUserName")
+                .IsUnique()
+                .HasDatabaseName("UserNameIndex")
+                .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("SkillCategoryId");
+            b.ToTable("AspNetUsers", (string)null);
+         });
 
-                    b.ToTable("Skills");
-                });
+         modelBuilder.Entity("Verification", b =>
+         {
+            b.Property<int>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("int");
 
-            modelBuilder.Entity("SkillCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+            b.Property<string>("Signature")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<int>("TrainingOrderId")
+                .HasColumnType("int");
 
-                    b.HasKey("Id");
+            b.Property<string>("VerifierId")
+                .HasColumnType("nvarchar(450)");
 
-                    b.ToTable("SkillCategories");
-                });
+            b.Property<DateOnly?>("VerifyDate")
+                .HasColumnType("date");
 
-            modelBuilder.Entity("TrainerGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            b.Property<string>("VerifyNotes")
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+            b.HasKey("Id");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            b.HasIndex("TrainingOrderId")
+                .IsUnique();
 
-                    b.HasKey("Id");
+            b.HasIndex("VerifierId");
 
-                    b.ToTable("TrainerGroups");
-                });
+            b.ToTable("Verifications");
+         });
 
-            modelBuilder.Entity("TrainerGroupTrainingOrder", b =>
-                {
-                    b.Property<int>("TrainerGroupsId")
-                        .HasColumnType("int");
+         modelBuilder.Entity("Description", b =>
+         {
+            b.HasOne("FileUpload", "FileUpload")
+                .WithMany()
+                .HasForeignKey("FileUploadId");
 
-                    b.Property<int>("TrainingOrdersId")
-                        .HasColumnType("int");
+            b.HasOne("Lesson", "Lesson")
+                .WithMany("Descriptions")
+                .HasForeignKey("LessonId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
 
-                    b.HasKey("TrainerGroupsId", "TrainingOrdersId");
+            b.Navigation("FileUpload");
 
-                    b.HasIndex("TrainingOrdersId");
+            b.Navigation("Lesson");
+         });
 
-                    b.ToTable("TrainerGroupTrainingOrder");
-                });
+         modelBuilder.Entity("Employee", b =>
+         {
+            b.HasOne("UserAccount", "UserAccount")
+                .WithOne("Employee")
+                .HasForeignKey("Employee", "UserAccountId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
 
-            modelBuilder.Entity("TrainingOrder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            b.Navigation("UserAccount");
+         });
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+         modelBuilder.Entity("EmployeeSkill", b =>
+         {
+            b.HasOne("Employee", null)
+                .WithMany()
+                .HasForeignKey("EmployeesId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
 
-                    b.Property<DateOnly?>("ApprovalDate")
-                        .HasColumnType("date");
+            b.HasOne("Skill", null)
+                .WithMany()
+                .HasForeignKey("SkillsId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+         });
 
-                    b.Property<bool>("Archived")
-                        .HasColumnType("bit");
+         modelBuilder.Entity("EmployeeTrainerGroup", b =>
+         {
+            b.HasOne("TrainerGroup", null)
+                .WithMany()
+                .HasForeignKey("GroupsId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
 
-                    b.Property<DateOnly?>("BeginDate")
-                        .HasColumnType("date");
+            b.HasOne("Employee", null)
+                .WithMany()
+                .HasForeignKey("TrainersId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+         });
 
-                    b.Property<string>("ClosingNotes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+         modelBuilder.Entity("EmployeeTrainingOrder", b =>
+         {
+            b.HasOne("Employee", null)
+                .WithMany()
+                .HasForeignKey("TrainersId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
 
-                    b.Property<DateOnly?>("CompletionDate")
-                        .HasColumnType("date");
+            b.HasOne("TrainingOrder", null)
+                .WithMany()
+                .HasForeignKey("TrainingOrdersAsTrainerId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+         });
 
-                    b.Property<DateOnly>("CreateDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("CreatedByUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("LessonId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LocationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Medium")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ParentSkillId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Priority")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly?>("ScheduleDate")
-                        .HasColumnType("date");
-
-                    b.Property<int?>("SkillId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TraineeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("VerificationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LessonId");
-
-                    b.HasIndex("LocationId");
-
-                    b.HasIndex("ParentSkillId");
-
-                    b.HasIndex("SkillId");
-
-                    b.HasIndex("TraineeId");
-
-                    b.ToTable("TrainingOrders");
-                });
-
-            modelBuilder.Entity("UserAccount", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("Verification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Signature")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TrainingOrderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("VerifierId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateOnly?>("VerifyDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("VerifyNotes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TrainingOrderId")
-                        .IsUnique();
-
-                    b.HasIndex("VerifierId");
-
-                    b.ToTable("Verifications");
-                });
-
-            modelBuilder.Entity("Description", b =>
-                {
-                    b.HasOne("ImageUpload", "ImageUpload")
-                        .WithMany()
-                        .HasForeignKey("ImageUploadId");
-
-                    b.HasOne("Lesson", "Lesson")
-                        .WithMany("Descriptions")
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ImageUpload");
-
-                    b.Navigation("Lesson");
-                });
-
-            modelBuilder.Entity("Employee", b =>
-                {
-                    b.HasOne("UserAccount", "UserAccount")
-                        .WithOne("Employee")
-                        .HasForeignKey("Employee", "UserAccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserAccount");
-                });
-
-            modelBuilder.Entity("EmployeeSkill", b =>
-                {
-                    b.HasOne("Employee", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Skill", null)
-                        .WithMany()
-                        .HasForeignKey("SkillsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EmployeeTrainerGroup", b =>
-                {
-                    b.HasOne("TrainerGroup", null)
-                        .WithMany()
-                        .HasForeignKey("GroupsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Employee", null)
-                        .WithMany()
-                        .HasForeignKey("TrainersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EmployeeTrainingOrder", b =>
-                {
-                    b.HasOne("Employee", null)
-                        .WithMany()
-                        .HasForeignKey("TrainersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrainingOrder", null)
-                        .WithMany()
-                        .HasForeignKey("TrainingOrdersAsTrainerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Lesson", b =>
-                {
-                    b.HasOne("LessonCategory", "LessonCategory")
-                        .WithMany("Lessons")
-                        .HasForeignKey("LessonCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("LessonCategory");
-                });
-
-            modelBuilder.Entity("LessonSkill", b =>
-                {
-                    b.HasOne("Lesson", null)
-                        .WithMany()
-                        .HasForeignKey("LessonsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Skill", null)
-                        .WithMany()
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("UserAccount", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("UserAccount", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UserAccount", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("UserAccount", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Skill", b =>
-                {
-                    b.HasOne("SkillCategory", "SkillCategory")
-                        .WithMany("Skills")
-                        .HasForeignKey("SkillCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SkillCategory");
-                });
-
-            modelBuilder.Entity("TrainerGroupTrainingOrder", b =>
-                {
-                    b.HasOne("TrainerGroup", null)
-                        .WithMany()
-                        .HasForeignKey("TrainerGroupsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrainingOrder", null)
-                        .WithMany()
-                        .HasForeignKey("TrainingOrdersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TrainingOrder", b =>
-                {
-                    b.HasOne("Lesson", "Lesson")
-                        .WithMany("TrainingOrders")
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Location", "Location")
-                        .WithMany("TrainingOrders")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Skill", "ParentSkill")
-                        .WithMany()
-                        .HasForeignKey("ParentSkillId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Skill", null)
-                        .WithMany("TrainingOrders")
-                        .HasForeignKey("SkillId");
-
-                    b.HasOne("Employee", "Trainee")
-                        .WithMany("TrainingOrdersAsTrainee")
-                        .HasForeignKey("TraineeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Lesson");
-
-                    b.Navigation("Location");
-
-                    b.Navigation("ParentSkill");
-
-                    b.Navigation("Trainee");
-                });
-
-            modelBuilder.Entity("Verification", b =>
-                {
-                    b.HasOne("TrainingOrder", "TrainingOrder")
-                        .WithOne("Verification")
-                        .HasForeignKey("Verification", "TrainingOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UserAccount", "Verifier")
-                        .WithMany()
-                        .HasForeignKey("VerifierId");
-
-                    b.Navigation("TrainingOrder");
-
-                    b.Navigation("Verifier");
-                });
-
-            modelBuilder.Entity("Employee", b =>
-                {
-                    b.Navigation("TrainingOrdersAsTrainee");
-                });
-
-            modelBuilder.Entity("Lesson", b =>
-                {
-                    b.Navigation("Descriptions");
-
-                    b.Navigation("TrainingOrders");
-                });
-
-            modelBuilder.Entity("LessonCategory", b =>
-                {
-                    b.Navigation("Lessons");
-                });
-
-            modelBuilder.Entity("Location", b =>
-                {
-                    b.Navigation("TrainingOrders");
-                });
-
-            modelBuilder.Entity("Skill", b =>
-                {
-                    b.Navigation("TrainingOrders");
-                });
-
-            modelBuilder.Entity("SkillCategory", b =>
-                {
-                    b.Navigation("Skills");
-                });
-
-            modelBuilder.Entity("TrainingOrder", b =>
-                {
-                    b.Navigation("Verification");
-                });
-
-            modelBuilder.Entity("UserAccount", b =>
-                {
-                    b.Navigation("Employee");
-                });
+         modelBuilder.Entity("Lesson", b =>
+         {
+            b.HasOne("LessonCategory", "LessonCategory")
+                .WithMany("Lessons")
+                .HasForeignKey("LessonCategoryId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+
+            b.Navigation("LessonCategory");
+         });
+
+         modelBuilder.Entity("LessonSkill", b =>
+         {
+            b.HasOne("Lesson", null)
+                .WithMany()
+                .HasForeignKey("LessonsId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+
+            b.HasOne("Skill", null)
+                .WithMany()
+                .HasForeignKey("SkillId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+         });
+
+         modelBuilder.Entity("Location", b =>
+         {
+            b.HasOne("LocationCategory", "Category")
+                .WithMany("Locations")
+                .HasForeignKey("CategoryId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+
+            b.Navigation("Category");
+         });
+
+         modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+         {
+            b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                .WithMany()
+                .HasForeignKey("RoleId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+         });
+
+         modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+         {
+            b.HasOne("UserAccount", null)
+                .WithMany()
+                .HasForeignKey("UserId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+         });
+
+         modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+         {
+            b.HasOne("UserAccount", null)
+                .WithMany()
+                .HasForeignKey("UserId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+         });
+
+         modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+         {
+            b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                .WithMany()
+                .HasForeignKey("RoleId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+
+            b.HasOne("UserAccount", null)
+                .WithMany()
+                .HasForeignKey("UserId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+         });
+
+         modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+         {
+            b.HasOne("UserAccount", null)
+                .WithMany()
+                .HasForeignKey("UserId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+         });
+
+         modelBuilder.Entity("Skill", b =>
+         {
+            b.HasOne("SkillCategory", "SkillCategory")
+                .WithMany("Skills")
+                .HasForeignKey("SkillCategoryId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+
+            b.Navigation("SkillCategory");
+         });
+
+         modelBuilder.Entity("TrainerGroupTrainingOrder", b =>
+         {
+            b.HasOne("TrainerGroup", null)
+                .WithMany()
+                .HasForeignKey("TrainerGroupsId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+
+            b.HasOne("TrainingOrder", null)
+                .WithMany()
+                .HasForeignKey("TrainingOrdersId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+         });
+
+         modelBuilder.Entity("TrainingOrder", b =>
+         {
+            b.HasOne("Lesson", "Lesson")
+                .WithMany("TrainingOrders")
+                .HasForeignKey("LessonId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+
+            b.HasOne("Location", "Location")
+                .WithMany("TrainingOrders")
+                .HasForeignKey("LocationId")
+                .OnDelete(DeleteBehavior.SetNull);
+
+            b.HasOne("Skill", "ParentSkill")
+                .WithMany()
+                .HasForeignKey("ParentSkillId")
+                .OnDelete(DeleteBehavior.SetNull);
+
+            b.HasOne("Skill", null)
+                .WithMany("TrainingOrders")
+                .HasForeignKey("SkillId");
+
+            b.HasOne("Employee", "Trainee")
+                .WithMany("TrainingOrdersAsTrainee")
+                .HasForeignKey("TraineeId")
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+
+            b.Navigation("Lesson");
+
+            b.Navigation("Location");
+
+            b.Navigation("ParentSkill");
+
+            b.Navigation("Trainee");
+         });
+
+         modelBuilder.Entity("Verification", b =>
+         {
+            b.HasOne("TrainingOrder", "TrainingOrder")
+                .WithOne("Verification")
+                .HasForeignKey("Verification", "TrainingOrderId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+
+            b.HasOne("UserAccount", "Verifier")
+                .WithMany()
+                .HasForeignKey("VerifierId");
+
+            b.Navigation("TrainingOrder");
+
+            b.Navigation("Verifier");
+         });
+
+         modelBuilder.Entity("Employee", b =>
+         {
+            b.Navigation("TrainingOrdersAsTrainee");
+         });
+
+         modelBuilder.Entity("Lesson", b =>
+         {
+            b.Navigation("Descriptions");
+
+            b.Navigation("TrainingOrders");
+         });
+
+         modelBuilder.Entity("LessonCategory", b =>
+         {
+            b.Navigation("Lessons");
+         });
+
+         modelBuilder.Entity("Location", b =>
+         {
+            b.Navigation("TrainingOrders");
+         });
+
+         modelBuilder.Entity("LocationCategory", b =>
+         {
+            b.Navigation("Locations");
+         });
+
+         modelBuilder.Entity("Skill", b =>
+         {
+            b.Navigation("TrainingOrders");
+         });
+
+         modelBuilder.Entity("SkillCategory", b =>
+         {
+            b.Navigation("Skills");
+         });
+
+         modelBuilder.Entity("TrainingOrder", b =>
+         {
+            b.Navigation("Verification");
+         });
+
+         modelBuilder.Entity("UserAccount", b =>
+         {
+            b.Navigation("Employee");
+         });
 #pragma warning restore 612, 618
-        }
-    }
+      }
+   }
 }

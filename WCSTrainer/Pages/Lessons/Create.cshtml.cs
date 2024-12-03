@@ -15,8 +15,11 @@ namespace WCSTrainer.Pages.Lessons {
       public List<string> ImageCaptions { get; set; } = new List<string>();
       public SelectList CategorySelectList { get; set; }
 
+      public List<string> VideoPaths { get; set; }
+
       public async Task<IActionResult> OnGetAsync() {
          CategorySelectList = new SelectList(await context.LessonCategories.ToListAsync(), "Id", "Name");
+         VideoPaths = GetVideoPaths();
          return Page();
       }
 
@@ -40,14 +43,27 @@ namespace WCSTrainer.Pages.Lessons {
             if (imageFile != null && imageFile.Length > 0) {
                var uploadResult = await imageUploadService.UploadImageAsync(imageFile, "uploads/lessons");
                if (uploadResult != null) {
-                  description.ImageUploadId = uploadResult.Id;
-                  description.ImageUpload = uploadResult;
+                  description.FileUploadId = uploadResult.Id;
+                  description.FileUpload = uploadResult;
                }
             }
             context.Descriptions.Add(description);
          }
          await context.SaveChangesAsync();
          return RedirectToPage("./Index");
+      }
+
+      public List<string> GetVideoPaths() {
+         var videoFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Shared", "Videos");
+         if (Directory.Exists(videoFolder)) {
+            return Directory.GetFiles(videoFolder, "*.*", SearchOption.AllDirectories)
+                .Where(file => file.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase) ||
+                               file.EndsWith(".webm", StringComparison.OrdinalIgnoreCase) ||
+                               file.EndsWith(".ogg", StringComparison.OrdinalIgnoreCase))
+                .Select(file => $"/Shared/Videos/{Path.GetRelativePath(videoFolder, file).Replace("\\", "/")}")
+                .ToList();
+         }
+         return new List<string>();
       }
    }
 }

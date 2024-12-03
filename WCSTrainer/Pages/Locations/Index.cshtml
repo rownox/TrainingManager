@@ -15,17 +15,33 @@
                   </select>
                </form>
             </div>
-            <partial name="_ListDisplay" model="Model.ListPartial" />
+            <ul class="category-container">
+               @foreach (var category in Model.CategoryList)
+               {
+                  <li id="@category.Name @category.Id" class="category">
+                     <p class="category-title">@category.Name</p>
+                     <ul class="skill-list">
+                        @foreach (var lesson in category.Locations)
+                        {
+                           <li id="@lesson.Name @lesson.Id" class="skill">
+                              <a asp-page="./Details" asp-route-id="@lesson.Id">#@lesson.Id - @lesson.Name</a>
+                           </li>
+                        }
+                     </ul>
+                  </li>
+               }
+            </ul>
          </div>
          <script src="~/js/listdisplay.js"></script>
          <div class="tool-container">
             <div class="tools">
                <p class="title">Options:</p>
                <div class="search">
-                  <input class="search-box" id="searchInput" placeholder="Search Skills" type="search" oninput="update(this)" />
+                  <input class="search-box" id="searchInput" placeholder="Search Categories" type="search" oninput="update(this)" />
                </div>
                <div class="btns">
                   <a asp-page="Create" class="btn nbg-btn btnMenu">Create Location</a>
+                  <a asp-page="CreateCategory" class="btn nbg-btn btnMenu">Create Category</a>
                </div>
             </div>
          </div>

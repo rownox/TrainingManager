@@ -1,11 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Locations {
    [Authorize(Roles = "owner, admin")]
    public class CreateModel(Data.WCSTrainerContext context) : PageModel {
-      public IActionResult OnGet() {
+      public SelectList CategorySelectList { get; set; }
+
+      public async Task<IActionResult> OnGetAsync() {
+         CategorySelectList = new SelectList(await context.LocationCategories.ToListAsync(), "Id", "Name");
+
          return Page();
       }
 

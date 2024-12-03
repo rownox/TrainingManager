@@ -19,6 +19,7 @@ namespace WCSTrainer.Data {
       public DbSet<LessonCategory> LessonCategories { get; set; } = default!;
       public DbSet<SkillCategory> SkillCategories { get; set; } = default!;
       public DbSet<Description> Descriptions { get; set; } = default!;
+      public DbSet<LocationCategory> LocationCategories { get; set; } = default!;
 
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
          optionsBuilder.ConfigureWarnings(warnings =>
@@ -114,6 +115,11 @@ namespace WCSTrainer.Data {
          builder.Entity<LessonCategory>()
             .HasMany(lc => lc.Lessons)
             .WithOne(l => l.LessonCategory);
+
+         //LocationCategory
+         builder.Entity<LocationCategory>()
+            .HasMany(lc => lc.Locations)
+            .WithOne(l => l.Category);
 
          var ownerRole = new IdentityRole("owner") { NormalizedName = "OWNER" };
          var adminRole = new IdentityRole("admin") { NormalizedName = "ADMIN" };

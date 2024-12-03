@@ -19,9 +19,13 @@ namespace WCSTrainer.Pages.Locations {
       public ListPartialModel? ListPartial { get; set; }
       [BindProperty]
       public int MaxCount { get; set; } = 10;
+      public List<LocationCategory> CategoryList { get; set; }
 
       public async Task<IActionResult> OnGetAsync() {
          Locations = await _context.Locations.ToListAsync();
+         CategoryList = await _context.LocationCategories
+            .Include(c => c.Locations)
+            .ToListAsync();
 
          MaxCount = MaxCount <= 0 ? 10 : MaxCount;
          foreach (var item in Locations) {

@@ -8,7 +8,7 @@
          _logger = logger;
       }
 
-      public async Task<ImageUpload?> UploadImageAsync(IFormFile file, string uploadFolder) {
+      public async Task<FileUpload?> UploadImageAsync(IFormFile file, string uploadFolder) {
          if (file == null || file.Length == 0)
             return null;
 
@@ -33,7 +33,7 @@
                await file.CopyToAsync(stream);
             }
 
-            return new ImageUpload {
+            return new FileUpload {
                FileName = file.FileName,
                FilePath = Path.Combine(uploadFolder, uniqueFileName),
                FileSize = file.Length,
