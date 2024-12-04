@@ -7,6 +7,7 @@
       public int Id { get; set; }
       public string Name { get; set; } = string.Empty;
       public string Status { get; set; } = string.Empty;
+      public string Department { get; set; } = string.Empty;
    }
 }
 
@@ -26,53 +27,48 @@
          <div id="trainerBtn" class="btn" onclick="toggleView('trainers')">Trainers</div>
       </div>
    </div>
-   <ul id="traineesList" class="item-container">
-      @foreach (var item in Model) {
-         if (item.Status == "Trainee") {
-            var newPerson = new Person {
-                  Id = item.Id,
-                  Name = item.FirstName + " " + item.LastName,
-                  Status = item.Status
-            };
+   @{
+      var traineeList = new Dictionary<Person, string>();
+      var trainerList = new Dictionary<Person, string>();
 
-            var employeeJson = JsonSerializer.Serialize(newPerson, jsonOptions);
-            <li onclick="selectTrainee('@employeeJson', this)" class="item" data-name="@newPerson.Name">
-               <div class="info">
-                  <p>@newPerson.Name</p>
-                  <div class="sub">
-                     <p>Status: </p>
-                     <p class="@(newPerson.Status == "Trainer" ? "highlight" : "")">@newPerson.Status</p>
-                  </div>
-               </div>
-               <div class="selector">
-                  <img src="~/images/add.svg" onclick="addItemToPartial('@newPerson.Id', '@newPerson.Name')" />
-               </div>
-            </li>
+      foreach (var item in Model) {
+         var newPerson = new Person {
+               Id = item.Id,
+               Name = item.FirstName + " " + item.LastName,
+               Status = item.Status,
+               Department = item.Department
+         };
+         var employeeJson = JsonSerializer.Serialize(newPerson, jsonOptions);
+         if (item.Status == "Trainer") {
+            trainerList.Add(newPerson, employeeJson);
+         } else {
+            traineeList.Add(newPerson, employeeJson);
          }
+      }
+   }
+   
+   <ul id="traineesList" class="item-container">
+      @foreach (var item in traineeList) {
+         <li onclick="selectTrainee('@item.Value', this)" class="item" data-name="@item.Key.Name">
+            <div class="info">
+               <p>@item.Key.Name</p>
+            </div>
+            <div class="selector">
+               <img src="~/images/add.svg" onclick="addItemToPartial('@item.Key.Id', '@item.Key.Name')" />
+            </div>
+         </li>
       }
    </ul>
    <ul id="trainersList" class="item-container">
-      @foreach (var item in Model) {
-         if (item.Status == "Trainer") {
-            var newPerson = new Person {
-                  Id = item.Id,
-                  Name = item.FirstName + " " + item.LastName,
-                  Status = item.Status
-            };
-            var employeeJson = JsonSerializer.Serialize(newPerson, jsonOptions);
-            <li onclick="selectTrainer('@employeeJson', this)" class="item" data-name="@newPerson.Name">
-               <div class="info">
-                  <p>@newPerson.Name</p>
-                  <div class="sub">
-                     <p>Status: </p>
-                     <p class="@(newPerson.Status == "Trainer" ? "highlight" : "")">@newPerson.Status</p>
-                  </div>
-               </div>
-               <div class="selector">
-                  <img src="~/images/add.svg" onclick="addItemToPartial('@newPerson.Id', '@newPerson.Name')" />
-               </div>
-            </li>
-         }
+      @foreach (var item in trainerList) {
+         <li onclick="selectTrainer('@item.Value', this)" class="item" data-name="@item.Key.Name">
+            <div class="info">
+               <p>@item.Key.Name</p>
+            </div>
+            <div class="selector">
+               <img src="~/images/add.svg" onclick="addItemToPartial('@item.Key.Id', '@item.Key.Name')" />
+            </div>
+         </li>
       }
    </ul>
 </div>
@@ -88,6 +84,10 @@
          <div class="info">
             <p class="one">Status</p>
             <p id="status" class="two"></p>
+         </div>
+         <div class="info">
+            <p class="one">Department</p>
+            <p id="department" class="two"></p>
          </div>
          <div class="btn-container">
             <a class="btn btnWhite bg-btn" onclick="linkToUser()">View User Details</a>
@@ -159,6 +159,7 @@
    function updateSelected() {
       document.getElementById('name').textContent = selected.Name;
       document.getElementById('status').textContent = selected.Status;
+      document.getElementById('department').textContent = selected.Department;
       document.getElementById('employeeId').textContent = selected.Id;
    }
 

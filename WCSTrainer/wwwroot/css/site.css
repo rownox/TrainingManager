@@ -1169,7 +1169,7 @@ nav {
 			justify-content: space-between;
 			align-items: center;
 			user-select: none;
-			font-size: 13px;
+			font-size: 15px;
 			padding: 0 5px;
 			display: flex;
 			color: var(--textMain);
@@ -1446,6 +1446,7 @@ nav {
 }
 
 	.identity-container .top {
+
 	}
 
 	.identity-container .content {
