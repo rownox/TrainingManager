@@ -14,26 +14,26 @@ namespace WCSTrainer.Data {
             }
          }
 
-         //foreach (var adminPerm in adminList) {
-         //   var user = await userManager.FindByNameAsync(adminPerm);
-         //   if (user != null && !await userManager.IsInRoleAsync(user, "admin")) {
-         //      await userManager.AddToRoleAsync(user, "admin");
-         //   }
-         //}
+         foreach (var adminPerm in adminList) {
+            var user = await userManager.FindByNameAsync(adminPerm);
+            if (user != null && !await userManager.IsInRoleAsync(user, "admin")) {
+               await userManager.AddToRoleAsync(user, "admin");
+            }
+         }
 
-         //foreach (var userPerm in userList) {
-         //   var user = await userManager.FindByNameAsync(userPerm);
-         //   if (user != null && !await userManager.IsInRoleAsync(user, "user")) {
-         //      await userManager.AddToRoleAsync(user, "user");
-         //   }
-         //}
+         foreach (var userPerm in userList) {
+            var user = await userManager.FindByNameAsync(userPerm);
+            if (user != null && !await userManager.IsInRoleAsync(user, "user")) {
+               await userManager.AddToRoleAsync(user, "user");
+            }
+         }
 
          var allUsers = userManager.Users.ToList();
 
          foreach (var user in allUsers) {
             var roles = await userManager.GetRolesAsync(user);
             if (roles.Count == 0) {
-               await userManager.AddToRoleAsync(user, "owner");
+               await userManager.AddToRoleAsync(user, "guest");
             }
          }
       }
