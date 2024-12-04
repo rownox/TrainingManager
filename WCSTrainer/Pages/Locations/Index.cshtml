@@ -1,6 +1,20 @@
 ﻿@page
 @model WCSTrainer.Pages.Locations.IndexModel
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<UserAccount> SignInManager
+@inject UserManager<UserAccount> UserManager
+
+@{
+   var isOwner = false;
+   var user = await UserManager.GetUserAsync(User);
+   if (user != null)
+   {
+      isOwner = await UserManager.IsInRoleAsync(user, "owner");
+   }
+}
+
+
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
@@ -19,7 +33,13 @@
                @foreach (var category in Model.CategoryList)
                {
                   <li id="@category.Name @category.Id" class="category">
-                     <p class="category-title">@category.Name</p>
+                     <div class="category-title">
+                        <p>@category.Name</p>
+                        @if (isOwner)
+                        {
+                           <a asp-page="DeleteCategory" asp-route-id="@category.Id" class="btn bg-btn btnRed">Delete</a>
+                        }
+                     </div>
                      <ul class="skill-list">
                         @foreach (var lesson in category.Locations)
                         {

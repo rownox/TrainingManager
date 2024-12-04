@@ -1578,10 +1578,21 @@ nav {
 	}
 
 		.category-container .category .category-title {
-			color: var(--textMain);
-			font-size: 16px;
-			font-weight: bold;
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
 		}
+
+         .category-container .category .category-title p {
+            color: var(--textMain);
+            font-size: 16px;
+            font-weight: bold;
+         }
+
+         .category-container .category .category-title .btn {
+            font-size: 14px;
+            padding: 0 5px;
+         }
 
 		.category-container .category .skill-list {
 			padding-left: 10px;
