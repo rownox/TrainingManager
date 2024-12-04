@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\Shared\" />
     <Folder Include="wwwroot\uploads\" />
     <Folder Include="wwwroot\uploads\lessons\" />
   </ItemGroup>
