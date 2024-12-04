@@ -77,7 +77,7 @@
                </div>
             </div>
             <div class="btn-container">
-               <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Lesson.Id">Edit</a>
+               @* <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Lesson.Id">Edit</a> *@
                @if (SignInManager.IsSignedIn(User))
                {
                   var user = await UserManager.GetUserAsync(User);
