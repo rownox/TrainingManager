@@ -55,7 +55,7 @@ namespace WCSTrainer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ImageUpload",
+                name: "FileUpload",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -68,7 +68,7 @@ namespace WCSTrainer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ImageUpload", x => x.Id);
+                    table.PrimaryKey("PK_FileUpload", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,7 +85,7 @@ namespace WCSTrainer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Locations",
+                name: "LocationCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -94,7 +94,7 @@ namespace WCSTrainer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Locations", x => x.Id);
+                    table.PrimaryKey("PK_LocationCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -273,6 +273,26 @@ namespace WCSTrainer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Locations_LocationCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "LocationCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Skills",
                 columns: table => new
                 {
@@ -325,17 +345,16 @@ namespace WCSTrainer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LessonId = table.Column<int>(type: "int", nullable: false),
                     TextContent = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImageUploadId = table.Column<int>(type: "int", nullable: true),
-                    DescriptionType = table.Column<int>(type: "int", nullable: false),
+                    FileUploadId = table.Column<int>(type: "int", nullable: true),
                     DisplayOrder = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Descriptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Descriptions_ImageUpload_ImageUploadId",
-                        column: x => x.ImageUploadId,
-                        principalTable: "ImageUpload",
+                        name: "FK_Descriptions_FileUpload_FileUploadId",
+                        column: x => x.FileUploadId,
+                        principalTable: "FileUpload",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Descriptions_Lessons_LessonId",
@@ -532,10 +551,10 @@ namespace WCSTrainer.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "34a347db-234a-4d96-9c80-a35ea92cef16", null, "owner", "OWNER" },
-                    { "a4346e92-0975-4047-8f79-cb3168a1defe", null, "admin", "ADMIN" },
-                    { "a7c9c3b2-9b98-42ac-a302-1f4654f245fc", null, "guest", "GUEST" },
-                    { "e83e680b-d8b5-4075-bbed-6dc4d6ba7310", null, "user", "USER" }
+                    { "26d0cff0-c661-46db-8296-a2a40865bfba", null, "owner", "OWNER" },
+                    { "42ff162c-2621-44fe-b53f-2c6cdad8e3d9", null, "guest", "GUEST" },
+                    { "a28842fe-fbe8-4004-a0e7-41826f8f608e", null, "admin", "ADMIN" },
+                    { "cda84c47-3e55-4fa4-80fb-3d37e76cdfb8", null, "user", "USER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -578,9 +597,9 @@ namespace WCSTrainer.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Descriptions_ImageUploadId",
+                name: "IX_Descriptions_FileUploadId",
                 table: "Descriptions",
-                column: "ImageUploadId");
+                column: "FileUploadId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Descriptions_LessonId",
@@ -617,6 +636,11 @@ namespace WCSTrainer.Migrations
                 name: "IX_LessonSkill_SkillId",
                 table: "LessonSkill",
                 column: "SkillId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Locations_CategoryId",
+                table: "Locations",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Skills_SkillCategoryId",
@@ -708,7 +732,7 @@ namespace WCSTrainer.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "ImageUpload");
+                name: "FileUpload");
 
             migrationBuilder.DropTable(
                 name: "TrainerGroups");
@@ -733,6 +757,9 @@ namespace WCSTrainer.Migrations
 
             migrationBuilder.DropTable(
                 name: "LessonCategories");
+
+            migrationBuilder.DropTable(
+                name: "LocationCategories");
 
             migrationBuilder.DropTable(
                 name: "SkillCategories");

@@ -12,8 +12,8 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Migrations
 {
     [DbContext(typeof(WCSTrainerContext))]
-    [Migration("20241203150443_2")]
-    partial class _2
+    [Migration("20241204145401_1")]
+    partial class _1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,13 +33,10 @@ namespace WCSTrainer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DescriptionType")
-                        .HasColumnType("int");
-
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ImageUploadId")
+                    b.Property<int?>("FileUploadId")
                         .HasColumnType("int");
 
                     b.Property<int>("LessonId")
@@ -50,7 +47,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageUploadId");
+                    b.HasIndex("FileUploadId");
 
                     b.HasIndex("LessonId");
 
@@ -134,7 +131,7 @@ namespace WCSTrainer.Migrations
                     b.ToTable("EmployeeTrainingOrder");
                 });
 
-            modelBuilder.Entity("ImageUpload", b =>
+            modelBuilder.Entity("FileUpload", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -162,7 +159,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ImageUpload");
+                    b.ToTable("FileUpload");
                 });
 
             modelBuilder.Entity("Lesson", b =>
@@ -258,7 +255,7 @@ namespace WCSTrainer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LocationCategory");
+                    b.ToTable("LocationCategories");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -290,25 +287,25 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "abb18395-e7ed-4a2c-bf44-b8b054747211",
+                            Id = "26d0cff0-c661-46db-8296-a2a40865bfba",
                             Name = "owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "4cc2e97d-2d7a-45a9-a0e1-e7cc57ae46a3",
+                            Id = "a28842fe-fbe8-4004-a0e7-41826f8f608e",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d757eb15-2ed3-4309-b455-ee1939703723",
+                            Id = "cda84c47-3e55-4fa4-80fb-3d37e76cdfb8",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "6022a93d-6787-4e3c-b074-69bcfae8b4d6",
+                            Id = "42ff162c-2621-44fe-b53f-2c6cdad8e3d9",
                             Name = "guest",
                             NormalizedName = "GUEST"
                         });
@@ -684,9 +681,9 @@ namespace WCSTrainer.Migrations
 
             modelBuilder.Entity("Description", b =>
                 {
-                    b.HasOne("ImageUpload", "ImageUpload")
+                    b.HasOne("FileUpload", "FileUpload")
                         .WithMany()
-                        .HasForeignKey("ImageUploadId");
+                        .HasForeignKey("FileUploadId");
 
                     b.HasOne("Lesson", "Lesson")
                         .WithMany("Descriptions")
@@ -694,7 +691,7 @@ namespace WCSTrainer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ImageUpload");
+                    b.Navigation("FileUpload");
 
                     b.Navigation("Lesson");
                 });

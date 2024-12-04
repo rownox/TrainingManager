@@ -21,12 +21,12 @@ namespace WCSTrainer.Data {
             }
          }
 
-         foreach (var userPerm in userList) {
-            var user = await userManager.FindByNameAsync(userPerm);
-            if (user != null && !await userManager.IsInRoleAsync(user, "user")) {
-               await userManager.AddToRoleAsync(user, "user");
-            }
-         }
+         //foreach (var userPerm in userList) {
+         //   var user = await userManager.FindByNameAsync(userPerm);
+         //   if (user != null && !await userManager.IsInRoleAsync(user, "user")) {
+         //      await userManager.AddToRoleAsync(user, "user");
+         //   }
+         //}
 
          var allUsers = userManager.Users.ToList();
 
