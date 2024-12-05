@@ -15,24 +15,32 @@
                      <p class="subtitle">@Model.Employee.FirstName @Model.Employee.LastName</p>
                   }
                   <div class="field-container">
-                     <div class="title-row">
-                        <p class="title">Account Info</p>
-                     </div>
-                     <div class="text-group">
-                        <p class="title">User ID</p>
-                        <p class="info">@Model.UserAccount.Id</p>
-                     </div>
-                     <div class="text-group">
-                        <p class="title">Username</p>
-                        <p class="info">@Model.UserAccount.UserName</p>
-                     </div>
-                     <div class="text-group">
-                        <p class="title">Email</p>
-                        <p class="info">@Model.UserAccount.Email</p>
-                     </div>
-                     <div class="text-group">
-                        <p class="title">Phone Number</p>
-                        <p class="info">@Model.UserAccount.PhoneNumber</p>
+                     <div class="field-section-container">
+                        <div class="field-section">
+                           <div class="title-row">
+                              <p class="title">Account Info</p>
+                           </div>
+                           <table>
+                              <tbody>
+                                 <tr>
+                                    <td class="label">User ID</td>
+                                    <td class="text">@Model.UserAccount.Id</td>
+                                 </tr>
+                                 <tr>
+                                    <td class="label">Username</td>
+                                    <td class="text">@Model.UserAccount.UserName</td>
+                                 </tr>
+                                 <tr>
+                                    <td class="label">Email</td>
+                                    <td class="text">@Model.UserAccount.Email</td>
+                                 </tr>
+                                 <tr>
+                                    <td class="label">Phone Number</td>
+                                    <td class="text">@Model.UserAccount.PhoneNumber</td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
                      </div>
                      @if (Model.Employee != null) {
                         <component type="typeof(Person)" render-mode="WebAssemblyPrerendered" param-EmployeeId="@Model.Employee.Id" />

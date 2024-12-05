@@ -21,12 +21,14 @@
             WriteIndented = false
       };
    }
+
    <div class="btns-container">
       <div class="btns">
          <div id="traineeBtn" class="btn" onclick="toggleView('trainees')">Trainees</div>
          <div id="trainerBtn" class="btn" onclick="toggleView('trainers')">Trainers</div>
       </div>
    </div>
+
    @{
       var traineeList = new Dictionary<Person, string>();
       var trainerList = new Dictionary<Person, string>();
@@ -59,6 +61,7 @@
          </li>
       }
    </ul>
+
    <ul id="trainersList" class="item-container">
       @foreach (var item in trainerList) {
          <li onclick="selectTrainer('@item.Value', this)" class="item" data-name="@item.Key.Name  @item.Key.Department">

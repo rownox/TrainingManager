@@ -239,6 +239,7 @@ nav {
 					margin-top: 20px;
 					display: flex;
 					width: 100%;
+               gap: 10px;
 				}
 
 				.panel .body .properties .user-form .btn-container {
@@ -374,7 +375,6 @@ nav {
 				.panel .body .properties .user-form .field-container .title-row {
 					background-color: var(--gray3);
 					padding: 3px 5px;
-					border: 1px solid var(--gray4);
 				}
 
 					.panel .body .properties .user-form .field-container .title-row .title {
@@ -382,7 +382,7 @@ nav {
 					}
 
 				.panel .body .properties .user-form .field-container .text-group {
-					border-bottom: 1px solid var(--gray3);
+					border-top: 1px solid var(--gray3);
 					flex-direction: row;
 					display: flex;
 					padding: 3px 0;
@@ -446,6 +446,129 @@ nav {
                      padding: 4px 8px;
                   }
 
+.field-section-container {
+   display: flex;
+   width: 100%;
+   gap: 10px;
+}
+
+   .field-section-container .field-section {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      height: fit-content;
+      padding: 5px;
+      background-color: var(--gray2);
+      border: 1px solid var(--gray4);
+      border-radius: 5px;
+   }
+
+   .field-section-container .field-section .field-mini-section {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      height: fit-content;
+      padding: 5px;
+      background-color: var(--gray2);
+      border: 1px solid var(--gray4);
+      border-radius: 5px;
+   }
+
+      .field-section-container .field-section table {
+         border-collapse: collapse;
+      }
+
+         .field-section-container .field-section table tbody {
+         }
+
+            .field-section-container .field-section table tbody tr {
+               border-top: 1px solid var(--gray3);
+            }
+
+               .field-section-container .field-section table tbody tr td {
+                  padding: 2px 0;
+                  vertical-align: top;
+               }
+
+               .field-section-container .field-section table thead tr th {
+                  font-size: 14px;
+                  font-weight: 500;
+                  border-right: 1px solid var(--gray4);
+                  border-left: 1px solid var(--gray4);
+                  border-bottom: 1px solid var(--gray4);
+                  padding: 3px 0;
+               }
+
+               .field-section-container .field-section table tbody tr .label {
+                  width: 25%;
+                  padding:0 10px;
+                  color: var(--textSub1);
+                  font-size: 16px;
+                  font-weight: 500;
+                  width: 1%;
+                  white-space: nowrap;
+               }
+
+               .field-section-container .field-section table tbody tr .column {
+                  border-right: 1px solid var(--gray4);
+                  border-left: 1px solid var(--gray4);
+                  padding: 5px;
+               }
+
+                  .field-section-container .field-section table tbody tr .column .pills-container {
+                     display: flex;
+                     flex-direction: column;
+                     top: 0px;
+                     align-self: flex-start;
+                  }
+
+               .field-section-container .field-section table tbody tr .text {
+                  display: flex;
+                  flex-wrap: wrap;
+                  font-size: 16px;
+                  gap: 1px;
+                  flex-direction: column;
+               }
+
+                  .field-section-container .field-section table tbody tr .text .description-container {
+                     width: 100%;
+                     font-size: 16px;
+                  }
+
+                  .field-section-container .field-section table tbody tr .text .description-link {
+                     color: var(--blue1);
+                     width: fit-content;
+                  }
+
+                  .field-section-container .field-section table tbody tr .text .description-video {
+                     display: flex;
+                  }
+
+                  .field-section-container .field-section table tbody tr .text .skills-container {
+                     display: flex;
+                     gap: 5px;
+                     flex-wrap: wrap;
+                  }
+
+                  .field-section-container .field-section table tbody tr .text .pills-container {
+                     display: flex;
+                     flex-wrap: wrap;
+                     width: 100%;
+                     gap: 1px;
+                  }
+
+                  .field-section-container .field-section table tbody tr .text .info img {
+                     display: flex;
+                     width: fit-content;
+                  }
+
+                  .field-section-container .field-section table tbody tr .text .info .btn {
+                     display: flex;
+                     width: fit-content;
+                     font-size: 13px;
+                     padding: 4px 8px;
+                  }
+
 				.panel .body .properties .user-form .skill-box {
 					padding: 5px;
 					display: flex;
@@ -476,7 +599,8 @@ nav {
 							}
 
 					.panel .body .properties .user-form .skill-box .order-list {
-						gap: 5px;
+                  display: flex;
+                  flex-direction: column;
 					}
 
 						.panel .body .properties .user-form .skill-box .order-list .pill {
@@ -809,16 +933,20 @@ nav {
 
 						}
 
-					.panel .body .properties .list-container .order-table tr td, .panel .body .properties .list-container table tr th {
-						color: var(--textSub1);
-						border-bottom: 1px solid var(--gray3);
-						text-align: start;
-						padding: 2px 5px;
-					}
+               .panel .body .properties .list-container .order-table tr td, .panel .body .properties .list-container table tr th {
+                  color: var(--textSub1);
+                  border-bottom: 1px solid var(--gray3);
+                  text-align: start;
+                  padding: 2px 5px;
+                  white-space: nowrap
+               }
 
-					.panel .body .properties .list-container .order-table tr td {
+               .panel .body .properties .list-container .order-table tr td {
+               }
 
-					}
+                  .panel .body .properties .list-container .order-table tr td:last-child {
+                     width: 1%;
+                  }
 
 					.panel .body .properties .list-container .order-table tr th {
 						background-color: var(--gray3);
@@ -912,7 +1040,6 @@ nav {
 
 			.panel .body .properties .scheduling {
 				display: flex;
-				flex-grow: 1;
 			}
 
 				.panel .body .properties .scheduling .schedule {
