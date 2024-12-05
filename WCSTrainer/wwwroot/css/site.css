@@ -438,6 +438,14 @@ nav {
 							display: flex;
 							width: fit-content;
 						}
+
+                  .panel .body .properties .user-form .field-container .text-group .info .btn {
+                     display: flex;
+                     width: fit-content;
+                     font-size: 13px;
+                     padding: 4px 8px;
+                  }
+
 				.panel .body .properties .user-form .skill-box {
 					padding: 5px;
 					display: flex;

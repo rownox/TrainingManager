@@ -28,8 +28,7 @@
               <p class="title">Included Lessons</p>
               <div class="info">
                 <div class="pills-container">
-                  @foreach (var lesson in Model.Skill.Lessons)
-                  {
+                  @foreach (var lesson in Model.Skill.Lessons) {
                       <a href="/Lessons/Details?id=@lesson.Id" class="pill">@lesson.Name</a>
                   }
                 </div>
@@ -39,22 +38,17 @@
               <p class="title">Currently Learning</p>
               <div class="info">
                 <div class="pills-container">
-                  @foreach (var person in Model.Skill.Employees)
-                  {
+                  @foreach (var person in Model.Skill.Employees) {
                     bool isActive = false;
-                    foreach (var orderAsTrainee in person.TrainingOrdersAsTrainee)
-                    {
-                      if (orderAsTrainee.ParentSkillId == Model.Skill.Id)
-                      {
-                        if (orderAsTrainee.Status == "Active" || orderAsTrainee.Status == "Approving")
-                        {
+                    foreach (var orderAsTrainee in person.TrainingOrdersAsTrainee) {
+                      if (orderAsTrainee.ParentSkillId == Model.Skill.Id) {
+                        if (orderAsTrainee.Status == "Active" || orderAsTrainee.Status == "Approving") {
                           isActive = true;
                         }
                       }
                     }
-                    if (isActive)
-                    {
-                          <a href="/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
+                    if (isActive) {
+                        <a href="/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
                     }
                   }
                 </div>
@@ -64,22 +58,17 @@
               <p class="title">Learning Completed</p>
               <div class="info">
                 <div class="pills-container">
-                  @foreach (var person in Model.Skill.Employees)
-                  {
+                  @foreach (var person in Model.Skill.Employees) {
                     bool isActive = false;
-                    foreach (var orderAsTrainee in person.TrainingOrdersAsTrainee)
-                    {
-                      if (orderAsTrainee.ParentSkillId == Model.Skill.Id)
-                      {
-                        if (orderAsTrainee.Status == "Active" || orderAsTrainee.Status == "Approving")
-                        {
+                    foreach (var orderAsTrainee in person.TrainingOrdersAsTrainee) {
+                      if (orderAsTrainee.ParentSkillId == Model.Skill.Id) {
+                        if (orderAsTrainee.Status == "Active" || orderAsTrainee.Status == "Approving") {
                           isActive = true;
                         }
                       }
                     }
-                    if (!isActive)
-                    {
-                          <a href="/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
+                    if (!isActive) {
+                        <a href="/Employees/Details?id=@person.Id" class="pill">@person.FirstName @person.LastName</a>
                     }
                   }
                 </div>
@@ -91,15 +80,12 @@
         <div class="btn-container">
           <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Skill.Id">Edit Skill</a>
           <a class="btn bg-btn btnBlue" asp-page="./Assign" asp-route-id="@Model.Skill.Id">Assign</a>
-          @if (SignInManager.IsSignedIn(User))
-          {
+          @if (SignInManager.IsSignedIn(User)) {
             var user = await UserManager.GetUserAsync(User);
-            if (user != null)
-            {
+            if (user != null) {
               var isOwner = await UserManager.IsInRoleAsync(user, "owner");
-              if (isOwner)
-              {
-                      <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.Skill.Id">Delete</a>
+              if (isOwner) {
+                  <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.Skill.Id">Delete</a>
               }
             }
           }

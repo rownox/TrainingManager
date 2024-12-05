@@ -18,22 +18,23 @@
     <p class="title">Status</p>
     <p class="info">@employee.Status</p>
   </div>
+   <div class="text-group">
+      <p class="title">Department</p>
+      <p class="info">@employee.Department</p>
+   </div>
   <div class="text-group">
     <p class="title">Skills</p>
     <div class="info">
       <div class="skills-container">
-        @foreach (var skill in employee.Skills)
-        {
+        @foreach (var skill in employee.Skills) {
           <div class="skill-box">
             <div class="title-container">
               <a href="/Skills/Details?id=@skill.Id" class="skill-title">@skill.Name</a>
             </div>
             <div class="order-list">
-              @foreach (var order in employee.TrainingOrdersAsTrainee)
-              {
+              @foreach (var order in employee.TrainingOrdersAsTrainee) {
                 var cssClass = order.Archived ? "pill inactive" : "pill";
-                if (order.ParentSkillId == skill.Id)
-                {
+                if (order.ParentSkillId == skill.Id) {
                   <div class="order-block">
                     <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
                     @{
@@ -49,49 +50,41 @@
       </div>
     </div>
   </div>
-
   setOrders(employee.TrainingOrdersAsTrainee);
   <div class="text-group">
     <p class="title">Assigned Learning (@activeHours Hours)</p>
     <div class="info">
       <div class="pills-container">
-        @foreach (var order in activeOrders)
-        {
+        @foreach (var order in activeOrders) {
           var cssClass = order.Archived ? "pill inactive" : "pill";
           <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
         }
       </div>
-      
     </div>
   </div>
   <div class="text-group">
     <p class="title">Completed Learning (@completeHours Hours)</p>
     <div class="info">
       <div class="pills-container">
-        @foreach (var order in completeOrders)
-        {
+        @foreach (var order in completeOrders) {
           var cssClass = order.Archived ? "pill inactive" : "pill";
           <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
         }
       </div>
-      
     </div>
   </div>
-
   <div class="text-group">
     <p class="title">Assigned Teaching (@activeHours Hours)</p>
     <div class="info">
       <div class="pills-container">
         @{
           setOrders(employee.TrainingOrdersAsTrainer);
-          foreach (var order in activeOrders)
-          {
+          foreach (var order in activeOrders) {
             var cssClass = order.Archived ? "pill inactive" : "pill";
             <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
           }
         }
       </div>
-      
     </div>
   </div>
   <div class="text-group">
@@ -100,21 +93,18 @@
       <div class="pills-container">
         @{
           setOrders(employee.TrainingOrdersAsTrainer);
-          foreach (var order in completeOrders)
-          {
+          foreach (var order in completeOrders) {
             var cssClass = order.Archived ? "pill inactive" : "pill";
             <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
           }
         }
       </div>
-      
     </div>
   </div>
   <div class="text-group">
     <p class="title">Affiliated Groups</p>
     <div class="info">
-      @foreach (var group in employee.Groups)
-      {
+      @foreach (var group in employee.Groups) {
         <a href="/TrainerGroups/Details?id=@group.Id" class="pill">@group.Name</a>
       }
     </div>
@@ -127,69 +117,69 @@ else
 
 
 @code {
-  [Parameter]
-  public int EmployeeId { get; set; }
+   [Parameter]
+   public int EmployeeId { get; set; }
 
-  private Employee employee = default!;
+   private Employee employee = default!;
 
-  List<TrainingOrder> completeOrders = new List<TrainingOrder>();
-  List<TrainingOrder> activeOrders = new List<TrainingOrder>();
-  int completeHours = 0;
-  int activeHours = 0;
+   List<TrainingOrder> completeOrders = new List<TrainingOrder>();
+   List<TrainingOrder> activeOrders = new List<TrainingOrder>();
+   int completeHours = 0;
+   int activeHours = 0;
 
-  protected override async Task OnInitializedAsync()
-  {
-    await LoadTrainingOrderAsync();
-  }
+   protected override async Task OnInitializedAsync()
+   {
+      await LoadTrainingOrderAsync();
+   }
 
-  protected override async Task OnParametersSetAsync()
-  {
-    await LoadTrainingOrderAsync();
-  }
+   protected override async Task OnParametersSetAsync()
+   {
+      await LoadTrainingOrderAsync();
+   }
 
-  private async Task LoadTrainingOrderAsync()
-  {
-    var tempEmployee = await _context.Employees
-       .Include(e => e.TrainingOrdersAsTrainer)
-          .ThenInclude(t => t.Lesson)
-       .Include(e => e.TrainingOrdersAsTrainee)
-          .ThenInclude(t => t.ParentSkill)
-       .Include(e => e.TrainingOrdersAsTrainee)
-          .ThenInclude(t => t.Lesson)
-       .Include(e => e.Groups)
-       .Include(e => e.Skills)
-       .FirstOrDefaultAsync(m => m.Id == EmployeeId);
+   private async Task LoadTrainingOrderAsync()
+   {
+      var tempEmployee = await _context.Employees
+         .Include(e => e.TrainingOrdersAsTrainer)
+            .ThenInclude(t => t.Lesson)
+         .Include(e => e.TrainingOrdersAsTrainee)
+            .ThenInclude(t => t.ParentSkill)
+         .Include(e => e.TrainingOrdersAsTrainee)
+            .ThenInclude(t => t.Lesson)
+         .Include(e => e.Groups)
+         .Include(e => e.Skills)
+         .FirstOrDefaultAsync(m => m.Id == EmployeeId);
 
-    if (tempEmployee != null)
-    {
-      employee = tempEmployee;
-    }
-  }
-
-
-
-  public void setOrders(ICollection<TrainingOrder> orders)
-  {
-    completeHours = 0;
-    activeHours = 0;
-    completeOrders.Clear();
-    activeOrders.Clear();
-
-    foreach (var order in orders.OrderBy(o => o.Archived))
-    {
-      if (order.Status == "Completed" || order.Status == "Verified")
+      if (tempEmployee != null)
       {
-        completeHours = completeHours + order.Lesson.Duration;
-        completeOrders.Add(order);
+         employee = tempEmployee;
       }
-      else
+   }
+
+
+
+   public void setOrders(ICollection<TrainingOrder> orders)
+   {
+      completeHours = 0;
+      activeHours = 0;
+      completeOrders.Clear();
+      activeOrders.Clear();
+
+      foreach (var order in orders.OrderBy(o => o.Archived))
       {
-        if (!order.Archived)
-        {
-          activeHours = activeHours + order.Lesson.Duration;
-        }
-        activeOrders.Add(order);
+         if (order.Status == "Completed" || order.Status == "Verified")
+         {
+            completeHours = completeHours + order.Lesson.Duration;
+            completeOrders.Add(order);
+         }
+         else
+         {
+            if (!order.Archived)
+            {
+               activeHours = activeHours + order.Lesson.Duration;
+            }
+            activeOrders.Add(order);
+         }
       }
-    }
-  }
+   }
 }

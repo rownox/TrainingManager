@@ -13,7 +13,7 @@
 
 <div class="people-container">
    <div class="search">
-      <input class="search-box" type="search" id="searchInputPeople" placeholder="Search By Name" oninput="searchEmployees()" />
+      <input class="search-box" type="search" id="searchInputPeople" placeholder="Search by Name or Department" oninput="searchEmployees()" />
    </div>
    @{
       var jsonOptions = new JsonSerializerOptions {
@@ -49,7 +49,7 @@
    
    <ul id="traineesList" class="item-container">
       @foreach (var item in traineeList) {
-         <li onclick="selectTrainee('@item.Value', this)" class="item" data-name="@item.Key.Name">
+         <li onclick="selectTrainee('@item.Value', this)" class="item" data-name="@item.Key.Name @item.Key.Department">
             <div class="info">
                <p>@item.Key.Name</p>
             </div>
@@ -61,7 +61,7 @@
    </ul>
    <ul id="trainersList" class="item-container">
       @foreach (var item in trainerList) {
-         <li onclick="selectTrainer('@item.Value', this)" class="item" data-name="@item.Key.Name">
+         <li onclick="selectTrainer('@item.Value', this)" class="item" data-name="@item.Key.Name  @item.Key.Department">
             <div class="info">
                <p>@item.Key.Name</p>
             </div>
