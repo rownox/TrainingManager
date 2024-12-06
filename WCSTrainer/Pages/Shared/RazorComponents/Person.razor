@@ -1,34 +1,120 @@
 ﻿@using Microsoft.EntityFrameworkCore
 @inject WCSTrainer.Data.WCSTrainerContext _context
+@if (employee != null) {
+   <div class="field-section-container">
+      <div class="field-section">
+         <div class="field-section">
+            <div class="title-row">
+               <p class="title">Employee Details</p>
+            </div>
+            <table>
+               <tbody>
+                  <tr>
+                     <td class="label">Employee ID</td>
+                     <td class="text">@employee.Id</td>
+                  </tr>
+                  <tr>
+                     <td class="label">Full Name</td>
+                     <td class="text">@employee.FirstName @employee.LastName</td>
+                  </tr>
+                  <tr>
+                     <td class="label">Status</td>
+                     <td class="text">@employee.Status</td>
+                  </tr>
+                  <tr>
+                     <td class="label">Department</td>
+                     <td class="text">@employee.Department</td>
+                  </tr>
+                  <tr>
+                     <td class="label">Affiliated Groups</td>
+                     <td class="text">
+                        <div class="pills-container">
+                           @foreach (var group in employee.Groups)
+                           {
+                              <a href="/TrainerGroups/Details?id=@group.Id" class="pill">@group.Name</a>
+                           }
+                        </div>
 
-<div class="field-section-container">
-   <div class="field-section">
-      @if (employee != null)
-      {
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+
+         <div class="field-section">
+            <div class="title-row">
+               <p class="title">Linked Training Orders</p>
+            </div>
+            @{
+               setOrders(employee.TrainingOrdersAsTrainee);
+            }
+            <table>
+               <thead>
+                  <tr>
+                     <th>Assigned Learning <br /> (@activeHours Hours)</th>
+                     <th>Completed Learning <br /> (@completeHours Hours)</th>
+                     <th>Assigned Teaching <br /> (@activeHours Hours)</th>
+                     <th>Completed Teaching <br /> (@completeHours Hours)</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td class="column">
+                        <div class="pills-container">
+                           @foreach (var order in activeOrders)
+                           {
+                              var cssClass = order.Archived ? "pill inactive" : "pill";
+                              <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                           }
+                        </div>
+                     </td>
+                     <td class="column">
+                        <div class="pills-container">
+                           @foreach (var order in completeOrders)
+                           {
+                              var cssClass = order.Archived ? "pill inactive" : "pill";
+                              <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                           }
+                        </div>
+                     </td>
+                     <td class="column">
+                        <div class="pills-container">
+                           @{
+                              setOrders(employee.TrainingOrdersAsTrainer);
+                              foreach (var order in activeOrders)
+                              {
+                                 var cssClass = order.Archived ? "pill inactive" : "pill";
+                                 <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                              }
+                           }
+                        </div>
+                     </td>
+                     <td class="column">
+                        <div class="pills-container">
+                           @{
+                              setOrders(employee.TrainingOrdersAsTrainer);
+                              foreach (var order in completeOrders)
+                              {
+                                 var cssClass = order.Archived ? "pill inactive" : "pill";
+                                 <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                              }
+                           }
+                        </div>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+
+      <div class="field-section">
          <div class="title-row">
-            <p class="title">Employee Details</p>
+            <p class="title">Skills</p>
          </div>
          <table>
             <tbody>
                <tr>
-                  <td class="label">Employee ID</td>
-                  <td class="text">@employee.Id</td>
-               </tr>
-               <tr>
-                  <td class="label">Full Name</td>
-                  <td class="text">@employee.FirstName @employee.LastName</td>
-               </tr>
-               <tr>
-                  <td class="label">Status</td>
-                  <td class="text">@employee.Status</td>
-               </tr>
-               <tr>
-                  <td class="label">Department</td>
-                  <td class="text">@employee.Department</td>
-               </tr>
-               <tr>
-                  <td class="label">Skills</td>
-                  <td class="text">
+                  <td class="column">
                      <div class="skills-container">
                         @foreach (var skill in employee.Skills)
                         {
@@ -57,97 +143,14 @@
                      </div>
                   </td>
                </tr>
-               <tr>
-                  <td class="label">Affiliated Groups</td>
-                  <td class="text">
-                     <div class="pills-container">
-                        @foreach (var group in employee.Groups)
-                        {
-                           <a href="/TrainerGroups/Details?id=@group.Id" class="pill">@group.Name</a>
-                        }
-                     </div>
-                     
-                  </td>
-               </tr>
             </tbody>
          </table>
-      }
-      else
-      {
-         <p>Loading...</p>
-      }
+      </div>
    </div>
+} else {
+   <p>Loading...</p>
+}
 
-   <div class="field-section">
-      @if (employee != null)
-      {
-         <div class="title-row">
-            <p class="title">Linked Training Orders</p>
-         </div>
-         setOrders(employee.TrainingOrdersAsTrainee);
-         <table>
-            <thead>
-               <tr>
-                  <th>Assigned Learning <br /> (@activeHours Hours)</th>
-                  <th>Completed Learning <br /> (@completeHours Hours)</th>
-                  <th>Assigned Teaching <br /> (@activeHours Hours)</th>
-                  <th>Completed Teaching <br /> (@completeHours Hours)</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td class="column">
-                     <div class="pills-container">
-                        @foreach (var order in activeOrders)
-                        {
-                           var cssClass = order.Archived ? "pill inactive" : "pill";
-                           <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
-                        }
-                     </div>
-                  </td>
-                  <td class="column">
-                     <div class="pills-container">
-                        @foreach (var order in completeOrders)
-                        {
-                           var cssClass = order.Archived ? "pill inactive" : "pill";
-                           <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
-                        }
-                     </div>
-                  </td>
-                  <td class="column">
-                     <div class="pills-container">
-                        @{
-                           setOrders(employee.TrainingOrdersAsTrainer);
-                           foreach (var order in activeOrders)
-                           {
-                              var cssClass = order.Archived ? "pill inactive" : "pill";
-                              <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
-                           }
-                        }
-                     </div>
-                  </td>
-                  <td class="column">
-                     <div class="pills-container">
-                        @{
-                           setOrders(employee.TrainingOrdersAsTrainer);
-                           foreach (var order in completeOrders)
-                           {
-                              var cssClass = order.Archived ? "pill inactive" : "pill";
-                              <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
-                           }
-                        }
-                     </div>
-                  </td>
-               </tr>
-            </tbody>
-         </table>
-      }
-      else
-      {
-         <p>Loading...</p>
-      }
-   </div>
-</div>
 
 @code {
    [Parameter]

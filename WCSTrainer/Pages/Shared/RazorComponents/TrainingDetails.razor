@@ -5,216 +5,223 @@
 @inject SignInManager<UserAccount> SignInManager
 @inject UserManager<UserAccount> UserManager
 
-@if (TrainingOrder != null)
-{
-  <div class="title-row">
-    <p class="title">Created - @TrainingOrder.CreateDate</p>
-  </div>
-  <div class="text-group">
-    <p class="title">Trainee</p>
-    <div class="info">
-      <div class="pills-container">
-        @if (TrainingOrder.Trainee != null)
-        {
-          <a href="/Employees/Details?id=@TrainingOrder.Trainee.Id" class="pill trainee">
-            @TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName
-          </a>
-        }
+@if (TrainingOrder != null) {
+   <div class="field-section-container">
+      <div class="field-section">
+         <div class="field-section">
+            <div class="title-row">
+               <p class="title">Created - @TrainingOrder.CreateDate</p>
+            </div>
+            <table>
+               <tbody>
+                  <tr>
+                     <td class="label">Trainee</td>
+                     <td class="text">
+                        <div class="pills-container">
+                           @if (TrainingOrder.Trainee != null) {
+                              <a href="/Employees/Details?id=@TrainingOrder.Trainee.Id" class="pill trainee">
+                                 @TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName
+                              </a>
+                           }
+                        </div>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td class="label">Lesson</td>
+                     <td class="text">
+                        <div class="pills-container">
+                           @if (TrainingOrder.Lesson != null) {
+                              <a href="/Lessons/Details?id=@TrainingOrder.Lesson.Id" class="pill">
+                                 @TrainingOrder.Lesson.Name
+                              </a>
+                           }
+                        </div>
+                     </td>
+                  </tr>
+                  @if (TrainingOrder.ParentSkill != null) {
+                     <tr>
+                        <td class="label">Parent Skill</td>
+                        <td class="text">
+                           <div class="pills-container">
+                              <a href="/Skills/Details?id=@TrainingOrder.ParentSkill.Id" class="pill yellow">
+                                 @TrainingOrder.ParentSkill.Name
+                              </a>
+                           </div>
+                        </td>
+                     </tr>
+                  }
+                  <tr>
+                     <td class="label">Created By</td>
+                     <td class="text">
+                        @if (TrainingOrder.CreatedByUserId != null) {
+                           <p class="info">@CreatedByUserName</p>
+                        }
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
       </div>
-    </div>
-  </div>
-  <div class="text-group">
-    <p class="title">Lesson</p>
-    <div class="info">
-      <div class="pills-container">
-        @if (TrainingOrder.Lesson != null)
-        {
-          <a href="/Lessons/Details?id=@TrainingOrder.Lesson.Id" class="pill">
-            @TrainingOrder.Lesson.Name
-          </a>
-        }
-      </div>
-    </div>
-  </div>
-  if (TrainingOrder.ParentSkill != null)
-  {
-    <div class="text-group">
-      <p class="title">Parent Skill</p>
-      <div class="info">
-        <div class="pills-container">
-          <a href="/Skills/Details?id=@TrainingOrder.ParentSkill.Id" class="pill yellow">
-            @TrainingOrder.ParentSkill.Name
-          </a>
-        </div>
-      </div>
-    </div>
-  }
-  <div class="text-group">
-    <p class="title">Created By</p>
-    @if (TrainingOrder.CreatedByUserId != null)
-    {
-      <p class="info">@CreatedByUserName</p>
-    }
-  </div>
+   </div>
 
-  @if (!TrainingOrder.Status.Equals("Approving"))
-  {
-    <div class="title-row">
-      <p class="title">Approved - @TrainingOrder.ApprovalDate</p>
-    </div>
-    <div class="text-group">
-      <p class="title">Trainers</p>
-      <div class="info">
-        <div class="pills-container">
-          @{
-            var list = new List<Employee>();
-            foreach (var trainer in TrainingOrder.Trainers)
-            {
-              list.Add(trainer);
-            }
-            foreach (var groupPerson in groupPeople)
-            {
-              if (!list.Contains(groupPerson))
-              {
-                list.Add(groupPerson);
-              }
-            }
-
-            foreach (var item in list)
-            {
-              <a href="/Employees/Details?id=@item.Id" class="pill">@item.FirstName @item.LastName</a>
-            }
-          }
-        </div>
-
-      </div>
-    </div>
-    if (TrainingOrder.TrainerGroups.Count > 0)
-    {
-      <div class="text-group">
-        <p class="title">Trainer Groups</p>
-        <div class="info">
-          <div class="pills-container">
-            @{
-              foreach (var group in TrainingOrder.TrainerGroups)
-              {
-                <a href="/TrainerGroups/Details?id=@group.Id" class="pill">@group.Name</a>
-              }
-            }
-          </div>
-        </div>
-      </div>
-    }
-    if (TrainingOrder.Location != null)
-    {
-      <div class="text-group">
-        <p class="title">Location</p>
-        <p class="info">@TrainingOrder.Location.Name</p>
-      </div>
-    }
-  }
-  @if (!TrainingOrder.Status.Equals("Approving") && !TrainingOrder.Status.Equals("Scheduling"))
-  {
-    <div class="title-row">
-      <p class="title">Scheduled - @TrainingOrder.ScheduleDate</p>
-    </div>
-    <div class="text-group">
-      <p class="title">Priority Level</p>
-      <p class="info">@TrainingOrder.Priority</p>
-    </div>
-    <div class="text-group">
-      <p class="title">Training Hours Needed</p>
-      <p class="info">@TrainingOrder.Lesson.Duration Hours</p>
-    </div>
-    <div class="text-group">
-      <p class="title">Begin Date</p>
-      <p class="info">@TrainingOrder.BeginDate</p>
-    </div>
-  }
-  @if (TrainingOrder.Status.Equals("Completed") || TrainingOrder.Status.Equals("Verified"))
-  {
-    <div class="title-row">
-      <p class="title">Completed - @TrainingOrder.CompletionDate</p>
-    </div>
-    <div class="text-group">
-      <p class="title">Closing Notes</p>
-      <pre class="info">@TrainingOrder.ClosingNotes</pre>
-    </div>
-  }
-  @if (TrainingOrder.Status.Equals("Verified"))
-  {
-    if (TrainingOrder.Verification != null)
-    {
+   @if (!TrainingOrder.Status.Equals("Approving"))
+   {
       <div class="title-row">
-        <p class="title">Verified - @TrainingOrder.Verification.VerifyDate</p>
+         <p class="title">Approved - @TrainingOrder.ApprovalDate</p>
       </div>
       <div class="text-group">
-        <p class="title">Signed By</p>
-        <p class="info">@TrainingOrder.Verification.Signature</p>
+         <p class="title">Trainers</p>
+         <div class="info">
+            <div class="pills-container">
+               @{
+                  var list = new List<Employee>();
+                  foreach (var trainer in TrainingOrder.Trainers)
+                  {
+                     list.Add(trainer);
+                  }
+                  foreach (var groupPerson in groupPeople)
+                  {
+                     if (!list.Contains(groupPerson))
+                     {
+                        list.Add(groupPerson);
+                     }
+                  }
+
+                  foreach (var item in list)
+                  {
+                     <a href="/Employees/Details?id=@item.Id" class="pill">@item.FirstName @item.LastName</a>
+                  }
+               }
+            </div>
+
+         </div>
+      </div>
+      if (TrainingOrder.TrainerGroups.Count > 0)
+      {
+         <div class="text-group">
+            <p class="title">Trainer Groups</p>
+            <div class="info">
+               <div class="pills-container">
+                  @{
+                     foreach (var group in TrainingOrder.TrainerGroups)
+                     {
+                        <a href="/TrainerGroups/Details?id=@group.Id" class="pill">@group.Name</a>
+                     }
+                  }
+               </div>
+            </div>
+         </div>
+      }
+      if (TrainingOrder.Location != null)
+      {
+         <div class="text-group">
+            <p class="title">Location</p>
+            <p class="info">@TrainingOrder.Location.Name</p>
+         </div>
+      }
+   }
+   @if (!TrainingOrder.Status.Equals("Approving") && !TrainingOrder.Status.Equals("Scheduling"))
+   {
+      <div class="title-row">
+         <p class="title">Scheduled - @TrainingOrder.ScheduleDate</p>
       </div>
       <div class="text-group">
-        <p class="title">Effectiveness</p>
-        <pre class="info">@TrainingOrder.Verification.VerifyNotes</pre>
+         <p class="title">Priority Level</p>
+         <p class="info">@TrainingOrder.Priority</p>
       </div>
-    }
-  }
+      <div class="text-group">
+         <p class="title">Training Hours Needed</p>
+         <p class="info">@TrainingOrder.Lesson.Duration Hours</p>
+      </div>
+      <div class="text-group">
+         <p class="title">Begin Date</p>
+         <p class="info">@TrainingOrder.BeginDate</p>
+      </div>
+   }
+   @if (TrainingOrder.Status.Equals("Completed") || TrainingOrder.Status.Equals("Verified"))
+   {
+      <div class="title-row">
+         <p class="title">Completed - @TrainingOrder.CompletionDate</p>
+      </div>
+      <div class="text-group">
+         <p class="title">Closing Notes</p>
+         <pre class="info">@TrainingOrder.ClosingNotes</pre>
+      </div>
+   }
+   @if (TrainingOrder.Status.Equals("Verified"))
+   {
+      if (TrainingOrder.Verification != null)
+      {
+         <div class="title-row">
+            <p class="title">Verified - @TrainingOrder.Verification.VerifyDate</p>
+         </div>
+         <div class="text-group">
+            <p class="title">Signed By</p>
+            <p class="info">@TrainingOrder.Verification.Signature</p>
+         </div>
+         <div class="text-group">
+            <p class="title">Effectiveness</p>
+            <pre class="info">@TrainingOrder.Verification.VerifyNotes</pre>
+         </div>
+      }
+   }
 }
 else
 {
-  <p>Loading...</p>
+   <p>Loading...</p>
 }
 
 @code {
-  [Parameter]
-  public int OrderId { get; set; }
+   [Parameter]
+   public int OrderId { get; set; }
 
-  private TrainingOrder TrainingOrder = default!;
-  private string CreatedByUserName = "Unknown";
+   private TrainingOrder TrainingOrder = default!;
+   private string CreatedByUserName = "Unknown";
 
-  private List<Employee> groupPeople = new List<Employee>();
+   private List<Employee> groupPeople = new List<Employee>();
 
-  protected override async Task OnInitializedAsync()
-  {
-    await LoadTrainingOrderAsync();
-  }
+   protected override async Task OnInitializedAsync()
+   {
+      await LoadTrainingOrderAsync();
+   }
 
-  protected override async Task OnParametersSetAsync()
-  {
-    await LoadTrainingOrderAsync();
-  }
+   protected override async Task OnParametersSetAsync()
+   {
+      await LoadTrainingOrderAsync();
+   }
 
-  private async Task LoadTrainingOrderAsync()
-  {
-    var trainingOrder = await _context.TrainingOrders
-        .Include(t => t.Trainee)
-        .Include(t => t.Location)
-        .Include(t => t.Trainers)
-        .Include(t => t.Verification)
-        .Include(t => t.TrainerGroups)
-        .Include(t => t.ParentSkill)
-        .Include(t => t.Lesson)
-        .FirstOrDefaultAsync(m => m.Id == OrderId);
+   private async Task LoadTrainingOrderAsync()
+   {
+      var trainingOrder = await _context.TrainingOrders
+          .Include(t => t.Trainee)
+          .Include(t => t.Location)
+          .Include(t => t.Trainers)
+          .Include(t => t.Verification)
+          .Include(t => t.TrainerGroups)
+          .Include(t => t.ParentSkill)
+          .Include(t => t.Lesson)
+          .FirstOrDefaultAsync(m => m.Id == OrderId);
 
-    if (trainingOrder != null)
-    {
-      TrainingOrder = trainingOrder;
-
-      if (TrainingOrder.CreatedByUserId != null)
+      if (trainingOrder != null)
       {
-        var user = await UserManager.FindByIdAsync(TrainingOrder.CreatedByUserId);
-        CreatedByUserName = user?.UserName ?? "Unknown";
-      }
+         TrainingOrder = trainingOrder;
 
-      foreach (var group in TrainingOrder.TrainerGroups)
-      {
-        var trainerGroup = await _context.TrainerGroups
-        .Include(g => g.Trainers)
-        .FirstOrDefaultAsync(g => g.Id == group.Id);
-        foreach (var person in trainerGroup.Trainers)
-        {
-          groupPeople.Add(person);
-        }
+         if (TrainingOrder.CreatedByUserId != null)
+         {
+            var user = await UserManager.FindByIdAsync(TrainingOrder.CreatedByUserId);
+            CreatedByUserName = user?.UserName ?? "Unknown";
+         }
+
+         foreach (var group in TrainingOrder.TrainerGroups)
+         {
+            var trainerGroup = await _context.TrainerGroups
+            .Include(g => g.Trainers)
+            .FirstOrDefaultAsync(g => g.Id == group.Id);
+            foreach (var person in trainerGroup.Trainers)
+            {
+               groupPeople.Add(person);
+            }
+         }
       }
-    }
-  }
+   }
 }
