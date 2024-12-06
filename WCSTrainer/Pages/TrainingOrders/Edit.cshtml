@@ -26,6 +26,7 @@
 							<input asp-for="TrainingOrder.CompletionDate" hidden />
 							<input asp-for="TrainingOrder.CreateDate" hidden />
 							<input asp-for="TrainingOrder.ApprovalDate" hidden />
+                     <input asp-for="TrainingOrder.ScheduleDate" hidden />
 							<input asp-for="TrainingOrder.Status" hidden />
 							<input asp-for="TrainingOrder.ParentSkillId" hidden />
 							<input asp-for="TrainingOrder.CreatedByUserId" hidden />
@@ -61,8 +62,7 @@
 										</div>
 										<div class="selections">
 											<ul id="groupList" class="pill-container">
-												@foreach (var trainerGroup in Model.TrainingOrder.TrainerGroups)
-												{
+												@foreach (var trainerGroup in Model.TrainingOrder.TrainerGroups) {
 													<li class="pill removable" onclick="removeItem(this, 'group')" value="@trainerGroup.Id">@trainerGroup.Name</li>
 												}
 											</ul>
@@ -83,8 +83,7 @@
 										<ul id="traineeList" class="pill-container">
 											@{
 												var trainee = Model.TrainingOrder.Trainee;
-												if (trainee != null)
-												{
+												if (trainee != null) {
 													<li value="@Model.TrainingOrder.TraineeId" class="pill removable" onclick="removeItem(this, 'trainee')">@trainee.FirstName @trainee.LastName</li>
 												}
 											}
@@ -94,16 +93,8 @@
 									</div>
 								</div>
 							</div>
-							@if (!Model.TrainingOrder.Status.Equals("Approving"))
-							{
+							@if (!Model.TrainingOrder.Status.Equals("Approving")) {
 								<div class="form-group">
-									<div class="form">
-										<div class="labels">
-											<p class="control-label">Training Hours Needed</p>
-											<span asp-validation-for="TrainingOrder.Lesson.Duration" class="text-danger"></span>
-										</div>
-										<input asp-for="TrainingOrder.Lesson.Duration" class="form-control" />
-									</div>
 									<div class="form">
 										<div class="labels">
 											<p class="control-label">Priority Level</p>
@@ -128,8 +119,7 @@
 								</div>
 							}
 							<div class="form-group">
-								@if (Model.TrainingOrder.Status == "Approving" || Model.TrainingOrder.Status == "Active")
-								{
+                        @if (Model.TrainingOrder.Status == "Approving" || Model.TrainingOrder.Status == "Active" || Model.TrainingOrder.Status == "Scheduling") {
 									<div class="form">
 										<div class="labels">
 											<p class="control-label">Lesson</p>
@@ -138,8 +128,7 @@
 										<select asp-for="TrainingOrder.LessonId" class="form-control" asp-items="@Model.LessonSelectList"></select>
 									</div>
 								}
-								@if (!Model.TrainingOrder.Status.Equals("Approving"))
-								{
+								@if (!Model.TrainingOrder.Status.Equals("Approving")) {
 									<div class="form">
 										<div class="labels">
 											<p class="control-label">Begin Date</p>

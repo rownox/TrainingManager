@@ -184,6 +184,19 @@
 		min-height: 20px;
 	}
 
+.link {
+   color: var(--blue1);
+   width: fit-content;
+}
+
+   .link:hover {
+   }
+
+   .link:active {
+      color: var(--blue2);
+   }
+
+
 .text-danger {
 	color: var(--red1);
 }

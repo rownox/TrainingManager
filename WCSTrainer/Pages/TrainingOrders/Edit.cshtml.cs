@@ -63,14 +63,12 @@ namespace WCSTrainer.Pages.TrainingOrders {
             if (string.IsNullOrWhiteSpace(SelectedTrainerGroupString) && string.IsNullOrWhiteSpace(SelectedTrainerString)) {
                ModelState.AddModelError("SelectedTrainerString", "At least one trainer or trainer group must be selected.");
                await initJson();
-
                return await OnGetAsync(TrainingOrder.Id);
             }
          }
 
          if (!ModelState.IsValid) {
             await initJson();
-
             return await OnGetAsync(TrainingOrder.Id);
          }
 
@@ -114,7 +112,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
                throw;
             }
          }
-
          return RedirectToPage("./Index");
       }
 
@@ -124,7 +121,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
             .Include(e => e.TrainingOrdersAsTrainer)
             .Include(e => e.Groups)
             .ToListAsync();
-
          TrainerGroups = await context.TrainerGroups.ToListAsync();
          LessonSelectList = new SelectList(await context.Lessons.ToListAsync(), "Id", "Name");
       }
@@ -136,7 +132,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
              .Include(t => t.Trainers)
              .Include(t => t.TrainerGroups)
              .FirstOrDefaultAsync(m => m.Id == id);
-
          if (trainingorder != null) {
             return trainingorder;
          } else {
