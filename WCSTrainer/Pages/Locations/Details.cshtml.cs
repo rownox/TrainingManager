@@ -11,7 +11,7 @@ namespace WCSTrainer.Pages.Locations {
       public DetailsModel(WCSTrainer.Data.WCSTrainerContext context) {
          _context = context;
       }
-
+      [BindProperty]
       public Location Location { get; set; } = default!;
 
       public async Task<IActionResult> OnGetAsync(int? id) {
@@ -19,7 +19,10 @@ namespace WCSTrainer.Pages.Locations {
             return NotFound();
          }
 
-         var location = await _context.Locations.FirstOrDefaultAsync(m => m.Id == id);
+         var location = await _context.Locations
+            .Include(l => l.TrainingOrders)
+            .ThenInclude(t => t.Lesson)
+            .FirstOrDefaultAsync(m => m.Id == id);
          if (location == null) {
             return NotFound();
          } else {

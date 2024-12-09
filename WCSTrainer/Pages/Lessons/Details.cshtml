@@ -59,45 +59,56 @@
          <div class="user-form">
             <p class="title">Lesson #@Model.Lesson.Id</p>
             <div class="field-container">
-               <div class="title-row">
-                  <p class="title">Details</p>
+               <div class="field-section-container">
+                  <div class="field-section">
+                     <div class="title-row">
+                        <p class="title">Details</p>
+                     </div>
+                     <table>
+                        <tbody>
+                           <tr>
+                              <td class="label">Name</td>
+                              <td class="text">@Model.Lesson.Name</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
                </div>
-               <div class="text-group">
-                  <p class="title">Name</p>
-                  <p class="info">@Model.Lesson.Name</p>
-               </div>
-               <div class="text-group">
-                  <p class="title">Description</p>
-                  <div class="info">
-                     @if (Model.Lesson.Descriptions.Any()) {
-                        @foreach (var description in Model.Lesson.Descriptions.Reverse())
-                        {
-                           if (description != null)
-                           {
-                              @if (!string.IsNullOrWhiteSpace(description.TextContent))
-                              {
-                                 <pre class="description-container">@Html.Raw(ConvertContent(description.TextContent))</pre>
-                              }
-                              @if (description.FileUpload != null)
-                              {
-                                 <img src="~/@description.FileUpload.FilePath" alt="[Could not load image.]" />
-                              }
-                           }
-                        }
-                     }
+               <div class="field-section-container">
+                  <div class="field-section">
+                     <div class="title-row">
+                        <p class="title">Lesson Content</p>
+                     </div>
+                     <table>
+                        <tbody>
+                           <tr>
+                              <td class="column">
+                                 @if (Model.Lesson.Descriptions.Any()) {
+                                    @foreach (var description in Model.Lesson.Descriptions.Reverse()) {
+                                       if (description != null) {
+                                          @if (!string.IsNullOrWhiteSpace(description.TextContent)) {
+                                             <pre class="description-container">@Html.Raw(ConvertContent(description.TextContent))</pre>
+                                          }
+                                          @if (description.FileUpload != null) {
+                                             <img src="~/@description.FileUpload.FilePath" alt="[Could not load image.]" />
+                                          }
+                                       }
+                                    }
+                                 }
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
                   </div>
                </div>
             </div>
             <div class="btn-container">
                @* <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Lesson.Id">Edit</a> *@
-               @if (SignInManager.IsSignedIn(User))
-               {
+               @if (SignInManager.IsSignedIn(User)) {
                   var user = await UserManager.GetUserAsync(User);
-                  if (user != null)
-                  {
+                  if (user != null) {
                      var isOwner = await UserManager.IsInRoleAsync(user, "owner");
-                     if (isOwner)
-                     {
+                     if (isOwner) {
                         <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.Lesson.Id">Delete</a>
                      }
                   }

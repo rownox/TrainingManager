@@ -13,24 +13,41 @@
          <div class="user-form">
             <p class="title">Location #@Model.Location.Id</p>
             <div class="field-container">
-               <div class="title-row">
-                  <p class="title">Details</p>
-               </div>
-               <div class="text-group">
-                  <p class="title">Name</p>
-                  <p class="info">@Model.Location.Name</p>
+               <div class="field-section-container">
+                  <div class="field-section">
+                     <div class="title-row">
+                        <p class="title">Details</p>
+                     </div>
+                     <table>
+                        <tbody>
+                           <tr>
+                              <td class="label">Name</td>
+                              <td class="text">@Model.Location.Name</td>
+                           </tr>
+                           <tr>
+                              <td class="label">Assigned Orders</td>
+                              <td class="text">
+                                 <div class="pills-container">
+                                    @foreach (var order in Model.Location.TrainingOrders) {
+                                       if (order.Lesson != null) {
+                                          <a href="/TrainingOrders/Details?id=@order.Id" class="pill">TO #@order.Id - @order.Lesson.Name</a>
+                                       }
+                                    }
+                                 </div>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
                </div>
             </div>
             <div class="btn-container">
                <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Location.Id">Edit</a>
-               @if (SignInManager.IsSignedIn(User))
-               {
+               @if (SignInManager.IsSignedIn(User)) {
                   var user = await UserManager.GetUserAsync(User);
-                  if (user != null)
-                  {
+                  if (user != null) {
                      var isOwner = await UserManager.IsInRoleAsync(user, "owner");
-                     if (isOwner)
-                     {
+                     if (isOwner) {
                         <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.Location.Id">Delete</a>
                      }
                   }

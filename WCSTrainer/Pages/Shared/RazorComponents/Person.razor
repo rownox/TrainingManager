@@ -29,12 +29,10 @@
                      <td class="label">Affiliated Groups</td>
                      <td class="text">
                         <div class="pills-container">
-                           @foreach (var group in employee.Groups)
-                           {
+                           @foreach (var group in employee.Groups) {
                               <a href="/TrainerGroups/Details?id=@group.Id" class="pill">@group.Name</a>
                            }
                         </div>
-
                      </td>
                   </tr>
                </tbody>
@@ -163,18 +161,15 @@
    int completeHours = 0;
    int activeHours = 0;
 
-   protected override async Task OnInitializedAsync()
-   {
+   protected override async Task OnInitializedAsync() {
       await LoadTrainingOrderAsync();
    }
 
-   protected override async Task OnParametersSetAsync()
-   {
+   protected override async Task OnParametersSetAsync() {
       await LoadTrainingOrderAsync();
    }
 
-   private async Task LoadTrainingOrderAsync()
-   {
+   private async Task LoadTrainingOrderAsync() {
       var tempEmployee = await _context.Employees
          .Include(e => e.TrainingOrdersAsTrainer)
             .ThenInclude(t => t.Lesson)
@@ -186,33 +181,31 @@
          .Include(e => e.Skills)
          .FirstOrDefaultAsync(m => m.Id == EmployeeId);
 
-      if (tempEmployee != null)
-      {
+      if (tempEmployee != null) {
          employee = tempEmployee;
       }
    }
 
 
 
-   public void setOrders(ICollection<TrainingOrder> orders)
-   {
+   public void setOrders(ICollection<TrainingOrder> orders) {
       completeHours = 0;
       activeHours = 0;
       completeOrders.Clear();
       activeOrders.Clear();
 
-      foreach (var order in orders.OrderBy(o => o.Archived))
-      {
-         if (order.Status == "Completed" || order.Status == "Verified")
-         {
-            completeHours = completeHours + order.Lesson.Duration;
+      foreach (var order in orders.OrderBy(o => o.Archived)) {
+         if (order.Status == "Completed" || order.Status == "Verified") {
+            if (order.Lesson != null) {
+               completeHours = completeHours + order.Lesson.Duration;
+            }
             completeOrders.Add(order);
          }
-         else
-         {
-            if (!order.Archived)
-            {
-               activeHours = activeHours + order.Lesson.Duration;
+         else {
+            if (!order.Archived) {
+               if (order.Lesson != null) {
+                  activeHours = activeHours + order.Lesson.Duration;
+               }
             }
             activeOrders.Add(order);
          }
