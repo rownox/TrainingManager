@@ -474,7 +474,7 @@ nav {
          }
 
             .field-section table tbody tr td {
-               padding-top: 1px;
+               padding: 1px 0;
                vertical-align: top;
             }
 
@@ -502,7 +502,7 @@ nav {
 
       .field-section table tbody tr .column {
          border-right: 1px solid var(--gray4);
-         padding: 5px;
+         padding: 3px;
       }
 
          .field-section table tbody tr .column:last-child {
@@ -556,7 +556,7 @@ nav {
          width: fit-content;
       }
 
-      .field-section table tbody tr .text .info .btn {
+      .field-section table tbody tr .btn {
          display: flex;
          width: fit-content;
          font-size: 13px;
