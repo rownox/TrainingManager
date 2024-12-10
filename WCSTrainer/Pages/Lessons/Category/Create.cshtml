@@ -1,16 +1,16 @@
 ﻿@page
-@model EditModel
+@model CreateModel
 
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="user-form">
-            <p class="title">Edit Category</p>
+            <p class="title">Create New Category</p>
+            <p class="description">Fill out each required field.</p>
             <div class="field-container">
                <form method="post">
                   <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                  <input hidden asp-for="Category.Id" />
                   <div class="form-group">
                      <div class="form">
                         <div class="labels">
@@ -21,7 +21,7 @@
                      </div>
                   </div>
                   <div class="form-group">
-                     <input type="submit" value="Edit" class="btn bg-btn btnGreen" />
+                     <input type="submit" value="Create" class="btn bg-btn btnGreen" />
                   </div>
                </form>
             </div>

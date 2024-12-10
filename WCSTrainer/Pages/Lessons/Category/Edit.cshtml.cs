@@ -8,14 +8,14 @@ namespace WCSTrainer.Pages.Lessons.Category {
    [Authorize(Roles = "owner, admin")]
    public class EditModel(WCSTrainerContext context) : PageModel {
       [BindProperty]
-      public SkillCategory? Category { get; set; }
+      public LessonCategory? Category { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          if (id == null) {
             return NotFound();
          }
 
-         var category = await context.SkillCategories.FirstOrDefaultAsync(m => m.Id == id);
+         var category = await context.LessonCategories.FirstOrDefaultAsync(m => m.Id == id);
          if (category == null) {
             return NotFound();
          }
@@ -29,11 +29,11 @@ namespace WCSTrainer.Pages.Lessons.Category {
          }
 
          if (Category != null) {
-            context.SkillCategories.Update(Category);
+            context.LessonCategories.Update(Category);
             await context.SaveChangesAsync();
          }
 
-         return RedirectToPage("/Skills/Index");
+         return RedirectToPage("/Lessons/Index");
       }
    }
 }
