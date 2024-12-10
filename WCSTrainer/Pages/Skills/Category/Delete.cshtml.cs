@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace WCSTrainer.Pages.Skills {
+namespace WCSTrainer.Pages.Skills.Category {
    [Authorize(Roles = "owner")]
-   public class DeleteCategoryModel : PageModel {
-      private readonly WCSTrainer.Data.WCSTrainerContext _context;
+   public class DeleteModel : PageModel {
+      private readonly Data.WCSTrainerContext _context;
 
-      public DeleteCategoryModel(WCSTrainer.Data.WCSTrainerContext context) {
+      public DeleteModel(Data.WCSTrainerContext context) {
          _context = context;
       }
 
@@ -42,7 +42,7 @@ namespace WCSTrainer.Pages.Skills {
             await _context.SaveChangesAsync();
          }
 
-         return RedirectToPage("./Index");
+         return RedirectToPage("/Skills/Index");
       }
    }
 }

@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WCSTrainer.Data;
 
-namespace WCSTrainer.Pages.Skills {
+namespace WCSTrainer.Pages.Skills.Category {
    [Authorize(Roles = "owner, admin")]
-   public class CreateCategoryModel(WCSTrainerContext context) : PageModel {
+   public class CreateModel(WCSTrainerContext context) : PageModel {
       [BindProperty]
       public SkillCategory SkillCategory { get; set; } = default!;
 
@@ -17,7 +17,7 @@ namespace WCSTrainer.Pages.Skills {
          context.SkillCategories.Add(SkillCategory);
          await context.SaveChangesAsync();
 
-         return RedirectToPage("./Index");
+         return RedirectToPage("/Skills/Index");
       }
    }
 }

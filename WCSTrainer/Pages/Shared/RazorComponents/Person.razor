@@ -29,9 +29,9 @@
                      <td class="label">Affiliated Groups</td>
                      <td class="text">
                         <div class="pills-container">
-                           @foreach (var group in employee.Groups) {
-                              <a href="/TrainerGroups/Details?id=@group.Id" class="pill">@group.Name</a>
-                           }
+                        @foreach (var group in employee.Groups) {
+                           <a href="/TrainerGroups/Details?id=@group.Id" class="pill">@group.Name</a>
+                        }
                         </div>
                      </td>
                   </tr>
@@ -43,9 +43,9 @@
             <div class="title-row">
                <p class="title">Linked Training Orders</p>
             </div>
-            @{
-               setOrders(employee.TrainingOrdersAsTrainee);
-            }
+         @{
+            setOrders(employee.TrainingOrdersAsTrainee);
+         }
             <table>
                <thead>
                   <tr>
@@ -59,44 +59,40 @@
                   <tr>
                      <td class="column">
                         <div class="pills-container">
-                           @foreach (var order in activeOrders)
-                           {
+                        @foreach (var order in activeOrders) {
+                           var cssClass = order.Archived ? "pill inactive" : "pill";
+                           <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                        }
+                        </div>
+                     </td>
+                     <td class="column">
+                        <div class="pills-container">
+                        @foreach (var order in completeOrders) {
+                           var cssClass = order.Archived ? "pill inactive" : "pill";
+                           <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                        }
+                        </div>
+                     </td>
+                     <td class="column">
+                        <div class="pills-container">
+                        @{
+                           setOrders(employee.TrainingOrdersAsTrainer);
+                           foreach (var order in activeOrders) {
                               var cssClass = order.Archived ? "pill inactive" : "pill";
                               <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
                            }
+                        }
                         </div>
                      </td>
                      <td class="column">
                         <div class="pills-container">
-                           @foreach (var order in completeOrders)
-                           {
+                        @{
+                           setOrders(employee.TrainingOrdersAsTrainer);
+                           foreach (var order in completeOrders) {
                               var cssClass = order.Archived ? "pill inactive" : "pill";
                               <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
                            }
-                        </div>
-                     </td>
-                     <td class="column">
-                        <div class="pills-container">
-                           @{
-                              setOrders(employee.TrainingOrdersAsTrainer);
-                              foreach (var order in activeOrders)
-                              {
-                                 var cssClass = order.Archived ? "pill inactive" : "pill";
-                                 <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
-                              }
-                           }
-                        </div>
-                     </td>
-                     <td class="column">
-                        <div class="pills-container">
-                           @{
-                              setOrders(employee.TrainingOrdersAsTrainer);
-                              foreach (var order in completeOrders)
-                              {
-                                 var cssClass = order.Archived ? "pill inactive" : "pill";
-                                 <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
-                              }
-                           }
+                        }
                         </div>
                      </td>
                   </tr>
@@ -114,30 +110,30 @@
                <tr>
                   <td class="column">
                      <div class="skills-container">
-                        @foreach (var skill in employee.Skills)
+                     @foreach (var skill in employee.Skills)
+                     {
+                        <div class="skill-box">
+                           <div class="title-container">
+                              <a href="/Skills/Details?id=@skill.Id" class="skill-title">@skill.Name</a>
+                           </div>
+                           <div class="order-list">
+                        @foreach (var order in employee.TrainingOrdersAsTrainee)
                         {
-                           <div class="skill-box">
-                              <div class="title-container">
-                                 <a href="/Skills/Details?id=@skill.Id" class="skill-title">@skill.Name</a>
-                              </div>
-                              <div class="order-list">
-                                 @foreach (var order in employee.TrainingOrdersAsTrainee)
-                                 {
-                                    var cssClass = order.Archived ? "pill inactive" : "pill";
-                                    if (order.ParentSkillId == skill.Id)
-                                    {
-                                       <div class="order-block">
-                                          <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
-                                          @{
-                                             var type = order.Status.ToLower();
-                                             <p class="@type dot" title="@order.Status">⬤</p>
-                                          }
-                                       </div>
-                                    }
+                           var cssClass = order.Archived ? "pill inactive" : "pill";
+                           if (order.ParentSkillId == skill.Id)
+                           {
+                              <div class="order-block">
+                                 <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                                 @{
+                                    var type = order.Status.ToLower();
+                                    <p class="@type dot" title="@order.Status">⬤</p>
                                  }
                               </div>
-                           </div>
+                           }
                         }
+                           </div>
+                        </div>
+                     }
                      </div>
                   </td>
                </tr>
@@ -146,7 +142,7 @@
       </div>
    </div>
 } else {
-   <p>Loading...</p>
+      <p>Loading...</p>
 }
 
 
