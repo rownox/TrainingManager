@@ -6,7 +6,7 @@
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="user-form">
-            <p class="title">Create New Skill Category</p>
+            <p class="title">Create New Category</p>
             <p class="description">Fill out each required field.</p>
             <div class="field-container">
                <form method="post">
@@ -14,10 +14,10 @@
                   <div class="form-group">
                      <div class="form">
                         <div class="labels">
-                           <label asp-for="SkillCategory.Name" class="control-label"></label>
-                           <span asp-validation-for="SkillCategory.Name" class="text-danger"></span>
+                           <label asp-for="Category.Name" class="control-label"></label>
+                           <span asp-validation-for="Category.Name" class="text-danger"></span>
                         </div>
-                        <input asp-for="SkillCategory.Name" class="form-control" />
+                        <input asp-for="Category.Name" class="form-control" />
                      </div>
                   </div>
                   <div class="form-group">

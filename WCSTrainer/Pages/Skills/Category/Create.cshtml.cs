@@ -7,14 +7,14 @@ namespace WCSTrainer.Pages.Skills.Category {
    [Authorize(Roles = "owner, admin")]
    public class CreateModel(WCSTrainerContext context) : PageModel {
       [BindProperty]
-      public SkillCategory SkillCategory { get; set; } = default!;
+      public SkillCategory Category { get; set; } = default!;
 
       public async Task<IActionResult> OnPostAsync() {
          if (!ModelState.IsValid) {
             return Page();
          }
 
-         context.SkillCategories.Add(SkillCategory);
+         context.SkillCategories.Add(Category);
          await context.SaveChangesAsync();
 
          return RedirectToPage("/Skills/Index");

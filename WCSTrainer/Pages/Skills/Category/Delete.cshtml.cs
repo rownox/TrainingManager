@@ -13,7 +13,7 @@ namespace WCSTrainer.Pages.Skills.Category {
       }
 
       [BindProperty]
-      public SkillCategory SkillCategory { get; set; } = default!;
+      public SkillCategory Category { get; set; } = default!;
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          if (id == null) {
@@ -25,7 +25,7 @@ namespace WCSTrainer.Pages.Skills.Category {
          if (category == null) {
             return NotFound();
          } else {
-            SkillCategory = category;
+            Category = category;
          }
          return Page();
       }
@@ -37,7 +37,7 @@ namespace WCSTrainer.Pages.Skills.Category {
 
          var category = await _context.SkillCategories.FindAsync(id);
          if (category != null) {
-            SkillCategory = category;
+            Category = category;
             _context.SkillCategories.Remove(category);
             await _context.SaveChangesAsync();
          }

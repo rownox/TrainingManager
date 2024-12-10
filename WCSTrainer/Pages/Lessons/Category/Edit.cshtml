@@ -1,29 +1,27 @@
 ﻿@page
-@model WCSTrainer.Pages.Lessons.CreateCategoryModel
-@{
-}
+@model WCSTrainer.Pages.Skills.Category.EditModel
 
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="user-form">
-            <p class="title">Create Lesson Category</p>
-            <p class="description">Fill out each required field.</p>
+            <p class="title">Edit Category</p>
             <div class="field-container">
                <form method="post">
                   <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                  <input hidden asp-for="Category.Id" />
                   <div class="form-group">
                      <div class="form">
                         <div class="labels">
-                           <label asp-for="LessonCategory.Name" class="control-label"></label>
-                           <span asp-validation-for="LessonCategory.Name" class="text-danger"></span>
+                           <label asp-for="Category.Name" class="control-label"></label>
+                           <span asp-validation-for="Category.Name" class="text-danger"></span>
                         </div>
-                        <input asp-for="LessonCategory.Name" class="form-control" />
+                        <input asp-for="Category.Name" class="form-control" />
                      </div>
                   </div>
                   <div class="form-group">
-                     <input type="submit" value="Create" class="btn bg-btn btnGreen" />
+                     <input type="submit" value="Edit" class="btn bg-btn btnGreen" />
                   </div>
                </form>
             </div>
