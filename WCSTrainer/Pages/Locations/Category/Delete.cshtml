@@ -1,20 +1,20 @@
 ﻿@page
-@model WCSTrainer.Pages.Locations.DeleteCategoryModel
+@model DeleteModel
 
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="user-form">
-            <p class="title">Category #@Model.LocationCategory.Id</p>
+            <p class="title">Category #@Model.Category.Id</p>
             <div class="field-container">
                <div class="text-group">
                   <p class="title">Name</p>
-                  <p class="info">@Model.LocationCategory.Name</p>
+                  <p class="info">@Model.Category.Name</p>
                </div>
                <br />
                <form method="post" class="form-group">
-                  <input hidden asp-for="LocationCategory.Id" />
+                  <input hidden asp-for="Category.Id" />
                   <input type="submit" value="Delete" class="btn bg-btn btnRed" />
                </form>
             </div>

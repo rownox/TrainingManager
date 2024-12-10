@@ -3,17 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace WCSTrainer.Pages.Locations {
+namespace WCSTrainer.Pages.Locations.Category {
    [Authorize(Roles = "owner")]
-   public class DeleteCategoryModel : PageModel {
-      private readonly WCSTrainer.Data.WCSTrainerContext _context;
+   public class DeleteModel : PageModel {
+      private readonly Data.WCSTrainerContext _context;
 
-      public DeleteCategoryModel(WCSTrainer.Data.WCSTrainerContext context) {
+      public DeleteModel(Data.WCSTrainerContext context) {
          _context = context;
       }
 
       [BindProperty]
-      public LocationCategory LocationCategory { get; set; } = default!;
+      public LocationCategory Category { get; set; } = default!;
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          if (id == null) {
@@ -25,7 +25,7 @@ namespace WCSTrainer.Pages.Locations {
          if (category == null) {
             return NotFound();
          } else {
-            LocationCategory = category;
+            Category = category;
          }
          return Page();
       }
@@ -37,12 +37,12 @@ namespace WCSTrainer.Pages.Locations {
 
          var category = await _context.LocationCategories.FindAsync(id);
          if (category != null) {
-            LocationCategory = category;
-            _context.LocationCategories.Remove(LocationCategory);
+            Category = category;
+            _context.LocationCategories.Remove(category);
             await _context.SaveChangesAsync();
          }
 
-         return RedirectToPage("./Index");
+         return RedirectToPage("/Lessons/Index");
       }
    }
 }

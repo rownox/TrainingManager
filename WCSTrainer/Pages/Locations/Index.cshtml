@@ -35,9 +35,11 @@
                   <li id="@category.Name @category.Id" class="category">
                      <div class="category-title">
                         <p>@category.Name</p>
-                        @if (isOwner)
-                        {
-                           <a asp-page="DeleteCategory" asp-route-id="@category.Id" class="btn bg-btn btnRed">Delete</a>
+                        @if (isOwner) {
+                           <div>
+                              <a asp-page="./Category/Edit" asp-route-id="@category.Id" class="btn bg-btn btnGreen">Edit</a>
+                              <a asp-page="./Category/Delete" asp-route-id="@category.Id" class="btn bg-btn btnRed">Delete</a>
+                           </div>
                         }
                      </div>
                      <ul class="skill-list">
