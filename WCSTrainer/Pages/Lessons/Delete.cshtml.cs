@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 namespace WCSTrainer.Pages.Lessons {
    [Authorize(Roles = "owner")]
    public class DeleteModel : PageModel {
-      private readonly WCSTrainer.Data.WCSTrainerContext _context;
+      private readonly Data.WCSTrainerContext _context;
 
-      public DeleteModel(WCSTrainer.Data.WCSTrainerContext context) {
+      public DeleteModel(Data.WCSTrainerContext context) {
          _context = context;
       }
 
