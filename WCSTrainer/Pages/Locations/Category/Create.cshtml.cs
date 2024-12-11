@@ -17,7 +17,7 @@ namespace WCSTrainer.Pages.Locations.Category {
          context.LocationCategories.Add(Category);
          await context.SaveChangesAsync();
 
-         return RedirectToPage("/Lessons/Index");
+         return RedirectToPage("/Locations/Index");
       }
    }
 }

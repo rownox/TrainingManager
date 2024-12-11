@@ -16,10 +16,8 @@
 			<div class="user-form">
 				<p class="title">Edit Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
 				<div class="field-container">
-					@if (Model.TrainingOrder.Status != "Completed" && Model.TrainingOrder.Status != "Verified")
-					{
+					@if (Model.TrainingOrder.Status != "Completed" && Model.TrainingOrder.Status != "Verified") {
 						<form method="post">
-
 							<div asp-validation-summary="All" class="text-danger"></div>
 							<input hidden asp-for="TrainingOrder.Id" />
 
@@ -31,8 +29,7 @@
 							<input asp-for="TrainingOrder.ParentSkillId" hidden />
 							<input asp-for="TrainingOrder.CreatedByUserId" hidden />
 
-							@if (!Model.TrainingOrder.Status.Equals("Approving"))
-							{
+							@if (!Model.TrainingOrder.Status.Equals("Approving")) {
 								<div class="form-group">
 									<div class="form">
 										<div class="labels">
@@ -41,8 +38,7 @@
 										</div>
 										<div class="selections">
 											<ul id="trainerList" class="pill-container">
-												@foreach (var trainer in Model.TrainingOrder.Trainers)
-												{
+												@foreach (var trainer in Model.TrainingOrder.Trainers) {
 													<li class="pill person" onclick="removeItem(this, 'trainer')" value="@trainer.Id">
 														@trainer.FirstName @trainer.LastName
 													</li>
@@ -146,9 +142,7 @@
 								</div>
 							</div>
 						</form>
-					}
-					else
-					{
+					} else {
 						<p>No.</p>
 					}
 				</div>
