@@ -11,14 +11,14 @@ namespace WCSTrainer.Pages.Skills {
       public Skill Skill { get; set; } = new Skill();
       [BindProperty]
       public List<string> SelectedLessonList { get; set; } = new List<string>();
-      public SelectList? LessonSelectList { get; set; }
+      public List<Lesson> Lessons { get; set; } = new List<Lesson>();
       public SelectList? CategorySelectList { get; set; }
 
       public async Task OnGetAsync() {
          var lessons = await context.Lessons.ToListAsync();
          var skillCategories = await context.SkillCategories.ToListAsync();
 
-         LessonSelectList = new SelectList(lessons, "Id", "Name");
+         Lessons = await context.Lessons.ToListAsync();
          CategorySelectList = new SelectList(skillCategories, "Id", "Name");
       }
 
