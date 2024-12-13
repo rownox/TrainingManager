@@ -34,11 +34,12 @@
       var trainerList = new Dictionary<Person, string>();
 
       foreach (var item in Model) {
+         string departments = string.Join(", ", item.TrainerDepartments.Select(dept => dept.Name));
          var newPerson = new Person {
                Id = item.Id,
                Name = item.FirstName + " " + item.LastName,
                Status = item.Status,
-               Department = item.Department
+               Department = departments
          };
          var employeeJson = JsonSerializer.Serialize(newPerson, jsonOptions);
          if (item.Status == "Trainer") {

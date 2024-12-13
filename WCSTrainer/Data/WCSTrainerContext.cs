@@ -116,6 +116,10 @@ namespace WCSTrainer.Data {
             .HasMany(lc => lc.Lessons)
             .WithOne(l => l.LessonCategory);
 
+         builder.Entity<LessonCategory>()
+            .HasMany(lc => lc.Trainers)
+            .WithMany(t => t.TrainerDepartments);
+
          //LocationCategory
          builder.Entity<LocationCategory>()
             .HasMany(lc => lc.Locations)

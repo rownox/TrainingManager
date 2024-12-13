@@ -23,7 +23,14 @@
                   </tr>
                   <tr>
                      <td class="label">Department</td>
-                     <td class="text">@employee.Department</td>
+                     <td class="text">
+                        <div class="pills-container">
+                           @foreach (var department in employee.TrainerDepartments)
+                           {
+                              <a class="pill">@department.Name</a>
+                           }
+                        </div>
+                     </td>
                   </tr>
                   <tr>
                      <td class="label">Affiliated Groups</td>
