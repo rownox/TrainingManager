@@ -1,13 +1,42 @@
 ﻿@page
 @model WCSTrainer.Pages.FileManager.IndexModel
+
+@using System.Text.RegularExpressions
+@using System.IO
+
+@functions {
+   public List<string> GetSharedFilePaths()
+   {
+      var sharedFolderPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Shared");
+      var filePaths = new List<string>();
+
+      if (Directory.Exists(sharedFolderPath))
+      {
+         var files = Directory.GetFiles(sharedFolderPath, "*.*", SearchOption.AllDirectories);
+         foreach (var file in files)
+         {
+            var webPath = ConvertToWebPath(file, System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "");
+            filePaths.Add(webPath);
+         }
+      }
+
+      return filePaths;
+   }
+
+   private string ConvertToWebPath(string filePath, string rootPath, string webPrefix)
+   {
+      return filePath.Replace("\\", "/").Replace(rootPath.Replace("\\", "/"), webPrefix);
+   }
+}
+
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
       <div class="properties">
          <ul class="file-explorer">
-            @foreach (var file in Model.VideoFiles)
+            @foreach (var filePath in GetSharedFilePaths())
             {
-               <li>@file</li>
+               <li>@filePath</li>
             }
          </ul>
       </div>
