@@ -3,5 +3,13 @@
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
+      <div class="properties">
+         <ul class="file-explorer">
+            @foreach (var file in Model.VideoFiles)
+            {
+               <li>@file</li>
+            }
+         </ul>
+      </div>
    </div>
 </div>

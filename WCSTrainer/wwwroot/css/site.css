@@ -1760,3 +1760,9 @@ nav {
          display: flex;
          flex-grow: 1;
       }
+
+
+.file-explorer {
+   padding: 20px;
+   color: var(--textMain);
+}
