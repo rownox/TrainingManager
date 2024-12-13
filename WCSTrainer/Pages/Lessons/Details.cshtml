@@ -49,7 +49,7 @@
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="user-form">
-            <p class="title">Lesson #@Model.Lesson.Id</p>
+            <p class="title">@Model.Lesson.Name</p>
             <div class="field-container">
                <div class="field-section-container">
                   <div class="field-section">
@@ -58,6 +58,10 @@
                      </div>
                      <table>
                         <tbody>
+                           <tr>
+                              <td class="label">Lesson ID</td>
+                              <td class="text">@Model.Lesson.Id</td>
+                           </tr>
                            <tr>
                               <td class="label">Name</td>
                               <td class="text">@Model.Lesson.Name</td>
@@ -95,7 +99,7 @@
                </div>
             </div>
             <div class="btn-container">
-               @* <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Lesson.Id">Edit</a> *@
+               <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Lesson.Id">Edit</a>
                @if (SignInManager.IsSignedIn(User)) {
                   var user = await UserManager.GetUserAsync(User);
                   if (user != null) {

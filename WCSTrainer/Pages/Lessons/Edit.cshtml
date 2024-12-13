@@ -27,15 +27,28 @@
                         <select asp-for="Lesson.LessonCategoryId" class="form-drop2" asp-items="@Model.CategorySelectList"></select>
                      </div>
                   </div>
-                  <div class="form-group">
-                     <div class="form">
+@*                   <div class="form-group">
+                     <div class="form" id="imageUploadContainer">
                         <div class="labels">
-                           <label asp-for="Lesson.Descriptions" class="control-label"></label>
-                           <span asp-validation-for="Lesson.Descriptions" class="text-danger"></span>
+                           <label class="control-label">Description Section</label>
                         </div>
-                        <textarea class="desc-resize" rows="5" asp-for="Lesson.Descriptions" placeholder="Describe the steps needed to complete this lesson."></textarea>
+                        @foreach (var description in Model.Lesson.Descriptions) {
+                           <div class="image-upload-row">
+                              <div class="description-row">
+                                 <textarea class="desc-content" name="ImageCaptions" placeholder="Type lesson description here.">@description.TextContent</textarea>
+                              </div>
+                              <div class="description-row">
+                                 @if (description.FileUpload != null) {
+                                    <p>@description.FileUpload.FilePath</p>
+                                 }
+                                 <label class="control-label">Upload File</label>
+                                 <input type="file" name="ImageUploads" accept=".jpg,.jpeg,.png,.gif" class="form-control-file" />
+                                 <button type="button" class="btn remove-section-btn bg-btn btnRed">Remove Section</button>
+                              </div>
+                           </div>
+                        }
                      </div>
-                  </div>
+                  </div> *@
                   <div class="form-group">
                      <input type="submit" value="Save" class="btn bg-btn btnGreen" />
                   </div>

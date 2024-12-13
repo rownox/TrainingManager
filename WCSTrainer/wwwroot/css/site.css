@@ -861,7 +861,8 @@ nav {
                color: var(--textMain);
                font-size: 17px;
                align-items: flex-start;
-               gap: 8px;
+               column-gap: 8px;
+               row-gap: 3px;
                flex-wrap: wrap;
             }
 

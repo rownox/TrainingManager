@@ -19,7 +19,9 @@ namespace WCSTrainer.Pages.Lessons {
             return NotFound();
          }
 
-         var lesson = await context.Lessons.FirstOrDefaultAsync(m => m.Id == id);
+         var lesson = await context.Lessons
+            .Include(l => l.Descriptions)
+            .FirstOrDefaultAsync(m => m.Id == id);
          if (lesson == null) {
             return NotFound();
          }
