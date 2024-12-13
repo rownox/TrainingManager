@@ -1,33 +1,33 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Employees {
    [Authorize(Roles = "owner")]
-   public class EditModel : PageModel {
-      private readonly WCSTrainer.Data.WCSTrainerContext _context;
-
-      public EditModel(WCSTrainer.Data.WCSTrainerContext context) {
-         _context = context;
-      }
-
+   public class EditModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public Employee Employee { get; set; } = default!;
+
+      public SelectList? Departments { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          if (id == null) {
             return NotFound();
          }
+         Departments = new SelectList(await context.LessonCategories.ToListAsync(), "Id", "Name");
 
-         var employee = await _context.Employees
+         var employee = await context.Employees
              .Include(ua => ua.UserAccount)
+             .Include(e => e.TrainerDepartments)
              .FirstOrDefaultAsync(m => m.Id == id);
 
          if (employee == null) {
             return NotFound();
          }
          Employee = employee;
+
          return Page();
       }
 
@@ -36,10 +36,10 @@ namespace WCSTrainer.Pages.Employees {
             return Page();
          }
 
-         _context.Attach(Employee).State = EntityState.Modified;
+         context.Attach(Employee).State = EntityState.Modified;
 
          try {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
          } catch (DbUpdateConcurrencyException) {
             if (!EmployeeExists(Employee.Id)) {
                return NotFound();
@@ -51,7 +51,7 @@ namespace WCSTrainer.Pages.Employees {
          return RedirectToPage("./Index");
       }
       private bool EmployeeExists(int id) {
-         return _context.Employees.Any(e => e.Id == id);
+         return context.Employees.Any(e => e.Id == id);
       }
    }
 }

@@ -25,9 +25,8 @@
                      <td class="label">Department</td>
                      <td class="text">
                         <div class="pills-container">
-                           @foreach (var department in employee.TrainerDepartments)
-                           {
-                              <a class="pill">@department.Name</a>
+                           @foreach (var department in employee.TrainerDepartments) {
+                              <div class="pill">@department.Name</div>
                            }
                         </div>
                      </td>
@@ -182,6 +181,7 @@
             .ThenInclude(t => t.Lesson)
          .Include(e => e.Groups)
          .Include(e => e.Skills)
+         .Include(e => e.TrainerDepartments)
          .FirstOrDefaultAsync(m => m.Id == EmployeeId);
 
       if (tempEmployee != null) {
