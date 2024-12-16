@@ -4,8 +4,8 @@ namespace WCSTrainer.Data {
    public static class SeedData {
       public static async Task AssignRoles(UserManager<UserAccount> userManager, RoleManager<IdentityRole> roleManager) {
          var ownerList = new List<string>() { "AadamH" };
-         var adminList = new List<string>() { "JayD" };
-         var userList = new List<string>() { "KayS" };
+         var adminList = new List<string>() { "JayD", "KayS", "MatthewW", "DonnaC", "CraigG" };
+         var userList = new List<string>() { "" };
 
          foreach (var ownerPerm in ownerList) {
             var user = await userManager.FindByNameAsync(ownerPerm);

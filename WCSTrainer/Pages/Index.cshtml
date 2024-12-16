@@ -8,19 +8,51 @@
 
 <div class="main-banner">
    <div class="banner-container">
-      <div class="right">
+      <div class="left">
          <div class="info">
-            <p>Manage and Organize Work Training</p>
-            @if (SignInManager.IsSignedIn(User)) {
-               <a asp-page="/TrainingOrders/Index" class="btn btnWhite bg-btn">Start Here</a>
-            } else {
-               <a id="login" asp-area="Identity" asp-page="/Account/Login" class="btn btnWhite bg-btn">Start Here</a>
-            }
+            <p>Manage and Organize<br />Work Training</p>
+         </div>
+         <div class="text-container">
+            <div class="text">
+               @if (SignInManager.IsSignedIn(User)) {
+                  <p>You're all set! Click the logout button to switch accounts.</p>
+               } else {
+                  <p>You need to sign in. Create a new account or log in to your account.</p>
+               }
+            </div>
+            <div class="btn-container">
+               @if (SignInManager.IsSignedIn(User)) {
+                  <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                     <button id="logout" type="submit" class="btn bg-btn btnWhite">Logout</button>
+                  </form>
+               } else {
+                  <a id="login" asp-area="Identity" asp-page="/Account/Login" class="btn btnWhite bg-btn">Login</a>
+                  <a id="register" asp-area="Identity" asp-page="/Account/Register" class="btn bg-btn btnWhite">Register</a>
+               }
+            </div>
          </div>
       </div>
-      <div class="left">
-         <div class="image">
-            <img src="images/1N.png" />
+      <div class="right">
+         <p class="title">Get Started</p>
+         <div class="menu-grid">
+            <a href="/TrainingOrders" class="menu-btn">
+               <div class="img-container">
+                  <img src="~/images/TrainingOrders.svg" alt="Training Orders Image"/>
+               </div>
+               <div class="text-container">Training Orders</div>
+            </a>
+            <a href="/Lessons" class="menu-btn">
+               <div class="img-container">
+                  <img src="~/images/Lessons.svg" alt="Lessons Image"/>
+               </div>
+               <div class="text-container">Lessons</div>
+            </a>
+            <a href="/Identity/Account/Manage" class="menu-btn">
+               <div class="img-container">
+                  <img src="~/images/settings.svg" alt="Settings Image" />
+               </div>
+               <div class="text-container">Account Settings</div>
+            </a>
          </div>
       </div>
    </div>

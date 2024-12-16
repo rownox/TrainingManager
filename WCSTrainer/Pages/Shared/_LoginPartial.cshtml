@@ -6,15 +6,59 @@
 @if (SignInManager.IsSignedIn(User)) {
    var user = await UserManager.GetUserAsync(User);
    if (user != null) {
-      <p class="login-email">@user.UserName</p>
-      <a href="/Identity/Account/Manage" class="img-container">
-         <img src="~/images/settings.svg" />
-      </a>
+      <a href="/Identity/Account/Manage" class="login-email">@user.UserName</a>
    }
    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-      <button id="logout" type="submit" class="btn bg-btn btnWhite">Logout</button>
+      <div class="btn-container">
+         <button id="logout" type="submit" class="btn bg-btn btnWhite">Logout</button>
+      </div>
    </form>
 } else {
-   <a id="register" asp-area="Identity" asp-page="/Account/Register" class="btn bg-btn btnWhite">Register</a>
-   <a id="login" asp-area="Identity" asp-page="/Account/Login" class="btn bg-btn btnWhite">Login</a>
+   <div class="btn-container">
+      <a id="register" asp-area="Identity" asp-page="/Account/Register" class="btn bg-btn btnWhite">Register</a>
+      <a id="login" asp-area="Identity" asp-page="/Account/Login" class="btn bg-btn btnWhite">Login</a>
+   </div>
 }
+<div class="img-container">
+   <label class="switch">
+      <input type="checkbox" class="theme-input" onclick="toggleLightMode()">
+      <span class="slider"></span>
+   </label>
+</div>
+
+<script>
+   function enableLightMode() {
+       document.documentElement.classList.add('light-mode');
+   }
+
+   function disableLightMode() {
+       document.documentElement.classList.remove('light-mode');
+   }
+
+   function toggleLightMode() {
+       const isLightMode = localStorage.getItem('lightMode') === 'true';
+
+       if (isLightMode) {
+           localStorage.setItem('lightMode', 'false');
+           disableLightMode();
+       } else {
+           localStorage.setItem('lightMode', 'true');
+           enableLightMode();
+       }
+   }
+
+   function initializeTheme() {
+       const isLightMode = localStorage.getItem('lightMode') === 'true';
+       const themeInput = document.querySelector('.theme-input');
+
+       if (isLightMode) {
+           enableLightMode();
+           themeInput.checked = true;
+       } else {
+           disableLightMode();
+           themeInput.checked = false;
+       }
+   }
+
+   document.addEventListener('DOMContentLoaded', initializeTheme);
+</script>
