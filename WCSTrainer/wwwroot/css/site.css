@@ -969,10 +969,10 @@ nav {
          }
 
 .panel .body .properties .order-list2 {
-   overflow-y: scroll;
-   max-height: 750px;
    width: 100%;
-   scrollbar-width: none;
+   overflow-y: scroll;
+   max-height: 700px;
+   scrollbar-width: thin;
 }
 
    .panel .body .properties .order-list2 .sorters {
@@ -1519,7 +1519,7 @@ nav {
 
 .main-banner {
    display: flex;
-   height: 100%;
+   height: 80vh;
    width: 100%;
 }
 
@@ -1538,7 +1538,8 @@ nav {
          border-radius: 10px;
          flex-direction: column;
          gap: 35px;
-         background: linear-gradient(var(--gray3), var(--gray1), var(--gray1));
+         background: linear-gradient(var(--gray3), var(--gray1));
+         height: 100%;
       }
 
          .main-banner .banner-container .left .info {
@@ -1853,6 +1854,10 @@ nav {
 .file-explorer {
    padding: 20px;
    color: var(--textMain);
+   width: 100%;
+   max-height: 700px;
+   overflow-y: scroll;
+   scrollbar-width: thin;
 }
 
 /*-------------------------------*/
