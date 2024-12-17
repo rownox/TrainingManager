@@ -67,7 +67,9 @@
                         <div class="pills-container">
                         @foreach (var order in activeOrders) {
                            var cssClass = order.Archived ? "pill inactive" : "pill";
-                           <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                           if (order.Lesson != null) {
+                              <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                           }
                         }
                         </div>
                      </td>
@@ -75,7 +77,9 @@
                         <div class="pills-container">
                         @foreach (var order in completeOrders) {
                            var cssClass = order.Archived ? "pill inactive" : "pill";
-                           <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                           if (order.Lesson != null) {
+                              <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                           }
                         }
                         </div>
                      </td>
@@ -85,7 +89,9 @@
                            setOrders(employee.TrainingOrdersAsTrainer);
                            foreach (var order in activeOrders) {
                               var cssClass = order.Archived ? "pill inactive" : "pill";
-                              <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                              if (order.Lesson != null) {
+                                 <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                              }
                            }
                         }
                         </div>
@@ -96,7 +102,9 @@
                            setOrders(employee.TrainingOrdersAsTrainer);
                            foreach (var order in completeOrders) {
                               var cssClass = order.Archived ? "pill inactive" : "pill";
-                              <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                              if (order.Lesson != null) {
+                                 <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                              }
                            }
                         }
                         </div>

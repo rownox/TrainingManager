@@ -31,7 +31,7 @@
                      <div class="form">
                         <div class="multi-select-wrapper">
                            <p class="label">Lesson</p>
-                           <select multiple class="multi-select-comp" size="@Model.Lessons.Count()">
+                           <select asp-for="SelectedLessonList" multiple class="multi-select-comp" size="@Model.Lessons.Count()">
                               @foreach (var lesson in Model.Lessons) {
                                  <option value="@lesson.Id">@lesson.Name</option>
                               }

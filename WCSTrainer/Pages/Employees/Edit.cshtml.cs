@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Employees {
@@ -10,13 +9,15 @@ namespace WCSTrainer.Pages.Employees {
       [BindProperty]
       public Employee Employee { get; set; } = default!;
 
-      public SelectList? Departments { get; set; }
+      public List<LessonCategory> Departments { get; set; } = new List<LessonCategory>();
+      [BindProperty]
+      public List<string> SelectedDepartments { get; set; } = new List<string>();
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          if (id == null) {
             return NotFound();
          }
-         Departments = new SelectList(await context.LessonCategories.ToListAsync(), "Id", "Name");
+         Departments = await context.LessonCategories.ToListAsync();
 
          var employee = await context.Employees
              .Include(ua => ua.UserAccount)
@@ -37,6 +38,13 @@ namespace WCSTrainer.Pages.Employees {
          }
 
          context.Attach(Employee).State = EntityState.Modified;
+
+         foreach (var option in SelectedDepartments) {
+            var department = await context.LessonCategories.FirstOrDefaultAsync(l => l.Id.ToString() == option);
+            if (department != null) {
+               Employee.TrainerDepartments.Add(department);
+            }
+         }
 
          try {
             await context.SaveChangesAsync();

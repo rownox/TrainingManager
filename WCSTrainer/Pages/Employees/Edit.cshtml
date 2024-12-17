@@ -48,11 +48,14 @@
                   </div>
                   <div class="form-group">
                      <div class="form">
-                        <div class="labels">
-                           <p class="control-label">Departments</p>
-                           <span asp-validation-for="Employee.TrainerDepartments" class="text-danger"></span>
+                        <div class="multi-select-wrapper">
+                           <p class="label">Departments</p>
+                           <select asp-for="SelectedDepartments" multiple class="multi-select-comp" size="@Model.Departments.Count()">
+                              @foreach (var dept in Model.Departments) {
+                                 <option value="@dept.Id">@dept.Name</option>
+                              }
+                           </select>
                         </div>
-                        <select asp-for="Employee.TrainerDepartments" multiple class="multi-select" asp-items="Model.Departments"></select>
                      </div>
                   </div>
                   <div class="form-group">
@@ -64,6 +67,8 @@
       </div>
    </div>
 </div>
+
+<script src="~/js/pillMenu.js"></script>
 
 @section Scripts {
    @{

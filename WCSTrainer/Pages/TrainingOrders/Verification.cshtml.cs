@@ -6,28 +6,22 @@ using System.Security.Claims;
 
 namespace WCSTrainer.Pages.TrainingOrders {
    [Authorize(Roles = "owner, admin, user")]
-   public class VerificationModel : PageModel {
-      private readonly WCSTrainer.Data.WCSTrainerContext _context;
-
-      public VerificationModel(WCSTrainer.Data.WCSTrainerContext context) {
-         _context = context;
-      }
-
+   public class VerificationModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;
 
       [BindProperty]
-      public string VerifyNotes { get; set; }
+      public string VerifyNotes { get; set; } = string.Empty;
 
       [BindProperty]
-      public string Signature { get; set; }
+      public string Signature { get; set; } = string.Empty;
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          if (id == null) {
             return NotFound();
          }
 
-         var trainingorder = await _context.TrainingOrders
+         var trainingorder = await context.TrainingOrders
              .Include(t => t.Trainers)
              .Include(t => t.Location)
              .Include(t => t.Trainee)
@@ -55,7 +49,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return Page();
          }
 
-         var trainingOrder = await _context.TrainingOrders
+         var trainingOrder = await context.TrainingOrders
              .Include(t => t.Verification)
              .FirstOrDefaultAsync(t => t.Id == TrainingOrder.Id);
 
@@ -76,13 +70,13 @@ namespace WCSTrainer.Pages.TrainingOrders {
             TrainingOrderId = trainingOrder.Id
          };
 
-         _context.Verifications.Add(verification);
+         context.Verifications.Add(verification);
 
          trainingOrder.Status = "Verified";
          trainingOrder.Verification = verification;
 
          try {
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
          } catch (DbUpdateConcurrencyException) {
             if (!TrainingOrderExists(TrainingOrder.Id)) {
                return NotFound();
@@ -95,7 +89,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
       }
 
       private bool TrainingOrderExists(int id) {
-         return _context.TrainingOrders.Any(e => e.Id == id);
+         return context.TrainingOrders.Any(e => e.Id == id);
       }
    }
 }

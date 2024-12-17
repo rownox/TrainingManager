@@ -7,13 +7,7 @@ using WCSTrainer.Models;
 
 namespace WCSTrainer.Pages.Locations {
    [Authorize(Roles = "owner, admin, user")]
-   public class IndexModel : PageModel {
-      private readonly WCSTrainerContext _context;
-
-      public IndexModel(WCSTrainerContext context) {
-         _context = context;
-      }
-
+   public class IndexModel(WCSTrainerContext context) : PageModel {
       public IList<Location> Locations { get; set; } = default!;
       public List<ListItem> ListItems { get; set; } = new List<ListItem>();
       public ListPartialModel? ListPartial { get; set; }
@@ -22,8 +16,8 @@ namespace WCSTrainer.Pages.Locations {
       public List<LocationCategory> CategoryList { get; set; }
 
       public async Task<IActionResult> OnGetAsync() {
-         Locations = await _context.Locations.ToListAsync();
-         CategoryList = await _context.LocationCategories
+         Locations = await context.Locations.ToListAsync();
+         CategoryList = await context.LocationCategories
             .Include(c => c.Locations)
             .ToListAsync();
 
