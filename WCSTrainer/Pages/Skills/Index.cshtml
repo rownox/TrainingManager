@@ -29,7 +29,7 @@
             </div>
             <ul class="category-container">
                @foreach (var category in Model.CategoryList) {
-                  <li id="@category.Name @category.Id" class="category">
+                  <li id="@category.Name @category.Id" class="category searchable">
                      <div class="category-title">
                         <p>@category.Name</p>
                         @if (isOwner) {
@@ -41,7 +41,7 @@
                      </div>
                      <ul class="skill-list">
                         @foreach (var skill in category.Skills) {
-                           <li id="@skill.Name @skill.Id" class="skill">
+                           <li id="@skill.Name @skill.Id" class="skill searchable2">
                               <a asp-page="./Details" asp-route-id="@skill.Id">#@skill.Id - @skill.Name</a>
                            </li>
                         }
@@ -55,7 +55,8 @@
             <div class="tools">
                <p class="title">Options:</p>
                <div class="search">
-                  <input class="search-box" id="searchInput" placeholder="Search Categories" type="search" oninput="update(this)" />
+                  <input class="search-box" id="searchInput" placeholder="Search Categories" type="search" oninput="update(this, 'searchable')" />
+                  <input class="search-box" id="searchInput" placeholder="Search Skills" type="search" oninput="update(this, 'searchable2')" />
                </div>
                <div class="btns">
                   <a asp-page="Create" class="btn nbg-btn btnMenu">Create Skill</a>

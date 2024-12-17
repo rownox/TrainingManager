@@ -1,6 +1,6 @@
-﻿function update(searchElement) {
+﻿function update(searchElement, searchable) {
    var value = searchElement.value.toLowerCase();
-   var elements = document.getElementsByClassName("searchable");
+   var elements = document.getElementsByClassName(searchable);
 
    if (value == "") {
       for (var i = 0; i < elements.length; i++) {

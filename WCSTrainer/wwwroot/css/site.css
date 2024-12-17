@@ -705,6 +705,7 @@ nav {
          flex-direction: column;
          padding: 20px 0;
          height: fit-content;
+         gap: 10px;
       }
 
          .panel .body .properties .tool-container .tools .search .side {
