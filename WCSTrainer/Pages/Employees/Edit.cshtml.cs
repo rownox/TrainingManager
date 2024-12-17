@@ -39,10 +39,14 @@ namespace WCSTrainer.Pages.Employees {
 
          context.Attach(Employee).State = EntityState.Modified;
 
+         await context.Entry(Employee).Collection(e => e.TrainerDepartments).LoadAsync();
+
          foreach (var option in SelectedDepartments) {
             var department = await context.LessonCategories.FirstOrDefaultAsync(l => l.Id.ToString() == option);
             if (department != null) {
-               Employee.TrainerDepartments.Add(department);
+               if (!Employee.TrainerDepartments.Contains(department)) {
+                  Employee.TrainerDepartments.Add(department);
+               }
             }
          }
 
