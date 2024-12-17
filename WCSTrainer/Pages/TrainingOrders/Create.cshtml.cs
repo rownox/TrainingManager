@@ -16,7 +16,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
       public SelectList? LessonSelectList { get; set; }
 
       public async Task<IActionResult> OnGetAsync() {
-         Employees = await context.Employees.ToListAsync();
+         Employees = await context.Employees
+            .Include(e => e.TrainerDepartments)
+            .ToListAsync();
          LessonSelectList = new SelectList(await context.Lessons.ToListAsync(), "Id", "Name");
          return Page();
       }

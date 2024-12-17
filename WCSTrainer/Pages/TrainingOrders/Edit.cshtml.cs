@@ -120,6 +120,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             .Include(e => e.TrainingOrdersAsTrainee)
             .Include(e => e.TrainingOrdersAsTrainer)
             .Include(e => e.Groups)
+            .Include(e => e.TrainerDepartments)
             .ToListAsync();
          TrainerGroups = await context.TrainerGroups.ToListAsync();
          LessonSelectList = new SelectList(await context.Lessons.ToListAsync(), "Id", "Name");

@@ -124,27 +124,24 @@
                <tr>
                   <td class="column">
                      <div class="skills-container">
-                     @foreach (var skill in employee.Skills)
-                     {
+                     @foreach (var skill in employee.Skills) {
                         <div class="skill-box">
                            <div class="title-container">
                               <a href="/Skills/Details?id=@skill.Id" class="skill-title">@skill.Name</a>
                            </div>
                            <div class="order-list">
-                        @foreach (var order in employee.TrainingOrdersAsTrainee)
-                        {
-                           var cssClass = order.Archived ? "pill inactive" : "pill";
-                           if (order.ParentSkillId == skill.Id)
-                           {
-                              <div class="order-block">
-                                 <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
-                                 @{
-                                    var type = order.Status.ToLower();
-                                    <p class="@type dot" title="@order.Status">⬤</p>
+                              @foreach (var order in employee.TrainingOrdersAsTrainee) {
+                                 var cssClass = order.Archived ? "pill inactive" : "pill";
+                                 if (order.ParentSkillId == skill.Id) {
+                                    <div class="order-block">
+                                       <a href="/TrainingOrders/Details?id=@order.Id" class="@cssClass">TO #@order.Id - @order.Lesson.Name</a>
+                                       @{
+                                          var type = order.Status.ToLower();
+                                          <p class="@type dot" title="@order.Status">⬤</p>
+                                       }
+                                    </div>
                                  }
-                              </div>
-                           }
-                        }
+                              }
                            </div>
                         </div>
                      }

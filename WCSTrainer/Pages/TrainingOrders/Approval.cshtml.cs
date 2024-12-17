@@ -99,7 +99,9 @@ namespace WCSTrainer.Pages.TrainingOrders {
       }
 
       private async Task initJson() {
-         Employees = await context.Employees.ToListAsync();
+         Employees = await context.Employees
+            .Include(e => e.TrainerDepartments)
+            .ToListAsync();
          TrainerGroups = await context.TrainerGroups.ToListAsync();
 
          Locations = new SelectList(await context.Locations.ToListAsync(), "Id", "Name");

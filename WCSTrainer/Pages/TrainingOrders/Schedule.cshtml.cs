@@ -19,6 +19,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
       public async Task<IActionResult> OnGetAsync() {
          Employees = await context.Employees
+            .Include(e => e.TrainerDepartments)
             .Include(e => e.TrainingOrdersAsTrainer)
             .ToListAsync();
          TrainingOrders = await context.TrainingOrders
