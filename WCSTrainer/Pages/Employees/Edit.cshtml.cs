@@ -8,8 +8,8 @@ namespace WCSTrainer.Pages.Employees {
    public class EditModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public Employee Employee { get; set; } = default!;
-
       public List<LessonCategory> Departments { get; set; } = new List<LessonCategory>();
+
       [BindProperty]
       public List<string> SelectedDepartments { get; set; } = new List<string>();
 
@@ -17,6 +17,7 @@ namespace WCSTrainer.Pages.Employees {
          if (id == null) {
             return NotFound();
          }
+
          Departments = await context.LessonCategories.ToListAsync();
 
          var employee = await context.Employees
@@ -27,6 +28,7 @@ namespace WCSTrainer.Pages.Employees {
          if (employee == null) {
             return NotFound();
          }
+
          Employee = employee;
 
          return Page();
@@ -38,15 +40,13 @@ namespace WCSTrainer.Pages.Employees {
          }
 
          context.Attach(Employee).State = EntityState.Modified;
-
          await context.Entry(Employee).Collection(e => e.TrainerDepartments).LoadAsync();
 
+         Employee.TrainerDepartments.Clear();
          foreach (var option in SelectedDepartments) {
             var department = await context.LessonCategories.FirstOrDefaultAsync(l => l.Id.ToString() == option);
             if (department != null) {
-               if (!Employee.TrainerDepartments.Contains(department)) {
-                  Employee.TrainerDepartments.Add(department);
-               }
+               Employee.TrainerDepartments.Add(department);
             }
          }
 
@@ -60,7 +60,7 @@ namespace WCSTrainer.Pages.Employees {
             }
          }
 
-         return RedirectToPage("./Index");
+         return RedirectToPage("/Employees/Details", new { Employee.Id });
       }
       private bool EmployeeExists(int id) {
          return context.Employees.Any(e => e.Id == id);

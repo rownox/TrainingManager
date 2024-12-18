@@ -89,7 +89,7 @@
 									</div>
 								</div>
 							</div>
-							@if (!Model.TrainingOrder.Status.Equals("Approving")) {
+							@if (!Model.TrainingOrder.Status.Equals("Approving") && !Model.TrainingOrder.Status.Equals("Scheduling")) {
 								<div class="form-group">
 									<div class="form">
 										<div class="labels">
@@ -103,17 +103,19 @@
 										</select>
 									</div>
 								</div>
-								<div class="form-group">
-									<div class="form">
-										<div class="labels">
-											<p class="control-label">Location</p>
-											<span asp-validation-for="TrainingOrder.LocationId" class="text-danger"></span>
-										</div>
-										<select asp-for="TrainingOrder.LocationId" class="form-drop2" asp-items="@Model.Locations">
-										</select>
-									</div>
-								</div>
 							}
+                     @if (!Model.TrainingOrder.Status.Equals("Approving")) {
+                        <div class="form-group">
+                           <div class="form">
+                              <div class="labels">
+                                 <p class="control-label">Location</p>
+                                 <span asp-validation-for="TrainingOrder.LocationId" class="text-danger"></span>
+                              </div>
+                              <select asp-for="TrainingOrder.LocationId" class="form-drop2" asp-items="@Model.Locations">
+                              </select>
+                           </div>
+                        </div>
+                     }
 							<div class="form-group">
                         @if (Model.TrainingOrder.Status == "Approving" || Model.TrainingOrder.Status == "Active" || Model.TrainingOrder.Status == "Scheduling") {
 									<div class="form">

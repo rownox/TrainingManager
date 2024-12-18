@@ -53,7 +53,11 @@
                            <div id="multi-pill-container" class=""></div>
                            <select asp-for="SelectedDepartments" multiple class="multi-select-comp" size="@Model.Departments.Count()">
                               @foreach (var dept in Model.Departments) {
-                                 <option value="@dept.Id">@dept.Name</option>
+                                 if (Model.Employee.TrainerDepartments.Contains(dept)) {
+                                    <option selected value="@dept.Id">@dept.Name</option>
+                                 } else {
+                                    <option value="@dept.Id">@dept.Name</option>
+                                 }
                               }
                            </select>
                         </div>

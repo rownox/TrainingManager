@@ -11,7 +11,6 @@ nav {
    border-bottom: 1px solid var(--gray4);
    background-color: var(--black);
    justify-content: center;
-   margin-bottom: 50px;
    display: flex;
    width: 100%;
    top: 0;
@@ -38,8 +37,8 @@ nav {
             nav .nav-container .nav-buttons ul .main-title {
                font-weight: 400;
                color: var(--textMain);
-               margin-right: 50px;
                padding: 0 10px;
+               white-space: nowrap;
             }
 
             nav .nav-container .nav-buttons ul li {
@@ -130,6 +129,7 @@ nav {
 .panel {
    display: flex;
    width: 100%;
+   margin-top: 30px;
 }
 
    .panel .body {
@@ -361,16 +361,7 @@ nav {
             }
 
                .panel .body .properties .user-form .field-container .selections .pill-container {
-                  border: 1px solid var(--gray4);
-                  flex-direction: row;
-                  flex-wrap: wrap;
-                  display: flex;
-                  min-height: fit-content;
                   flex-grow: 1;
-                  gap: 5px;
-                  align-content: flex-end;
-                  padding: 5px;
-                  background-color: var(--black);
                }
 
             .panel .body .properties .user-form .field-container .form-group .selector {
@@ -800,7 +791,7 @@ nav {
       .panel .body .properties .list-container .top .left {
          display: flex;
          height: 100%;
-         color: var(--textSub1);
+         color: var(--textSub2);
          gap: 10px;
       }
 
@@ -827,8 +818,6 @@ nav {
          height: 100%;
          min-width: fit-content;
       }
-
-
 
    .panel .body .properties .list-container .order-list-container {
    }
@@ -949,6 +938,8 @@ nav {
       }
 
       .panel .body .properties .list-container .order-table tr td {
+         white-space: normal;
+         max-width: 300px;
       }
 
          .panel .body .properties .list-container .order-table tr td:last-child {
@@ -974,6 +965,7 @@ nav {
    overflow-y: scroll;
    max-height: 700px;
    scrollbar-width: thin;
+   scrollbar-color: var(--gray5) var(--gray3);
 }
 
    .panel .body .properties .order-list2 .sorters {
@@ -1011,7 +1003,6 @@ nav {
    .panel .body .properties .order-list2 table {
       width: 100%;
       border-collapse: collapse;
-      margin: 20px 0;
    }
 
       .panel .body .properties .order-list2 table tr {
@@ -1259,6 +1250,7 @@ nav {
       padding: 20px;
       display: flex;
       width: 30%;
+      min-width: 230px;
       gap: 10px;
       border-collapse: collapse;
    }
@@ -1448,20 +1440,16 @@ nav {
       }
 
          .people-component .details .bottom .list-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
             flex-grow: 1;
-            font-size: 18px;
+            border: 1px solid var(--gray3);
+            background-color: var(--black);
          }
 
             .people-component .details .bottom .list-container .list {
                display: flex;
-               background-color: var(--black);
-               flex-grow: 1;
-               padding: 10px;
-               border: 1px solid var(--gray3);
-               gap: 5px;
+               padding: 5px;
+               gap: 2px;
+               flex-wrap: wrap;
             }
 
          .people-component .details .bottom .btn-container {
@@ -1527,7 +1515,7 @@ nav {
    .main-banner .banner-container {
       width: 100%;
       display: flex;
-      gap: 5%;
+      gap: 2%;
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: center;
@@ -1535,12 +1523,11 @@ nav {
 
       .main-banner .banner-container .left {
          display: flex;
-         padding: 15px 50px;
-         border-radius: 10px;
+         padding: 25px 50px;
          flex-direction: column;
          gap: 35px;
          background: linear-gradient(var(--gray3), var(--gray1));
-         height: 100%;
+         flex-grow: 1;
       }
 
          .main-banner .banner-container .left .info {
@@ -1588,7 +1575,7 @@ nav {
       .main-banner .banner-container .right {
          display: flex;
          align-items: center;
-         flex-grow: 1;
+         flex-grow: 5;
          flex-direction: column;
          gap: 30px;
       }
@@ -1769,7 +1756,7 @@ nav {
 .pagination {
    display: flex;
    gap: 5px;
-   color: var(--textSub1);
+   color: var(--textSub2);
 }
 
    .pagination .btn {
@@ -1859,6 +1846,7 @@ nav {
    max-height: 700px;
    overflow-y: scroll;
    scrollbar-width: thin;
+   scrollbar-color: var(--gray5) var(--gray3);
 }
 
 /*-------------------------------*/

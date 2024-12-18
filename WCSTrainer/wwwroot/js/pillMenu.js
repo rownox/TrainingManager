@@ -20,8 +20,14 @@
          }
       });
 
-      this.selectElement.addEventListener("change", () => this.handleSelection());
+      this.selectElement.addEventListener("mousedown", (e) => {
+         e.preventDefault();
+         this.toggleOptionSelection(e.target);
+      });
+
+      this.loadInitialPills();
    }
+
 
    showDropdown() {
       this.selectElement.style.display = "block";
@@ -82,6 +88,29 @@
          this.onUpdateFilters(selectedValues, this.type);
       }
    }
+
+   loadInitialPills() {
+      Array.from(this.selectElement.selectedOptions).forEach(option => {
+         this.selectedValues.add(option.value);
+         this.addPill(option);
+      });
+   }
+
+   toggleOptionSelection(option) {
+      if (!option.value) return;
+
+      if (option.selected) {
+         option.selected = false;
+         this.removePill(option.value);
+      } else {
+         option.selected = true;
+         this.addPill(option);
+      }
+
+      this.updateFilters();
+   }
+
+
 }
 
 document.addEventListener("DOMContentLoaded", () => {

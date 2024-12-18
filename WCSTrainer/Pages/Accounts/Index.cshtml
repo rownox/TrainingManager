@@ -9,7 +9,6 @@
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="flex-column">
-            <p class="title">Account Manager</p>
             <div class="order-list2">
                <table id="dataTable">
                   <tr>
@@ -17,7 +16,7 @@
                      <th>Role</th>
                      <th></th>
                   </tr>
-                  @foreach (var user in Model.Users) {
+                  @foreach (var user in Model.Users.OrderBy(u => u.UserName)) {
                      <tr class="clickable">
                         <td>@user.UserName</td>
                         <td>
