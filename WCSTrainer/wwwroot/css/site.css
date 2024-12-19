@@ -76,7 +76,7 @@ nav {
          height: 100%;
          justify-content: center;
          align-items: center;
-         padding: 0 20px;
+         padding: 0 10px;
       }
 
          nav .nav-container .nav-options .btn-container {
@@ -144,6 +144,7 @@ nav {
          flex-direction: column;
          display: flex;
          height: fit-content;
+         border-left: 1px solid var(--gray5);
       }
 
          .panel .body .side-bar .link-list {
@@ -154,18 +155,31 @@ nav {
          }
 
             .panel .body .side-bar .link-list .condenser {
+               color: var(--white);
                display: flex;
                justify-content: flex-end;
-               margin-bottom: 10px;
                align-items: center;
+               padding: 2px;
+               padding-right: 5px;
+               cursor: pointer;
+               border-top: 1px solid;
+               border-right: 1px solid;
+               border-color: var(--gray5);
+               border-radius: 0 6px 0 0;
+            }
+
+            .panel .body .side-bar .link-list .condenser:hover {
+               background-color: var(--gray3);
             }
 
             .panel .body .side-bar .link-list .btn {
                display: flex;
                padding: 9px;
-               max-height: 20px;
+               max-height: 25px;
                align-items: center;
                gap: 15px;
+               border-top: 1px solid var(--gray1);
+               border-bottom: 1px solid var(--gray1);
             }
 
                .panel .body .side-bar .link-list .btn .icon {
@@ -179,17 +193,39 @@ nav {
                }
 
                .panel .body .side-bar .link-list .btn:hover {
-                  background-color: var(--gray3);
+                  background: linear-gradient(90deg, var(--gray3), var(--gray1));
                }
 
                   .panel .body .side-bar .link-list .btn:hover .icon {
                      filter: var(--svgHover);
                   }
 
-         .panel .body .side-bar .selected {
-            background-color: var(--gray3);
-            color: var(--textMain);
+         .panel .body .side-bar .condensed {
+            border-right: 1px solid;
+            border-color: var(--gray4);
          }
+
+         .panel .body .side-bar .condensed:hover {
+            background: none !important;
+            background-color: var(--gray3) !important;
+         }
+
+         .panel .body .side-bar .selected {
+            background: linear-gradient(90deg, var(--gray3), var(--gray1));
+            color: var(--textMain);
+            border-image: linear-gradient(90deg, var(--gray5), var(--gray1)) 1;
+            
+         }
+
+            .panel .body .side-bar .selected.condensed {
+               background: none;
+               background-color: var(--gray3);
+               color: var(--textMain);
+               border-image: none;
+               border-color: var(--gray5);
+            }
+
+            
 
          .panel .body .side-bar .selected-img {
             filter: var(--svgHover) !important;
@@ -1528,6 +1564,9 @@ nav {
          gap: 35px;
          background: linear-gradient(var(--gray3), var(--gray1));
          flex-grow: 1;
+         border-right: 1px solid;
+         border-left: 1px solid;
+         border-image: linear-gradient(180deg, var(--gray5), var(--gray1)) 1;
       }
 
          .main-banner .banner-container .left .info {
@@ -1541,35 +1580,42 @@ nav {
                font-size: 45px;
                font-weight: bold;
                user-select: none;
-               border-bottom: 1px solid var(--textMain);
+               border-bottom: 1px solid var(--gray5);
                padding-bottom: 30px;
             }
 
          .main-banner .banner-container .left .text-container {
             display: flex;
             width: 100%;
-            justify-content: flex-end;
+            align-items: center;
+            flex-direction: column;
          }
 
             .main-banner .banner-container .left .text-container .text {
                color: var(--textSub2);
                font-size: 30px;
-               width: 350px;
+               width: 400px;
+               text-align: center;
             }
 
             .main-banner .banner-container .left .text-container .btn-container {
                display: flex;
-               flex-direction: column;
                flex-grow: 1;
                gap: 10px;
-               padding: 5px 0;
+               padding-top: 30px;
                justify-content: center;
+               width: 100%;
+               align-items: center;
             }
 
                .main-banner .banner-container .left .text-container .btn-container .btn {
-                  padding: 10px 0;
+                  padding: 7px 20px;
                   width: 100%;
                   font-size: 20px;
+                  width: fit-content;
+                  color: var(--textSub1);
+                  background-color: var(--gray1);
+                  border-radius: 5px;
                }
 
       .main-banner .banner-container .right {
@@ -1608,14 +1654,32 @@ nav {
                background: linear-gradient(var(--gray3), var(--gray1));
                height: 250px;
                justify-content: flex-start;
-               border-radius: 20px;
+               border-radius: 20px 20px 0 0;
                cursor: pointer;
                text-decoration: none;
+               position: relative;
             }
 
+               .main-banner .banner-container .right .menu-grid .menu-btn::before {
+                  content: '';
+                  position: absolute;
+                  top: -1px;
+                  left: -1px;
+                  right: -1px;
+                  bottom: -1px;
+                  background: linear-gradient(180deg, var(--gray5), var(--gray1));
+                  border-radius: inherit;
+                  z-index: -2;
+                  pointer-events: none;
+               }
+
+               .main-banner .banner-container .right .menu-grid .menu-btn:hover::before {
+                  background: linear-gradient(180deg, var(--gray4), var(--gray1));
+                  border-radius: inherit;
+               }
+
                .main-banner .banner-container .right .menu-grid .menu-btn:hover {
-                  transform: translateY(-5px);
-                  background: linear-gradient(var(--gray4), var(--gray3), var(--gray1));
+                  transform: scale(105%);
                   transition: all ease-in-out 0.1s;
                }
 
@@ -1772,7 +1836,7 @@ nav {
 
    .category-container .category {
       list-style: none;
-      padding: 3px 10px;
+      padding: 3px 5px 3px 10px;
       background-color: var(--gray2);
       border-radius: 3px;
       border-left: 3px solid var(--gray5);

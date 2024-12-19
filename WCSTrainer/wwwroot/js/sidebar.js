@@ -1,26 +1,33 @@
 ﻿function toggleExpand() {
    var textElements = document.getElementsByClassName("text");
-   Array.from(textElements).forEach(function (item, index) {
-      item.classList.toggle("hidden");
+   var menuElements = document.getElementsByClassName("condensable");
+   var isHidden = !textElements[0].classList.contains("hidden");
 
-      if (item.classList.contains("hidden")) {
-         localStorage.setItem("textHidden-" + index, "true");
+   Array.from(textElements).forEach(function (item) {
+      item.classList.toggle("hidden", isHidden);
+   });
+
+   Array.from(menuElements).forEach(function (item) {
+      if (isHidden) {
+         item.classList.add("condensed");
       } else {
-         localStorage.setItem("textHidden-" + index, "false");
+         item.classList.remove("condensed");
       }
    });
+
+   localStorage.setItem("allTextHidden", isHidden);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
    var textElements = document.getElementsByClassName("text");
+   var menuElements = document.getElementsByClassName("condensable");
+   var isHidden = localStorage.getItem("allTextHidden") === "true";
 
-   Array.from(textElements).forEach(function (item, index) {
-      var isHidden = localStorage.getItem("textHidden-" + index);
+   Array.from(textElements).forEach(function (item) {
+      item.classList.toggle("hidden", isHidden);
+   });
 
-      if (isHidden === "true") {
-         item.classList.add("hidden");
-      } else {
-         item.classList.remove("hidden");
-      }
+   Array.from(menuElements).forEach(function (item) {
+      item.classList.toggle("condensed", isHidden);
    });
 });
