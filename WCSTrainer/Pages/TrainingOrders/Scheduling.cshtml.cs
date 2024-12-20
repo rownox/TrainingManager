@@ -40,7 +40,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          context.TrainingOrders.Update(TrainingOrder);
          await context.SaveChangesAsync();
-         return RedirectToPage("./Index");
+         return RedirectToPage("/TrainingOrders/Details", new { TrainingOrder.Id });
       }
 
       private bool TrainingOrderExists(int id) {

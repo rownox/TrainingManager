@@ -85,7 +85,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
          }
 
-         return RedirectToPage("./Index");
+         return RedirectToPage("/TrainingOrders/Details", new { TrainingOrder.Id });
       }
 
       private bool TrainingOrderExists(int id) {
