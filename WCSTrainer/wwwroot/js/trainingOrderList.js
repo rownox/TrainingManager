@@ -10,7 +10,8 @@
    showApproving: true,
    detailed: false,
    priorityIds: [],
-   monthIds: []
+   monthIds: [],
+   yearIds: []
 };
 
 let debounceTimeout;
@@ -60,7 +61,8 @@ function loadOrders() {
    const queryParams = new URLSearchParams({
       ...currentFilters,
       priorityIds: currentFilters.priorityIds && currentFilters.priorityIds.length > 0 ? currentFilters.priorityIds.join(',') : '',
-      monthIds: currentFilters.monthIds && currentFilters.monthIds.length > 0 ? currentFilters.monthIds.join(',') : ''
+      monthIds: currentFilters.monthIds && currentFilters.monthIds.length > 0 ? currentFilters.monthIds.join(',') : '',
+      yearIds: currentFilters.yearIds && currentFilters.yearIds.length > 0 ? currentFilters.yearIds.join(',') : ''
    });
 
    fetch(`?handler=Orders&${queryParams.toString()}`)

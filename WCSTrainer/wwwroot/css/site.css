@@ -202,7 +202,7 @@ nav {
 
          .panel .body .side-bar .condensed {
             border-right: 1px solid;
-            border-color: var(--gray4);
+            border-color: var(--gray5);
          }
 
          .panel .body .side-bar .condensed:hover {
