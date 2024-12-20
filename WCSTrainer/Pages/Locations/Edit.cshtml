@@ -18,6 +18,13 @@
                         </div>
                         <input asp-for="Location.Name" class="form-control" />
                      </div>
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Category</p>
+                           <span asp-validation-for="Location.CategoryId" class="text-danger"></span>
+                        </div>
+                        <select asp-for="Location.CategoryId" class="form-drop2" asp-items="@Model.CategorySelectList"></select>
+                     </div>
                   </div>
                   <div class="form-group">
                      <input type="submit" value="Save" class="btn bg-btn btnGreen" />

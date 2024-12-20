@@ -47,7 +47,7 @@ namespace WCSTrainer.Pages.Lessons {
             }
          }
 
-         return RedirectToPage("./Index");
+         return RedirectToPage("/Lessons/Details", new { Lesson.Id });
       }
 
       private bool LessonExists(int id) {

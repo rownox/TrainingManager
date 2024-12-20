@@ -44,7 +44,7 @@ namespace WCSTrainer.Pages.Skills {
             }
          }
 
-         return RedirectToPage("./Index");
+         return RedirectToPage("/Skills/Details", new { Skill.Id });
       }
 
       private bool SkillExists(int id) {

@@ -63,7 +63,7 @@ namespace WCSTrainer.Pages.TrainerGroups {
          } catch (DbUpdateConcurrencyException) {
             return NotFound();
          }
-         return RedirectToPage("./Index");
+         return RedirectToPage("/TrainerGroups/Details", new { TrainerGroup.Id });
       }
 
    }

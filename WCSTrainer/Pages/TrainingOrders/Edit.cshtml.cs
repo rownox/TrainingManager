@@ -112,7 +112,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
                throw;
             }
          }
-         return RedirectToPage("./Index");
+         return RedirectToPage("/TrainingOrders/Details", new { TrainingOrder.Id });
       }
 
       private async Task initJson() {
