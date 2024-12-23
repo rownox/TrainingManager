@@ -120,12 +120,16 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (type === "month") {
          currentFilters.monthIds = selectedValues.length > 0 ? selectedValues : null;
       }
+      //else if (type === "year") {
+      //   currentFilters.yearIds = selectedValues.length > 0 ? selectedValues : null;
+      //}
       currentFilters.currentPage = 1;
       loadOrders();
    };
 
    const multiSelectWrappers = document.querySelectorAll(".multi-select-wrapper");
    multiSelectWrappers.forEach((wrapper, index) => {
+      //const type = index === 0 ? "priority" : index === 1 ? "month" : "year";
       const type = index === 0 ? "priority" : "month";
       new MultiSelectComponent(wrapper, updateFilters, type);
    });
