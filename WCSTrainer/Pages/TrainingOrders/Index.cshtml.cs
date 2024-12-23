@@ -11,7 +11,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
       [BindProperty(SupportsGet = true)]
       public TrainingOrderFilterModel Filter { get; set; } = new();
 
-      //public int EarliestYear { get; set; }
+      public int EarliestYear { get; set; }
 
       public class TrainingOrderFilterModel {
          public int PageSize { get; set; } = 10;
@@ -26,7 +26,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          public bool Detailed { get; set; }
          public int[]? PriorityIds { get; set; }
          public int[]? MonthIds { get; set; }
-         //public int[]? YearIds { get; set; }
+         public int[]? YearIds { get; set; }
       }
 
       public class TrainingOrderViewModel {
@@ -50,13 +50,13 @@ namespace WCSTrainer.Pages.TrainingOrders {
       public TrainingOrderViewModel ViewModel { get; set; } = new();
 
       public async Task<IActionResult> OnGetAsync() {
-         //var orders = await context.TrainingOrders
-         //   .Include(o => o.Lesson)
-         //   .ToListAsync();
-         //EarliestYear = orders
-         //   .Select(t => t.CreateDate.Year)
-         //   .DefaultIfEmpty(DateTime.Now.Year)
-         //   .Min();
+         var orders = await context.TrainingOrders
+            .Include(o => o.Lesson)
+            .ToListAsync();
+         EarliestYear = orders
+            .Select(t => t.CreateDate.Year)
+            .DefaultIfEmpty(DateTime.Now.Year)
+            .Min();
 
          return Page();
       }
@@ -70,8 +70,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
          return query.Where(t => t.CreatedByUserId == user.Id || t.Trainers.Any(tr => tr.Id == currentEmployeeId) || (t.Trainee != null && t.Trainee.Id == currentEmployeeId));
       }
 
-      //public async Task<JsonResult> OnGetOrdersAsync([FromQuery] string priorityIds, [FromQuery] string monthIds, [FromQuery] string yearIds, [FromQuery] TrainingOrderFilterModel filter) {
-      public async Task<JsonResult> OnGetOrdersAsync([FromQuery] string priorityIds, [FromQuery] string monthIds, [FromQuery] TrainingOrderFilterModel filter) {
+      public async Task<JsonResult> OnGetOrdersAsync([FromQuery] string priorityIds, [FromQuery] string monthIds, [FromQuery] string yearIds, [FromQuery] TrainingOrderFilterModel filter) {
          var query = context.TrainingOrders
             .Include(t => t.Trainers)
             .Include(t => t.ParentSkill)
@@ -123,7 +122,7 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          filter.PriorityIds = string.IsNullOrEmpty(priorityIds) ? null : priorityIds.Split(',').Select(int.Parse).ToArray();
          filter.MonthIds = string.IsNullOrEmpty(monthIds) ? null : monthIds.Split(',').Select(int.Parse).ToArray();
-         //filter.YearIds = string.IsNullOrEmpty(yearIds) ? null : yearIds.Split(',').Select(int.Parse).ToArray();
+         filter.YearIds = string.IsNullOrEmpty(yearIds) ? null : yearIds.Split(',').Select(int.Parse).ToArray();
 
          if (filter.PriorityIds != null && filter.PriorityIds.Length > 0) {
             var priorityMap = new Dictionary<int, string> {
@@ -156,16 +155,16 @@ namespace WCSTrainer.Pages.TrainingOrders {
             }
          }
 
-         //if (filter.YearIds != null && filter.YearIds.Length > 0) {
-         //   var validYears = filter.YearIds.ToList();
+         if (filter.YearIds != null && filter.YearIds.Length > 0) {
+            var validYears = filter.YearIds.ToList();
 
-         //   if (validYears.Any()) {
-         //      query = query.Where(t =>
-         //         t.BeginDate != null &&
-         //         validYears.Contains(t.BeginDate.Value.Year)
-         //      );
-         //   }
-         //}
+            if (validYears.Any()) {
+               query = query.Where(t =>
+                  t.BeginDate != null &&
+                  validYears.Contains(t.BeginDate.Value.Year)
+               );
+            }
+         }
 
          var totalCount = await query.CountAsync();
 
