@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.TrainingOrders {
-   [Authorize(Roles = "owner, admin, user")]
+   [Authorize(Roles = "owner, admin, user, guest")]
    public class ConcludeModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public TrainingOrder TrainingOrder { get; set; } = default!;

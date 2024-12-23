@@ -393,10 +393,23 @@ nav {
 
             .panel .body .properties .user-form .field-container .selections {
                display: flex;
-               gap: 10px;
+               flex-direction: column;
             }
 
+               .panel .body .properties .user-form .field-container .selections .btn {
+                  background-color: var(--gray3);
+                  border: 1px solid var(--gray5);
+                  padding: 2px 10px;
+                  border-bottom: none;
+               }
+
+                  .panel .body .properties .user-form .field-container .selections .btn:hover {
+                     background-color: var(--gray4);
+                  }
+
+
                .panel .body .properties .user-form .field-container .selections .pill-container {
+                  border-radius: 0;
                   flex-grow: 1;
                }
 
