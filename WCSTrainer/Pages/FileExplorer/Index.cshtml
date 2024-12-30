@@ -5,34 +5,122 @@
 @using System.IO
 
 @functions {
-   public List<string> GetSharedFilePaths() {
-      var sharedFolderPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Shared");
-      var filePaths = new List<string>();
+   public class FileSystemNode
+   {
+      public string Name { get; set; }
+      public bool IsFile { get; set; }
+      public Dictionary<string, FileSystemNode> Children { get; set; }
+      public string Path { get; set; }
 
-      if (Directory.Exists(sharedFolderPath)) {
-         var files = Directory.GetFiles(sharedFolderPath, "*.*", SearchOption.AllDirectories);
-         foreach (var file in files) {
-            var webPath = ConvertToWebPath(file, System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "");
-            filePaths.Add(webPath);
-         }
+      public FileSystemNode(string name, bool isFile, string path)
+      {
+         Name = name;
+         IsFile = isFile;
+         Path = path;
+         Children = new Dictionary<string, FileSystemNode>();
       }
-      return filePaths;
    }
 
-   private string ConvertToWebPath(string filePath, string rootPath, string webPrefix) {
+   public FileSystemNode BuildFileTree()
+   {
+      var root = new FileSystemNode("Shared", false, "/Shared");
+      var sharedFolderPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Shared");
+
+      if (Directory.Exists(sharedFolderPath))
+      {
+         var files = Directory.GetFiles(sharedFolderPath, "*.*", SearchOption.AllDirectories);
+         foreach (var file in files)
+         {
+            var webPath = ConvertToWebPath(file, System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "");
+            AddToTree(root, webPath.Split('/').Skip(2).ToArray(), webPath);
+         }
+      }
+      return root;
+   }
+
+   private void AddToTree(FileSystemNode node, string[] pathParts, string fullPath)
+   {
+      if (pathParts.Length == 0) return;
+
+      var currentPart = pathParts[0];
+      var isFile = pathParts.Length == 1;
+      var currentPath = $"{node.Path}/{currentPart}";
+
+      if (!node.Children.ContainsKey(currentPart))
+      {
+         node.Children[currentPart] = new FileSystemNode(currentPart, isFile, currentPath);
+      }
+
+      if (!isFile)
+      {
+         AddToTree(node.Children[currentPart], pathParts.Skip(1).ToArray(), fullPath);
+      }
+   }
+
+   private string ConvertToWebPath(string filePath, string rootPath, string webPrefix)
+   {
       return filePath.Replace("\\", "/").Replace(rootPath.Replace("\\", "/"), webPrefix);
    }
 }
+
+<link rel="stylesheet" href="~/css/explorer.css" asp-append-version="true" />
 
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
       <div class="properties">
-         <ul class="file-explorer">
-            @foreach (var filePath in GetSharedFilePaths()) {
-               <li>@filePath</li>
-            }
-         </ul>
+         <div class="file-explorer">
+            <div>
+               <ul id="path">
+                  <li>test</li>
+               </ul>
+            </div>
+            <div id="fileList" class="file-list">
+               @{
+                  void RenderNode(FileSystemNode node, int depth)
+                  {
+                     var indent = new string(' ', depth * 4);
+                     if (node.IsFile)
+                     {
+                        <div class="file" data-path="@node.Path">
+                           <div>
+                              <i class="fas fa-file"></i>
+                              @node.Name
+                           </div>
+                           <div>@node.Path</div>
+                        </div>
+                     }
+                     else
+                     {
+                        <div class="folder" data-path="@node.Path">
+                           <div class="folder-header">
+                              <div onclick="setPath('@node.Path')">
+                                 <i class="fas fa-folder"></i>
+                                 <span class="folder-name">@node.Name</span>
+                              </div>
+                              <div>@node.Path</div>
+                           </div>
+                           <div class="folder-content">
+                              @foreach (var child in node.Children.Values.OrderBy(n => !n.IsFile).ThenBy(n => n.Name))
+                              {
+                                 RenderNode(child, depth + 1);
+                              }
+                           </div>
+                        </div>
+                     }
+                  }
+
+                  var fileTree = BuildFileTree();
+                  foreach (var child in fileTree.Children.Values.OrderBy(n => !n.IsFile).ThenBy(n => n.Name))
+                  {
+                     RenderNode(child, 0);
+                  }
+               }
+            </div>
+         </div>
       </div>
    </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+<script src="~/js/explorer.js" />

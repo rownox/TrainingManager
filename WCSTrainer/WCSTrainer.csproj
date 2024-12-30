@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\explorer.css" />
     <None Include="wwwroot\images\1N.png" />
   </ItemGroup>
 

@@ -1915,17 +1915,6 @@ nav {
          flex-grow: 1;
       }
 
-
-.file-explorer {
-   padding: 20px;
-   color: var(--textMain);
-   width: 100%;
-   max-height: 700px;
-   overflow-y: scroll;
-   scrollbar-width: thin;
-   scrollbar-color: var(--gray5) var(--gray3);
-}
-
 /*-------------------------------*/
 
 .switch input {
