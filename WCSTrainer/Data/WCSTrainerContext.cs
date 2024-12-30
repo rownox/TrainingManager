@@ -18,7 +18,6 @@ namespace WCSTrainer.Data {
       public DbSet<Lesson> Lessons { get; set; } = default!;
       public DbSet<LessonCategory> LessonCategories { get; set; } = default!;
       public DbSet<SkillCategory> SkillCategories { get; set; } = default!;
-      public DbSet<Description> Descriptions { get; set; } = default!;
       public DbSet<LocationCategory> LocationCategories { get; set; } = default!;
 
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
@@ -55,11 +54,6 @@ namespace WCSTrainer.Data {
              .HasMany(l => l.TrainingOrders)
              .WithOne(to => to.Lesson)
              .HasForeignKey(to => to.LessonId);
-
-         builder.Entity<Lesson>()
-            .HasMany(l => l.Descriptions)
-            .WithOne(d => d.Lesson)
-            .HasForeignKey(d => d.LessonId);
 
          // Location
          builder.Entity<Location>()

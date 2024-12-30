@@ -37,9 +37,8 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\Shared\Documents\" />
     <Folder Include="wwwroot\Shared\Videos\" />
-    <Folder Include="wwwroot\uploads\" />
-    <Folder Include="wwwroot\uploads\lessons\" />
   </ItemGroup>
 
 </Project>

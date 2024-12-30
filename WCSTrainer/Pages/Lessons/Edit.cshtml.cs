@@ -9,7 +9,6 @@ namespace WCSTrainer.Pages.Lessons {
    public class EditModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public Lesson Lesson { get; set; } = default!;
-
       public SelectList CategorySelectList { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int? id) {
@@ -20,11 +19,11 @@ namespace WCSTrainer.Pages.Lessons {
          }
 
          var lesson = await context.Lessons
-            .Include(l => l.Descriptions)
             .FirstOrDefaultAsync(m => m.Id == id);
          if (lesson == null) {
             return NotFound();
          }
+
          Lesson = lesson;
          ViewData["TrainingOrderId"] = new SelectList(context.TrainingOrders, "Id", "Id");
          return Page();

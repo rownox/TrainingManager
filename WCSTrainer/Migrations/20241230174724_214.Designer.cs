@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WCSTrainer.Data;
 
@@ -11,9 +12,11 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Migrations
 {
     [DbContext(typeof(WCSTrainerContext))]
-    partial class WCSTrainerContextModelSnapshot : ModelSnapshot
+    [Migration("20241230174724_214")]
+    partial class _214
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,22 @@ namespace WCSTrainer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Description", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("TextContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Descriptions");
+                });
 
             modelBuilder.Entity("Employee", b =>
                 {
@@ -122,9 +141,8 @@ namespace WCSTrainer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DescriptionId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");
@@ -137,6 +155,8 @@ namespace WCSTrainer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DescriptionId");
 
                     b.HasIndex("LessonCategoryId");
 
@@ -243,25 +263,25 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4c65f342-8200-4aaa-a035-d483621f5f8a",
+                            Id = "b265e947-2ec2-492b-998c-61dad7622c28",
                             Name = "owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "342bb0ba-589c-4d37-ba97-ebef4b49e639",
+                            Id = "f88bedf7-3105-492c-8b77-2806d7124162",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "238cb15b-e449-49bc-8af4-ccb4d1dcdf81",
+                            Id = "e020cf3b-6384-4c2f-b641-6010653f5528",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "5a49fd6b-098a-4a40-afcb-1c71f9e851e3",
+                            Id = "836c03dd-edc5-4966-afad-4bc368b5a722",
                             Name = "guest",
                             NormalizedName = "GUEST"
                         });
@@ -703,11 +723,19 @@ namespace WCSTrainer.Migrations
 
             modelBuilder.Entity("Lesson", b =>
                 {
+                    b.HasOne("Description", "Description")
+                        .WithMany()
+                        .HasForeignKey("DescriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LessonCategory", "LessonCategory")
                         .WithMany("Lessons")
                         .HasForeignKey("LessonCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Description");
 
                     b.Navigation("LessonCategory");
                 });
