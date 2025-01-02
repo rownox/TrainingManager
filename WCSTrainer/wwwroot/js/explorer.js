@@ -2,6 +2,7 @@
 var currentPath = "/Shared";
 var pathDisplay = document.getElementById("path");
 
+
 function setPath(path) {
    currentPath = path.endsWith("/") ? path.slice(0, -1) : path;
    const splitPath = currentPath.split("/").filter(Boolean);
@@ -14,11 +15,9 @@ function setPath(path) {
       const newItem = document.createElement("li");
       newItem.textContent = segment;
 
-      // Navigate to the accumulated path when clicked
       newItem.onclick = () => setPath("/" + splitPath.slice(0, index + 1).join("/"));
       pathDisplay.appendChild(newItem);
 
-      // Add an arrow after the segment unless it's the last
       if (index < splitPath.length - 1) {
          const arrow = document.createElement("li");
          arrow.textContent = "->";
