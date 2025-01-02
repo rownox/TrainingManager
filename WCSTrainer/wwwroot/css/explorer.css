@@ -66,3 +66,17 @@
 .folder-name {
    font-weight: 500;
 }
+
+
+.file-explorer-path {
+   list-style: none;
+   display: flex;
+   gap: 7px;
+   font-weight: bold;
+   padding: 10px 0;
+}
+
+.file-explorer-path li:hover {
+   text-decoration: underline;
+   cursor: pointer;
+}

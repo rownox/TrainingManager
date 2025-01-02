@@ -3,28 +3,44 @@ var currentPath = "/Shared";
 var pathDisplay = document.getElementById("path");
 
 function setPath(path) {
-   currentPath = path;
-   var splitPath = path.split("/");
+   currentPath = path.endsWith("/") ? path.slice(0, -1) : path;
+   const splitPath = currentPath.split("/").filter(Boolean);
    pathDisplay.innerHTML = "";
-   Array.from(splitPath).forEach(link => {
-      var newItem = document.createElement("li");
-      newItem.textContent = link;
-      newItem.onclick = () => setPath(currentPath + "/" + link)
-      pathDisplay.appendChild(newItem)
+   let accumulatedPath = "";
+
+   splitPath.forEach((segment, index) => {
+      accumulatedPath += (index > 0 ? "/" : "") + segment;
+
+      const newItem = document.createElement("li");
+      newItem.textContent = segment;
+
+      // Navigate to the accumulated path when clicked
+      newItem.onclick = () => setPath("/" + splitPath.slice(0, index + 1).join("/"));
+      pathDisplay.appendChild(newItem);
+
+      // Add an arrow after the segment unless it's the last
+      if (index < splitPath.length - 1) {
+         const arrow = document.createElement("li");
+         arrow.textContent = "->";
+         pathDisplay.appendChild(arrow);
+      }
    });
+
    updateFiles();
 }
+
 
 function updateFiles() {
    Array.from(fileContainer.children).forEach(child => {
       const dataPath = child.getAttribute('data-path') || '';
-      if (!dataPath.includes(currentPath)) {
-         child.style.display = 'none';
-      } else {
+      if (dataPath.startsWith(currentPath + "/") || dataPath === currentPath) {
          child.style.display = 'flex';
+      } else {
+         child.style.display = 'none';
       }
    });
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
    document.querySelectorAll('.file-explorer > .folder').forEach(folder => {
