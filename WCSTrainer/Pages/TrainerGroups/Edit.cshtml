@@ -37,10 +37,12 @@
                         <div class="form-group">
                            <div class="form">
                               <div class="labels">
-                                 <p class="control-label">Trainers</p>
-                                       <span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
+                                 <span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
                               </div>
                               <div class="selections">
+                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainer')">
+                                    <p>Select Trainers</p>
+                                 </div>
                                  <ul id="trainerList" class="pill-container">
                                     @foreach (var trainer in Model.TrainerGroup.Trainers) {
                                        <li class="pill person" onclick="removeItem(this, 'trainer')" value="@trainer.Id">
@@ -48,9 +50,6 @@
                                        </li>
                                     }
                                  </ul>
-                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainer')">
-                                    <p>Select</p>
-                                 </div>
                                  <input id="trainerInput" asp-for="@Model.SelectedTrainerString" type="hidden" />
                               </div>
                            </div>

@@ -11,7 +11,7 @@
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="user-form">
-            <p class="title">Location #@Model.Location.Id</p>
+            <p class="title">@Model.Location.Name</p>
             <div class="field-container">
                <div class="field-section-container">
                   <div class="field-section">
@@ -20,6 +20,10 @@
                      </div>
                      <table>
                         <tbody>
+                           <tr>
+                              <td class="label">Locatiom ID</td>
+                              <td class="text">@Model.Location.Id</td>
+                           </tr>
                            <tr>
                               <td class="label">Name</td>
                               <td class="text">@Model.Location.Name</td>

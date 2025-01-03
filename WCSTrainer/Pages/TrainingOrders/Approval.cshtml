@@ -33,12 +33,11 @@
                      <div class="form-group">
                         <div class="form">
                            <div class="labels">
-                              <p class="control-label">Trainers</p>
                               <span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
                            </div>
                            <div class="selections">
+                              <div class="btn bg-btn btnWhite" onclick="openComponent('trainer')"><p>Select Trainer</p></div>
                               <ul id="trainerList" class="pill-container"></ul>
-                              <div class="btn bg-btn btnWhite" onclick="openComponent('trainer')"><p>Select</p></div>
                               <input id="trainerInput" asp-for="@Model.SelectedTrainerString" type="hidden" />
                            </div>
                         </div>
@@ -46,12 +45,11 @@
                      <div class="form-group">
                         <div class="form">
                            <div class="labels">
-                              <p class="control-label">Trainer Groups</p>
                               <span asp-validation-for="@Model.SelectedTrainerGroupString" class="text-danger"></span>
                            </div>
                            <div class="selections">
+                              <div class="btn bg-btn btnWhite" onclick="openComponent('group')">Select Trainer Group</div>
                               <ul id="groupList" class="pill-container"></ul>
-                              <div class="btn bg-btn btnWhite" onclick="openComponent('group')">Select</div>
                               <input id="groupInput" asp-for="@Model.SelectedTrainerGroupString" type="hidden" />
                            </div>
                         </div>

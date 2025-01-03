@@ -9,7 +9,7 @@
       <div class="properties">
          <div class="user-form">
             <div id="contentToPrint" class="print-block">
-               <p class="title">Employee #@Model.Employee.Id</p>
+               <p class="title">@Model.Employee.FirstName @Model.Employee.LastName</p>
                <div class="field-container">
                   <component type="typeof(Person)" render-mode="WebAssemblyPrerendered" param-EmployeeId="@Model.Employee.Id" />
                   <div class="btn-container">

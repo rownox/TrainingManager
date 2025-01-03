@@ -10,10 +10,9 @@ function copyToClipboard(text) {
          console.error('Could not copy text: ', err);
       });
    } else {
-      // Fallback for unsupported browsers
       const textArea = document.createElement('textarea');
       textArea.value = text;
-      textArea.style.position = 'fixed'; // Prevent scrolling to the bottom of the page
+      textArea.style.position = 'fixed';
       document.body.appendChild(textArea);
       textArea.focus();
       textArea.select();

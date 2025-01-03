@@ -42,7 +42,7 @@
                      <ul class="skill-list">
                         @foreach (var skill in category.Skills) {
                            <li id="@skill.Name @skill.Id" class="skill searchable2">
-                              <a asp-page="./Details" asp-route-id="@skill.Id">#@skill.Id - @skill.Name</a>
+                              <a asp-page="./Details" asp-route-id="@skill.Id">- @skill.Name</a>
                            </li>
                         }
                      </ul>

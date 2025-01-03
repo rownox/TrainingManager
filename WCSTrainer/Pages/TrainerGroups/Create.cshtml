@@ -35,14 +35,13 @@
                         <div class="form-group">
                            <div class="form">
                               <div class="labels">
-                                 <p class="control-label">Trainers</p>
                                  <span asp-validation-for="@Model.SelectedEmployeeIdString" class="text-danger"></span>
                               </div>
                               <div class="selections">
-                                 <ul id="trainerList" class="pill-container"></ul>
                                  <div class="btn bg-btn btnWhite" onclick="openComponent('trainer')">
                                     <p>Select Trainers</p>
                                  </div>
+                                 <ul id="trainerList" class="pill-container"></ul>
                                  <input id="trainerInput" asp-for="@Model.SelectedEmployeeIdString" type="hidden" />
                               </div>
                            </div>
