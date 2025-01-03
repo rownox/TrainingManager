@@ -25,6 +25,7 @@
    padding: 5px 10px;
    border-top: 1px solid var(--gray4);
    justify-content: space-between;
+   flex-wrap: wrap;
 }
 
    .folder-header:hover {
@@ -53,6 +54,7 @@
    gap: 10px;
    border-top: 1px solid var(--gray4);
    justify-content: space-between;
+   flex-wrap: wrap;
 }
 
    .file:hover {
@@ -82,5 +84,18 @@
 }
 
 .filePath {
-   white-space: normal;
+   width: 300px;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+.path-container {
+   display: flex;
+   gap: 10px;
+   align-items: center;
+}
+
+.fa-copy:hover {
+   color: var(--textSub1);
 }

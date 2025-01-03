@@ -87,7 +87,11 @@
                               <i class="fas fa-file"></i>
                               @node.Name
                            </div>
-                           <div>@node.Path</div>
+                           <div class="path-container">
+                              <i class="fas fa-copy" onclick="copyToClipboard('@node.Path')"></i>
+                              <div class="filePath">@node.Path</div>
+                           </div>
+                           
                         </div>
                      }
                      else
@@ -98,9 +102,12 @@
                                  <i class="fas fa-folder"></i>
                                  <span class="folder-name">@node.Name</span>
                               </div>
-                              <div>@node.Path</div>
+                              <div class="path-container">
+                                 <i class="fas fa-copy" onclick="copyToClipboard('@node.Path')"></i>
+                                 <div class="filePath">@node.Path</div>
+                              </div>
                            </div>
-                           <div class="folder-content">
+                           <div id="@node.Path" class="folder-content">
                               @foreach (var child in node.Children.Values.OrderBy(n => !n.IsFile).ThenBy(n => n.Name))
                               {
                                  RenderNode(child, depth + 1);
