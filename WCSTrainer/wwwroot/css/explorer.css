@@ -31,6 +31,11 @@
    .folder-header:hover {
       background-color: var(--gray3);
    }
+   
+   .folder-header button {
+      color: var(--textMain);
+      font-size: 16px;
+   }
 
 .folder-content {
    margin-left: 20px;
@@ -78,7 +83,12 @@
    padding: 10px 0;
 }
 
-.file-explorer-path li:hover {
+   .file-explorer-path button {
+      font-size: 16px;
+      color: var(--textMain);
+   }
+
+.file-explorer-path button:hover {
    text-decoration: underline;
    cursor: pointer;
 }
