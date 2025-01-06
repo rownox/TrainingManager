@@ -8,7 +8,7 @@
 <div class="order-list">
    <ul>
       @foreach (var item in Model.Items) {
-         <li id="@item.Description @item.Id" class="active searchable">
+         <li id="@item.Description @item.Id" class="mainTheme searchable">
             <div class="info">
                <div class="title">
                   <a class="name unarchived" asp-page="./Details" asp-route-id="@item.Id">@item.Description</a>

@@ -805,6 +805,7 @@ nav {
       .panel .body .properties .tool-container .tools .info-section {
          display: flex;
          justify-content: space-between;
+         justify-content: space-between;
       }
 
 .panel .body .properties .categories {
@@ -1852,7 +1853,7 @@ nav {
       padding: 3px 5px 3px 10px;
       background-color: var(--gray2);
       border-radius: 3px;
-      border-left: 3px solid var(--gray5);
+      border-left: 3px solid var(--mainTheme);
       display: flex;
       flex-direction: column;
    }

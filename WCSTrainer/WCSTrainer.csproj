@@ -38,8 +38,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="wwwroot\Shared\Documents\" />
-    <Folder Include="wwwroot\Shared\Videos\" />
   </ItemGroup>
 
 </Project>
