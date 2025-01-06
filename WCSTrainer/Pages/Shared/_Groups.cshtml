@@ -37,7 +37,7 @@
                </div>
             </div>
             <div class="selector">
-               <img src="~/images/add.svg" onclick="addItemToGroupPartial('@item.Id', '@item.Name')" />
+               <img src="~/images/add.svg" onclick="addItemToGroupPartial('@item.Id', '@item.Name.Replace("'", "")')" />
             </div>
          </li>
       }
@@ -62,11 +62,10 @@
       </div>
    </div>
    <div class="bottom">
+      <p>Selected:</p>
       <div class="list-container">
-         <p>Selected:</p>
          <ul id="groupTempList" class="list"></ul>
       </div>
-
       <div class="btn-container">
          <button class="btn btnWhite bg-btn" onclick="confirmGroupSelection()">Add Selection</button>
       </div>

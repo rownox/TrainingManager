@@ -33,6 +33,8 @@
                      <input asp-for="TrainingOrder.LocationId" hidden />
                      <input asp-for="TrainingOrder.CreatedByUserId" hidden />
 
+                     <input asp-for="TrainingOrder.ClosedByUserId" hidden />
+
                      <component type="typeof(TrainingDetails)" render-mode="WebAssemblyPrerendered"
                      param-OrderId="@Model.TrainingOrder.Id" />
 

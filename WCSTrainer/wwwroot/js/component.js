@@ -85,7 +85,7 @@ var groupsTempList = document.getElementById('groupTempList');
 
 function addItemToGroupPartial(id, Name) {
    var exists = Array.from(groupsTempList.children).some(function (li) {
-      return li.dataset.id == id;
+      return li.dataset.id === id;
    });
 
    if (!exists) {
@@ -94,9 +94,9 @@ function addItemToGroupPartial(id, Name) {
       li.addEventListener("click", function () {
          removeItem(li, displayMode);
       });
-      li.textContent = Name;
+      li.textContent = Name; // Set the Name directly (apostrophes work fine here)
       li.dataset.id = id;
-      li.dataset.Name = Name;
+      li.dataset.Name = Name; // Set Name directly in dataset
       groupsTempList.appendChild(li);
    } else {
       alert(Name + " is already in the list.");

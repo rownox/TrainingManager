@@ -151,6 +151,21 @@
                         <td class="label">Closing Notes</td>
                         <td class="text">@TrainingOrder.ClosingNotes</td>
                      </tr>
+                     <tr>
+                        <td class="label">Signed By</td>
+                        <td class="text">@TrainingOrder.ClosingSignature</td>
+                     </tr>
+                     <tr>
+                        <td class="label">Closed By</td>
+                        <td class="text">
+                           @if (TrainingOrder.ClosedByUserId != null)
+                           {
+                              <a href="/Accounts/Details?id=@TrainingOrder.ClosedByUserId" class="link">
+                                 @ClosedByUserName
+                              </a>
+                           }
+                        </td>
+                     </tr>
                   </tbody>
                </table>
             </div>
@@ -188,6 +203,7 @@
 
    private TrainingOrder TrainingOrder = default!;
    private string CreatedByUserName = "Unknown";
+   private string ClosedByUserName = "Unknown";
 
    private List<Employee> groupPeople = new List<Employee>();
 
@@ -220,7 +236,9 @@
          if (TrainingOrder.CreatedByUserId != null)
          {
             var user = await UserManager.FindByIdAsync(TrainingOrder.CreatedByUserId);
+            var user2 = await UserManager.FindByIdAsync(TrainingOrder.ClosedByUserId);
             CreatedByUserName = user?.UserName ?? "Unknown";
+            ClosedByUserName = user2?.UserName ?? "Unknown";
          }
 
          foreach (var group in TrainingOrder.TrainerGroups)
