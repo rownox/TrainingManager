@@ -17,24 +17,8 @@
    flex-direction: column;
 }
 
-.folder-header {
-   cursor: pointer;
-   display: flex;
-   gap: 10px;
-   align-items: center;
-   padding: 5px 10px;
-   border-top: 1px solid var(--gray4);
-   justify-content: space-between;
-   flex-wrap: wrap;
-}
-
    .folder-header:hover {
       background-color: var(--gray3);
-   }
-   
-   .folder-header button {
-      color: var(--textMain);
-      font-size: 16px;
    }
 
 .folder-content {
@@ -51,19 +35,22 @@
 }
 
 .file {
-   padding: 5px 10px;
-   margin-left: 20px;
    display: flex;
+   grid-column-gap: 10px;
    align-items: center;
-   cursor: pointer;
-   gap: 10px;
+   padding: 5px 10px;
    border-top: 1px solid var(--gray4);
    justify-content: space-between;
    flex-wrap: wrap;
 }
 
-   .file:hover {
-      border-radius: 4px;
+   .file .file-title {
+      color: var(--textMain);
+      font-size: 15px;
+      display: flex;
+      gap: 10px;
+      cursor: pointer;
+      align-items: center;
    }
 
 .fas {
@@ -84,8 +71,9 @@
 }
 
    .file-explorer-path button {
-      font-size: 16px;
+      font-size: 15px;
       color: var(--textMain);
+      font-weight: bold;
    }
 
 .file-explorer-path button:hover {
@@ -98,14 +86,17 @@
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
+   font-size: 15px;
+   
 }
 
 .path-container {
    display: flex;
    gap: 10px;
    align-items: center;
+   color: var(--textSub2);
 }
 
 .fa-copy:hover {
-   color: var(--textSub1);
+   color: var(--textMain);
 }

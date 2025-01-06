@@ -37,9 +37,8 @@
                   if (node.IsFile)
                   {
                      <div class="file" data-path="@node.Path">
-                        <div>
-                           <i class="fas fa-file"></i>
-                           @node.Name
+                        <div class="file-title">
+                           <i class="fas fa-file"></i> @node.Name
                         </div>
                         <div class="path-container">
                            <i class="fas fa-copy" onclick="copyToClipboard('@node.Path')"></i>
@@ -49,20 +48,17 @@
                   }
                   else
                   {
-                     <div class="folder" data-path="@node.Path">
-                        <div class="folder-header">
-                           <form method="get">
-                              <input type="hidden" name="path" value="@node.Path" />
-                              <button type="submit" class="folder-name">
-                                 <i class="fas fa-folder"></i> @node.Name
-                              </button>
-                           </form>
-                           <div class="path-container">
-                              <i class="fas fa-copy" onclick="copyToClipboard('@node.Path')"></i>
-                              <div class="filePath">@node.Path</div>
-                           </div>
+                     <div class="folder-header file" data-path="@node.Path">
+                        <form method="get">
+                           <input type="hidden" name="path" value="@node.Path" />
+                           <button type="submit" class="file-title">
+                              <i class="fas fa-folder"></i> @node.Name
+                           </button>
+                        </form>
+                        <div class="path-container">
+                           <i class="fas fa-copy" onclick="copyToClipboard('@node.Path')"></i>
+                           <div class="filePath">@node.Path</div>
                         </div>
-                        
                      </div>
                   }
                }
@@ -74,11 +70,27 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 <script>
-   function copyToClipboard(text) {
-       navigator.clipboard.writeText(text).then(() => {
-           alert('Path copied to clipboard!');
-       }).catch(err => {
-           console.error('Could not copy text: ', err);
-       });
+      function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+         navigator.clipboard.writeText(text).then(() => {
+            alert('Path copied to clipboard!');
+         }).catch(err => {
+            console.error('Could not copy text: ', err);
+         });
+      } else {
+         const textArea = document.createElement('textarea');
+         textArea.value = text;
+         textArea.style.position = 'fixed';
+         document.body.appendChild(textArea);
+         textArea.focus();
+         textArea.select();
+         try {
+            document.execCommand('copy');
+            alert('Path copied to clipboard!');
+         } catch (err) {
+            console.error('Fallback: Could not copy text: ', err);
+         }
+         document.body.removeChild(textArea);
+      }
    }
 </script>
