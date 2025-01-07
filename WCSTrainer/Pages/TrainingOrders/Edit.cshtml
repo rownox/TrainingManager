@@ -33,10 +33,10 @@
 								<div class="form-group">
 									<div class="form">
 										<div class="labels">
-											<p class="control-label">Trainers</p>
 											<span asp-validation-for="@Model.SelectedTrainerString" class="text-danger"></span>
 										</div>
 										<div class="selections">
+                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainer')">Select Trainers</div>
 											<ul id="trainerList" class="pill-container">
 												@foreach (var trainer in Model.TrainingOrder.Trainers) {
 													<li class="pill person" onclick="removeItem(this, 'trainer')" value="@trainer.Id">
@@ -44,25 +44,21 @@
 													</li>
 												}
 											</ul>
-											<div class="btn bg-btn btnWhite" onclick="openComponent('trainer')">
-												<p>Select</p>
-											</div>
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="form">
 										<div class="labels">
-											<p class="control-label">Trainer Groups</p>
 											<span asp-validation-for="@Model.SelectedTrainerGroupString" class="text-danger"></span>
 										</div>
 										<div class="selections">
+                                 <div class="btn bg-btn btnWhite" onclick="openComponent('group')">Select Trainer Groups</div>
 											<ul id="groupList" class="pill-container">
 												@foreach (var trainerGroup in Model.TrainingOrder.TrainerGroups) {
 													<li class="pill removable" onclick="removeItem(this, 'group')" value="@trainerGroup.Id">@trainerGroup.Name</li>
 												}
 											</ul>
-											<div class="btn bg-btn btnWhite" onclick="openComponent('group')">Select</div>
 										</div>
 									</div>
 								</div>
@@ -72,10 +68,10 @@
 							<div class="form-group">
 								<div class="form">
 									<div class="labels">
-										<p class="control-label">Trainee</p>
 										<span asp-validation-for="TrainingOrder.TraineeId" class="text-danger"></span>
 									</div>
 									<div class="selections">
+                              <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')"><p>Select Trainee</p></div>
 										<ul id="traineeList" class="pill-container">
 											@{
 												var trainee = Model.TrainingOrder.Trainee;
@@ -84,7 +80,6 @@
 												}
 											}
 										</ul>
-										<div class="btn bg-btn btnWhite" onclick="openComponent('trainee')"><p>Select</p></div>
 										<input id="traineeInput" asp-for="TrainingOrder.TraineeId" hidden />
 									</div>
 								</div>

@@ -14,8 +14,7 @@
                if (user != null) {
                   <p class="title">Conclude Training Order #@Html.DisplayFor(model => model.TrainingOrder.Id)</p>
                   <div class="field-container">
-                     @if (Model.TrainingOrder.Status == "Active")
-                     {
+                     @if (Model.TrainingOrder.Status == "Active") {
                         <form method="post">
                            <div asp-validation-summary="All" class="text-danger"></div>
                            <input hidden asp-for="TrainingOrder.Id" />
@@ -40,9 +39,7 @@
 
                            <input asp-for="TrainingOrder.ClosedByUserId" type="hidden" value="@user.Id" />
 
-                           <component type="typeof(TrainingDetails)"
-                                      render-mode="WebAssemblyPrerendered"
-                                      param-OrderId="@Model.TrainingOrder.Id" />
+                           <component type="typeof(TrainingDetails)" render-mode="WebAssemblyPrerendered" param-OrderId="@Model.TrainingOrder.Id" />
 
                            <br />
                            <div class="form-group">

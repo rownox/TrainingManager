@@ -29,12 +29,11 @@
                         <div class="form-group">
                            <div class="form">
                               <div class="labels">
-                                 <p class="control-label">Trainee</p>
                                  <span asp-validation-for="@Model.SelectedTraineeId" class="text-danger"></span>
                               </div>
                               <div class="selections">
+                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')"><p>Select Trainee</p></div>
                                  <ul id="traineeList" class="pill-container"></ul>
-                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')"><p>Select</p></div>
                                  <input id="traineeInput" asp-for="@Model.SelectedTraineeId" hidden />
                               </div>
                            </div>

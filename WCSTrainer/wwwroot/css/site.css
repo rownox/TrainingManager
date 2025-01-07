@@ -870,15 +870,15 @@ nav {
       }
 
    .panel .body .properties .list-container .order-list-container {
+      overflow-y: scroll;
+      max-height: 65vh;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gray5) var(--gray3);
+      scroll-behavior: smooth;
    }
 
    .panel .body .properties .list-container .order-list {
-      overflow-y: scroll;
-      scroll-behavior: smooth;
-      max-height: 65vh;
       width: 100%;
-      scrollbar-color: var(--gray5) var(--gray3);
-      scrollbar-width: thin;
    }
 
       .panel .body .properties .list-container .order-list ul {
@@ -972,6 +972,16 @@ nav {
          height: 10px;
       }
 
+         .panel .body .properties .list-container .order-table tr:hover {
+            background-color: var(--gray2);
+            cursor: pointer;
+            color: white;
+         }
+
+         .panel .body .properties .list-container .order-table tr:hover td {
+            color: white;
+         }
+
          .panel .body .properties .list-container .order-table tr.Archived {
             background-color: var(--red3);
          }
@@ -981,7 +991,6 @@ nav {
 
       .panel .body .properties .list-container .order-table tr td, .panel .body .properties .list-container table tr th {
          color: var(--textSub1);
-         border-bottom: 1px solid var(--gray3);
          text-align: start;
          padding: 2px 5px;
          white-space: nowrap
@@ -990,11 +999,8 @@ nav {
       .panel .body .properties .list-container .order-table tr td {
          white-space: normal;
          max-width: 300px;
+         border: 1px solid var(--gray3);
       }
-
-         .panel .body .properties .list-container .order-table tr td:last-child {
-            width: 1%;
-         }
 
       .panel .body .properties .list-container .order-table tr th {
          background-color: var(--gray3);
@@ -1716,9 +1722,6 @@ nav {
                   font-weight: 500;
                   user-select: none;
                }
-
-
-
 
 .identity-container {
    width: 100%;

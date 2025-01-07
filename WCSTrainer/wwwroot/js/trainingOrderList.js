@@ -90,19 +90,15 @@ function renderOrders(data) {
                <th>Lesson</th>
                <th>Skill</th>
                <th>Priority</th>
-               <th></th>
             </tr>
             ${data.orders.map(order => `
-               <tr class="${getOrderClasses(order)}">
+               <tr class="${getOrderClasses(order)}" onclick="window.location.href='./TrainingOrders/Details?id=${order.id}'" style="cursor: pointer;">
                   <td><p class="${getTypeClass(order.status)}" title="${order.status}">${order.id}</p></td>
                   <td>${order.traineeName}</td>
                   <td>${order.beginDate}</td>
                   <td>${order.lessonName}</td>
                   <td>${order.skillName}</td>
                   <td>${order.priority}</td>
-                  <td>
-                     <a href="./TrainingOrders/Details?id=${order.id}" class="table-btn">View</a>
-                  </td>
                </tr>
             `).join('')}
          </table>
