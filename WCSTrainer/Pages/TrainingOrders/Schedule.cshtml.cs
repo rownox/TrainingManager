@@ -26,9 +26,11 @@ namespace WCSTrainer.Pages.TrainingOrders {
             .Include(o => o.Lesson)
             .ToListAsync();
          EarliestYear = TrainingOrders
-            .Select(t => t.CreateDate.Year)
+            .Where(t => t.BeginDate.HasValue)
+            .Select(t => t.BeginDate.Value.Year)
             .DefaultIfEmpty(DateTime.Now.Year)
             .Min();
+
          return Page();
       }
 
@@ -115,7 +117,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
          }
          return count;
       }
-
 
       public List<TrainingOrder> getMonthOrders(int month) {
          List<TrainingOrder> ordersInMonth = new List<TrainingOrder>();

@@ -34,7 +34,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          var newOrder = initOrder(id).Result;
          if (newOrder != null) {
-         https://localhost:44360/Employees
             TrainingOrder = newOrder;
          }
 
