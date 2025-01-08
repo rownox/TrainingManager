@@ -33,7 +33,7 @@
                      <div class="category-title">
                         <p>@category.Name</p>
                         @if (isOwner) {
-                           <div>
+                           <div class="btn-container">
                               <a asp-page="Category/Edit" asp-route-id="@category.Id" class="btn bg-btn btnGreen">Edit</a>
                               <a asp-page="Category/Delete" asp-route-id="@category.Id" class="btn bg-btn btnRed">Delete</a>
                            </div>

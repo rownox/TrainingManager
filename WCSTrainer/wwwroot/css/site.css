@@ -266,10 +266,11 @@ nav {
                padding-left: 10px;
                height: 17px;
                width: 17px;
+               filter: var(--svg);
             }
 
             .panel .body .properties .archive-warning p {
-               color: var(--red2);
+               color: var(--red1);
                padding: 5px 10px;
             }
 
@@ -842,7 +843,8 @@ nav {
          display: flex;
          height: 100%;
          color: var(--textSub2);
-         gap: 10px;
+         column-gap: 10px;
+         flex-wrap: wrap;
       }
 
          .panel .body .properties .list-container .top .left .select-cont {
@@ -1873,9 +1875,22 @@ nav {
             font-weight: bold;
          }
 
+         .category-container .category .category-title .btn-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            align-content: flex-start;
+            column-gap: 5px;
+            row-gap: 2px;
+         }
+
          .category-container .category .category-title .btn {
             font-size: 14px;
             padding: 0 5px;
+            display: flex;
+            justify-self: flex-end;
+            height: fit-content;
          }
 
       .category-container .category .skill-list {
