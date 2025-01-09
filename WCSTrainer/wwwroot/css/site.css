@@ -298,6 +298,7 @@ nav {
                display: flex;
                width: 100%;
                gap: 5px;
+               flex-wrap: wrap;
             }
 
                .panel .body .properties .user-form .btn-container .btn {
@@ -569,6 +570,10 @@ nav {
             flex-direction: column;
             top: 0px;
             align-self: flex-start;
+         }
+
+         .field-section table tbody tr .column .description-container {
+            padding: 10px;
          }
 
       .field-section table tbody tr .text {
@@ -1335,6 +1340,7 @@ nav {
                   background-color: var(--gray3);
                   border-bottom: 1px solid var(--textSub2);
                }
+
 
       .people-component .people-container .search {
          display: flex;

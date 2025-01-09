@@ -1,0 +1,26 @@
+﻿.__toolbar {
+   padding: 0;
+   display: flex;
+   margin-top: 10px;
+}
+
+.__toolbar-item {
+   display: flex;
+   justify-content: center;
+   align-content: center;
+   height: 100%;
+}
+
+   .__toolbar-item i {
+      height: 16px;
+   }
+
+.__toolbar-separator {
+   display: none;
+}
+
+.__editor {
+   overflow: hidden;
+   overflow-y: scroll;
+   scrollbar-width: thin;
+}

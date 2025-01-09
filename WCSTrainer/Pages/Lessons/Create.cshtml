@@ -9,7 +9,7 @@
             <p class="description">Fill out each required field.</p>
             <div class="field-container">
                <form method="post" enctype="multipart/form-data">
-                  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                  <div asp-validation-summary="All" class="text-danger"></div>
                   <div class="form-group">
                      <div class="form">
                         <div class="labels">
@@ -42,7 +42,26 @@
                         <div class="labels">
                            <label class="control-label">Lesson Content</label>
                         </div>
-                        <textarea asp-for="Lesson.Content" class="desc-content" placeholder="Type lesson description here."></textarea>
+
+                        <div id="editor-container" data-tiny-editor
+                             data-bold="yes"
+                             data-formatblock="no"
+                             data-italic="yes"
+                             data-underline="yes"
+                             data-fontname="no"
+                             data-forecolor="yes"
+                             data-justifyleft="no"
+                             data-justifycenter="no"
+                             data-justifyright="no"
+                             data-insertorderedlist="no"
+                             data-insertunorderedlist="no"
+                             data-outdent="yes"
+                             data-indent="yes"
+                             data-remove-format="yes"
+                             data-autofocus="yes">
+                           <p class="createEditor">Write lesson content here.</p>
+                        </div>
+                        <input type="hidden" asp-for="Lesson.Content" id="LessonContent" />
                      </div>
                   </div>
 
@@ -63,3 +82,24 @@
       </div>
    </div>
 </div>
+
+<script src="~/dist/bundle.js"></script>
+<link rel="stylesheet" href="~/css/editor.css" asp-append-version="true" />
+
+<link rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      crossorigin="anonymous">
+
+<script>
+   const editorContainer = document.querySelector('#editor-container');
+   const lessonContentInput = document.querySelector('#LessonContent');
+
+   editorContainer.addEventListener('input', function () {
+      lessonContentInput.value = editorContainer.innerHTML;
+   });
+
+   document.querySelector('form').addEventListener('submit', function () {
+      lessonContentInput.value = editorContainer.innerHTML;
+   });
+</script>

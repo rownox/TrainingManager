@@ -80,11 +80,8 @@
                         <tbody>
                            <tr>
                               <td class="column">
-                                 @{
-                                    if (!string.IsNullOrWhiteSpace(Model.Lesson.Content))
-                                    {
-                                       <pre class="description-container">@Html.Raw(ConvertContent(Model.Lesson.Content))</pre>
-                                    }
+                                 @if (!string.IsNullOrWhiteSpace(Model.Lesson.Content)) {
+                                    <pre class="description-container">@Html.Raw(ConvertContent(Model.Lesson.Content))</pre>
                                  }
                               </td>
                            </tr>

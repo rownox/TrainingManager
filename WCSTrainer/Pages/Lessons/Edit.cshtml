@@ -1,12 +1,65 @@
 ﻿@page
 @model WCSTrainer.Pages.Lessons.EditModel
 
+@using System.Text.RegularExpressions
+
+
+@functions {
+   public string ConvertContent(string content)
+   {
+      var urlRegex = new Regex(@"(http|https)://[^\s]+|[a-zA-Z]:/[^\s]+");
+      return urlRegex.Replace(content, match =>
+      {
+         var url = match.Value;
+
+         if (url.Contains("youtube.com/watch?v=") || url.Contains("youtu.be/"))
+         {
+            var videoId = ExtractYouTubeId(url);
+            if (videoId != null)
+            {
+               return $"<iframe class=\"description-video\" src=\"https://www.youtube.com/embed/{videoId}\" frameborder=\"0\" allowfullscreen></iframe>";
+            }
+         }
+         else if (Regex.IsMatch(url, @"^S:/"))
+         {
+            var webPath = ConvertToWebPath(url, "S:");
+            return $"<iframe src=\"{webPath}\" frameborder=\"0\" width=\"100%\" height=\"500\"></iframe>";
+         }
+         else if (Regex.IsMatch(url, @"^D:/"))
+         {
+            var webPath = ConvertToWebPath(url, "D:");
+            var fileName = System.IO.Path.GetFileName(url);
+            return $"<a class=\"btn btnBlue bg-btn\" href=\"{webPath}\" download>Download {fileName}</a>";
+         }
+         else if (Regex.IsMatch(url, @"^I:/"))
+         {
+            var webPath = ConvertToWebPath(url, "I:");
+            var fileName = System.IO.Path.GetFileName(url);
+            return $"<img src=\"{webPath}\" alt=\"[Could not load image.]\" />";
+         }
+         return $"<a class=\"description-link\" href=\"{url}\" target=\"_blank\">{url}</a>";
+      });
+   }
+
+   private string ConvertToWebPath(string filePath, string drivePrefix)
+   {
+      return filePath.Replace("\\", "/").Replace(drivePrefix, "");
+   }
+
+   private string ExtractYouTubeId(string url)
+   {
+      var youtubeIdRegex = new Regex(@"(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})");
+      var match = youtubeIdRegex.Match(url);
+      return match.Success ? match.Groups[1].Value : null;
+   }
+}
+
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="user-form">
-            <p class="title">Skill #@Html.DisplayFor(model => model.Lesson.Id)</p>
+            <p class="title">Lesson #@Html.DisplayFor(model => model.Lesson.Id)</p>
             <div class="field-container">
                <form method="post">
                   <div asp-validation-summary="All" class="text-danger"></div>
@@ -42,7 +95,20 @@
                            <p class="control-label">Lesson Content</p>
                            <span asp-validation-for="Lesson.Content" class="text-danger"></span>
                         </div>
-                        <textarea asp-for="Lesson.Content" class="desc-content" placeholder="Type lesson description here."></textarea>
+                        @if (!string.IsNullOrWhiteSpace(Model.Lesson.Content)) {
+                           <div id="editor-container" data-tiny-editor data-bold="yes" data-formatblock="no" data-italic="yes" data-underline="yes" data-fontname="no"
+                                data-forecolor="yes" data-justifyleft="no" data-justifycenter="no" data-justifyright="no" data-insertorderedlist="no"
+                                data-insertunorderedlist="no" data-outdent="yes" data-indent="yes" data-remove-format="yes"
+                                data-autofocus="yes">
+                              @Html.Raw(ConvertContent(Model.Lesson.Content))
+                           </div>
+                        } else {
+                           <div id="editor-container" data-tiny-editor data-bold="yes" data-formatblock="no" data-italic="yes" data-underline="yes" data-fontname="no"
+                                data-forecolor="yes" data-justifyleft="no" data-justifycenter="no" data-justifyright="no" data-insertorderedlist="no"
+                                data-insertunorderedlist="no" data-outdent="yes" data-indent="yes" data-remove-format="yes"
+                                data-autofocus="yes">Write the lesson content here.</div>
+                        }
+                        <input type="hidden" asp-for="Lesson.Content" id="LessonContent" />
                      </div>
                   </div>
                   <div class="form-group">
@@ -60,3 +126,24 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script src="~/dist/bundle.js"></script>
+<link rel="stylesheet" href="~/css/editor.css" asp-append-version="true" />
+
+<link rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      crossorigin="anonymous">
+
+<script>
+   const editorContainer = document.querySelector('#editor-container');
+   const lessonContentInput = document.querySelector('#LessonContent');
+
+   editorContainer.addEventListener('input', function () {
+      lessonContentInput.value = editorContainer.innerHTML;
+   });
+
+   document.querySelector('form').addEventListener('submit', function () {
+      lessonContentInput.value = editorContainer.innerHTML;
+   });
+</script>
