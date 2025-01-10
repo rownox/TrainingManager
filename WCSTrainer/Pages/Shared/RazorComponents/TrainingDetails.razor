@@ -5,6 +5,8 @@
 @inject SignInManager<UserAccount> SignInManager
 @inject UserManager<UserAccount> UserManager
 
+@using System.Text.RegularExpressions
+
 @if (TrainingOrder != null) {
    <div class="field-section-container">
       <div class="field-section">
@@ -150,6 +152,25 @@
                      <tr>
                         <td class="label">Closing Notes</td>
                         <td class="text">@TrainingOrder.ClosingNotes</td>
+                     </tr>
+                     <tr>
+                        <td class="label">Certification</td>
+                        <td>
+                           @if (!string.IsNullOrWhiteSpace(TrainingOrder.Certificate)) {
+                              var path = "";
+                              var name = "";
+                              var urlRegex = new Regex(@"(http|https)://[^\s]+|[a-zA-Z]:/[^\s]+");
+                              name = urlRegex.Replace(TrainingOrder.Certificate, match => {
+                                 var url = match.Value;
+                                 if (Regex.IsMatch(url, @"^D:/")){
+                                    path = url.Replace("\\", "/").Replace("D:", "");
+                                    return System.IO.Path.GetFileName(url);
+                                 }
+                                 return "";
+                              });
+                              <a class="link" href="@path" download>Download @name</a>
+                           }
+                        </td>
                      </tr>
                      <tr>
                         <td class="label">Signed By</td>

@@ -99,14 +99,12 @@
                            <div id="editor-container" data-tiny-editor data-bold="yes" data-formatblock="no" data-italic="yes" data-underline="yes" data-fontname="no"
                                 data-forecolor="yes" data-justifyleft="no" data-justifycenter="no" data-justifyright="no" data-insertorderedlist="no"
                                 data-insertunorderedlist="no" data-outdent="yes" data-indent="yes" data-remove-format="yes"
-                                data-autofocus="yes">
-                              @Html.Raw(ConvertContent(Model.Lesson.Content))
-                           </div>
+                                data-autofocus="yes">@Html.Raw(ConvertContent(Model.Lesson.Content))</div>
                         } else {
                            <div id="editor-container" data-tiny-editor data-bold="yes" data-formatblock="no" data-italic="yes" data-underline="yes" data-fontname="no"
                                 data-forecolor="yes" data-justifyleft="no" data-justifycenter="no" data-justifyright="no" data-insertorderedlist="no"
                                 data-insertunorderedlist="no" data-outdent="yes" data-indent="yes" data-remove-format="yes"
-                                data-autofocus="yes">Write the lesson content here.</div>
+                                data-autofocus="yes"></div>
                         }
                         <input type="hidden" asp-for="Lesson.Content" id="LessonContent" />
                      </div>

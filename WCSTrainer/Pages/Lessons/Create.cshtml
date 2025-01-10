@@ -43,30 +43,18 @@
                            <label class="control-label">Lesson Content</label>
                         </div>
 
-                        <div id="editor-container" data-tiny-editor
-                             data-bold="yes"
-                             data-formatblock="no"
-                             data-italic="yes"
-                             data-underline="yes"
-                             data-fontname="no"
-                             data-forecolor="yes"
-                             data-justifyleft="no"
-                             data-justifycenter="no"
-                             data-justifyright="no"
-                             data-insertorderedlist="no"
-                             data-insertunorderedlist="no"
-                             data-outdent="yes"
-                             data-indent="yes"
-                             data-remove-format="yes"
-                             data-autofocus="yes">
-                           <p class="createEditor">Write lesson content here.</p>
-                        </div>
+                        <div id="editor-container" data-tiny-editor data-bold="yes" data-formatblock="no"
+                             data-italic="yes" data-underline="yes" data-fontname="no" data-forecolor="yes"
+                             data-justifyleft="no" data-justifycenter="no" data-justifyright="no"
+                             data-insertorderedlist="no" data-insertunorderedlist="no" data-outdent="yes"
+                             data-indent="yes" data-remove-format="yes" data-autofocus="yes"></div>
+
                         <input type="hidden" asp-for="Lesson.Content" id="LessonContent" />
                      </div>
                   </div>
 
                   <p>Naming Conventions:</p>
-                  <p>S:/ (Story Path) </p>
+                  <p>S:/ (Story or Video Path) </p>
                   <p>D:/ (Document Path)</p>
                   <p>I:/ (Image Path)</p>
                   <p>Example: D:/Documents/Unit_Two/Lesson_One.pdf</p>

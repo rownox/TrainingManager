@@ -8,6 +8,7 @@
    public string Status { get; set; } = string.Empty;
    public string? Priority { get; set; }
    public string? ClosingNotes { get; set; }
+   public string? Certificate { get; set; }
    public string? ClosedByUserId { get; set; }
    public string? ClosingSignature { get; set; }
    public int? ParentSkillId { get; set; }
