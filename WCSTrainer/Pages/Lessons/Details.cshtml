@@ -52,25 +52,27 @@
          <div class="user-form">
             <p class="title">@Model.Lesson.Name</p>
             <div class="field-container">
-               <div class="field-section-container">
-                  <div class="field-section">
-                     <div class="title-row">
-                        <p class="title">Details</p>
+               @if (SignInManager.IsSignedIn(User)) {
+                  <div class="field-section-container">
+                     <div class="field-section">
+                        <div class="title-row">
+                           <p class="title">Details</p>
+                        </div>
+                        <table>
+                           <tbody>
+                              <tr>
+                                 <td class="label">Lesson ID</td>
+                                 <td class="text">@Model.Lesson.Id</td>
+                              </tr>
+                              <tr>
+                                 <td class="label">Name</td>
+                                 <td class="text">@Model.Lesson.Name</td>
+                              </tr>
+                           </tbody>
+                        </table>
                      </div>
-                     <table>
-                        <tbody>
-                           <tr>
-                              <td class="label">Lesson ID</td>
-                              <td class="text">@Model.Lesson.Id</td>
-                           </tr>
-                           <tr>
-                              <td class="label">Name</td>
-                              <td class="text">@Model.Lesson.Name</td>
-                           </tr>
-                        </tbody>
-                     </table>
                   </div>
-               </div>
+               }
                <div class="field-section-container">
                   <div class="field-section">
                      <div class="title-row">
