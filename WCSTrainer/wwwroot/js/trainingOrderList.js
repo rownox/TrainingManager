@@ -221,6 +221,7 @@ function changePage(page) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+   moduleType = "A";
    loadSavedFilters();
    initializeUI();
    loadOrders();

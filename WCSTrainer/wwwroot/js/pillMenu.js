@@ -1,4 +1,6 @@
-﻿class MultiSelectComponent {
+﻿var moduleType = null;
+
+class MultiSelectComponent {
    constructor(wrapper, onUpdateFilters, type) {
       this.wrapper = wrapper;
       this.selectElement = wrapper.querySelector(".multi-select-comp");
@@ -112,21 +114,24 @@
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-   const updateFilters = (selectedValues, type) => {
-      if (type === "priority") {
-         currentFilters.priorityIds = selectedValues.length > 0 ? selectedValues : null;
-      } else if (type === "month") {
-         currentFilters.monthIds = selectedValues.length > 0 ? selectedValues : null;
-      } else if (type === "year") {
-         currentFilters.yearIds = selectedValues.length > 0 ? selectedValues : null;
-      }
-      currentFilters.currentPage = 1;
-      loadOrders();
-   };
+   var updateFiltersOptions = (selectedValues, type) => {};
+   if (moduleType != null) {
+      updateFiltersOptions = (selectedValues, type) => {
+         if (type === "priority") {
+            currentFilters.priorityIds = selectedValues.length > 0 ? selectedValues : null;
+         } else if (type === "month") {
+            currentFilters.monthIds = selectedValues.length > 0 ? selectedValues : null;
+         } else if (type === "year") {
+            currentFilters.yearIds = selectedValues.length > 0 ? selectedValues : null;
+         }
+         currentFilters.currentPage = 1;
+         loadOrders();
+      };
+   }
 
    const multiSelectWrappers = document.querySelectorAll(".multi-select-wrapper");
    multiSelectWrappers.forEach((wrapper, index) => {
       const type = index === 0 ? "priority" : index === 1 ? "month" : "year";
-      new MultiSelectComponent(wrapper, updateFilters, type);
+      new MultiSelectComponent(wrapper, updateFiltersOptions, type);
    });
 });

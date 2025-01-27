@@ -31,13 +31,22 @@
                      <div class="form">
                         <div class="multi-select-wrapper">
                            <p class="label">Lesson</p>
-                           <select asp-for="SelectedLessonList" multiple class="multi-select-comp" size="@Model.LessonCategories.Count()">
+                           @{
+                              var lessonCount = 0;
                               @foreach (var category in Model.LessonCategories) {
                                  @foreach (var lesson in category.Lessons) {
-                                    <option value="@lesson.Id">@category.Name - @lesson.Name</option>
+                                    lessonCount = lessonCount + 1;
                                  }
                               }
-                           </select>
+                              <select asp-for="SelectedLessonList" multiple class="multi-select-comp" size="@lessonCount">
+                                 @foreach (var category in Model.LessonCategories) {
+                                    @foreach (var lesson in category.Lessons) {
+                                       <option value="@lesson.Id">@category.Name - @lesson.Name</option>
+                                    }
+                                 }
+                              </select>
+                           }
+                           
                         </div>
                      </div>
                   </div>
