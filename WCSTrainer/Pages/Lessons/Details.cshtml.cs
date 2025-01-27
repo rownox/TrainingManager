@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Lessons {
-   [Authorize(Roles = "owner, admin, user, guest")]
    public class DetailsModel(Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public Lesson Lesson { get; set; } = default!;

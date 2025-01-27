@@ -231,6 +231,43 @@ nav {
             filter: var(--svgHover) !important;
          }
 
+      .panel .body .help-navigation {
+         flex-direction: column;
+         display: flex;
+         height: fit-content;
+         gap: 20px;
+      }
+
+         .panel .body .help-navigation .link-list {
+            flex-direction: row;
+            display: flex;
+            column-gap: 10px;
+            row-gap: 5px;
+            flex-wrap: wrap; 
+         }
+
+         .panel .body .help-navigation .btn {
+            display: flex;
+            padding: 3px 10px;
+            color: var(--textSub1);
+            font-weight: bold;
+            font-size: 18px;
+            border-left: 3px solid var(--gray5);
+            background-color: var(--gray3);
+         }
+
+            .panel .body .help-navigation .btn:hover {
+               color: var(--textMain);
+               border-color: var(--textMain);
+               background-color: var(--gray4);
+            }
+
+         .panel .body .help-navigation .title {
+            color: var(--textMain);
+            font-weight: bold;
+            font-size: 25px;
+         }
+
       .panel .body .properties {
          justify-content: space-between;
          flex-direction: row;

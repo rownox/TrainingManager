@@ -1,0 +1,21 @@
+﻿@page
+@model WCSTrainer.Pages.Help.IndexModel
+
+<div class="panel">
+   <div class="body">
+      <div class="help-navigation">
+         <p class="title">Help Topics</p>
+         <div class="link-list">
+            @foreach (var category in Model.CategoryList) {
+               if (category.Name == "WCS Trainer") {
+                  foreach(var lesson in category.Lessons) {
+                     <a href="/Lessons/Details?id=@lesson.Id" class="btn">@lesson.Name</a>
+                  }
+               }
+            }
+         </div>
+      </div>
+      <div class="properties">
+      </div>
+   </div>
+</div>
