@@ -235,7 +235,6 @@ nav {
          flex-direction: column;
          display: flex;
          height: fit-content;
-         gap: 20px;
       }
 
          .panel .body .help-navigation .link-list {
@@ -266,6 +265,14 @@ nav {
             color: var(--textMain);
             font-weight: bold;
             font-size: 25px;
+         }
+
+         .panel .body .help-navigation .sub-title {
+            color: var(--textSub1);
+            font-weight: bold;
+            font-size: 20px;
+            padding-top: 20px;
+            padding-bottom: 5px;
          }
 
       .panel .body .properties {

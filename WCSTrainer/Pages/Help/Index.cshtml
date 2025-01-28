@@ -5,17 +5,26 @@
    <div class="body">
       <div class="help-navigation">
          <p class="title">Help Topics</p>
+         <p class="sub-title">User</p>
          <div class="link-list">
             @foreach (var category in Model.CategoryList) {
-               if (category.Name == "WCS Trainer") {
+               if (category.Name == "WCS Trainer User") {
                   foreach(var lesson in category.Lessons) {
                      <a href="/Lessons/Details?id=@lesson.Id" class="btn">@lesson.Name</a>
                   }
                }
             }
          </div>
-      </div>
-      <div class="properties">
+         <p class="sub-title">Admin</p>
+         <div class="link-list">
+            @foreach (var category in Model.CategoryList) {
+               if (category.Name == "WCS Trainer Admin") {
+                  foreach (var lesson in category.Lessons) {
+                     <a href="/Lessons/Details?id=@lesson.Id" class="btn">@lesson.Name</a>
+                  }
+               }
+            }
+         </div>
       </div>
    </div>
 </div>
