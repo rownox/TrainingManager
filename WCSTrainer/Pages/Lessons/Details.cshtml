@@ -82,9 +82,12 @@
                         <tbody>
                            <tr>
                               <td class="column">
-                                 @if (!string.IsNullOrWhiteSpace(Model.Lesson.Content)) {
-                                    <pre class="description-container">@Html.Raw(ConvertContent(Model.Lesson.Content))</pre>
-                                 }
+                                 <div id="contentToPrint" class="print-block">
+                                    @if (!string.IsNullOrWhiteSpace(Model.Lesson.Content))
+                                    {
+                                       <pre class="description-container">@Html.Raw(ConvertContent(Model.Lesson.Content))</pre>
+                                    }
+                                 </div>
                               </td>
                            </tr>
                         </tbody>
@@ -108,3 +111,4 @@
       </div>
    </div>
 </div>
+<script src="~/js/details.js" />

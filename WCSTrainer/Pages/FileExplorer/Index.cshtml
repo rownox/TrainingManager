@@ -13,8 +13,7 @@
                   @{
                      var segments = Model.CurrentPath.Trim('/').Split('/');
                      var accumulatedPath = "/";
-                     for (var i = 0; i < segments.Length; i++)
-                     {
+                     for (var i = 0; i < segments.Length; i++) {
                         accumulatedPath += segments[i];
                         <li class="path-selector">
                            <form method="get">
@@ -22,8 +21,7 @@
                               <button type="submit" class="path-segment">@segments[i]</button>
                            </form>
                         </li>
-                        if (i < segments.Length - 1)
-                        {
+                        if (i < segments.Length - 1) {
                            <li class="path-separator">-></li>
                         }
                         accumulatedPath += "/";
@@ -32,10 +30,8 @@
                </ul>
             </div>
             <div id="fileList" class="file-list">
-               @foreach (var node in Model.DisplayNodes)
-               {
-                  if (node.IsFile)
-                  {
+               @foreach (var node in Model.DisplayNodes) {
+                  if (node.IsFile) {
                      <div class="file" data-path="@node.Path">
                         <div class="file-title">
                            <i class="fas fa-file"></i> @node.Name
@@ -46,8 +42,7 @@
                         </div>
                      </div>
                   }
-                  else
-                  {
+                  else {
                      <div class="folder-header file" data-path="@node.Path">
                         <form method="get">
                            <input type="hidden" name="path" value="@node.Path" />
