@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Models;
 
 namespace WCSTrainer.Pages.Lessons {
-   [Authorize(Roles = "owner, admin, user, guest")]
+   [Authorize(Roles = "owner, admin, user")]
    public class IndexModel(Data.WCSTrainerContext context) : PageModel {
       public IList<Lesson> Lessons { get; set; } = default!;
       public List<ListItem> ListItems { get; set; } = new List<ListItem>();

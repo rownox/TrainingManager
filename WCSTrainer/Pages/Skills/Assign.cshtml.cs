@@ -31,7 +31,9 @@ namespace WCSTrainer.Pages.Skills {
          }
 
          Skill = skill;
-         Employees = await context.Employees.ToListAsync();
+         Employees = await context.Employees
+            .Include(e => e.TrainerDepartments)
+            .ToListAsync();
 
          return Page();
       }
