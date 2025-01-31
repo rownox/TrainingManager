@@ -48,32 +48,27 @@
                      var isOwner = await UserManager.IsInRoleAsync(user, "owner");
                      var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
 
-                     if (Status.Equals("Active"))
-                     {
-                        if (Model.TrainingOrder.Trainee != null)
-                        {
-                           if (Model.TrainingOrder.Trainee.Id != user.EmployeeId)
-                           {
-                              <a class="btn bg-btn btnRed" asp-page="./Conclude" asp-route-id="@Id">Conclude Order</a>
-                           }
-                        }
+                     if (Status.Equals("Active")) {
+                        <a class="btn bg-btn btnRed" asp-page="./Conclude" asp-route-id="@Id">Conclude Order</a>
                      }
 
                      if (isAdmin || isOwner) {
-                        if (Status.Equals("Approving"))
-                        {
-                           <a class="btn bg-btn btnRed" asp-page="./Approval" asp-route-id="@Id">Approve Order</a>
-                        }
-                        else if (Status.Equals("Scheduling"))
-                        {
-                           <a class="btn bg-btn btnRed" asp-page="./Scheduling" asp-route-id="@Id">Schedule Order</a>
-                        }
-                        else if (Status.Equals("Completed"))
-                        {
-                           <a class="btn bg-btn btnRed" asp-page="./Verification" asp-route-id="@Id">Verify Order</a>
-                        }
+                        if (Model.TrainingOrder.TraineeId != user.EmployeeId) {
+                           if (Status.Equals("Approving"))
+                           {
+                              <a class="btn bg-btn btnRed" asp-page="./Approval" asp-route-id="@Id">Approve Order</a>
+                           }
+                           else if (Status.Equals("Scheduling"))
+                           {
+                              <a class="btn bg-btn btnRed" asp-page="./Scheduling" asp-route-id="@Id">Schedule Order</a>
+                           }
+                           else if (Status.Equals("Completed"))
+                           {
+                              <a class="btn bg-btn btnRed" asp-page="./Verification" asp-route-id="@Id">Verify Order</a>
+                           }
 
-                        <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Id">Edit Order</a>
+                           <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Id">Edit Order</a>
+                        }
                      }
 
                      <div id="printButton" class="btn bg-btn btnWhite">

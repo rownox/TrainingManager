@@ -52,27 +52,6 @@
          <div class="user-form">
             <p class="title">@Model.Lesson.Name</p>
             <div class="field-container">
-               @if (SignInManager.IsSignedIn(User)) {
-                  <div class="field-section-container">
-                     <div class="field-section">
-                        <div class="title-row">
-                           <p class="title">Details</p>
-                        </div>
-                        <table>
-                           <tbody>
-                              <tr>
-                                 <td class="label">Lesson ID</td>
-                                 <td class="text">@Model.Lesson.Id</td>
-                              </tr>
-                              <tr>
-                                 <td class="label">Name</td>
-                                 <td class="text">@Model.Lesson.Name</td>
-                              </tr>
-                           </tbody>
-                        </table>
-                     </div>
-                  </div>
-               }
                <div class="field-section-container">
                   <div class="field-section">
                      <div class="title-row">
@@ -94,13 +73,37 @@
                      </table>
                   </div>
                </div>
+               @if (SignInManager.IsSignedIn(User)) {
+                  <div class="field-section-container">
+                     <div class="field-section">
+                        <div class="title-row">
+                           <p class="title">Details</p>
+                        </div>
+                        <table>
+                           <tbody>
+                              <tr>
+                                 <td class="label">Lesson ID</td>
+                                 <td class="text">@Model.Lesson.Id</td>
+                              </tr>
+                              <tr>
+                                 <td class="label">Name</td>
+                                 <td class="text">@Model.Lesson.Name</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               }
             </div>
             <div class="btn-container">
-               <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Lesson.Id">Edit</a>
                @if (SignInManager.IsSignedIn(User)) {
                   var user = await UserManager.GetUserAsync(User);
                   if (user != null) {
                      var isOwner = await UserManager.IsInRoleAsync(user, "owner");
+                     var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
+                     if (isAdmin || isOwner) {
+                        <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.Lesson.Id">Edit</a>
+                     }
                      if (isOwner) {
                         <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.Lesson.Id">Delete</a>
                      }

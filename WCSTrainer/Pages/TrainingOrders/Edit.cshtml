@@ -26,6 +26,10 @@
                   <input asp-for="TrainingOrder.Status" hidden />
                   <input asp-for="TrainingOrder.ParentSkillId" hidden />
                   <input asp-for="TrainingOrder.CreatedByUserId" hidden />
+                  <input asp-for="TrainingOrder.ClosingSignature" hidden />
+                  <input asp-for="TrainingOrder.ClosedByUserId" hidden />
+                  <input asp-for="TrainingOrder.ClosingNotes" hidden />
+                  <input asp-for="TrainingOrder.VerificationId" hidden />
 
                   @{
                      var OrderStatus = Model.TrainingOrder.Status;
