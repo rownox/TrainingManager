@@ -1900,6 +1900,11 @@ nav {
    display: flex;
    flex-direction: column;
    gap: 3px;
+   overflow-y: scroll;
+   max-height: 75vh;
+   scrollbar-width: thin;
+   scrollbar-color: var(--gray5) var(--gray3);
+   scroll-behavior: smooth;
 }
 
    .category-container .category {
