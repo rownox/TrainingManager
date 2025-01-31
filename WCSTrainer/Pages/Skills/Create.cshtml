@@ -29,6 +29,17 @@
                   </div>
                   <div class="form-group">
                      <div class="form">
+                        <div class="labels">
+                           <div class="labels">
+                              <p class="control-label">Checklist Link (Example: D:/Documents/Checklist_Name.pdf)</p>
+                           </div>
+                           <span asp-validation-for="Skill.Checklist" class="text-danger"></span>
+                        </div>
+                        <input asp-for="Skill.Checklist" class="form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form">
                         <div class="multi-select-wrapper">
                            <p class="label">Lesson</p>
                            @{

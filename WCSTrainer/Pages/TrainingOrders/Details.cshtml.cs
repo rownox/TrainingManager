@@ -18,7 +18,10 @@ namespace WCSTrainer.Pages.TrainingOrders {
             return NotFound();
          }
 
-         var trainingorder = await context.TrainingOrders.FirstOrDefaultAsync(m => m.Id == id);
+         var trainingorder = await context.TrainingOrders
+            .Include(to => to.Trainee)
+            .Include(to => to.Lesson)
+            .FirstOrDefaultAsync(m => m.Id == id);
          if (trainingorder == null) {
             return NotFound();
          } else {

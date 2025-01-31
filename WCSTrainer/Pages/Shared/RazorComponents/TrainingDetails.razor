@@ -12,26 +12,45 @@
       <div class="field-section">
          <div class="field-section">
             <div class="title-row">
+               <p class="title">Lesson</p>
+            </div>
+            <table>
+               <tbody>
+                  <tr>
+                     <td class="text">
+                        @if (TrainingOrder.Lesson != null)
+                        {
+                           <div class="lesson-pill">
+                              <div class="left">
+                                 <div class="lesson-title">@TrainingOrder.Lesson.Name</div>
+                                 <div class="lesson-subtitle">Duration: @TrainingOrder.Lesson.Duration Hour(s)</div>
+                              </div>
+                              <div class="right">
+                                 <a href="/Lessons/Details?id=@TrainingOrder.Lesson.Id" class="btn bg-btn btnWhite">View Lesson</a>
+                              </div>
+                           </div>
+                        }
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <div class="field-section">
+            <div class="title-row">
                <p class="title">Created - @TrainingOrder.CreateDate</p>
             </div>
             <table>
                <tbody>
+                  <tr>
+                     <td class="label">Training Order ID</td>
+                     <td class="text">@TrainingOrder.Id</td>
+                  </tr>
                   <tr>
                      <td class="label">Trainee</td>
                      <td class="text">
                         @if (TrainingOrder.Trainee != null) {
                            <a href="/Employees/Details?id=@TrainingOrder.Trainee.Id" class="link trainee">
                               @TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName
-                           </a>
-                        }
-                     </td>
-                  </tr>
-                  <tr>
-                     <td class="label">Lesson</td>
-                     <td class="text">
-                        @if (TrainingOrder.Lesson != null) {
-                           <a href="/Lessons/Details?id=@TrainingOrder.Lesson.Id" class="link">
-                              @TrainingOrder.Lesson.Name
                            </a>
                         }
                      </td>
@@ -143,6 +162,48 @@
 
       @if (TrainingOrder.Status.Equals("Completed") || TrainingOrder.Status.Equals("Verified")) {
          <div class="field-section">
+            @if (TrainingOrder.ParentSkill != null)
+            {
+               <div class="field-section">
+                  <div class="title-row">
+                     <p class="title">Parent Skill Checklist</p>
+                  </div>
+                  <table>
+                     <tbody>
+                        <tr>
+
+                           <td class="text">
+                              @if (!string.IsNullOrWhiteSpace(TrainingOrder.ParentSkill.Checklist))
+                              {
+                                 var path = "";
+                                 var name = "";
+                                 var urlRegex = new Regex(@"(http|https)://[^\s]+|[a-zA-Z]:/[^\s]+");
+                                 name = urlRegex.Replace(TrainingOrder.ParentSkill.Checklist, match =>
+                                 {
+                                    var url = match.Value;
+                                    if (Regex.IsMatch(url, @"^D:/"))
+                                    {
+                                       path = url.Replace("\\", "/").Replace("D:", "");
+                                       return System.IO.Path.GetFileName(url);
+                                    }
+                                    return "";
+                                 });
+                                 <div class="lesson-pill">
+                                    <div class="left">
+                                       <div class="lesson-title">@TrainingOrder.ParentSkill.Name Checklist</div>
+                                       <div class="lesson-subtitle">@name</div>
+                                    </div>
+                                    <div class="right">
+                                       <a class="btn btnBlue bg-btn" href="@path" download>Download</a>
+                                    </div>
+                                 </div>
+                              }
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            }
             <div class="field-section">
                <div class="title-row">
                   <p class="title">Completed - @TrainingOrder.CompletionDate</p>

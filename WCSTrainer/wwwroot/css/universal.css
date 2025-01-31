@@ -164,9 +164,16 @@ img {
 		color: black !important;
 	}
 
-	#contentToPrint, #contentToPrint * {
-		visibility: visible;
-	}
+   #contentToPrint, #contentToPrint * {
+      visibility: visible;
+      border-bottom: none;
+      border-right: none;
+      border-left: none;
+   }
+
+   .btn {
+      display: none !important;
+   }
 
 	#contentToPrint {
 		gap: 20px;

@@ -8,7 +8,7 @@ using WCSTrainer.Data;
 using WCSTrainer.Helpers;
 
 namespace WCSTrainer.Pages.TrainingOrders {
-   [Authorize(Roles = "owner, admin, user")]
+   [Authorize(Roles = "owner, admin")]
    public class EditModel(WCSTrainerContext context, UserManager<UserAccount> userManager) : PageModel {
 
       [BindProperty]
@@ -54,6 +54,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
          SelectedTrainerGroupString = string.Join(", ", SelectedTrainerGroupIds);
 
          Locations = new SelectList(await context.Locations.ToListAsync(), "Id", "Name");
+
+         LessonSelectList = new SelectList(await context.Lessons.ToListAsync(), "Id", "Name");
          return Page();
       }
 
