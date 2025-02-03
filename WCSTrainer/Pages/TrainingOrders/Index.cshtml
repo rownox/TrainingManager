@@ -74,10 +74,20 @@
                </div>
                <div class="selections">
                   <p class="section-title">Show List Items:</p>
-                  <div class="section">
-                     <p class="section-info archived">Archived</p>
-                     <input type="checkbox" id="showArchived" />
-                  </div>
+                  @if (SignInManager.IsSignedIn(User)) {
+                     var user = await UserManager.GetUserAsync(User);
+                     if (user != null)
+                     {
+                        var isOwner = await UserManager.IsInRoleAsync(user, "owner");
+                        var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
+                        if (isOwner || isAdmin) {
+                           <div class="section">
+                              <p class="section-info archived">Archived</p>
+                              <input type="checkbox" id="showArchived" />
+                           </div>
+                        }
+                     }
+                  }
                   <div class="section">
                      <p class="section-info verified">Verified</p>
                      <input type="checkbox" id="showVerified" checked />

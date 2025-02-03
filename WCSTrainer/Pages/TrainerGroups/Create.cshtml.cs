@@ -19,7 +19,9 @@ namespace WCSTrainer.Pages.TrainerGroups {
       public IList<Employee> Employees { get; set; }
 
       public async Task<IActionResult> OnGetAsync() {
-         Employees = await _context.Employees.ToListAsync();
+         Employees = await _context.Employees
+            .Include(e => e.TrainerDepartments)
+            .ToListAsync();
          return Page();
       }
 

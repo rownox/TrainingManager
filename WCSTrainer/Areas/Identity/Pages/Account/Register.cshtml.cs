@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,8 @@ using System.ComponentModel.DataAnnotations;
 using WCSTrainer.Data;
 
 namespace WCSTrainer.Areas.Identity.Pages.Account {
+   [Authorize(Roles = "owner, admin")]
+
    public class RegisterModel : PageModel {
       private readonly SignInManager<UserAccount> _signInManager;
       private readonly UserManager<UserAccount> _userManager;
@@ -101,12 +104,7 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
 
                   await _userManager.AddToRoleAsync(user, "guest");
 
-                  if (_userManager.Options.SignIn.RequireConfirmedAccount) {
-                     return RedirectToPage("RegisterConfirmation", new { username = Input.Username, returnUrl = returnUrl });
-                  } else {
-                     await _signInManager.SignInAsync(user, isPersistent: false);
-                     return LocalRedirect(returnUrl);
-                  }
+                  TempData["SuccessMessage"] = $"Account '{user.UserName}' was created successfully.";
                }
 
                foreach (var error in result.Errors) {

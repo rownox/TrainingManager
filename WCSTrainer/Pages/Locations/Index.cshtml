@@ -14,21 +14,11 @@
    }
 }
 
-
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="list-container">
-            <div class="top">
-               <form method="post" id="pageSizeForm">
-                  <select asp-for="MaxCount" class="drop-main" value="@Model.MaxCount" onchange="this.form.submit()">
-                     <option value="10">10</option>
-                     <option value="25">25</option>
-                     <option value="50">50</option>
-                  </select>
-               </form>
-            </div>
             <ul class="category-container">
                @foreach (var category in Model.CategoryList) {
                   <li id="@category.Name @category.Id" class="category searchable">

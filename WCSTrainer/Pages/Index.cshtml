@@ -17,7 +17,7 @@
                @if (SignInManager.IsSignedIn(User)) {
                   <p>You're all set! Click the logout button to switch accounts.</p>
                } else {
-                  <p>You need to sign in. Create a new account or log in to your account.</p>
+                  <p>You need to sign in. Contact an admin to receive an account.</p>
                }
             </div>
             <div class="btn-container">
@@ -27,7 +27,6 @@
                   </form>
                } else {
                   <a id="login" asp-area="Identity" asp-page="/Account/Login" class="btn btnWhite bg-btn">Login</a>
-                  <a id="register" asp-area="Identity" asp-page="/Account/Register" class="btn bg-btn btnWhite">Register</a>
                }
             </div>
          </div>
