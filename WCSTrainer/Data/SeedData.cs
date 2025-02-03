@@ -1,35 +1,32 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Text.Json;
 
 namespace WCSTrainer.Data {
    public static class SeedData {
       public static async Task AssignRoles(UserManager<UserAccount> userManager, RoleManager<IdentityRole> roleManager) {
-         var ownerList = new List<string>() { "AadamH" };
-         var adminList = new List<string>() { "JayD", "KayS", "MatthewW", "DonnaC", "CraigG" };
-         var userList = new List<string>() { "HenryO" };
+         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "roles.json");
 
-         foreach (var ownerPerm in ownerList) {
-            var user = await userManager.FindByNameAsync(ownerPerm);
-            if (user != null && !await userManager.IsInRoleAsync(user, "owner")) {
-               await userManager.AddToRoleAsync(user, "owner");
-            }
+         if (!File.Exists(filePath)) {
+            return;
          }
 
-         foreach (var adminPerm in adminList) {
-            var user = await userManager.FindByNameAsync(adminPerm);
-            if (user != null && !await userManager.IsInRoleAsync(user, "admin")) {
-               await userManager.AddToRoleAsync(user, "admin");
-            }
+         var json = await File.ReadAllTextAsync(filePath);
+         var roleAssignments = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
+
+         if (roleAssignments == null) {
+            return;
          }
 
-         //foreach (var userPerm in userList) {
-         //   var user = await userManager.FindByNameAsync(userPerm);
-         //   if (user != null && !await userManager.IsInRoleAsync(user, "user")) {
-         //      await userManager.AddToRoleAsync(user, "user");
-         //   }
-         //}
+         foreach (var role in roleAssignments) {
+            foreach (var username in role.Value) {
+               var user = await userManager.FindByNameAsync(username);
+               if (user != null && !await userManager.IsInRoleAsync(user, role.Key)) {
+                  await userManager.AddToRoleAsync(user, role.Key);
+               }
+            }
+         }
 
          var allUsers = userManager.Users.ToList();
-
          foreach (var user in allUsers) {
             var roles = await userManager.GetRolesAsync(user);
             if (roles.Count == 0) {
