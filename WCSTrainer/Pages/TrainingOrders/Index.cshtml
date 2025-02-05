@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{handler?}"
 @model WCSTrainer.Pages.TrainingOrders.IndexModel
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<UserAccount> SignInManager
@@ -52,10 +52,10 @@
                         for (int year = Model.EarliestYear; year <= DateTime.Now.Year; year++) {
                            activeYears.Add(year);
                         }
-                        <select multiple class="multi-select-comp" size="3">
-                           <option value="2023">2023</option>
-                           <option value="2024">2024</option>
-                           <option value="2025">2025</option>
+                        <select multiple class="multi-select-comp" size="@activeYears.Count()">
+                           @foreach (var year in activeYears) {
+                              <option value="@year">@year</option>
+                           }
                         </select>
                      }
                   </div>

@@ -5,6 +5,7 @@
    max-width: 100%;
    display: flex;
    width: 1650px;
+   min-width: 70%;
 }
 
 nav {
@@ -22,6 +23,7 @@ nav {
       max-width: 100%;
       display: flex;
       width: 1650px;
+      min-width: 70%;
    }
 
       nav .nav-container .nav-buttons {
@@ -286,7 +288,7 @@ nav {
 
          .panel .body .properties .title {
             color: var(--textMain);
-            font-size: 30px;
+            font-size: 25px;
             font-weight: 500;
          }
 
@@ -1043,13 +1045,13 @@ nav {
          color: var(--textSub1);
          text-align: start;
          padding: 2px 5px;
-         white-space: nowrap
+         white-space: nowrap;
       }
 
       .panel .body .properties .list-container .order-table tr td {
+         border: 1px solid var(--gray3);
          white-space: normal;
          max-width: 300px;
-         border: 1px solid var(--gray3);
       }
 
       .panel .body .properties .list-container .order-table tr th {

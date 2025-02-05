@@ -7,194 +7,52 @@
 
 @using System.Text.RegularExpressions
 
-@if (TrainingOrder != null) {
-   <div class="field-section-container">
-      <div class="field-section">
-         <div class="field-section">
-            <div class="title-row">
-               <p class="title">Lesson</p>
-            </div>
-            <table>
-               <tbody>
-                  <tr>
-                     <td class="text">
-                        @if (TrainingOrder.Lesson != null)
-                        {
-                           <div class="lesson-pill">
-                              <div class="left">
-                                 <div class="lesson-title">@TrainingOrder.Lesson.Name</div>
-                                 <div class="lesson-subtitle">Duration: @TrainingOrder.Lesson.Duration Hour(s)</div>
-                              </div>
-                              <div class="right">
-                                 <a href="/Lessons/Details?id=@TrainingOrder.Lesson.Id" class="btn bg-btn btnWhite">View Lesson</a>
-                              </div>
-                           </div>
-                        }
-                     </td>
-                  </tr>
-               </tbody>
-            </table>
-         </div>
-         <div class="field-section">
-            <div class="title-row">
-               <p class="title">Created - @TrainingOrder.CreateDate</p>
-            </div>
-            <table>
-               <tbody>
-                  <tr>
-                     <td class="label">Training Order ID</td>
-                     <td class="text">@TrainingOrder.Id</td>
-                  </tr>
-                  <tr>
-                     <td class="label">Trainee</td>
-                     <td class="text">
-                        @if (TrainingOrder.Trainee != null) {
-                           <a href="/Employees/Details?id=@TrainingOrder.Trainee.Id" class="link trainee">
-                              @TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName
-                           </a>
-                        }
-                     </td>
-                  </tr>
-                  @if (TrainingOrder.ParentSkill != null) {
-                     <tr>
-                        <td class="label">Parent Skill</td>
-                        <td class="text">
-                           <a href="/Skills/Details?id=@TrainingOrder.ParentSkill.Id" class="link">
-                              @TrainingOrder.ParentSkill.Name
-                           </a>
-                        </td>
-                     </tr>
-                  }
-                  <tr>
-                     <td class="label">Created By</td>
-                     <td class="text">
-                        @if (TrainingOrder.CreatedByUserId != null) {
-                           <a href="/Accounts/Details?id=@TrainingOrder.CreatedByUserId" class="link">
-                              @CreatedByUserName
-                           </a>
-                        }
-                     </td>
-                  </tr>
-               </tbody>
-            </table>
-         </div>
-         @if (!TrainingOrder.Status.Equals("Approving")) {
-            <div class="field-section">
-               <div class="title-row">
-                  <p class="title">Approved - @TrainingOrder.ApprovalDate</p>
-               </div>
-               <table>
-                  <tbody>
-                     <tr>
-                        <td class="label">Trainers</td>
-                        <td class="text">
-                           <div class="pills-container">
-                              @{
-                                 var list = new List<Employee>();
-                                 foreach (var trainer in TrainingOrder.Trainers) {
-                                    list.Add(trainer);
-                                 }
-                                 foreach (var groupPerson in groupPeople) {
-                                    if (!list.Contains(groupPerson)) {
-                                       list.Add(groupPerson);
-                                    }
-                                 }
-                                 foreach (var item in list) {
-                                    <a href="/Employees/Details?id=@item.Id" class="pill">@item.FirstName @item.LastName</a>
-                                 }
-                              }
-                           </div>
-                        </td>
-                     </tr>
-                     @if (TrainingOrder.TrainerGroups.Count > 0) {
-                        <tr>
-                           <td class="label">Trainer Groups</td>
-                           <td class="text">
-                              <div class="pills-container">
-                                 @{
-                                    foreach (var group in TrainingOrder.TrainerGroups)
-                                    {
-                                       <a href="/TrainerGroups/Details?id=@group.Id" class="pill">@group.Name</a>
-                                    }
-                                 }
-                              </div>
-                           </td>
-                        </tr>
-                     }
-                     <tr>
-                        <td class="label">Location</td>
-                        <td class="text">
-                           @if (TrainingOrder.Location != null) {
-                              <a href="/Locations/Details?id=@TrainingOrder.LocationId" class="link">
-                                 @TrainingOrder.Location.Name
-                              </a>
-                           }
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
-            </div>
-         }
-         @if (!TrainingOrder.Status.Equals("Approving") && !TrainingOrder.Status.Equals("Scheduling")){
-            <div class="field-section">
-               <div class="title-row">
-                  <p class="title">Scheduled - @TrainingOrder.ScheduleDate</p>
-               </div>
-               <table>
-                  <tbody>
-                     <tr>
-                        <td class="label">Priority Level</td>
-                        <td class="text">@TrainingOrder.Priority</td>
-                     </tr>
-                     <tr>
-                        <td class="label">Training Hours Needed</td>
-                        <td class="text">@TrainingOrder.Lesson.Duration Hours</td>
-                     </tr>
-                     <tr>
-                        <td class="label">Begin Date</td>
-                        <td class="text">@TrainingOrder.BeginDate</td>
-                     </tr>
-                  </tbody>
-               </table>
-            </div>
-         }
+@if (TrainingOrder != null)
+{
+   @if (TrainingOrder.Archived == true)
+   {
+      <div class="archive-warning">
+         <img src="/images/exclamation.svg" />
+         <p>You are viewing an archived document.</p>
       </div>
+      <br />
+   }
 
-      @if (TrainingOrder.Status.Equals("Completed") || TrainingOrder.Status.Equals("Verified")) {
-         <div class="field-section">
-            @if (TrainingOrder.ParentSkill != null)
-            {
+   <div id="contentToPrint" class="print-block">
+      @{
+         if (TrainingOrder.Lesson != null && TrainingOrder.Trainee != null)
+         {
+            var name = TrainingOrder.Trainee.FirstName + " " + TrainingOrder.Trainee.LastName;
+            <p class="title">@TrainingOrder.Lesson.Name - @name</p>
+         }
+
+         var status = TrainingOrder.Status;
+         var type = status.ToLower();
+         <div class="subtitle">
+            <p>Status: </p>
+            <p class="@type">@status</p>
+         </div>
+      }
+      <div class="field-container">
+         <div class="field-section-container">
+            <div class="field-section">
                <div class="field-section">
                   <div class="title-row">
-                     <p class="title">Parent Skill Checklist</p>
+                     <p class="title">Lesson</p>
                   </div>
                   <table>
                      <tbody>
                         <tr>
-
                            <td class="text">
-                              @if (!string.IsNullOrWhiteSpace(TrainingOrder.ParentSkill.Checklist))
+                              @if (TrainingOrder.Lesson != null)
                               {
-                                 var path = "";
-                                 var name = "";
-                                 var urlRegex = new Regex(@"(http|https)://[^\s]+|[a-zA-Z]:/[^\s]+");
-                                 name = urlRegex.Replace(TrainingOrder.ParentSkill.Checklist, match =>
-                                 {
-                                    var url = match.Value;
-                                    if (Regex.IsMatch(url, @"^D:/"))
-                                    {
-                                       path = url.Replace("\\", "/").Replace("D:", "");
-                                       return System.IO.Path.GetFileName(url);
-                                    }
-                                    return "";
-                                 });
                                  <div class="lesson-pill">
                                     <div class="left">
-                                       <div class="lesson-title">@TrainingOrder.ParentSkill.Name Checklist</div>
-                                       <div class="lesson-subtitle">@name</div>
+                                       <div class="lesson-title">@TrainingOrder.Lesson.Name</div>
+                                       <div class="lesson-subtitle">Duration: @TrainingOrder.Lesson.Duration Hour(s)</div>
                                     </div>
                                     <div class="right">
-                                       <a class="btn btnBlue bg-btn" href="@path" download>Download</a>
+                                       <a href="/Lessons/Details?id=@TrainingOrder.Lesson.Id" class="btn bg-btn btnWhite">View Lesson</a>
                                     </div>
                                  </div>
                               }
@@ -203,79 +61,268 @@
                      </tbody>
                   </table>
                </div>
-            }
-            <div class="field-section">
-               <div class="title-row">
-                  <p class="title">Completed - @TrainingOrder.CompletionDate</p>
+               <div class="field-section">
+                  <div class="title-row">
+                     <p class="title">Created - @TrainingOrder.CreateDate</p>
+                  </div>
+                  <table>
+                     <tbody>
+                        <tr>
+                           <td class="label">Training Order ID</td>
+                           <td class="text">@TrainingOrder.Id</td>
+                        </tr>
+                        <tr>
+                           <td class="label">Trainee</td>
+                           <td class="text">
+                              @if (TrainingOrder.Trainee != null)
+                              {
+                                 <a href="/Employees/Details?id=@TrainingOrder.Trainee.Id" class="link trainee">
+                                    @TrainingOrder.Trainee.FirstName @TrainingOrder.Trainee.LastName
+                                 </a>
+                              }
+                           </td>
+                        </tr>
+                        @if (TrainingOrder.ParentSkill != null)
+                        {
+                           <tr>
+                              <td class="label">Parent Skill</td>
+                              <td class="text">
+                                 <a href="/Skills/Details?id=@TrainingOrder.ParentSkill.Id" class="link">
+                                    @TrainingOrder.ParentSkill.Name
+                                 </a>
+                              </td>
+                           </tr>
+                        }
+                        <tr>
+                           <td class="label">Created By</td>
+                           <td class="text">
+                              @if (TrainingOrder.CreatedByUserId != null)
+                              {
+                                 <a href="/Accounts/Details?id=@TrainingOrder.CreatedByUserId" class="link">
+                                    @CreatedByUserName
+                                 </a>
+                              }
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
                </div>
-               <table>
-                  <tbody>
-                     <tr>
-                        <td class="label">Closing Notes</td>
-                        <td class="text">@TrainingOrder.ClosingNotes</td>
-                     </tr>
-                     <tr>
-                        <td class="label">Certification</td>
-                        <td>
-                           @if (!string.IsNullOrWhiteSpace(TrainingOrder.Certificate)) {
-                              var path = "";
-                              var name = "";
-                              var urlRegex = new Regex(@"(http|https)://[^\s]+|[a-zA-Z]:/[^\s]+");
-                              name = urlRegex.Replace(TrainingOrder.Certificate, match => {
-                                 var url = match.Value;
-                                 if (Regex.IsMatch(url, @"^D:/")){
-                                    path = url.Replace("\\", "/").Replace("D:", "");
-                                    return System.IO.Path.GetFileName(url);
-                                 }
-                                 return "";
-                              });
-                              <a class="link" href="@path" download>Download @name</a>
-                           }
-                        </td>
-                     </tr>
-                     <tr>
-                        <td class="label">Signed By</td>
-                        <td class="text">@TrainingOrder.ClosingSignature</td>
-                     </tr>
-                     <tr>
-                        <td class="label">Closed By</td>
-                        <td class="text">
-                           @if (TrainingOrder.ClosedByUserId != null)
-                           {
-                              <a href="/Accounts/Details?id=@TrainingOrder.ClosedByUserId" class="link">
-                                 @ClosedByUserName
-                              </a>
-                           }
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
-            </div>
-            @if (TrainingOrder.Status.Equals("Verified")) {
-               if (TrainingOrder.Verification != null) {
+               @if (!TrainingOrder.Status.Equals("Approving"))
+               {
                   <div class="field-section">
                      <div class="title-row">
-                        <p class="title">Verified - @TrainingOrder.Verification.VerifyDate</p>
+                        <p class="title">Approved - @TrainingOrder.ApprovalDate</p>
                      </div>
                      <table>
                         <tbody>
                            <tr>
-                              <td class="label">Training Understood?</td>
-                              <td class="text">@TrainingOrder.Verification.VerifyNotes</td>
+                              <td class="label">Trainers</td>
+                              <td class="text">
+                                 <div class="pills-container">
+                                    @{
+                                       var list = new List<Employee>();
+                                       foreach (var trainer in TrainingOrder.Trainers)
+                                       {
+                                          list.Add(trainer);
+                                       }
+                                       foreach (var groupPerson in groupPeople)
+                                       {
+                                          if (!list.Contains(groupPerson))
+                                          {
+                                             list.Add(groupPerson);
+                                          }
+                                       }
+                                       foreach (var item in list)
+                                       {
+                                          <a href="/Employees/Details?id=@item.Id" class="pill">@item.FirstName @item.LastName</a>
+                                       }
+                                    }
+                                 </div>
+                              </td>
                            </tr>
+                           @if (TrainingOrder.TrainerGroups.Count > 0)
+                           {
+                              <tr>
+                                 <td class="label">Trainer Groups</td>
+                                 <td class="text">
+                                    <div class="pills-container">
+                                       @{
+                                          foreach (var group in TrainingOrder.TrainerGroups)
+                                          {
+                                             <a href="/TrainerGroups/Details?id=@group.Id" class="pill">@group.Name</a>
+                                          }
+                                       }
+                                    </div>
+                                 </td>
+                              </tr>
+                           }
                            <tr>
-                              <td class="label">Signed By</td>
-                              <td class="text">@TrainingOrder.Verification.Signature</td>
+                              <td class="label">Location</td>
+                              <td class="text">
+                                 @if (TrainingOrder.Location != null)
+                                 {
+                                    <a href="/Locations/Details?id=@TrainingOrder.LocationId" class="link">
+                                       @TrainingOrder.Location.Name
+                                    </a>
+                                 }
+                              </td>
                            </tr>
                         </tbody>
                      </table>
                   </div>
                }
+               @if (!TrainingOrder.Status.Equals("Approving") && !TrainingOrder.Status.Equals("Scheduling"))
+               {
+                  <div class="field-section">
+                     <div class="title-row">
+                        <p class="title">Scheduled - @TrainingOrder.ScheduleDate</p>
+                     </div>
+                     <table>
+                        <tbody>
+                           <tr>
+                              <td class="label">Priority Level</td>
+                              <td class="text">@TrainingOrder.Priority</td>
+                           </tr>
+                           <tr>
+                              <td class="label">Training Hours Needed</td>
+                              <td class="text">@TrainingOrder.Lesson.Duration Hours</td>
+                           </tr>
+                           <tr>
+                              <td class="label">Begin Date</td>
+                              <td class="text">@TrainingOrder.BeginDate</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               }
+            </div>
+
+            @if (TrainingOrder.Status.Equals("Completed") || TrainingOrder.Status.Equals("Verified"))
+            {
+               <div class="field-section">
+                  @if (TrainingOrder.ParentSkill != null)
+                  {
+                     <div class="field-section">
+                        <div class="title-row">
+                           <p class="title">Parent Skill Checklist</p>
+                        </div>
+                        <table>
+                           <tbody>
+                              <tr>
+
+                                 <td class="text">
+                                    @if (!string.IsNullOrWhiteSpace(TrainingOrder.ParentSkill.Checklist))
+                                    {
+                                       var path = "";
+                                       var name = "";
+                                       var urlRegex = new Regex(@"(http|https)://[^\s]+|[a-zA-Z]:/[^\s]+");
+                                       name = urlRegex.Replace(TrainingOrder.ParentSkill.Checklist, match =>
+                                       {
+                                          var url = match.Value;
+                                          if (Regex.IsMatch(url, @"^D:/"))
+                                          {
+                                             path = url.Replace("\\", "/").Replace("D:", "");
+                                             return System.IO.Path.GetFileName(url);
+                                          }
+                                          return "";
+                                       });
+                                       <div class="lesson-pill">
+                                          <div class="left">
+                                             <div class="lesson-title">@TrainingOrder.ParentSkill.Name Checklist</div>
+                                             <div class="lesson-subtitle">@name</div>
+                                          </div>
+                                          <div class="right">
+                                             <a class="btn btnBlue bg-btn" href="@path" download>Download</a>
+                                          </div>
+                                       </div>
+                                    }
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  }
+                  <div class="field-section">
+                     <div class="title-row">
+                        <p class="title">Completed - @TrainingOrder.CompletionDate</p>
+                     </div>
+                     <table>
+                        <tbody>
+                           <tr>
+                              <td class="label">Closing Notes</td>
+                              <td class="text">@TrainingOrder.ClosingNotes</td>
+                           </tr>
+                           <tr>
+                              <td class="label">Certification</td>
+                              <td>
+                                 @if (!string.IsNullOrWhiteSpace(TrainingOrder.Certificate))
+                                 {
+                                    var path = "";
+                                    var name = "";
+                                    var urlRegex = new Regex(@"(http|https)://[^\s]+|[a-zA-Z]:/[^\s]+");
+                                    name = urlRegex.Replace(TrainingOrder.Certificate, match =>
+                                    {
+                                       var url = match.Value;
+                                       if (Regex.IsMatch(url, @"^D:/"))
+                                       {
+                                          path = url.Replace("\\", "/").Replace("D:", "");
+                                          return System.IO.Path.GetFileName(url);
+                                       }
+                                       return "";
+                                    });
+                                    <a class="link" href="@path" download>Download @name</a>
+                                 }
+                              </td>
+                           </tr>
+                           <tr>
+                              <td class="label">Signed By</td>
+                              <td class="text">@TrainingOrder.ClosingSignature</td>
+                           </tr>
+                           <tr>
+                              <td class="label">Closed By</td>
+                              <td class="text">
+                                 @if (TrainingOrder.ClosedByUserId != null)
+                                 {
+                                    <a href="/Accounts/Details?id=@TrainingOrder.ClosedByUserId" class="link">
+                                       @ClosedByUserName
+                                    </a>
+                                 }
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  @if (TrainingOrder.Status.Equals("Verified"))
+                  {
+                     if (TrainingOrder.Verification != null)
+                     {
+                        <div class="field-section">
+                           <div class="title-row">
+                              <p class="title">Verified - @TrainingOrder.Verification.VerifyDate</p>
+                           </div>
+                           <table>
+                              <tbody>
+                                 <tr>
+                                    <td class="label">Training Understood?</td>
+                                    <td class="text">@TrainingOrder.Verification.VerifyNotes</td>
+                                 </tr>
+                                 <tr>
+                                    <td class="label">Signed By</td>
+                                    <td class="text">@TrainingOrder.Verification.Signature</td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                     }
+                  }
+               </div>
             }
          </div>
-      }
+      </div>
    </div>
-} else {
+}
+else
+{
    <p>Loading...</p>
 }
 

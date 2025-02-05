@@ -10,89 +10,111 @@
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="user-form">
-            @if (Model.TrainingOrder.Archived == true) {
-               <div class="archive-warning">
-                  <img src="/images/exclamation.svg" />
-                  <p>You are viewing an archived document.</p>
-               </div>
-               <br />
-            }
-            <div id="contentToPrint" class="print-block">
-               @{
-                  if (Model.TrainingOrder.Lesson != null && Model.TrainingOrder.Trainee != null) {
-                     var name = Model.TrainingOrder.Trainee.FirstName + " " + Model.TrainingOrder.Trainee.LastName;
-                     <p class="title">@Model.TrainingOrder.Lesson.Name - @name</p>
-                  }
+            @if (SignInManager.IsSignedIn(User))
+            {
+               var user = await UserManager.GetUserAsync(User);
+               if (user != null)
+               {
+                  var isOwner = await UserManager.IsInRoleAsync(user, "owner");
+                  var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
 
-                  var status = Model.TrainingOrder.Status;
-                  var type = status.ToLower();
-                  <div class="subtitle">
-                     <p>Status: </p>
-                     <p class="@type">@status</p>
-                  </div>
-               }
-               <div class="field-container">
-                  <component type="typeof(TrainingDetails)" 
-                  render-mode="WebAssemblyPrerendered" 
-                  param-OrderId="@Model.TrainingOrder.Id" 
-                  />
-               </div>
-            </div>
-            <div class="btn-container">
-               @if (SignInManager.IsSignedIn(User)) {
-                  var user = await UserManager.GetUserAsync(User);
-                  if (user != null) {
-                     var Status = Model.TrainingOrder.Status;
-                     var Id = Model.TrainingOrder.Id;
+                  @if (Model.TrainingOrder.Archived == true)
+                  {
+                     if (isAdmin || isOwner)
+                     {
+                        <component type="typeof(TrainingDetails)" render-mode="WebAssemblyPrerendered" param-OrderId="@Model.TrainingOrder.Id" />
+                        <div class="btn-container">
+                           @{
+                              <div id="printButton" class="btn bg-btn btnWhite">
+                                 <img class="hover-img" src="/images/print.svg">
+                              </div>
 
-                     var isOwner = await UserManager.IsInRoleAsync(user, "owner");
-                     var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
+                              if (isAdmin || isOwner)
+                              {
+                                 string text = Model.TrainingOrder.Archived ? "Unarchive" : "Archive";
+                                 <form method="post" id="archiveForm">
+                                    <a class="btn bg-btn btnWhite" href="#" onclick="document.getElementById('archiveForm').submit();">
+                                       @text Document
+                                    </a>
+                                 </form>
+                              }
 
-                     if (Status.Equals("Active")) {
-                        <a class="btn bg-btn btnRed" asp-page="./Conclude" asp-route-id="@Id">Conclude Order</a>
+                              if (isOwner)
+                              {
+                                 <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.TrainingOrder.Id"> Delete</a>
+                              }
+                           }
+
+                        </div>
                      }
+                     else
+                     {
+                        <p>You do not have permission to view this document.</p>
+                     }
+                  }
+                  else
+                  {
+                     <component type="typeof(TrainingDetails)" render-mode="WebAssemblyPrerendered" param-OrderId="@Model.TrainingOrder.Id" />
+                     <div class="btn-container">
+                        @{
+                           var Status = Model.TrainingOrder.Status;
+                           var Id = Model.TrainingOrder.Id;
 
-                     if (isAdmin || isOwner) {
-                        if (Model.TrainingOrder.TraineeId != user.EmployeeId) {
-                           if (Status.Equals("Approving"))
+                           if (Status.Equals("Active"))
                            {
-                              <a class="btn bg-btn btnRed" asp-page="./Approval" asp-route-id="@Id">Approve Order</a>
-                           }
-                           else if (Status.Equals("Scheduling"))
-                           {
-                              <a class="btn bg-btn btnRed" asp-page="./Scheduling" asp-route-id="@Id">Schedule Order</a>
-                           }
-                           else if (Status.Equals("Completed"))
-                           {
-                              <a class="btn bg-btn btnRed" asp-page="./Verification" asp-route-id="@Id">Verify Order</a>
+                              <a class="btn bg-btn btnRed" asp-page="./Conclude" asp-route-id="@Id">Conclude Order</a>
                            }
 
-                           <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Id">Edit Order</a>
+                           if (isAdmin || isOwner)
+                           {
+                              if (Model.TrainingOrder.TraineeId != user.EmployeeId)
+                              {
+                                 if (Status.Equals("Approving"))
+                                 {
+                                    <a class="btn bg-btn btnRed" asp-page="./Approval" asp-route-id="@Id">Approve Order</a>
+                                 }
+                                 else if (Status.Equals("Scheduling"))
+                                 {
+                                    <a class="btn bg-btn btnRed" asp-page="./Scheduling" asp-route-id="@Id">Schedule Order</a>
+                                 }
+                                 else if (Status.Equals("Completed"))
+                                 {
+                                    <a class="btn bg-btn btnRed" asp-page="./Verification" asp-route-id="@Id">Verify Order</a>
+                                 }
+
+                                 <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Id">Edit Order</a>
+                              }
+                           }
+
+                           <div id="printButton" class="btn bg-btn btnWhite">
+                              <img class="hover-img" src="/images/print.svg">
+                           </div>
+
+                           if (isAdmin || isOwner)
+                           {
+                              string text = Model.TrainingOrder.Archived ? "Unarchive" : "Archive";
+                              <form method="post" id="archiveForm">
+                                 <a class="btn bg-btn btnWhite" href="#" onclick="document.getElementById('archiveForm').submit();">
+                                    @text Document
+                                 </a>
+                              </form>
+                           }
+
+                           if (isOwner)
+                           {
+                              <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.TrainingOrder.Id"> Delete</a>
+                           }
                         }
-                     }
 
-                     <div id="printButton" class="btn bg-btn btnWhite">
-                        <img class="hover-img" src="/images/print.svg">
                      </div>
-
-                     if (isAdmin || isOwner) {
-                        string text = Model.TrainingOrder.Archived ? "Unarchive" : "Archive";
-                        <form method="post" id="archiveForm">
-                           <a class="btn bg-btn btnWhite" href="#" onclick="document.getElementById('archiveForm').submit();">
-                              @text Document
-                           </a>
-                        </form>
-                     }
-
-                     if (isOwner) {
-                        <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.TrainingOrder.Id"> Delete</a>
-                     }
                   }
+
+
                }
-            </div>
+            }
          </div>
       </div>
    </div>
 </div>
 
-<script src="~/js/details.js"/>
+<script src="~/js/details.js" />

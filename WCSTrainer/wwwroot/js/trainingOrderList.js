@@ -15,36 +15,6 @@
 };
 
 let debounceTimeout;
-function loadSavedFilters() {
-   const savedFilters = localStorage.getItem('trainingOrderFilters');
-   if (savedFilters) {
-      const parsedFilters = JSON.parse(savedFilters);
-      ['showArchived', 'showVerified', 'showCompleted', 'showActive', 'showScheduling', 'showApproving', 'detailed', 'currentPage'].forEach(key => {
-         if (parsedFilters.hasOwnProperty(key)) {
-            currentFilters[key] = parsedFilters[key];
-         }
-      });
-   }
-}
-
-
-function saveFilters() {
-   const checkboxes = [
-      'currentPage',
-      'detailed',
-      'showArchived',
-      'showVerified',
-      'showCompleted',
-      'showActive',
-      'showScheduling',
-      'showApproving'
-   ];
-   const filteredFilters = {};
-   checkboxes.forEach(key => {
-      filteredFilters[key] = currentFilters[key];
-   });
-   localStorage.setItem('trainingOrderFilters', JSON.stringify(filteredFilters));
-}
 
 function debounce(func, wait) {
    return function executedFunction(...args) {
@@ -195,7 +165,6 @@ document.getElementById('pageSize').addEventListener('change', function (e) {
 document.getElementById('viewToggle').addEventListener('click', function () {
    currentFilters.detailed = !currentFilters.detailed;
    this.textContent = currentFilters.detailed ? 'Switch to Simple View' : 'Switch to Detailed View';
-   saveFilters();
    loadOrders();
 });
 
@@ -209,20 +178,17 @@ document.getElementById('searchInput').addEventListener('input', debounce(functi
    const checkbox = document.getElementById(`show${status}`);
    checkbox.addEventListener('change', function () {
       currentFilters[`show${status}`] = this.checked;
-      saveFilters();
       loadOrders();
    });
 });
 
 function changePage(page) {
    currentFilters.currentPage = page;
-   saveFilters();
    loadOrders();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
    moduleType = "A";
-   loadSavedFilters();
    initializeUI();
    loadOrders();
 });
