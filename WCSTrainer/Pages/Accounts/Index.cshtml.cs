@@ -9,7 +9,9 @@ namespace WCSTrainer.Pages.AccountManager {
       public List<UserAccount> Users { get; set; } = default!;
 
       public async Task OnGetAsync() {
-         Users = await userManager.Users.ToListAsync();
+         Users = await userManager.Users
+            .Include(user => user.Employee)
+            .ToListAsync();
       }
    }
 }

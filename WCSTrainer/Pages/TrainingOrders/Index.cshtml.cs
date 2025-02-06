@@ -46,13 +46,6 @@ namespace WCSTrainer.Pages.TrainingOrders {
          public string? Priority { get; set; }
       }
 
-      public class UserFilter {
-         public int Id { get; set; }
-         public string UserId { get; set; }
-         public string FilterType { get; set; } // e.g., "TrainingOrderFilters"
-         public string FilterData { get; set; } // JSON string of the filters
-      }
-
       [BindProperty]
       public TrainingOrderViewModel ViewModel { get; set; } = new();
 

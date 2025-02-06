@@ -36,6 +36,21 @@
          <input asp-for="Input.LastName" aria-required="true" placeholder="Last Name" class="Finput" />
       </div>
       <div class="field">
+         <label class="label" asp-for="Input.JobTitle">Job Title</label>
+         <span asp-validation-for="Input.JobTitle" class="text-danger"></span>
+         <input asp-for="Input.JobTitle" aria-required="true" placeholder="Last Name" class="Finput" />
+      </div>
+      <div class="field">
+         <label class="label" asp-for="Input.Shift">Shift</label>
+         <span asp-validation-for="Input.Shift" class="text-danger"></span>
+         <input asp-for="Input.Shift" aria-required="true" placeholder="Last Name" class="Finput" />
+      </div>
+      <div class="field">
+         <label class="label" asp-for="Input.EmployeeID">Employee ID</label>
+         <span asp-validation-for="Input.EmployeeID" class="text-danger"></span>
+         <input asp-for="Input.EmployeeID" aria-required="true" placeholder="Last Name" class="Finput" />
+      </div>
+      <div class="field">
          <label class="label" asp-for="Input.Password">Password</label>
          <span asp-validation-for="Input.Password" class="text-danger"></span>
          <input asp-for="Input.Password" aria-required="true" placeholder="Password" class="Finput" />

@@ -60,6 +60,18 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
          [Required]
          [Display(Name = "Last Name")]
          public string LastName { get; set; }
+
+         [Required]
+         [Display(Name = "Job Title")]
+         public string JobTitle { get; set; }
+
+         [Required]
+         [Display(Name = "Shift")]
+         public string Shift { get; set; }
+
+         [Required]
+         [Display(Name = "Employee ID")]
+         public string EmployeeID { get; set; }
       }
 
       public async Task OnGetAsync(string returnUrl = null) {
@@ -86,7 +98,9 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
                   var employee = new Employee {
                      FirstName = Input.FirstName,
                      LastName = Input.LastName,
-                     Status = "Trainee",
+                     EmployeeID = Input.EmployeeID,
+                     JobTitle = Input.JobTitle,
+                     Shift = Input.Shift,
                      UserAccountId = user.Id,
                      UserAccount = user
                   };
@@ -116,7 +130,6 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
                ModelState.AddModelError(string.Empty, "An error occurred while registering. Please try again.");
             }
          }
-
          return Page();
       }
    }

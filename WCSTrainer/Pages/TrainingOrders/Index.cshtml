@@ -1,4 +1,4 @@
-﻿@page "{handler?}"
+﻿@page
 @model WCSTrainer.Pages.TrainingOrders.IndexModel
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<UserAccount> SignInManager
@@ -76,8 +76,7 @@
                   <p class="section-title">Show List Items:</p>
                   @if (SignInManager.IsSignedIn(User)) {
                      var user = await UserManager.GetUserAsync(User);
-                     if (user != null)
-                     {
+                     if (user != null) {
                         var isOwner = await UserManager.IsInRoleAsync(user, "owner");
                         var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
                         if (isOwner || isAdmin) {

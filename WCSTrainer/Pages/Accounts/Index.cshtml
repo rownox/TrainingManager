@@ -12,29 +12,45 @@
             <div class="order-list2">
                <table id="dataTable">
                   <tr>
-                     <th>Username</th>
+                     <th>Employee ID</th>
+                     <th>Name</th>
+                     <th>Job Title</th>
+                     <th>Shift</th>
                      <th>Role</th>
-                     <th></th>
                   </tr>
                   @foreach (var user in Model.Users.OrderBy(u => u.UserName)) {
-                     <tr class="clickable">
-                        <td>@user.UserName</td>
-                        <td>
-                           @{
-                              var isOwner = await UserManager.IsInRoleAsync(user, "owner");
-                              var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
-                              var isUser = await UserManager.IsInRoleAsync(user, "user");
+                     if (user.Employee != null) {
+                        <tr class="clickable" onclick="window.location.href='./Accounts/Details?id=@user.Id'">
+                           <td>@user.Employee.EmployeeID</td>
+                           <td>@user.Employee.FirstName @user.Employee.LastName</td>
+                           <td>@user.Employee.JobTitle</td>
+                           <td>@user.Employee.Shift</td>
+                           <td>
+                              @{
+                                 var isOwner = await UserManager.IsInRoleAsync(user, "owner");
+                                 var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
+                                 var isUser = await UserManager.IsInRoleAsync(user, "user");
 
-                              if (isOwner) { <p>Owner</p> } 
-                              else if (isAdmin) { <p>Admin</p> } 
-                              else if (isUser) { <p>User</p> } 
-                              else { <p>Guest</p> }
-                           }
-                        </td>
-                        <td>
-                           <a asp-page="./Details" asp-route-id="@user.Id" class="btn nbg-btn btnWhite">View</a>
-                        </td>
-                     </tr>
+                                 if (isOwner)
+                                 {
+                                    <p>Owner</p>
+                                 }
+                                 else if (isAdmin)
+                                 {
+                                    <p>Admin</p>
+                                 }
+                                 else if (isUser)
+                                 {
+                                    <p>User</p>
+                                 }
+                                 else
+                                 {
+                                    <p>Guest</p>
+                                 }
+                              }
+                           </td>
+                        </tr>
+                     }
                   }
                </table>
             </div>

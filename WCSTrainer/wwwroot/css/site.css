@@ -1076,38 +1076,6 @@ nav {
    scrollbar-color: var(--gray5) var(--gray3);
 }
 
-   .panel .body .properties .order-list2 .sorters {
-      display: flex;
-      gap: 30px;
-      margin-bottom: 30px;
-      align-items: flex-end;
-   }
-
-      .panel .body .properties .order-list2 .sorters p {
-         color: var(--textMain);
-         font-size: 15px;
-      }
-
-      .panel .body .properties .order-list2 .sorters .btns {
-         display: flex;
-         gap: 10px;
-      }
-
-         .panel .body .properties .order-list2 .sorters .btns .btn {
-            padding: 8px 10px;
-            font-size: 15px;
-         }
-
-      .panel .body .properties .order-list2 .sorters form {
-         display: flex;
-         gap: 10px;
-      }
-
-      .panel .body .properties .order-list2 .sorters .selector {
-         display: flex;
-         flex-direction: column;
-      }
-
    .panel .body .properties .order-list2 table {
       width: 100%;
       border-collapse: collapse;
@@ -1119,30 +1087,38 @@ nav {
       .panel .body .properties .order-list2 table .clickable {
       }
 
-         .panel .body .properties .order-list2 table .clickable:hover {
-            background-color: var(--gray2);
-            cursor: pointer;
-         }
 
          .panel .body .properties .order-list2 table .clickable .btn {
-            padding: 2px 10px;
             font-size: 15px;
          }
 
-      .panel .body .properties .order-list2 table tr td, .panel .body .properties .order-list2 table tr th {
-         color: var(--textSub1);
-         border: 1px solid var(--gray3);
-         text-align: start;
-         padding: 5px;
-      }
+.order-list2 td, .order-list2 th {
+   color: var(--textSub1);
+   border: 1px solid var(--gray3);
+   padding: 2px 5px;
+   text-align: left;
+   white-space: nowrap;
+   padding-right: 30px;
+   font-size: 15px;
+}
 
-      .panel .body .properties .order-list2 table tr td {
-      }
+.panel .body .properties .order-list2 table tr td {
+}
 
-      .panel .body .properties .order-list2 table tr th {
-         background-color: var(--gray3);
-         color: var(--textMain);
-      }
+.panel .body .properties .order-list2 table tr:hover td {
+   background-color: var(--gray2);
+   cursor: pointer;
+   color: white;
+}
+
+.panel .body .properties .order-list2 table tr th {
+   background-color: var(--gray3);
+   color: var(--textMain);
+}
+
+.order-list2 td:last-child, .order-list2 th:last-child {
+   width: 100%;
+}
 
 .panel .body .properties .scheduling {
    display: flex;

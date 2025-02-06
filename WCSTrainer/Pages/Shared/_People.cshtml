@@ -6,8 +6,10 @@
    public class Person {
       public int Id { get; set; }
       public string Name { get; set; } = string.Empty;
-      public string Status { get; set; } = string.Empty;
       public string Department { get; set; } = string.Empty;
+      public string JobTitle { get; set; } = string.Empty;
+      public string Shift { get; set; } = string.Empty;
+      public string EmployeeID { get; set; } = string.Empty;
    }
 }
 
@@ -22,50 +24,27 @@
       };
    }
 
-   <div class="btns-container">
-      <div class="btns">
-         <div id="traineeBtn" class="btn" onclick="toggleView('trainees')">Trainees</div>
-         <div id="trainerBtn" class="btn" onclick="toggleView('trainers')">Trainers</div>
-      </div>
-   </div>
-
    @{
-      var traineeList = new Dictionary<Person, string>();
-      var trainerList = new Dictionary<Person, string>();
+      var peopleList = new Dictionary<Person, string>();
 
       foreach (var item in Model) {
          string departments = string.Join(", ", item.TrainerDepartments.Select(dept => dept.Name));
          var newPerson = new Person {
                Id = item.Id,
+               EmployeeID = item.EmployeeID,
+               JobTitle = item.JobTitle,
+               Shift = item.Shift,
                Name = item.FirstName + " " + item.LastName,
-               Status = item.Status,
                Department = departments
          };
          var employeeJson = JsonSerializer.Serialize(newPerson, jsonOptions);
-         if (item.Status == "Trainer") {
-            trainerList.Add(newPerson, employeeJson);
-         } else {
-            traineeList.Add(newPerson, employeeJson);
-         }
+         peopleList.Add(newPerson, employeeJson);
       }
    }
    
    <ul id="traineesList" class="item-container">
-      @foreach (var item in traineeList) {
+      @foreach (var item in peopleList) {
          <li onclick="selectTrainee('@item.Value', this)" class="item" data-name="@item.Key.Name @item.Key.Department">
-            <div class="info">
-               <p>@item.Key.Name</p>
-            </div>
-            <div class="selector">
-               <img src="~/images/add.svg" onclick="addItemToPartial('@item.Key.Id', '@item.Key.Name')" />
-            </div>
-         </li>
-      }
-   </ul>
-
-   <ul id="trainersList" class="item-container">
-      @foreach (var item in trainerList) {
-         <li onclick="selectTrainer('@item.Value', this)" class="item" data-name="@item.Key.Name  @item.Key.Department">
             <div class="info">
                <p>@item.Key.Name</p>
             </div>
@@ -86,8 +65,12 @@
             <p id="employeeId" class="two"></p>
          </div>
          <div class="info">
-            <p class="one">Status:</p>
-            <p id="status" class="two"></p>
+            <p class="one">Job Title:</p>
+            <p id="jobtitle" class="two"></p>
+         </div>
+         <div class="info">
+            <p class="one">Shift:</p>
+            <p id="shift" class="two"></p>
          </div>
          <div class="info">
             <p class="one">Known Skills:</p>
@@ -123,21 +106,6 @@
       window.open('/Employees/Details?id=' + selected.Id, '_blank');
    }
 
-   function toggleView(type) {
-      if (type == "trainees") {
-         traineesList.style.display = "flex";
-         trainersList.style.display = "none";
-         traineeBtn.classList.add("selected");
-         trainerBtn.classList.remove("selected");
-      } else if (type == "trainers") {
-         traineesList.style.display = "none";
-         trainersList.style.display = "flex";
-         traineeBtn.classList.remove("selected");
-         trainerBtn.classList.add("selected");
-      }
-      searchEmployees();
-   }
-
    var selected;
 
    function selectTrainer(json, element) {
@@ -161,9 +129,10 @@
 
    function updateSelected() {
       document.getElementById('name').textContent = selected.Name;
-      document.getElementById('status').textContent = selected.Status;
       document.getElementById('department').textContent = selected.Department;
-      document.getElementById('employeeId').textContent = selected.Id;
+      document.getElementById('employeeId').textContent = selected.EmployeeID;
+      document.getElementById('jobtitle').textContent = selected.JobTitle;
+      document.getElementById('shift').textContent = selected.Shift;
    }
 
    function searchEmployees() {
