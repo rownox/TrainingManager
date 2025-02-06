@@ -67,11 +67,11 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
 
          [Required]
          [Display(Name = "Shift")]
-         public string Shift { get; set; }
+         public int Shift { get; set; }
 
          [Required]
          [Display(Name = "Employee ID")]
-         public string EmployeeID { get; set; }
+         public int EmployeeID { get; set; }
       }
 
       public async Task OnGetAsync(string returnUrl = null) {
@@ -102,7 +102,8 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
                      JobTitle = Input.JobTitle,
                      Shift = Input.Shift,
                      UserAccountId = user.Id,
-                     UserAccount = user
+                     UserAccount = user,
+                     Active = true
                   };
 
                   _context.Employees.Add(employee);

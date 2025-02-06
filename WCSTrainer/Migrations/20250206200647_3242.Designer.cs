@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WCSTrainer.Data;
 
@@ -11,9 +12,11 @@ using WCSTrainer.Data;
 namespace WCSTrainer.Migrations
 {
     [DbContext(typeof(WCSTrainerContext))]
-    partial class WCSTrainerContextModelSnapshot : ModelSnapshot
+    [Migration("20250206200647_3242")]
+    partial class _3242
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,11 +33,9 @@ namespace WCSTrainer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("EmployeeID")
-                        .HasColumnType("int");
+                    b.Property<string>("EmployeeID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -48,8 +49,9 @@ namespace WCSTrainer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Shift")
-                        .HasColumnType("int");
+                    b.Property<string>("Shift")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserAccountId")
                         .IsRequired()
@@ -252,25 +254,25 @@ namespace WCSTrainer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6a3385fc-d51d-4e57-a92d-1cc1d6601006",
+                            Id = "7984420a-47d6-4fe8-8c90-9fd5cbb3cc89",
                             Name = "owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "182fbb19-c1a0-414c-b2d4-7f6255ca9682",
+                            Id = "ecd82cfb-ae1d-4edf-b03f-599e66599069",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "eb86e6e7-82ab-4ac4-b964-0ce9a6ac8606",
+                            Id = "a8644752-843d-470e-9aee-5b6e27efaa93",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "fe8af533-65d7-43c5-b2a1-576df8d96ca0",
+                            Id = "064960dc-bd15-423a-b185-eeacaa825a93",
                             Name = "guest",
                             NormalizedName = "GUEST"
                         });

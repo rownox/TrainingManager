@@ -1,7 +1,5 @@
 ﻿@page
 @model RegisterModel
-@{
-}
 
 @if (TempData["SuccessMessage"] != null)
 {
@@ -15,53 +13,86 @@
    </script>
 }
 
-
-<div class="login-container">
-   <p class="title">Register</p>
-   <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-   <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-      <div class="field">
-         <label class="label" asp-for="Input.Username">Username</label>
-         <span asp-validation-for="Input.Username" class="text-danger"></span>
-         <input asp-for="Input.Username" aria-required="true" placeholder="Username123" class="Finput" />
+<div class="panel">
+   <div class="body">
+      <partial name="_Sidebar" />
+      <div class="properties">
+         <div class="user-form">
+            <p class="title">Register a New Account</p>
+            <div class="field-container">
+               <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+               <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Username</p>
+                        </div>
+                        <input asp-for="Input.Username" aria-required="true" placeholder="Username123" class="Finput form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">First Name</p>
+                        </div>
+                        <input asp-for="Input.FirstName" aria-required="true" placeholder="John" class="Finput form-control" />
+                     </div>
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Last Name</p>
+                        </div>
+                        <input asp-for="Input.LastName" aria-required="true" placeholder="Doe" class="Finput form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Job Title</p>
+                        </div>
+                        <input asp-for="Input.JobTitle" aria-required="true" placeholder="Engineer" class="Finput form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Employee ID</p>
+                        </div>
+                        <input asp-for="Input.EmployeeID" aria-required="true" placeholder="12345" class="Finput form-control" />
+                     </div>
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Shift</p>
+                        </div>
+                        <select asp-for="Input.Shift" class="form-drop2">
+                           <option value="1">1st Shift</option>
+                           <option value="2">2nd Shift</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Password</p>
+                        </div>
+                        <input asp-for="Input.Password" aria-required="true" placeholder="Password" class="Finput form-control" />
+                     </div>
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Confirm Password</p>
+                        </div>
+                        <input asp-for="Input.ConfirmPassword" aria-required="true" placeholder="Confirm Password" class="Finput form-control" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form">
+                        <div class="btn-container">
+                           <input id="registerSubmit" type="submit" value="Register" class="btn bg-btn btnWhite" />
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
       </div>
-      <div class="field">
-         <label class="label" asp-for="Input.FirstName">First Name</label>
-         <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-         <input asp-for="Input.FirstName" aria-required="true" placeholder="First Name" class="Finput" />
-      </div>
-      <div class="field">
-         <label class="label" asp-for="Input.LastName">Last Name</label>
-         <span asp-validation-for="Input.LastName" class="text-danger"></span>
-         <input asp-for="Input.LastName" aria-required="true" placeholder="Last Name" class="Finput" />
-      </div>
-      <div class="field">
-         <label class="label" asp-for="Input.JobTitle">Job Title</label>
-         <span asp-validation-for="Input.JobTitle" class="text-danger"></span>
-         <input asp-for="Input.JobTitle" aria-required="true" placeholder="Last Name" class="Finput" />
-      </div>
-      <div class="field">
-         <label class="label" asp-for="Input.Shift">Shift</label>
-         <span asp-validation-for="Input.Shift" class="text-danger"></span>
-         <input asp-for="Input.Shift" aria-required="true" placeholder="Last Name" class="Finput" />
-      </div>
-      <div class="field">
-         <label class="label" asp-for="Input.EmployeeID">Employee ID</label>
-         <span asp-validation-for="Input.EmployeeID" class="text-danger"></span>
-         <input asp-for="Input.EmployeeID" aria-required="true" placeholder="Last Name" class="Finput" />
-      </div>
-      <div class="field">
-         <label class="label" asp-for="Input.Password">Password</label>
-         <span asp-validation-for="Input.Password" class="text-danger"></span>
-         <input asp-for="Input.Password" aria-required="true" placeholder="Password" class="Finput" />
-      </div>
-      <div class="field">
-         <label class="label" asp-for="Input.ConfirmPassword">Confirm Password</label>
-         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-         <input asp-for="Input.ConfirmPassword" aria-required="true" placeholder="Confirm Password" class="Finput" />
-      </div>
-      <div class="login-btns">
-         <button id="registerSubmit" type="submit" class="btn bg-btn btnWhite">Register</button>
-      </div>
-   </form>
+   </div>
 </div>
