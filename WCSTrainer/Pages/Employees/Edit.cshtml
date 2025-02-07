@@ -39,6 +39,16 @@
                         </div>
                         <input asp-for="Employee.JobTitle" class="form-control" />
                      </div>
+                     <div class="form">
+                        <div class="labels">
+                           <p class="control-label">Activity</p>
+                           <span asp-validation-for="Employee.Active" class="text-danger"></span>
+                        </div>
+                        <select asp-for="Employee.Active" class="form-drop2">
+                           <option value="true">Active</option>
+                           <option value="false">Inactive</option>
+                        </select>
+                     </div>
                   </div>
                   <div class="form-group">
                      <div class="form">

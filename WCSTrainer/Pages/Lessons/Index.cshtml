@@ -8,7 +8,8 @@
 @{
    var isOwner = false;
    var user = await UserManager.GetUserAsync(User);
-   if (user != null) {
+   if (user != null)
+   {
       isOwner = await UserManager.IsInRoleAsync(user, "owner");
    }
 }
@@ -19,19 +20,26 @@
       <div class="properties">
          <div class="list-container">
             <ul class="category-container">
-               @foreach (var category in Model.CategoryList) {
+               @foreach (var category in Model.CategoryList)
+               {
                   <li id="@category.Name @category.Id" class="category searchable">
                      <div class="category-title">
                         <p>@category.Name</p>
-                        @if (isOwner) {
+                        @if (isOwner)
+                        {
                            <div class="btn-container">
-                              <a asp-page="./Category/Edit" asp-route-id="@category.Id" class="btn bg-btn btnGreen">Edit</a>
-                              <a asp-page="./Category/Delete" asp-route-id="@category.Id" class="btn bg-btn btnRed">Delete</a>
+                              <a asp-page="./Category/Edit" asp-route-id="@category.Id">
+                                 <img src="~/images/Edit.svg" />
+                              </a>
+                              <a asp-page="./Category/Delete" asp-route-id="@category.Id">
+                                 <img src="~/images/Delete.svg" />
+                              </a>
                            </div>
                         }
                      </div>
                      <ul class="skill-list">
-                        @foreach (var lesson in category.Lessons) {
+                        @foreach (var lesson in category.Lessons)
+                        {
                            <li id="@lesson.Name @lesson.Id" class="skill searchable2">
                               <a asp-page="./Details" asp-route-id="@lesson.Id">- @lesson.Name</a>
                            </li>

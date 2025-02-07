@@ -393,6 +393,7 @@ nav {
                   }
 
                      .panel .body .properties .user-form .field-container .form-group .form .labels .control-label {
+                        font-weight: bold;
                      }
 
                      .panel .body .properties .user-form .field-container .form-group .form .labels .text-danger {
@@ -448,6 +449,7 @@ nav {
                   border: 1px solid var(--gray5);
                   padding: 2px 10px;
                   border-bottom: none;
+                  font-weight: bold;
                }
 
                   .panel .body .properties .user-form .field-container .selections .btn:hover {
@@ -1333,8 +1335,8 @@ nav {
       flex-direction: column;
       padding: 20px;
       display: flex;
-      width: 30%;
-      min-width: 230px;
+      width: fit-content;
+      min-width: 240px;
       gap: 10px;
       border-collapse: collapse;
    }
@@ -1418,6 +1420,7 @@ nav {
             padding: 5px 10px;
             display: flex;
             flex-grow: 1;
+            padding-right: 30px;
          }
 
          .people-component .people-container .item .selector {
@@ -1477,7 +1480,6 @@ nav {
 
       .people-component .details .top {
          display: flex;
-         border-bottom: 1px solid var(--gray4);
          height: 250px;
       }
 
@@ -1496,16 +1498,19 @@ nav {
             display: none;
             flex-direction: column;
             font-size: 18px;
+            overflow: hidden;
          }
 
             .people-component .details .top .info-container .title {
                font-size: 30px;
                padding-bottom: 10px;
+               font-weight: bold;
             }
 
             .people-component .details .top .info-container .info {
                display: flex;
                gap: 6px;
+               padding-left: 10px;
             }
 
                .people-component .details .top .info-container .info .one {
@@ -1526,7 +1531,7 @@ nav {
 
          .people-component .details .bottom .list-container {
             flex-grow: 1;
-            border: 1px solid var(--gray3);
+            border: 1px solid var(--gray4);
             background-color: var(--black);
          }
 
@@ -1877,22 +1882,20 @@ nav {
 .category-container {
    display: flex;
    flex-direction: column;
-   gap: 3px;
    overflow-y: scroll;
    max-height: 75vh;
-   scrollbar-width: thin;
-   scrollbar-color: var(--gray5) var(--gray3);
+   scrollbar-width: none;
    scroll-behavior: smooth;
 }
 
    .category-container .category {
       list-style: none;
-      padding: 3px 5px 3px 10px;
-      background-color: var(--gray2);
-      border-radius: 3px;
-      border-left: 3px solid var(--mainTheme);
+      padding: 5px 20px;
       display: flex;
       flex-direction: column;
+      border-top: 2px solid var(--purple4);
+      background: linear-gradient(to bottom, var(--purple3), var(--gray1));
+      border-radius: 20px;
    }
 
       .category-container .category .category-title {
@@ -1913,20 +1916,31 @@ nav {
             flex-wrap: wrap;
             justify-content: flex-end;
             align-content: flex-start;
-            column-gap: 5px;
+            column-gap: 10px;
             row-gap: 2px;
          }
 
          .category-container .category .category-title .btn {
             font-size: 14px;
-            padding: 0 5px;
+            padding: 5px;
             display: flex;
             justify-self: flex-end;
             height: fit-content;
          }
 
+      .category-container .category img {
+         height: 15px;
+         width: 15px;
+         filter: var(--svg);
+      }
+
+      .category-container .category img:hover {
+         filter: var(--svgHover);
+      }
+
       .category-container .category .skill-list {
-         padding-left: 10px;
+         padding-top: 5px;
+         padding-left: 20px;
       }
 
          .category-container .category .skill-list .skill {

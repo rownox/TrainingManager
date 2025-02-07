@@ -25,8 +25,12 @@
                         <p>@category.Name</p>
                         @if (isOwner) {
                            <div class="btn-container">
-                              <a asp-page="Category/Edit" asp-route-id="@category.Id" class="btn bg-btn btnGreen">Edit</a>
-                              <a asp-page="Category/Delete" asp-route-id="@category.Id" class="btn bg-btn btnRed">Delete</a>
+                              <a asp-page="./Category/Edit" asp-route-id="@category.Id">
+                                 <img src="~/images/Edit.svg" />
+                              </a>
+                              <a asp-page="./Category/Delete" asp-route-id="@category.Id">
+                                 <img src="~/images/Delete.svg" />
+                              </a>
                            </div>
                         }
                      </div>

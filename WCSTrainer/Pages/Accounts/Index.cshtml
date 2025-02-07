@@ -23,6 +23,7 @@
                      <th>Job Title</th>
                      <th>Shift</th>
                      <th>Role</th>
+                     <th>Activity</th>
                   </tr>
                   @foreach (var user in Model.Users.OrderBy(u => u.UserName)) {
                      if (user.Employee != null) {
@@ -37,21 +38,23 @@
                                  var isAdmin = await UserManager.IsInRoleAsync(user, "admin");
                                  var isUser = await UserManager.IsInRoleAsync(user, "user");
 
-                                 if (isOwner)
-                                 {
+                                 if (isOwner) {
                                     <p>Owner</p>
-                                 }
-                                 else if (isAdmin)
-                                 {
+                                 } else if (isAdmin) {
                                     <p>Admin</p>
-                                 }
-                                 else if (isUser)
-                                 {
+                                 } else if (isUser) {
                                     <p>User</p>
-                                 }
-                                 else
-                                 {
+                                 } else {
                                     <p>Guest</p>
+                                 }
+                              }
+                           </td>
+                           <td>
+                              @{
+                                 if (user.Employee.Active) {
+                                    <p>Active</p>
+                                 } else {
+                                    <p>Inactive</p>
                                  }
                               }
                            </td>
