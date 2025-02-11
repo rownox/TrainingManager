@@ -12,9 +12,11 @@ namespace WCSTrainer.Pages.Skills {
 
       public SelectList CategorySelectList { get; set; }
 
-      public async Task<IActionResult> OnGetAsync(int? id) {
-         CategorySelectList = new SelectList(await context.SkillCategories.ToListAsync(), "Id", "Name");
+      public List<string> SelectedLessonList { get; set; } = new List<string>();
 
+      public List<LessonCategory> LessonCategories { get; set; } = new List<LessonCategory>();
+
+      public async Task<IActionResult> OnGetAsync(int? id) {
          if (id == null) {
             return NotFound();
          }
@@ -24,6 +26,13 @@ namespace WCSTrainer.Pages.Skills {
             return NotFound();
          }
          Skill = skill;
+
+         var skillCategories = await context.SkillCategories.ToListAsync();
+
+         LessonCategories = await context.LessonCategories
+            .Include(lc => lc.Lessons)
+            .ToListAsync();
+         CategorySelectList = new SelectList(skillCategories, "Id", "Name");
          return Page();
       }
 

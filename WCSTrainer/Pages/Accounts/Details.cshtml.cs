@@ -6,13 +6,16 @@ using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
 
 namespace WCSTrainer.Pages.Accounts {
+
    [Authorize(Roles = "owner, admin")]
    public class DetailsModel(UserManager<UserAccount> userManager, WCSTrainerContext context) : PageModel {
+
       [BindProperty]
       public UserAccount? UserAccount { get; set; }
       public Employee? Employee { get; set; }
 
       public async Task<IActionResult> OnGetAsync(string id) {
+
          UserAccount = await userManager.FindByIdAsync(id);
 
          if (UserAccount == null) {
