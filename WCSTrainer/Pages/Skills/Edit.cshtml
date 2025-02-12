@@ -29,25 +29,11 @@
                   </div>
                   <div class="form-group">
                      <div class="form">
-                        <div class="multi-select-wrapper">
-                           <p class="label">Lesson</p>
-                           @{
-                              var lessonCount = 0;
-                              @foreach (var category in Model.LessonCategories) {
-                                 @foreach (var lesson in category.Lessons) {
-                                    lessonCount = lessonCount + 1;
-                                 }
-                              }
-                              <select asp-for="SelectedLessonList" multiple class="multi-select-comp" size="@lessonCount">
-                                 @foreach (var category in Model.LessonCategories) {
-                                    @foreach (var lesson in category.Lessons) {
-                                       <option value="@lesson.Id">@category.Name - @lesson.Name</option>
-                                    }
-                                 }
-                              </select>
-                           }
-
+                        <div class="labels">
+                           <label asp-for="Skill.Checklist" class="control-label"></label>
+                           <span asp-validation-for="Skill.Checklist" class="text-danger"></span>
                         </div>
+                        <input asp-for="Skill.Checklist" class="form-control" />
                      </div>
                   </div>
                   <div class="form-group">

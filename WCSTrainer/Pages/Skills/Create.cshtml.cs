@@ -33,9 +33,6 @@ namespace WCSTrainer.Pages.Skills {
             return Page();
          }
 
-         context.Skills.Add(Skill);
-         await context.SaveChangesAsync();
-
          foreach (var option in SelectedLessonList) {
             var lesson = await context.Lessons.FirstOrDefaultAsync(l => l.Id.ToString() == option);
             if (lesson != null) {
@@ -43,7 +40,7 @@ namespace WCSTrainer.Pages.Skills {
             }
          }
 
-         context.Skills.Update(Skill);
+         context.Skills.Add(Skill);
          await context.SaveChangesAsync();
 
          return RedirectToPage("./Index");

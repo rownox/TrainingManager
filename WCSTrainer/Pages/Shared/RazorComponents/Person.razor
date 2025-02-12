@@ -11,14 +11,22 @@
                <tbody>
                   <tr>
                      <td class="label">Employee ID</td>
-                     <td class="text">@employee.Id</td>
+                     <td class="text">@employee.EmployeeID</td>
                   </tr>
                   <tr>
                      <td class="label">Full Name</td>
                      <td class="text">@employee.FirstName @employee.LastName</td>
                   </tr>
                   <tr>
-                     <td class="label">Department</td>
+                     <td class="label">Job Title</td>
+                     <td class="text">@employee.JobTitle</td>
+                  </tr>
+                  <tr>
+                     <td class="label">Shift</td>
+                     <td class="text">@employee.Shift</td>
+                  </tr>
+                  <tr>
+                     <td class="label">Known Skills</td>
                      <td class="text">
                         <div class="pills-container">
                            @foreach (var department in employee.TrainerDepartments) {
