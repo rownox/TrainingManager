@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WCSTrainer.Data;
 using WCSTrainer.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
@@ -11,9 +12,6 @@ builder.Services.AddDbContext<WCSTrainerContext>(options =>
 builder.Services.AddDefaultIdentity<UserAccount>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<WCSTrainerContext>();
-
-builder.Services.AddDbContext<WCSTrainerContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection") ?? throw new InvalidOperationException("Connection string 'WCSTrainerContext' not found.")));
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -43,4 +41,4 @@ using (var scope = app.Services.CreateScope()) {
    await SeedData.AssignRoles(userManager, roleManager);
 }
 
-app.Run();
+await app.RunAsync();
