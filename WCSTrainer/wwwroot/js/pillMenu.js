@@ -12,12 +12,16 @@ class MultiSelectComponent {
 
    init() {
       this.pillContainer = document.createElement("div");
+      this.button = document.createElement("div");
       this.pillContainer.className = "pill-container";
+      this.button.className = "btn btnWhite";
+      this.button.textContent = "Select"
       this.wrapper.insertBefore(this.pillContainer, this.selectElement);
+      this.wrapper.insertBefore(this.button, this.pillContainer);
       this.selectElement.style.display = "none";
 
-      this.pillContainer.addEventListener("click", (e) => {
-         if (e.target === this.pillContainer) {
+      this.button.addEventListener("click", (e) => {
+         if (e.target === this.button) {
             this.showDropdown();
          }
       });
