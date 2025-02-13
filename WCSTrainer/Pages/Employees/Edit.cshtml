@@ -63,21 +63,18 @@
                            <p class="control-label">Shift</p>
                            <span asp-validation-for="Employee.Shift" class="text-danger"></span>
                         </div>
-                        <input asp-for="Employee.Shift" class="form-control" />
+                        <select asp-for="Employee.Shift" class="form-drop2">
+                           <option value="1">1st Shift</option>
+                           <option value="2">2nd Shift</option>
+                        </select>
                      </div>
                   </div>
                   <div class="form-group">
                      <div class="form">
-                        <div class="multi-select-wrapper">
-                           <p class="label">Departments</p>
-                           <div id="multi-pill-container" class=""></div>
+                        <div id="Select Departments" class="multi-select-wrapper">
                            <select asp-for="SelectedDepartments" multiple class="multi-select-comp" size="@Model.Departments.Count()">
                               @foreach (var dept in Model.Departments) {
-                                 if (Model.Employee.TrainerDepartments.Contains(dept)) {
-                                    <option selected value="@dept.Id">@dept.Name</option>
-                                 } else {
-                                    <option value="@dept.Id">@dept.Name</option>
-                                 }
+                                 <option selected="@(Model.Employee.TrainerDepartments.Contains(dept) ? "selected" : null)" value="@dept.Id">@dept.Name</option>
                               }
                            </select>
                         </div>

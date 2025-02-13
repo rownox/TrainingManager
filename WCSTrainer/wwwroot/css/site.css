@@ -2070,11 +2070,6 @@ nav {
       border-color: var(--gray5);
    }
 
-   .multi-select-wrapper .pill-container {
-      align-self: flex-end;
-      justify-self: flex-end;
-   }
-
 .object-component {
    position: absolute;
    border: 1px solid var(--gray5);

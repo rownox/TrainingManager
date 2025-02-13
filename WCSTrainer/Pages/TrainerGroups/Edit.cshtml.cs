@@ -26,7 +26,9 @@ namespace WCSTrainer.Pages.TrainerGroups {
             return NotFound();
          }
          TrainerGroup = trainergroup;
-         Employees = await context.Employees.ToListAsync();
+         Employees = await context.Employees
+            .Include(e => e.TrainerDepartments)
+            .ToListAsync();
 
          foreach (var trainer in TrainerGroup.Trainers) {
             SelectedTrainerIds.Add(trainer.Id);
