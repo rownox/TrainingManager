@@ -15,6 +15,7 @@ namespace WCSTrainer.Pages.Skills {
       public List<string> SelectedLessonList { get; set; } = new List<string>();
 
       public List<LessonCategory> LessonCategories { get; set; } = new List<LessonCategory>();
+      public Dictionary<Lesson, string> Lessons { get; set; } = new Dictionary<Lesson, string>();
 
       public async Task<IActionResult> OnGetAsync(int? id) {
          if (id == null) {
@@ -35,6 +36,12 @@ namespace WCSTrainer.Pages.Skills {
             .Include(lc => lc.Lessons)
             .ToListAsync();
          CategorySelectList = new SelectList(skillCategories, "Id", "Name");
+
+         foreach (var category in LessonCategories) {
+            foreach (var lesson in category.Lessons) {
+               Lessons.Add(lesson, category.Name);
+            }
+         }
          return Page();
       }
 

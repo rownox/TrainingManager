@@ -11,14 +11,28 @@ class MultiSelectComponent {
    }
 
    init() {
+      const componentObject = document.createElement("div");
+      componentObject.className = "object-component";
+      this.componentObject = componentObject;
+      this.wrapper.insertBefore(componentObject, this.selectElement);
+
+      var search = document.createElement("input");
+      search.placeholder = "Search";
+      search.addEventListener("input", (e) => this.filterOptions(e.target.value));
+
+      componentObject.appendChild(search);
+      componentObject.appendChild(this.selectElement);
+
       this.pillContainer = document.createElement("div");
       this.button = document.createElement("div");
       this.pillContainer.className = "pill-container";
       this.button.className = "btn btnWhite";
-      this.button.textContent = "Select"
-      this.wrapper.insertBefore(this.pillContainer, this.selectElement);
+      this.button.textContent = this.wrapper.id;
+
+      this.wrapper.insertBefore(this.pillContainer, this.componentObject);
       this.wrapper.insertBefore(this.button, this.pillContainer);
-      this.selectElement.style.display = "none";
+
+      this.componentObject.style.display = "none";
 
       this.button.addEventListener("click", (e) => {
          if (e.target === this.button) {
@@ -34,14 +48,13 @@ class MultiSelectComponent {
       this.loadInitialPills();
    }
 
-
    showDropdown() {
-      this.selectElement.style.display = "block";
-      this.selectElement.focus();
+      this.componentObject.style.display = "flex";
+      this.componentObject.focus();
 
       const hideDropdown = (e) => {
          if (!this.wrapper.contains(e.target)) {
-            this.selectElement.style.display = "none";
+            this.componentObject.style.display = "none";
             document.removeEventListener('click', hideDropdown);
          }
       };
@@ -105,6 +118,9 @@ class MultiSelectComponent {
    toggleOptionSelection(option) {
       if (!option.value) return;
 
+      // Store the current scroll position
+      const scrollTop = this.selectElement.scrollTop;
+
       if (option.selected) {
          option.selected = false;
          this.removePill(option.value);
@@ -113,12 +129,27 @@ class MultiSelectComponent {
          this.addPill(option);
       }
 
+      // Restore the scroll position
+      this.selectElement.scrollTop = scrollTop;
+
       this.handleSelection();
+   }
+
+   filterOptions(searchTerm) {
+      const options = this.selectElement.querySelectorAll("option");
+      options.forEach(option => {
+         const text = option.textContent.toLowerCase();
+         if (text.includes(searchTerm.toLowerCase())) {
+            option.style.display = "block";
+         } else {
+            option.style.display = "none";
+         }
+      });
    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-   var updateFiltersOptions = (selectedValues, type) => {};
+   var updateFiltersOptions = (selectedValues, type) => { };
    if (moduleType != null) {
       updateFiltersOptions = (selectedValues, type) => {
          if (type === "priority") {

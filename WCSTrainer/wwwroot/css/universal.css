@@ -123,39 +123,12 @@ img {
    min-height: 25px;
    min-width: 100px;
    cursor: pointer;
-   border-radius: 5px;
    gap: 1px;
 }
 
 	.pill-container:focus-within {
 		border-color: #007bff;
 	}
-
-.multi-select-wrapper {
-	position: relative;
-}
-
-.multi-select-comp {
-	position: absolute;
-	min-width: fit-content;
-	width: 100%;
-	margin-top: 5px;
-	background-color: var(--black);
-	z-index: 10;
-	color: var(--textMain);
-	border: 1px solid var(--gray5);
-	overflow: hidden;
-}
-
-	.multi-select-comp option {
-		padding: 5px;
-		padding-right: 20px;
-		user-select: none;
-	}
-
-		.multi-select-comp option:hover {
-			background-color: var(--gray4);
-		}
 
 @media print {
 	body * {

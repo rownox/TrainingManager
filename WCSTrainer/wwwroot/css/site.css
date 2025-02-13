@@ -885,7 +885,7 @@ nav {
    }
 
    .panel .body .properties .list-container .top {
-      padding-bottom: 10px;
+      margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
       gap: 10px;
@@ -896,6 +896,7 @@ nav {
          height: 100%;
          color: var(--textSub2);
          column-gap: 10px;
+         row-gap: 5px;
          flex-wrap: wrap;
       }
 
@@ -904,7 +905,7 @@ nav {
          }
 
          .panel .body .properties .list-container .top .left p {
-            margin-bottom: 5px;
+            margin-bottom: 2px;
          }
 
 
@@ -912,7 +913,6 @@ nav {
             height: 33px;
             background-color: var(--black);
             border: 1px solid var(--gray5);
-            border-radius: 5px;
             color: var(--textMain);
             width: 100%;
          }
@@ -2049,3 +2049,75 @@ nav {
       justify-content: center;
       padding: 10px;
    }
+
+.multi-select-wrapper {
+   position: relative;
+   display: flex;
+   flex-direction: column;
+}
+
+   .multi-select-wrapper .btn {
+      background-color: var(--gray3);
+      border: 1px solid var(--gray5);
+      padding: 1px 10px !important;
+      font-size: 15px;
+      border-bottom: none;
+      width: fit-content;
+   }
+
+   .multi-select-wrapper .btn:hover {
+      background-color: var(--gray4);
+      border-color: var(--gray5);
+   }
+
+   .multi-select-wrapper .pill-container {
+      align-self: flex-end;
+      justify-self: flex-end;
+   }
+
+.object-component {
+   position: absolute;
+   border: 1px solid var(--gray5);
+   display: flex;
+   height: fit-content;
+   z-index: 10;
+   flex-direction: column;
+   background-color: var(--gray3);
+   padding: 5px;
+   gap: 5px;
+}
+
+      .object-component input {
+         background-color: var(--black);
+         border: 1px solid var(--gray5);
+         padding: 3px;
+         color: var(--textMain);
+      }
+
+   .object-component .multi-select-comp {
+      max-height: 500px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gray5) var(--gray2);
+      scroll-behavior: smooth;
+      background-color: var(--black);
+      color: var(--textSub1);
+   }
+
+   .object-component .multi-select-comp option {
+      padding: 2px 5px;
+      user-select: none;
+   }
+
+      .object-component .multi-select-comp option:hover {
+         background: linear-gradient(45deg, var(--purple1), var(--purple2)) !important;
+         color: var(--textMain)
+      }
+
+      .object-component .multi-select-comp option:checked {
+         background: linear-gradient(40deg, var(--purple3), var(--purple2));
+      }
+
+      .object-component .multi-select-comp option:active {
+         background: linear-gradient(45deg, var(--purple3), var(--purple2)) !important;
+         text-decoration: underline;
+      }

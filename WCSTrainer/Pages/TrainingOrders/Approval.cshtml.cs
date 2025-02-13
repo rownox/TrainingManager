@@ -100,11 +100,20 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
       private async Task initJson() {
          Employees = await context.Employees
-            .Include(e => e.TrainerDepartments)
+             .Include(e => e.TrainerDepartments)
+             .ToListAsync();
+         TrainerGroups = await context.TrainerGroups
+            .Include(g => g.Trainers)
             .ToListAsync();
-         TrainerGroups = await context.TrainerGroups.ToListAsync();
 
-         Locations = new SelectList(await context.Locations.ToListAsync(), "Id", "Name");
+         var locations = await context.Locations
+             .Select(l => new {
+                l.Id,
+                Label = $"{(l.Category != null ? l.Category.Name : "No Region")} - {l.Name}"
+             })
+             .ToListAsync();
+
+         Locations = new SelectList(locations, "Id", "Label");
       }
    }
 }
