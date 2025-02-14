@@ -60,7 +60,8 @@ namespace WCSTrainer.Pages.Employees {
             }
          }
 
-         return RedirectToPage("/Employees/Details", new { Employee.Id });
+         return RedirectToPage("/Accounts/Details", new { id = Employee.UserAccountId });
+
       }
       private bool EmployeeExists(int id) {
          return context.Employees.Any(e => e.Id == id);

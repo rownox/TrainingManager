@@ -28,13 +28,23 @@
                               <td class="label">Name</td>
                               <td class="text">@Model.Location.Name</td>
                            </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <div class="field-section">
+                     <div class="title-row">
+                        <p class="title">Active Training Orders</p>
+                     </div>
+                     <table>
+                        <tbody>
                            <tr>
-                              <td class="label">Assigned Orders</td>
-                              <td class="text">
+                              <td class="column">
                                  <div class="pills-container">
                                     @foreach (var order in Model.Location.TrainingOrders) {
                                        if (order.Lesson != null) {
-                                          <a href="/TrainingOrders/Details?id=@order.Id" class="pill">TO #@order.Id - @order.Lesson.Name</a>
+                                          if (order.Status == "Active") {
+                                             <a href="/TrainingOrders/Details?id=@order.Id" class="pill">TO #@order.Id - @order.Lesson.Name</a>
+                                          }
                                        }
                                     }
                                  </div>

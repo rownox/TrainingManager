@@ -109,17 +109,12 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
                   _context.Employees.Add(employee);
                   await _context.SaveChangesAsync();
 
-
                   user.EmployeeId = employee.Id;
                   await _userManager.UpdateAsync(user);
-
                   await transaction.CommitAsync();
-
-                  _logger.LogInformation("User created a new account with password.");
-
                   await _userManager.AddToRoleAsync(user, "guest");
 
-                  TempData["SuccessMessage"] = $"Account '{user.UserName}' was created successfully.";
+                  TempData["SuccessMessage"] = $"Account '{user.UserName}' was created successfully with the password: Welcome123!";
                }
 
                foreach (var error in result.Errors) {

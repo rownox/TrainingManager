@@ -69,20 +69,8 @@
                         </select>
                      </div>
                   </div>
-                  <div class="form-group">
-                     <div class="form">
-                        <div class="labels">
-                           <p class="control-label">Password</p>
-                        </div>
-                        <input asp-for="Input.Password" aria-required="true" placeholder="Password" class="Finput form-control" />
-                     </div>
-                     <div class="form">
-                        <div class="labels">
-                           <p class="control-label">Confirm Password</p>
-                        </div>
-                        <input asp-for="Input.ConfirmPassword" aria-required="true" placeholder="Confirm Password" class="Finput form-control" />
-                     </div>
-                  </div>
+                  <input asp-for="Input.Password" value="Welcome123!" aria-required="true" placeholder="Password" hidden />
+                  <input asp-for="Input.ConfirmPassword" value="Welcome123!" aria-required="true" placeholder="Confirm Password" hidden />
                   <div class="form-group">
                      <div class="form">
                         <div class="btn-container">

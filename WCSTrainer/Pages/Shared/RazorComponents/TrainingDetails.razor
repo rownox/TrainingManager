@@ -190,41 +190,44 @@
             </div>
             <div class="field-section">
                @if (TrainingOrder.ParentSkill != null) {
-                  <div class="field-section">
-                     <div class="title-row">
-                        <p class="title">Parent Skill Checklist</p>
+                  if (!string.IsNullOrWhiteSpace(TrainingOrder.ParentSkill.Checklist)) {
+                     <div class="field-section">
+                        <div class="title-row">
+                           <p class="title">Parent Skill Checklist</p>
+                        </div>
+                        <table>
+                           <tbody>
+                              <tr>
+                                 <td class="text">
+                                    @{
+                                       var path = "";
+                                       var name = "";
+                                       var urlRegex = new Regex(@"(http|https)://[^\s]+|[a-zA-Z]:/[^\s]+");
+                                       name = urlRegex.Replace(TrainingOrder.ParentSkill.Checklist, match => {
+                                          var url = match.Value;
+                                          if (Regex.IsMatch(url, @"^D:/")) {
+                                             path = url.Replace("\\", "/").Replace("D:", "");
+                                             return System.IO.Path.GetFileName(url);
+                                          }
+                                          return "";
+                                       });
+                                       <div class="lesson-pill">
+                                          <div class="left">
+                                             <div class="lesson-title">@TrainingOrder.ParentSkill.Name Checklist</div>
+                                             <div class="lesson-subtitle">@name</div>
+                                          </div>
+                                          <div class="right">
+                                             <a class="btn btnBlue bg-btn" href="@path" download>Download</a>
+                                          </div>
+                                       </div>
+                                    }
+
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
                      </div>
-                     <table>
-                        <tbody>
-                           <tr>
-                              <td class="text">
-                                 @if (!string.IsNullOrWhiteSpace(TrainingOrder.ParentSkill.Checklist)) {
-                                    var path = "";
-                                    var name = "";
-                                    var urlRegex = new Regex(@"(http|https)://[^\s]+|[a-zA-Z]:/[^\s]+");
-                                    name = urlRegex.Replace(TrainingOrder.ParentSkill.Checklist, match => {
-                                       var url = match.Value;
-                                       if (Regex.IsMatch(url, @"^D:/")) {
-                                          path = url.Replace("\\", "/").Replace("D:", "");
-                                          return System.IO.Path.GetFileName(url);
-                                       }
-                                       return "";
-                                    });
-                                    <div class="lesson-pill">
-                                       <div class="left">
-                                          <div class="lesson-title">@TrainingOrder.ParentSkill.Name Checklist</div>
-                                          <div class="lesson-subtitle">@name</div>
-                                       </div>
-                                       <div class="right">
-                                          <a class="btn btnBlue bg-btn" href="@path" download>Download</a>
-                                       </div>
-                                    </div>
-                                 }
-                              </td>
-                           </tr>
-                        </tbody>
-                     </table>
-                  </div>
+                  }
                }
                @if (TrainingOrder.Status.Equals("Completed") || TrainingOrder.Status.Equals("Verified")) {
                   <div class="field-section">

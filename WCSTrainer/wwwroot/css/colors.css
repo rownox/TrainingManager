@@ -134,6 +134,11 @@
 		border-color: var(--green1);
 	}
 
+.grey {
+   color: var(--gray5);
+}
+
+
 .mainTheme {
    color: var(--mainTheme);
 }
