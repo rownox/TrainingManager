@@ -1096,12 +1096,19 @@ nav {
 
 .order-list2 td, .order-list2 th {
    color: var(--textSub1);
-   border: 1px solid var(--gray3);
-   padding: 2px 5px;
    text-align: left;
    white-space: nowrap;
    padding-right: 30px;
    font-size: 15px;
+}
+
+.order-list2 th {
+   padding: 5px;
+}
+
+.order-list2 td {
+   border: 1px solid var(--gray3);
+   padding: 2px 5px;
 }
 
 .panel .body .properties .order-list2 table tr td {
@@ -1116,6 +1123,8 @@ nav {
 .panel .body .properties .order-list2 table tr th {
    background-color: var(--gray3);
    color: var(--textMain);
+   position: sticky;
+   top: 0;
 }
 
 .order-list2 td:last-child, .order-list2 th:last-child {
