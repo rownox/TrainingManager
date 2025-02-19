@@ -8,7 +8,7 @@ html {
 	min-width: 100%;
 	padding: 0;
 	margin: 0;
-	scrollbar-width: none;
+   scrollbar-color: var(--gray5) var(--gray1);
 }
 
 body {

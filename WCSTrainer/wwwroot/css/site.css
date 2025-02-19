@@ -1902,8 +1902,8 @@ nav {
       padding: 5px 20px;
       display: flex;
       flex-direction: column;
-      border-top: 2px solid var(--purple4);
-      background: linear-gradient(to bottom, var(--purple3), var(--gray1));
+      border-top: 2px solid var(--gray5);
+      background: linear-gradient(to bottom, var(--gray2), var(--gray1));
       border-radius: 20px;
    }
 
