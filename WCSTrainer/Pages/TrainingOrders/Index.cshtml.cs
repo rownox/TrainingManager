@@ -67,8 +67,14 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          var currentEmployeeId = currentEmployee.Id;
 
-         return query.Where(t => t.CreatedByUserId == user.Id || t.Trainers.Any(tr => tr.Id == currentEmployeeId) || (t.Trainee != null && t.Trainee.Id == currentEmployeeId));
+         return query.Where(t =>
+            (t.CreatedByUserId == user.Id ||
+            t.Trainers.Any(tr => tr.Id == currentEmployeeId) ||
+            (t.Trainee != null && t.Trainee.Id == currentEmployeeId)) &&
+            t.Status != "Approving" && t.Status != "Scheduling"
+         );
       }
+
 
       public async Task<JsonResult> OnGetOrdersAsync([FromQuery] string priorityIds, [FromQuery] string monthIds, [FromQuery] string yearIds, [FromQuery] TrainingOrderFilterModel filter) {
          var query = context.TrainingOrders
@@ -110,6 +116,8 @@ namespace WCSTrainer.Pages.TrainingOrders {
 
          if (statuses.Any())
             query = query.Where(t => statuses.Contains(t.Status));
+
+         query = query.Where(t => t.Trainee == null || t.Trainee.Active);
 
          if (!string.IsNullOrEmpty(filter.SearchTerm)) {
             query = query.Where(t => (

@@ -62,8 +62,7 @@
                            <tr>
                               <td class="column">
                                  <div id="contentToPrint" class="print-block">
-                                    @if (!string.IsNullOrWhiteSpace(Model.Lesson.Content))
-                                    {
+                                    @if (!string.IsNullOrWhiteSpace(Model.Lesson.Content)) {
                                        <pre class="description-container">@Html.Raw(ConvertContent(Model.Lesson.Content))</pre>
                                     }
                                  </div>
