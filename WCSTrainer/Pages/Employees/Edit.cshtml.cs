@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace WCSTrainer.Pages.Employees {
-   [Authorize(Roles = "owner")]
+   [Authorize(Roles = "owner, admin")]
    public class EditModel(WCSTrainer.Data.WCSTrainerContext context) : PageModel {
       [BindProperty]
       public Employee Employee { get; set; } = default!;
