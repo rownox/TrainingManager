@@ -171,7 +171,7 @@ nav {
             }
 
             .panel .body .side-bar .link-list .condenser:hover {
-               background-color: var(--gray3);
+               background-color: var(--gray2);
             }
 
             .panel .body .side-bar .link-list .btn {

@@ -40,20 +40,11 @@
                   </div>
                   <div class="form-group">
                      <div class="form">
-                        <div class="multi-select-wrapper">
-                           <p class="labels">Included Lessons</p>
+                        <div id="Included Lessons" class="multi-select-wrapper">
                            @{
-                              var lessonCount = 0;
-                              @foreach (var category in Model.LessonCategories) {
-                                 @foreach (var lesson in category.Lessons) {
-                                    lessonCount = lessonCount + 1;
-                                 }
-                              }
-                              <select asp-for="SelectedLessonList" multiple class="multi-select-comp" size="@lessonCount">
-                                 @foreach (var category in Model.LessonCategories) {
-                                    @foreach (var lesson in category.Lessons) {
-                                       <option value="@lesson.Id">@category.Name - @lesson.Name</option>
-                                    }
+                              <select asp-for="SelectedLessonList" multiple class="multi-select-comp" size="@Model.Lessons.Count()">
+                                 @foreach (var lesson in Model.Lessons) {
+                                    <option value="@lesson.Key.Id">@lesson.Value - @lesson.Key.Name</option>
                                  }
                               </select>
                            }
