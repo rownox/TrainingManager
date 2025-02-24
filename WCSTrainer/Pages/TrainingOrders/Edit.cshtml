@@ -35,8 +35,7 @@
                      var OrderStatus = Model.TrainingOrder.Status;
                   }
 
-                  @if (OrderStatus != "Approving")
-                  {
+                  @if (OrderStatus != "Approving") {
                      <div class="form-group">
                         <div class="form">
                            <div class="labels">
@@ -45,8 +44,7 @@
                            <div class="selections">
                               <div class="btn bg-btn btnWhite" onclick="openComponent('trainer')">Select Trainers</div>
                               <ul id="trainerList" class="pill-container">
-                                 @foreach (var trainer in Model.TrainingOrder.Trainers)
-                                 {
+                                 @foreach (var trainer in Model.TrainingOrder.Trainers) {
                                     <li class="pill person" onclick="removeItem(this, 'trainer')" value="@trainer.Id">
                                        @trainer.FirstName @trainer.LastName
                                     </li>
@@ -63,8 +61,7 @@
                            <div class="selections">
                               <div class="btn bg-btn btnWhite" onclick="openComponent('group')">Select Trainer Groups</div>
                               <ul id="groupList" class="pill-container">
-                                 @foreach (var trainerGroup in Model.TrainingOrder.TrainerGroups)
-                                 {
+                                 @foreach (var trainerGroup in Model.TrainingOrder.TrainerGroups) {
                                     <li class="pill removable" onclick="removeItem(this, 'group')" value="@trainerGroup.Id">@trainerGroup.Name</li>
                                  }
                               </ul>
@@ -86,8 +83,7 @@
                               @{
                                  var trainee = Model.TrainingOrder.Trainee;
                               }
-                              @if (trainee != null)
-                              {
+                              @if (trainee != null) {
                                  <li value="@Model.TrainingOrder.TraineeId" class="pill removable" onclick="removeItem(this, 'trainee')">
                                     @trainee.FirstName @trainee.LastName
                                  </li>
@@ -98,8 +94,7 @@
                      </div>
                   </div>
 
-                  @if (OrderStatus != "Approving" && OrderStatus != "Scheduling")
-                  {
+                  @if (OrderStatus != "Approving" && OrderStatus != "Scheduling") {
                      <div class="form-group">
                         <div class="form">
                            <div class="labels">
@@ -144,8 +139,7 @@
                      </div>
                   </div>
 
-                  @if (OrderStatus != "Approving" && OrderStatus != "Scheduling" && OrderStatus != "Active")
-                  {
+                  @if (OrderStatus != "Approving" && OrderStatus != "Scheduling" && OrderStatus != "Active") {
                      <div class="form-group">
                         <div class="form">
                            <div class="labels">
