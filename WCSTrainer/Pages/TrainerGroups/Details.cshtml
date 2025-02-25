@@ -6,6 +6,16 @@
 @inject UserManager<UserAccount> UserManager
 
 
+@{
+   var isOwner = false;
+   var isAdmin = false;
+   var user = await UserManager.GetUserAsync(User);
+   if (user != null) {
+      isOwner = await UserManager.IsInRoleAsync(user, "owner");
+      isAdmin = await UserManager.IsInRoleAsync(user, "admin");
+   }
+}
+
 <div class="panel">
    <div class="body">
       <partial name="_Sidebar" />
@@ -45,17 +55,8 @@
             </div>
             <div class="btn-container">
                <a class="btn bg-btn btnGreen" asp-page="./Edit" asp-route-id="@Model.TrainerGroup.Id">Edit</a>
-               @if (SignInManager.IsSignedIn(User))
-               {
-                  var user = await UserManager.GetUserAsync(User);
-                  if (user != null)
-                  {
-                     var isOwner = await UserManager.IsInRoleAsync(user, "owner");
-                     if (isOwner)
-                     {
-                        <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.TrainerGroup.Id">Delete</a>
-                     }
-                  }
+               @if (isOwner || isAdmin) {
+                  <a class="btn bg-btn btnRed" asp-page="./Delete" asp-route-id="@Model.TrainerGroup.Id">Delete</a>
                }
             </div>
          </div>

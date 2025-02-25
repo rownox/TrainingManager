@@ -6,10 +6,11 @@
 
 @{
    var isOwner = false;
+   var isAdmin = false;
    var user = await UserManager.GetUserAsync(User);
-   if (user != null)
-   {
+   if (user != null) {
       isOwner = await UserManager.IsInRoleAsync(user, "owner");
+      isAdmin = await UserManager.IsInRoleAsync(user, "admin");
    }
 }
 
@@ -23,7 +24,7 @@
                   <li id="@category.Name @category.Id" class="category searchable">
                      <div class="category-title">
                         <p>@category.Name</p>
-                        @if (isOwner) {
+                        @if (isOwner || isAdmin) {
                            <div class="btn-container">
                               <a asp-page="./Category/Edit" asp-route-id="@category.Id">
                                  <img src="~/images/Edit.svg" />

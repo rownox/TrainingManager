@@ -1899,12 +1899,12 @@ nav {
 
    .category-container .category {
       list-style: none;
-      padding: 5px 20px;
+      padding: 5px 15px;
       display: flex;
       flex-direction: column;
-      border-top: 2px solid var(--gray5);
+      border-top: 1px solid var(--gray5);
       background: linear-gradient(to bottom, var(--gray2), var(--gray1));
-      border-radius: 20px;
+      border-radius: 15px;
    }
 
       .category-container .category .category-title {
