@@ -50,6 +50,8 @@ function loadOrders() {
 
 function renderOrders(data) {
    const container = document.getElementById('orderListContainer');
+   const currentDate = new Date();
+   const day = currentDate.getDate();
    if (currentFilters.detailed) {
       container.innerHTML = `
          <table id="dataTable" class="order-table">
@@ -98,6 +100,13 @@ function renderOrders(data) {
                            </div>
                         </div>
                      </div>
+
+                     ${currentDate > new Date(order.beginDate) &&
+                     (currentDate - new Date(order.beginDate)) > 2 * 24 * 60 * 60 * 1000 &&
+                     order.status == "Active" ?
+                        `<div class="overdue">
+                            <img src="/images/Warning.svg" title="Overdue Training" />
+                         </div>` : ''}
                   </li>
                `).join('')}
             </ul>

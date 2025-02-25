@@ -23,7 +23,20 @@
          if (TrainingOrder.Lesson != null && TrainingOrder.Trainee != null)
          {
             var name = TrainingOrder.Trainee.FirstName + " " + TrainingOrder.Trainee.LastName;
-            <p class="title">@TrainingOrder.Lesson.Name - @name</p>
+            <div class="title-container">
+               <p class="title">Training Order #@TrainingOrder.Id - @name</p>
+               @if (TrainingOrder.Status == "Active") {
+                  if (TrainingOrder.BeginDate != null) {
+                     DateOnly? curDate = DateOnly.FromDateTime(DateTime.Now.Date);
+                     if (curDate > TrainingOrder.BeginDate.Value.AddDays(3)) {
+                        <div class="overdue">
+                           <img src="/images/Warning.svg" />
+                           <p>Overdue</p>
+                        </div>
+                     }
+                  }
+               }
+            </div>
          }
 
          var status = TrainingOrder.Status;
@@ -43,9 +56,8 @@
                   <table>
                      <tbody>
                         <tr>
-                           <td class="text">
-                              @if (TrainingOrder.Lesson != null)
-                              {
+                           <td>
+                              @if (TrainingOrder.Lesson != null) {
                                  <div class="lesson-pill">
                                     <div class="left">
                                        <div class="lesson-title">@TrainingOrder.Lesson.Name</div>
@@ -188,6 +200,7 @@
                   </div>
                }
             </div>
+            
             <div class="field-section">
                @if (TrainingOrder.ParentSkill != null) {
                   if (!string.IsNullOrWhiteSpace(TrainingOrder.ParentSkill.Checklist)) {
@@ -198,7 +211,7 @@
                         <table>
                            <tbody>
                               <tr>
-                                 <td class="text">
+                                 <td>
                                     @{
                                        var path = "";
                                        var name = "";
