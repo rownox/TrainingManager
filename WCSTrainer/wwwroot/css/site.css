@@ -227,8 +227,6 @@ nav {
                border-color: var(--gray5);
             }
 
-            
-
          .panel .body .side-bar .selected-img {
             filter: var(--svgHover) !important;
          }
@@ -1908,9 +1906,8 @@ nav {
       padding: 5px 15px;
       display: flex;
       flex-direction: column;
-      border-top: 1px solid var(--gray5);
-      background: linear-gradient(to bottom, var(--gray2), var(--gray1));
-      border-radius: 15px 0 0 0;
+      border-top: 1px solid var(--gray4);
+      background: linear-gradient(to bottom, var(--gray1), var(--gray2));
    }
 
       .category-container .category .category-title {

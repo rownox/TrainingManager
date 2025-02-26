@@ -5,7 +5,7 @@
 @inject SignInManager<UserAccount> SignInManager
 @inject UserManager<UserAccount> UserManager
 
-<partial name="_People" model="Model.Employees" />
+<partial name="_People" model="Model.assignedEmployees" />
 
 <div class="panel">
    <div class="body">
@@ -14,42 +14,46 @@
          <div class="user-form">
             <p class="title">Unassign Skill #@Model.Skill.Id</p>
             <div class="field-container">
-               @if (SignInManager.IsSignedIn(User)) {
-                  var user = await UserManager.GetUserAsync(User);
-                  if (user != null) {
-                     <form method="post">
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <input hidden asp-for="Skill.Id" />
-                        <input hidden asp-for="Skill.Name" />
-                        <input hidden asp-for="Skill.Description" />
-                        <input hidden asp-for="Skill.Checklist" />
+               @if (Model.assignedEmployees.Count > 0) {
+                  @if (SignInManager.IsSignedIn(User)) {
+                     var user = await UserManager.GetUserAsync(User);
+                     if (user != null) {
+                        <form method="post">
+                           <div asp-validation-summary="All" class="text-danger"></div>
+                           <input hidden asp-for="Skill.Id" />
+                           <input hidden asp-for="Skill.Name" />
+                           <input hidden asp-for="Skill.Description" />
+                           <input hidden asp-for="Skill.Checklist" />
 
-                        <div class="form-group">
-                           <div class="form">
-                              <div class="labels">
-                                 <span asp-validation-for="@Model.SelectedTraineeId" class="text-danger"></span>
-                              </div>
-                              <div class="selections">
-                                 <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')"><p>Select Trainee</p></div>
-                                 <ul id="traineeList" class="pill-container"></ul>
-                                 <input id="traineeInput" asp-for="@Model.SelectedTraineeId" hidden />
+                           <div class="form-group">
+                              <div class="form">
+                                 <div class="labels">
+                                    <span asp-validation-for="@Model.SelectedTraineeId" class="text-danger"></span>
+                                 </div>
+                                 <div class="selections">
+                                    <div class="btn bg-btn btnWhite" onclick="openComponent('trainee')"><p>Select Trainee</p></div>
+                                    <ul id="traineeList" class="pill-container"></ul>
+                                    <input id="traineeInput" asp-for="@Model.SelectedTraineeId" hidden />
+                                 </div>
                               </div>
                            </div>
-                        </div>
 
-                        <div class="form-group">
-                           <div class="form">
-                              <div class="btn-container">
-                                 <input type="submit" value="Assign" class="btn bg-btn btnGreen" />
+                           <div class="form-group">
+                              <div class="form">
+                                 <div class="btn-container">
+                                    <input type="submit" value="Unassign" class="btn bg-btn btnGreen" />
+                                 </div>
                               </div>
                            </div>
-                        </div>
-                     </form>
+                        </form>
+                     } else {
+                        <p>User invalid.</p>
+                     }
                   } else {
-                     <p>User invalid.</p>
+                     <p>Not signed in.</p>
                   }
                } else {
-                  <p>Not signed in.</p>
+                  <p>There are no employees currently assigned to this skill.</p>
                }
             </div>
          </div>
