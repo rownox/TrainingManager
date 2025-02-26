@@ -5,10 +5,7 @@
 @inject SignInManager<UserAccount> SignInManager
 @inject UserManager<UserAccount> UserManager
 
-<div id="people-component" class="people-component hidden">
-   <partial name="_People" model="Model.Employees" />
-</div>
-<div class="overlay hidden" onclick="closeComponent()"></div>
+<partial name="_People" model="Model.Employees" />
 
 <div class="panel">
    <div class="body">

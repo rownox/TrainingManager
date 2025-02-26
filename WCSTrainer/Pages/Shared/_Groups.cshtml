@@ -8,66 +8,67 @@
       public string Name { get; set; } = string.Empty;
    }
 }
-
-<div class="people-container">
-   <div class="search">
-      <input class="search-box" type="search" id="searchInputGroups" placeholder="Search By Name" oninput="searchGroups()" />
-   </div>
-   @{
-      var jsonOptions = new JsonSerializerOptions {
-         ReferenceHandler = ReferenceHandler.Preserve,
-         WriteIndented = false
-      };
-   }
-   <ul id="groupsList" class="item-container">
-      @foreach (var item in Model) {
-         var newGroup = new Group {
-            Id = item.Id,
-            Name = item.Name,
+<div id="groups-component" class="people-component hidden">
+   <div class="people-container">
+      <div class="search">
+         <input class="search-box" type="search" id="searchInputGroups" placeholder="Search By Name" oninput="searchGroups()" />
+      </div>
+      @{
+         var jsonOptions = new JsonSerializerOptions {
+            ReferenceHandler = ReferenceHandler.Preserve,
+            WriteIndented = false
          };
-
-         var groupJson = JsonSerializer.Serialize(newGroup, jsonOptions);
-         var memberList = new List<string>();
-         foreach (var member in item.Trainers) {
-            memberList.Add(member.FirstName + " " + member.LastName);
-         }
-         var count = memberList.Count();
-         var memberString = string.Join(", ", memberList);
-         <li onclick="setSelectedGroup('@groupJson', '@memberString', this)" class="item" data-name="@item.Name">
-            <div class="info">
-               <p>@item.Name</p>
-               <div class="sub">
-                  <p>Member Count: </p>
-                  <p>@count</p>
-               </div>
-            </div>
-            <div class="selector">
-               <img src="~/images/add.svg" onclick="addItemToGroupPartial('@item.Id', '@item.Name.Replace("'", "")')" />
-            </div>
-         </li>
       }
-   </ul>
-</div>
+      <ul id="groupsList" class="item-container">
+         @foreach (var item in Model) {
+            var newGroup = new Group {
+               Id = item.Id,
+               Name = item.Name,
+            };
 
-<div class="details">
-   <div class="top">
-      <div id="group-info-container" class="info-container">
-         <p id="groupName" class="title"></p>
-         <div class="info">
-            <p class="one">Members: </p>
-            <p id="groupMembers" class="two"></p>
+            var groupJson = JsonSerializer.Serialize(newGroup, jsonOptions);
+            var memberList = new List<string>();
+            foreach (var member in item.Trainers) {
+               memberList.Add(member.FirstName + " " + member.LastName);
+            }
+            var count = memberList.Count();
+            var memberString = string.Join(", ", memberList);
+            <li onclick="setSelectedGroup('@groupJson', '@memberString', this)" class="item" data-name="@item.Name">
+               <div class="info">
+                  <p>@item.Name</p>
+                  <div class="sub">
+                     <p>Member Count: </p>
+                     <p>@count</p>
+                  </div>
+               </div>
+               <div class="selector">
+                  <img src="~/images/add.svg" onclick="addItemToGroupPartial('@item.Id', '@item.Name.Replace("'", "")')" />
+               </div>
+            </li>
+         }
+      </ul>
+   </div>
+
+   <div class="details">
+      <div class="top">
+         <div id="group-info-container" class="info-container">
+            <p id="groupName" class="title"></p>
+            <div class="info">
+               <p class="one">Members: </p>
+               <p id="groupMembers" class="two"></p>
+            </div>
+            <div class="btn-container">
+               <a class="btn btnWhite bg-btn" onclick="linkToGroup()">View Group Details</a>
+            </div>
+         </div>
+      </div>
+      <div class="bottom">
+         <div class="list-container">
+            <ul id="groupTempList" class="list"></ul>
          </div>
          <div class="btn-container">
-            <a class="btn btnWhite bg-btn" onclick="linkToGroup()">View Group Details</a>
+            <button class="btn btnWhite bg-btn" onclick="confirmGroupSelection()">Add Selection</button>
          </div>
-      </div>
-   </div>
-   <div class="bottom">
-      <div class="list-container">
-         <ul id="groupTempList" class="list"></ul>
-      </div>
-      <div class="btn-container">
-         <button class="btn btnWhite bg-btn" onclick="confirmGroupSelection()">Add Selection</button>
       </div>
    </div>
 </div>

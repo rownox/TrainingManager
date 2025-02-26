@@ -1,5 +1,5 @@
 ﻿@page
-@model AssignModel
+@model UnassignModel
 
 @using Microsoft.AspNetCore.Identity;
 @inject SignInManager<UserAccount> SignInManager
@@ -12,7 +12,7 @@
       <partial name="_Sidebar" />
       <div class="properties">
          <div class="user-form">
-            <p class="title">Assign Skill #@Model.Skill.Id</p>
+            <p class="title">Unassign Skill #@Model.Skill.Id</p>
             <div class="field-container">
                @if (SignInManager.IsSignedIn(User)) {
                   var user = await UserManager.GetUserAsync(User);

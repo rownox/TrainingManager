@@ -1,13 +1,8 @@
 ﻿@page
 @model Pages.TrainingOrders.EditModel
 
-<div id="groups-component" class="people-component hidden">
-   <partial name="_Groups" model="Model.TrainerGroups" />
-</div>
-<div id="people-component" class="people-component hidden">
-   <partial name="_People" model="Model.Employees" />
-</div>
-<div class="overlay hidden" onclick="closeComponent()"></div>
+<partial name="_Groups" model="Model.TrainerGroups" />
+<partial name="_People" model="Model.Employees" />
 
 <div class="panel">
    <div class="body">
