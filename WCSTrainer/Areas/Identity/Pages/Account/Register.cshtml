@@ -1,8 +1,7 @@
 ﻿@page
 @model RegisterModel
 
-@if (TempData["SuccessMessage"] != null)
-{
+@if (TempData["SuccessMessage"] != null) {
    <script>
       window.onload = function() {
           alert(@Html.Raw(Json.Serialize(TempData["SuccessMessage"])));
@@ -64,8 +63,10 @@
                            <p class="control-label">Shift</p>
                         </div>
                         <select asp-for="Input.Shift" class="form-drop2">
-                           <option value="1">1st Shift</option>
-                           <option value="2">2nd Shift</option>
+                           <option value="1st Shift">1st Shift</option>
+                           <option value="2nd Shift">2nd Shift</option>
+                           <option value="3rd Shift">3rd Shift</option>
+                           <option value="Swing Shift">Swing Shift</option>
                         </select>
                      </div>
                   </div>

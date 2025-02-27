@@ -8,7 +8,7 @@
       public string Name { get; set; } = string.Empty;
       public string Department { get; set; } = string.Empty;
       public string JobTitle { get; set; } = string.Empty;
-      public string Shift { get; set; }
+      public string Shift { get; set; } = string.Empty;
       public int EmployeeID { get; set; }
    }
 }
@@ -35,7 +35,7 @@
                   Id = item.Id,
                   EmployeeID = item.EmployeeID,
                   JobTitle = item.JobTitle,
-                  Shift = item.Shift == 1 ? "1st Shift" : "2nd Shift",
+                  Shift = item.Shift,
                   Name = item.FirstName + " " + item.LastName,
                   Department = departments
                };

@@ -67,7 +67,7 @@ namespace WCSTrainer.Areas.Identity.Pages.Account {
 
          [Required]
          [Display(Name = "Shift")]
-         public int Shift { get; set; }
+         public string Shift { get; set; }
 
          [Required]
          [Display(Name = "Employee ID")]

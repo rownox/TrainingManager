@@ -4,7 +4,7 @@
    public string LastName { get; set; } = string.Empty;
    public string UserAccountId { get; set; } = string.Empty;
    public string JobTitle { get; set; } = string.Empty;
-   public int Shift { get; set; }
+   public string Shift { get; set; } = string.Empty;
    public int EmployeeID { get; set; }
    public bool Active { get; set; }
    public UserAccount? UserAccount { get; set; }

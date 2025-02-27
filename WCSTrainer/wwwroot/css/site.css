@@ -3,9 +3,9 @@
    flex-direction: column;
    align-items: center;
    max-width: 100%;
+   min-width: 70%;
    display: flex;
    width: 1650px;
-   min-width: 70%;
 }
 
 nav {
@@ -21,9 +21,9 @@ nav {
       justify-content: space-between;
       align-items: center;
       max-width: 100%;
+      min-width: 70%;
       display: flex;
       width: 1650px;
-      min-width: 70%;
    }
 
       nav .nav-container .nav-buttons {
@@ -38,10 +38,10 @@ nav {
          }
 
             nav .nav-container .nav-buttons ul .main-title {
-               font-weight: 400;
                color: var(--textMain);
-               padding: 0 10px;
                white-space: nowrap;
+               padding: 0 10px;
+               font-weight: 400;
             }
 
             nav .nav-container .nav-buttons ul li {
@@ -1312,19 +1312,19 @@ nav {
 }
 
 .overlay {
-   display: flex;
+   background: rgba(0, 0, 0, 0.5);
+   backdrop-filter: blur(3px);
    justify-content: center;
    align-items: center;
    position: fixed;
-   top: 0;
-   bottom: 0;
-   left: 0;
-   right: 0;
-   width: 100%;
+   display: flex;
    height: 100%;
-   background: rgba(0, 0, 0, 0.5);
-   backdrop-filter: blur(3px);
+   width: 100%;
    z-index: 1;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   top: 0;
 }
 
 .people-component {
@@ -1694,7 +1694,7 @@ nav {
       }
 
          .main-banner .banner-container .right .title {
-            border-bottom: 1px solid var(--gray4);
+            border-bottom: 1px solid var(--gray5);
             padding: 20px 0;
             width: 100%;
             color: var(--textMain);
@@ -1714,30 +1714,30 @@ nav {
          }
 
             .main-banner .banner-container .right .menu-grid .menu-btn {
-               width: 200px;
-               display: flex;
-               flex-direction: column;
-               align-items: center;
                background: linear-gradient(var(--gray3), var(--gray1));
-               height: 250px;
-               justify-content: flex-start;
                border-radius: 20px 20px 0 0;
-               cursor: pointer;
+               justify-content: flex-start;
+               flex-direction: column;
                text-decoration: none;
+               align-items: center;
                position: relative;
+               cursor: pointer;
+               height: 250px;
+               display: flex;
+               width: 200px;
             }
 
                .main-banner .banner-container .right .menu-grid .menu-btn::before {
-                  content: '';
-                  position: absolute;
-                  top: -1px;
-                  left: -1px;
-                  right: -1px;
-                  bottom: -1px;
                   background: linear-gradient(180deg, var(--gray5), var(--gray1));
                   border-radius: inherit;
-                  z-index: -2;
                   pointer-events: none;
+                  position: absolute;
+                  bottom: -1px;
+                  content: '';
+                  z-index: -2;
+                  right: -1px;
+                  left: -1px;
+                  top: -1px;
                }
 
                .main-banner .banner-container .right .menu-grid .menu-btn:hover::before {
@@ -1807,9 +1807,9 @@ nav {
       }
 
 .login-container {
-   display: flex;
    flex-direction: column;
    align-items: center;
+   display: flex;
    width: 300px;
    gap: 20px;
 }
@@ -1858,9 +1858,9 @@ nav {
          }
 
       .login-container form .login-links {
-         display: flex;
          flex-direction: column;
          align-items: center;
+         display: flex;
          width: 100%;
          gap: 10px;
       }
@@ -1875,16 +1875,16 @@ nav {
             }
 
 .pagination-container {
+   justify-content: flex-start;
+   flex-direction: column;
    padding-bottom: 5px;
    display: flex;
-   flex-direction: column;
-   justify-content: flex-start;
 }
 
 .pagination {
+   color: var(--textSub2);
    display: flex;
    gap: 5px;
-   color: var(--textSub2);
 }
 
    .pagination .btn {
@@ -1893,44 +1893,41 @@ nav {
    }
 
 .category-container {
-   display: flex;
+   scroll-behavior: smooth;
    flex-direction: column;
+   scrollbar-width: thin;
    overflow-y: scroll;
    max-height: 75vh;
-   scrollbar-width: thin;
-   scroll-behavior: smooth;
+   display: flex;
 }
 
    .category-container .category {
-      list-style: none;
-      padding: 5px 15px;
-      display: flex;
-      flex-direction: column;
-      border-top: 1px solid var(--gray5);
-      border-right: 1px solid var(--gray2);
-      border-left: 1px solid var(--gray2);
       background: linear-gradient(to bottom, var(--gray1), var(--gray2));
+      border-top: 1px solid var(--gray5);
+      flex-direction: column;
+      padding: 5px 15px;
+      list-style: none;
+      display: flex;
    }
 
       .category-container .category .category-title {
-         display: flex;
-         flex-direction: row;
          justify-content: space-between;
+         display: flex;
       }
 
          .category-container .category .category-title p {
             color: var(--textMain);
-            font-size: 16px;
             font-weight: bold;
+            font-size: 16px;
          }
 
          .category-container .category .category-title .btn-container {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: flex-end;
             align-content: flex-start;
+            justify-content: flex-end;
+            flex-direction: row;
             column-gap: 10px;
+            flex-wrap: wrap;
+            display: flex;
             row-gap: 2px;
          }
 
