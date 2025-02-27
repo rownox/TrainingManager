@@ -164,10 +164,9 @@ nav {
                padding: 2px;
                padding-right: 5px;
                cursor: pointer;
-               border-top: 1px solid;
-               border-right: 1px solid;
-               border-color: var(--gray5);
-               border-radius: 0 6px 0 0;
+               border-top: 1px solid var(--gray5);
+               background: linear-gradient(90deg, var(--gray2), var(--gray3));
+               border-right: 1px solid var(--gray5);
             }
 
             .panel .body .side-bar .link-list .condenser:hover {
@@ -1899,15 +1898,17 @@ nav {
    overflow-y: scroll;
    max-height: 75vh;
    display: flex;
+   gap: 5px;
 }
 
    .category-container .category {
       background: linear-gradient(to bottom, var(--gray1), var(--gray2));
-      border-top: 1px solid var(--gray5);
+      border-top: 1px solid var(--gray4);
       flex-direction: column;
       padding: 5px 15px;
       list-style: none;
       display: flex;
+      border-left: 2px solid var(--gray5);
    }
 
       .category-container .category .category-title {
